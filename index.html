@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.classList.add('js')</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mollweide Alliance</title>
+<meta name="description" content="Thirteen airlines, one network. Explore the Mollweide Alliance route map, member carriers and book a simulated flight.">
+<meta name="theme-color" content="#13398C">
+<meta property="og:title" content="Mollweide Alliance">
+<meta property="og:description" content="Thirteen airlines, one network. Explore the Mollweide Alliance route map, member carriers and book a simulated flight.">
+<meta property="og:image" content="assets/img/photos/lineup-six.jpg">
+<link rel="icon" href="assets/img/mark-blue.png">
+<link rel="apple-touch-icon" href="assets/img/mark-blue.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+<div class="topbar">
+  <div class="wrap topbar__in">
+    <p>The Mollweide Alliance is a fictitious alliance created for The Airline Simulator</p>
+  </div>
+</div>
+
+<header class="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="index.html" aria-label="Mollweide Alliance home">
+      <img class="brand__mark" src="assets/img/mark-blue.png" alt="" width="38" height="33">
+      <span class="brand__txt">
+        <img class="brand__word" src="assets/img/wordmark-blue.png" alt="Mollweide" width="200" height="17">
+        <span class="brand__sub">Alliance</span>
+      </span>
+    </a>
+    <button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="navlinks"><span></span><span></span><span></span></button>
+    <nav class="nav__links" id="navlinks" data-open="false" aria-label="Main">
+      <a class="nav__link" href="index.html" aria-current="page">Home</a>
+      <a class="nav__link" href="members.html">Members</a>
+      <a class="nav__link" href="network.html">Network</a>
+      <a class="nav__link" href="lounges.html">Lounges</a>
+      <a class="nav__link" href="news.html">Newsroom</a>
+      <a class="nav__link" href="bookings.html">My bookings</a>
+      <a class="btn btn--primary nav__cta" href="book.html">Book</a>
+    </nav>
+  </div>
+</header>
+<section class="hero">
+  <img class="hero__bg" src="assets/img/photos/hero-departures.jpg" alt="" width="1800" height="667" fetchpriority="high">
+  <div class="wrap hero__in">
+    <div class="hero__grid">
+      <div>
+        <p class="tracked" data-rv>Further together · A wider world</p>
+        <h1 class="display mt-2" data-rv style="transition-delay:80ms">
+          <span class="hero__line">We take you from <b class="hero__city" id="cityA">Tbilisi</b></span>
+          <span class="hero__line">to <b class="hero__city" id="cityB">Rio de Janeiro</b></span>
+        </h1>
+        <div class="brandrule" data-rv style="transition-delay:140ms"></div>
+        <p class="lede mt-3" data-rv style="transition-delay:200ms">Thirteen independently operated carriers under one standard of service, one loyalty programme and one coordinated network.</p>
+        <div class="hero__actions" data-rv style="transition-delay:260ms">
+          <a class="btn btn--sky btn--lg" href="book.html">Book a flight <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn btn--ghost btn--lg" href="network.html">Explore the network</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow" data-rv>The alliance</p>
+        <h2 class="display" data-rv>Named for a projection that <b>shows the world at true size.</b></h2>
+      </div>
+      <a class="btn btn--line" href="members.html" data-rv>All member airlines</a>
+    </div>
+    <div class="two-col">
+      <p class="lede" data-rv>Mollweide Alliance brings thirteen independently operated airlines together under one standard of service, one loyalty programme and one coordinated schedule. The name comes from the equal-area projection that shows every part of the world at its true size — a fair description of how the network is put together, region by region, around the carriers that know each one best.</p>
+      <div data-rv style="transition-delay:80ms">
+        <p class="body-copy">What that means for your journey is simple. Travel across several members and it is still <strong style="color:var(--blue)">one booking, on one reference</strong>, with your bags checked through to where you are going. Our airlines carry one another's flight numbers, so a route no single carrier operates still sells as a single through service.</p>
+        <p class="body-copy mt-2">Miles you earn on any member count towards status on every other, and from <strong style="color:var(--blue)">Strata</strong> upwards that status opens alliance lounges across the network. Schedules are timed into connecting waves at each hub, so the onward flight is there when you land — and if a connection slips, it is the alliance that looks after you, not a hand-off between airlines.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section on-wash">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow" data-rv>Member airlines</p>
+      <h2 class="display" data-rv>Thirteen carriers, <b>each strongest at home.</b></h2></div>
+      <a class="btn btn--line" href="members.html" data-rv>View all members</a>
+    </div>
+    <div class="liveries" id="membersHome"></div>
+  </div>
+</section>
+
+<section class="section on-ink" style="background:var(--blue-ink)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow" data-rv>The network</p>
+      <h2 class="display" data-rv>Drawn on an <b>equal-area projection</b></h2>
+      <p class="lede mt-2" data-rv>Every route below is a true great circle, plotted on the Mollweide projection the alliance is named for.</p></div>
+      <a class="btn btn--ghost" href="network.html" data-rv>Network detail</a>
+    </div>
+    <div class="map-frame" data-rv><svg id="map" role="img" aria-label="Mollweide Alliance route network on an equal-area world projection"></svg></div>
+    <div class="map-legend">
+      <span><i></i>Alliance hub</span><span><i class="spoke"></i>Destination</span>
+      <span><i class="line"></i>Great-circle route</span>
+    </div>
+  </div>
+</section>
+
+<section class="band section--tight">
+  <div class="wrap band__in">
+    <div>
+      <h2 class="display" style="font-size:clamp(1.6rem,3.4vw,2.6rem)">Plan a journey across <b>the alliance network.</b></h2>
+      <p class="lede mt-2" style="color:rgba(255,255,255,.8)">Search every member carrier on a single itinerary.</p>
+    </div>
+    <a class="btn btn--lg" style="background:#fff;color:var(--blue)" href="book.html">Book a flight <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</section>
+
+<footer class="ft">
+  <div class="wrap ft__top">
+    <div>
+      <a class="brand" href="index.html" aria-label="Mollweide Alliance home">
+        <img class="brand__mark" src="assets/img/mark-blue.png" alt="" width="38" height="33">
+        <span class="brand__txt">
+          <img class="brand__word" src="assets/img/wordmark-blue.png" alt="Mollweide" width="200" height="17">
+          <span class="brand__sub">Alliance</span>
+        </span>
+      </a>
+      <p class="ft__about">Thirteen carriers. One network. Named for the equal-area projection that shows every part of the world at its true size.</p>
+      <p class="tracked" style="margin-top:1.5rem;font-size:.625rem">Further together · A wider world</p>
+    </div>
+    <div>
+      <h4>Alliance</h4>
+      <ul>
+        <li><a href="members.html">Member airlines</a></li>
+        <li><a href="network.html">Route network</a></li>
+        <li><a href="lounges.html#loyalty">Elara programme</a></li>
+        <li><a href="news.html">Newsroom</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Travel</h4>
+      <ul>
+        <li><a href="book.html">Book a flight</a></li>
+        <li><a href="bookings.html">My bookings</a></li>
+        <li><a href="lounges.html">Lounges</a></li>
+        <li><a href="network.html#hubs">Hub airports</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Members</h4>
+      <ul id="ftMembers"></ul>
+    </div>
+  </div>
+  <div class="wrap ft__bot">
+    <p class="ft__disc"><strong>This is a fan-made site for a simulation game.</strong> Mollweide Alliance and its member airlines are fictional entities
+      created for <span data-slot="game">The Airline Simulator</span>. Flights, fares, schedules and bookings shown here are simulated.
+      No real travel is sold, no payment is taken, and bookings are stored only in your own browser.</p>
+    <div class="ft__legal">
+      <span>© <span data-slot="year"></span> Mollweide Alliance · Fan project</span>
+      <span>Built for <span data-slot="game"></span></span>
+    </div>
+  </div>
+</footer>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/site.js"></script>
+<script>
+  renderMembers(document.getElementById('membersHome'));
+  startCityRotator(document.getElementById('cityA'), document.getElementById('cityB'));
+  renderMap(document.getElementById('map'));
+  document.getElementById('ftMembers').innerHTML =
+    MEMBERS.slice(0,6).map(m => '<li><a href="members.html#'+m.code+'">'+ (m.short||m.name) +'</a></li>').join('');
+</script>
+</body></html>

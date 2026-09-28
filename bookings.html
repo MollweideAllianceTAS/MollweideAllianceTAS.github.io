@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.classList.add('js')</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My bookings · Mollweide Alliance</title>
+<meta name="description" content="Your saved Mollweide Alliance pretend bookings, stored in this browser.">
+<meta name="theme-color" content="#13398C">
+<meta property="og:title" content="My bookings · Mollweide Alliance">
+<meta property="og:description" content="Your saved Mollweide Alliance pretend bookings, stored in this browser.">
+<meta property="og:image" content="assets/img/photos/lineup-six.jpg">
+<link rel="icon" href="assets/img/mark-blue.png">
+<link rel="apple-touch-icon" href="assets/img/mark-blue.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+<div class="topbar">
+  <div class="wrap topbar__in">
+    <p>The Mollweide Alliance is a fictitious alliance created for The Airline Simulator</p>
+  </div>
+</div>
+
+<header class="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="index.html" aria-label="Mollweide Alliance home">
+      <img class="brand__mark" src="assets/img/mark-blue.png" alt="" width="38" height="33">
+      <span class="brand__txt">
+        <img class="brand__word" src="assets/img/wordmark-blue.png" alt="Mollweide" width="200" height="17">
+        <span class="brand__sub">Alliance</span>
+      </span>
+    </a>
+    <button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="navlinks"><span></span><span></span><span></span></button>
+    <nav class="nav__links" id="navlinks" data-open="false" aria-label="Main">
+      <a class="nav__link" href="index.html">Home</a>
+      <a class="nav__link" href="members.html">Members</a>
+      <a class="nav__link" href="network.html">Network</a>
+      <a class="nav__link" href="lounges.html">Lounges</a>
+      <a class="nav__link" href="news.html">Newsroom</a>
+      <a class="nav__link" href="bookings.html" aria-current="page">My bookings</a>
+      <a class="btn btn--primary nav__cta" href="book.html">Book</a>
+    </nav>
+  </div>
+</header>
+<section class="phead" style="padding-block:clamp(2rem,5vw,3.5rem)">
+  <div class="wrap phead__in">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span>/</span> My bookings</nav>
+    <h1 class="display">Your <b>itineraries.</b></h1>
+    <div class="brandrule"></div>
+    <p class="lede mt-3">Itineraries are held in this browser only. They will not appear on another device, and clearing your browsing data removes them.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="results-bar">
+      <span class="results-bar__n" id="bkCount"></span>
+      <div class="sortset no-print">
+        <a class="btn btn--primary btn--sm" href="book.html">New booking</a>
+        <button class="btn btn--line btn--sm" id="bkPrint">Print</button>
+        <button class="btn btn--danger btn--sm" id="bkClear">Clear all</button>
+      </div>
+    </div>
+    <div class="bk-list" id="bkList"></div>
+
+    <div class="hide mt-6" id="bkPassWrap">
+      <div class="sec-head"><div><p class="eyebrow">Boarding pass</p></div></div>
+      <div id="bkPass"></div>
+    </div>
+  </div>
+</section>
+
+<footer class="ft">
+  <div class="wrap ft__top">
+    <div>
+      <a class="brand" href="index.html" aria-label="Mollweide Alliance home">
+        <img class="brand__mark" src="assets/img/mark-blue.png" alt="" width="38" height="33">
+        <span class="brand__txt">
+          <img class="brand__word" src="assets/img/wordmark-blue.png" alt="Mollweide" width="200" height="17">
+          <span class="brand__sub">Alliance</span>
+        </span>
+      </a>
+      <p class="ft__about">Thirteen carriers. One network. Named for the equal-area projection that shows every part of the world at its true size.</p>
+      <p class="tracked" style="margin-top:1.5rem;font-size:.625rem">Further together · A wider world</p>
+    </div>
+    <div>
+      <h4>Alliance</h4>
+      <ul>
+        <li><a href="members.html">Member airlines</a></li>
+        <li><a href="network.html">Route network</a></li>
+        <li><a href="lounges.html#loyalty">Elara programme</a></li>
+        <li><a href="news.html">Newsroom</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Travel</h4>
+      <ul>
+        <li><a href="book.html">Book a flight</a></li>
+        <li><a href="bookings.html">My bookings</a></li>
+        <li><a href="lounges.html">Lounges</a></li>
+        <li><a href="network.html#hubs">Hub airports</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Members</h4>
+      <ul id="ftMembers"></ul>
+    </div>
+  </div>
+  <div class="wrap ft__bot">
+    <p class="ft__disc"><strong>This is a fan-made site for a simulation game.</strong> Mollweide Alliance and its member airlines are fictional entities
+      created for <span data-slot="game">The Airline Simulator</span>. Flights, fares, schedules and bookings shown here are simulated.
+      No real travel is sold, no payment is taken, and bookings are stored only in your own browser.</p>
+    <div class="ft__legal">
+      <span>© <span data-slot="year"></span> Mollweide Alliance · Fan project</span>
+      <span>Built for <span data-slot="game"></span></span>
+    </div>
+  </div>
+</footer>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/site.js"></script>
+<script src="assets/js/booking.js"></script>
+<script>
+  document.getElementById('ftMembers').innerHTML =
+    MEMBERS.slice(0,6).map(m => '<li><a href="members.html#'+m.code+'">'+ (m.short||m.name) +'</a></li>').join('');
+</script>
+</body></html>
