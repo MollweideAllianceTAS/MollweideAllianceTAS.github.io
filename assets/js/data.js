@@ -82,6 +82,15 @@ const MEMBERS = [
           'market. Its flowering livery is among the most recognisable in the network.'
   },
   {
+    name:'Avni Airlines', code:'AV', country:'India',
+    color:'#19A7DE', tail:'assets/img/members/avni.webp',
+    hubs:['DEL','BOM','BLR','MAA','HYD','CCU','AMD','PNQ','TRV','CCJ',
+          'GAU','LKO','JAI','ATQ','CMB','DPS','MRU'], focus:[], joined:2026,
+    blurb:'The alliance\'s broadest Indian network, built on seventeen bases ' +
+          'from Amritsar to Thiruvananthapuram, with international points at ' +
+          'Colombo, Denpasar and Mauritius.'
+  },
+  {
     name:'AirLiban', code:'AL', country:'Lebanon', 
     color:'#C62B33', tail:'assets/img/members/airliban.webp',
     hubs:['BEY','CAI'], focus:[], joined:2025,
@@ -204,7 +213,17 @@ const AIRPORTS = [
   { code:'ADD', city:'Addis Ababa',   name:'Bole Intl',                country:'Ethiopia',     lat: 8.98, lon: 38.80 },
   { code:'MAA', city:'Chennai',       name:'Chennai Intl',             country:'India',        lat:12.99, lon: 80.17, hub:true },
   { code:'HYD', city:'Hyderabad',     name:'Rajiv Gandhi Intl',        country:'India',        lat:17.24, lon: 78.43, hub:true },
-  { code:'CMB', city:'Colombo',       name:'Bandaranaike Intl',        country:'Sri Lanka',    lat: 7.18, lon: 79.88 },
+  { code:'CMB', city:'Colombo',       name:'Bandaranaike Intl',        country:'Sri Lanka',    lat: 7.18, lon: 79.88, hub:true },
+  { code:'TRV', city:'Thiruvananthapuram', name:'Trivandrum Intl',     country:'India',        lat: 8.48, lon: 76.92, hub:true },
+  { code:'CCJ', city:'Kozhikode',     name:'Calicut Intl',             country:'India',        lat:11.14, lon: 75.96, hub:true },
+  { code:'PNQ', city:'Pune',          name:'Pune Airport',             country:'India',        lat:18.58, lon: 73.92, hub:true },
+  { code:'AMD', city:'Ahmedabad',     name:'Sardar Vallabhbhai Patel', country:'India',        lat:23.07, lon: 72.63, hub:true },
+  { code:'GAU', city:'Guwahati',      name:'Lokpriya Gopinath Bordoloi',country:'India',       lat:26.11, lon: 91.59, hub:true },
+  { code:'LKO', city:'Lucknow',       name:'Chaudhary Charan Singh',   country:'India',        lat:26.76, lon: 80.89, hub:true },
+  { code:'JAI', city:'Jaipur',        name:'Jaipur Intl',              country:'India',        lat:26.82, lon: 75.80, hub:true },
+  { code:'ATQ', city:'Amritsar',      name:'Sri Guru Ram Dass Jee',    country:'India',        lat:31.71, lon: 74.80, hub:true },
+  { code:'DPS', city:'Denpasar',      name:'Ngurah Rai Intl',          country:'Indonesia',    lat:-8.75, lon:115.17, hub:true },
+  { code:'MRU', city:'Mauritius',     name:'Sir Seewoosagur Ramgoolam',country:'Mauritius',    lat:-20.43,lon: 57.68, hub:true },
   { code:'KTM', city:'Kathmandu',     name:'Tribhuvan Intl',           country:'Nepal',        lat:27.70, lon: 85.36 },
   { code:'DAC', city:'Dhaka',         name:'Hazrat Shahjalal',         country:'Bangladesh',   lat:23.84, lon: 90.40 },
   { code:'BKK', city:'Bangkok',       name:'Suvarnabhumi',             country:'Thailand',     lat:13.69, lon:100.75 },
@@ -286,7 +305,7 @@ const AIRCRAFT = [
 const PROGRAMME = 'Elara';
 const TIERS = [
   { name:'Member', need:0,      color:'#8FA6C4',
-    perks:['Mileage accrual across all thirteen carriers','Online check-in','Member fares'] },
+    perks:['Mileage accrual across all fourteen carriers','Online check-in','Member fares'] },
   { name:'Select', need:25000,  color:'#4E9BD4',
     perks:['Priority check-in','One additional checked bag','Preferred seating'] },
   { name:'Strata', need:60000,  color:'#1B4A8F',

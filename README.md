@@ -111,6 +111,15 @@ everything readable — headlines, body copy and every small-caps label.
 codes, seat numbers, booking references and map labels. The full list is the
 `MONOSPACED DATA` block at the foot of `site.css`; nothing else is monospaced.
 
+### Carriers with many bases
+
+A member's bases are drawn on the network map as follows: carriers with four or
+fewer interconnect all of them, while a carrier with more radiates from its
+first listed hub. Avni Airlines has seventeen bases — drawing every pair would
+have added 136 lines over India alone and buried the map in a single airline's
+network. The first entry in a member's `hubs` array is therefore its primary
+hub, and worth putting in a sensible order.
+
 ### The two Aranya carriers
 
 **Aranya Air** and **Aranya Rukmanidoot** are separate members, not one airline

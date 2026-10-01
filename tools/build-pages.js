@@ -77,7 +77,7 @@ const footer = () => `
           <span class="brand__sub">Alliance</span>
         </span>
       </a>
-      <p class="ft__about">Thirteen carriers. One network. Named for the equal-area projection that shows every part of the world at its true size.</p>
+      <p class="ft__about">Fourteen carriers. One network. Named for the equal-area projection that shows every part of the world at its true size.</p>
       <p class="tracked" style="margin-top:1.5rem;font-size:.625rem">Further together · A wider world</p>
     </div>
     <div>
@@ -119,7 +119,7 @@ const footer = () => `
 /* ========================================================================== */
 /*  INDEX                                                                     */
 /* ========================================================================== */
-const index = head('Mollweide Alliance', 'Thirteen airlines, one network. Explore the Mollweide Alliance route map, member carriers and book a simulated flight.')
+const index = head('Mollweide Alliance', 'Fourteen airlines, one network. Explore the Mollweide Alliance route map, member carriers and book a simulated flight.')
 + chrome('index.html') + `
 <section class="hero">
   <img class="hero__bg" src="assets/img/photos/hero-departures.jpg" alt="" width="1800" height="667" fetchpriority="high">
@@ -132,7 +132,7 @@ const index = head('Mollweide Alliance', 'Thirteen airlines, one network. Explor
           <span class="hero__line">to <b class="hero__city" id="cityB">Rio de Janeiro</b></span>
         </h1>
         <div class="brandrule" data-rv style="transition-delay:140ms"></div>
-        <p class="lede mt-3" data-rv style="transition-delay:200ms">Thirteen independently operated carriers under one standard of service, one loyalty programme and one coordinated network.</p>
+        <p class="lede mt-3" data-rv style="transition-delay:200ms">Fourteen independently operated carriers under one standard of service, one loyalty programme and one coordinated network.</p>
         <div class="hero__actions" data-rv style="transition-delay:260ms">
           <a class="btn btn--sky btn--lg" href="book.html">Book a flight <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <a class="btn btn--ghost btn--lg" href="network.html">Explore the network</a>
@@ -152,7 +152,7 @@ const index = head('Mollweide Alliance', 'Thirteen airlines, one network. Explor
       <a class="btn btn--line" href="members.html" data-rv>All member airlines</a>
     </div>
     <div class="two-col">
-      <p class="lede" data-rv>Mollweide Alliance brings thirteen independently operated airlines together under one standard of service, one loyalty programme and one coordinated schedule. The name comes from the equal-area projection that shows every part of the world at its true size — a fair description of how the network is put together, region by region, around the carriers that know each one best.</p>
+      <p class="lede" data-rv>Mollweide Alliance brings fourteen independently operated airlines together under one standard of service, one loyalty programme and one coordinated schedule. The name comes from the equal-area projection that shows every part of the world at its true size — a fair description of how the network is put together, region by region, around the carriers that know each one best.</p>
       <div data-rv style="transition-delay:80ms">
         <p class="body-copy">What that means for your journey is simple. Travel across several members and it is still <strong style="color:var(--blue)">one booking, on one reference</strong>, with your bags checked through to where you are going. Our airlines carry one another's flight numbers, so a route no single carrier operates still sells as a single through service.</p>
         <p class="body-copy mt-2">Miles you earn on any member count towards status on every other, and from <strong style="color:var(--blue)">Strata</strong> upwards that status opens alliance lounges across the network. Schedules are timed into connecting waves at each hub, so the onward flight is there when you land — and if a connection slips, it is the alliance that looks after you, not a hand-off between airlines.</p>
@@ -165,7 +165,7 @@ const index = head('Mollweide Alliance', 'Thirteen airlines, one network. Explor
   <div class="wrap">
     <div class="sec-head">
       <div><p class="eyebrow" data-rv>Member airlines</p>
-      <h2 class="display" data-rv>Thirteen carriers, <b>each strongest at home.</b></h2></div>
+      <h2 class="display" data-rv>Fourteen carriers, <b>each strongest at home.</b></h2></div>
       <a class="btn btn--line" href="members.html" data-rv>View all members</a>
     </div>
     <div class="liveries" id="membersHome"></div>
@@ -210,13 +210,13 @@ const index = head('Mollweide Alliance', 'Thirteen airlines, one network. Explor
 /* ========================================================================== */
 /*  MEMBERS                                                                   */
 /* ========================================================================== */
-const members = head('Member airlines', 'The thirteen carriers of the Mollweide Alliance, their hubs and home markets.')
+const members = head('Member airlines', 'The fourteen carriers of the Mollweide Alliance, their hubs and home markets.')
 + chrome('members.html') + `
 <section class="phead">
   <img class="phead__bg" src="assets/img/photos/lineup-four.jpg" alt="" width="1440" height="380">
   <div class="wrap phead__in">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span>/</span> Member airlines</nav>
-    <h1 class="display">Thirteen carriers, <b>one standard.</b></h1>
+    <h1 class="display">Fourteen carriers, <b>one standard.</b></h1>
     <div class="brandrule"></div>
     <p class="lede mt-3">Each member keeps its own livery, its own cabin and its own home market. What they share is a schedule, a loyalty programme and a promise that a connection onto another member's aircraft feels like the same journey.</p>
   </div>
@@ -234,7 +234,7 @@ const members = head('Member airlines', 'The thirteen carriers of the Mollweide 
 
 <section class="band section--tight">
   <div class="wrap band__in">
-    <div><h2 class="display" style="font-size:clamp(1.6rem,3.4vw,2.6rem)">Thirteen carriers, <b>one booking.</b></h2></div>
+    <div><h2 class="display" style="font-size:clamp(1.6rem,3.4vw,2.6rem)">Fourteen carriers, <b>one booking.</b></h2></div>
     <a class="btn btn--lg" style="background:#fff;color:var(--blue)" href="book.html">Search flights <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
   </div>
 </section>
@@ -521,7 +521,7 @@ const lounges = head('Lounges', 'Find Mollweide Alliance lounges across the netw
     <div class="sec-head">
       <div><p class="eyebrow">Loyalty</p>
       <h2 class="display"><b data-slot="programme">Elara</b></h2>
-      <p class="lede mt-2">The alliance loyalty programme, and how lounge access is earned. Four tiers, recognised identically by all thirteen members: miles accrued on any carrier count towards status on every other.</p></div>
+      <p class="lede mt-2">The alliance loyalty programme, and how lounge access is earned. Four tiers, recognised identically by all fourteen members: miles accrued on any carrier count towards status on every other.</p></div>
     </div>
     <div class="tiers" id="tiers"></div>
   </div>
@@ -578,7 +578,7 @@ const news = head('Newsroom', 'Press releases and announcements from the Mollwei
 
 <section class="band section--tight">
   <div class="wrap band__in">
-    <div><h2 class="display" style="font-size:clamp(1.6rem,3.4vw,2.6rem)">Thirteen carriers, <b>one network.</b></h2></div>
+    <div><h2 class="display" style="font-size:clamp(1.6rem,3.4vw,2.6rem)">Fourteen carriers, <b>one network.</b></h2></div>
     <a class="btn btn--lg" style="background:#fff;color:var(--blue)" href="members.html">Meet the members <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
   </div>
 </section>

@@ -335,10 +335,16 @@ function renderMap(svg, opts) {
   primaryCodes.forEach((a, i) => primaryCodes.slice(i + 1)
     .forEach(b => { if (distKm(AP[a], AP[b]) > 700) add(AP[a], AP[b]); }));
 
-  // Each member's own hubs interconnect, and reach their primary
+  /* A member's own bases link up. Small multi-hub carriers interconnect fully;
+     a carrier with many bases radiates from its primary instead, because
+     drawing every pair of seventeen bases buries the map in its own lines. */
   MEMBERS.forEach(m => {
     const hs = (m.hubs || []).concat(m.focus || []);
-    hs.forEach((h, i) => hs.slice(i + 1).forEach(h2 => add(AP[h], AP[h2])));
+    if (hs.length <= 4) {
+      hs.forEach((h, i) => hs.slice(i + 1).forEach(h2 => add(AP[h], AP[h2])));
+    } else {
+      hs.slice(1).forEach(h => add(AP[hs[0]], AP[h]));
+    }
   });
 
   // Secondary hubs reach their two nearest alliance hubs
