@@ -107,14 +107,6 @@ const MEMBERS = [
           'services through its Pacific-coast network.'
   },
   {
-    name:'Bund Air', code:'BD', country:'China', 
-    color:'#C1272D', tail:'assets/img/members/bund-air.webp',
-    hubs:['PVG','CKG'], focus:[], joined:2026,
-    blurb:'The alliance\'s East Asian powerhouse, pairing a Shanghai ' +
-          'international gateway with an inland Chongqing hub serving western ' +
-          'China.'
-  },
-  {
     name:'Californio Air', code:'CA', country:'United States', 
     color:'#1273D4', tail:'assets/img/members/californio.webp',
     hubs:['LAX'], focus:['SFO'], joined:2026,   // TODO confirm Californio's hub
@@ -122,12 +114,27 @@ const MEMBERS = [
           'the alliance\'s primary transpacific and North American gateway.'
   },
   {
-    name:'Uzbekistan Airways', code:'HY', country:'Uzbekistan',
-    color:'#17754A', tail:'assets/img/members/uzbekistan.webp',
-    hubs:['TAS'], focus:['SKD'], joined:2026,
-    blurb:'The alliance\'s Central Asian member. From Tashkent, Uzbekistan ' +
-          'Airways connects the Silk Road corridor to the wider network, with ' +
-          'Samarkand as a focus city.'
+    name:'Californio Shuttle', code:'CL', country:'United States',
+    color:'#0A3D91', tail:'assets/img/members/californio-shuttle.webp',
+    hubs:['LAX','SFO'], focus:[], joined:2026,
+    blurb:'Californio Air\'s short-haul sister, shuttling between Los Angeles ' +
+          'and San Francisco and feeding both gateways from across the West Coast.'
+  },
+  {
+    name:'Volare', code:'VO', country:'Italy',
+    color:'#1E7A3E', tail:'assets/img/members/volare.webp',
+    hubs:['LIN','MXP','FCO','PMO','NAP'], focus:[], joined:2026,
+    blurb:'The alliance\'s Italian member, operating from both Milan airports, ' +
+          'Rome Fiumicino, Palermo and Naples.'
+  },
+  {
+    name:'StrayaJet', code:'SJ', country:'Australia',
+    color:'#AE1457', tail:'assets/img/members/strayajet.webp',
+    hubs:['BNE','WLG','NOU','POM','MNL','CGK','HLP','KUL','HND','MLE',
+          'HYD','MCT','RUH','SCL','GRU','JNB','SEZ','TNR'], focus:[], joined:2026,
+    blurb:'An eighteen-base operation spanning the Pacific, Southeast Asia and ' +
+          'the Indian Ocean, reaching as far as Santiago, São Paulo and ' +
+          'Johannesburg from its Brisbane base.'
   },
   {
     name:'Aloha Air', code:'AO', country:'United States', 
@@ -158,7 +165,7 @@ const AIRPORTS = [
   { code:'EVN', city:'Yerevan',       name:'Zvartnots Intl',           country:'Armenia',      lat:40.15, lon: 44.40, hub:true },
   { code:'BUS', city:'Batumi',        name:'Batumi Intl',              country:'Georgia',      lat:41.61, lon: 41.60, focus:true },
   { code:'GIG', city:'Rio de Janeiro',name:'Galeão',                   country:'Brazil',       lat:-22.81,lon:-43.25, hub:true },
-  { code:'GRU', city:'São Paulo',     name:'Guarulhos',                country:'Brazil',       lat:-23.43,lon:-46.47, focus:true },
+  { code:'GRU', city:'São Paulo',     name:'Guarulhos',                country:'Brazil',       lat:-23.43,lon:-46.47, hub:true },
   { code:'CGH', city:'São Paulo',     name:'Congonhas',                country:'Brazil',       lat:-23.63,lon:-46.66, hub:true },
   { code:'BSB', city:'Brasília',      name:'Juscelino Kubitschek',     country:'Brazil',       lat:-15.87,lon:-47.92, hub:true },
   { code:'SSA', city:'Salvador',      name:'Deputado Luís E. Magalhães',country:'Brazil',      lat:-12.91,lon:-38.32, hub:true },
@@ -170,10 +177,10 @@ const AIRPORTS = [
   { code:'BEY', city:'Beirut',        name:'Rafic Hariri Intl',        country:'Lebanon',      lat:33.82, lon: 35.49, hub:true },
   { code:'CAI', city:'Cairo',         name:'Cairo Intl',               country:'Egypt',        lat:30.11, lon: 31.41, hub:true },
   { code:'MEX', city:'Mexico City',   name:'Benito Juárez Intl',       country:'Mexico',       lat:19.44, lon:-99.07, hub:true },
-  { code:'PVG', city:'Shanghai',      name:'Pudong Intl',              country:'China',        lat:31.14, lon:121.81, hub:true },
-  { code:'CKG', city:'Chongqing',     name:'Jiangbei Intl',            country:'China',        lat:29.72, lon:106.64, hub:true },
+  { code:'PVG', city:'Shanghai',      name:'Pudong Intl',              country:'China',        lat:31.14, lon:121.81 },
+  { code:'CKG', city:'Chongqing',     name:'Jiangbei Intl',            country:'China',        lat:29.72, lon:106.64 },
   { code:'LAX', city:'Los Angeles',   name:'Los Angeles Intl',         country:'United States',lat:33.94, lon:-118.41,hub:true },
-  { code:'SFO', city:'San Francisco', name:'San Francisco Intl',       country:'United States',lat:37.62, lon:-122.38,focus:true },
+  { code:'SFO', city:'San Francisco', name:'San Francisco Intl',       country:'United States',lat:37.62, lon:-122.38,hub:true },
   { code:'OGG', city:'Kahului',       name:'Kahului Airport',          country:'United States',lat:20.90, lon:-156.43,hub:true },
   { code:'HNL', city:'Honolulu',      name:'Daniel K. Inouye Intl',    country:'United States',lat:21.32, lon:-157.92,hub:true },
 
@@ -186,8 +193,21 @@ const AIRPORTS = [
   { code:'MAD', city:'Madrid',        name:'Barajas',                  country:'Spain',        lat:40.47, lon: -3.56 },
   { code:'BCN', city:'Barcelona',     name:'El Prat',                  country:'Spain',        lat:41.30, lon:  2.08 },
   { code:'LIS', city:'Lisbon',        name:'Humberto Delgado',         country:'Portugal',     lat:38.77, lon: -9.13 },
-  { code:'FCO', city:'Rome',          name:'Fiumicino',                country:'Italy',        lat:41.80, lon: 12.25 },
-  { code:'MXP', city:'Milan',         name:'Malpensa',                 country:'Italy',        lat:45.63, lon:  8.72 },
+  { code:'FCO', city:'Rome',          name:'Fiumicino',                country:'Italy',        lat:41.80, lon: 12.25, hub:true },
+  { code:'LIN', city:'Milan',         name:'Linate',                   country:'Italy',        lat:45.45, lon:  9.28, hub:true },
+  { code:'NAP', city:'Naples',        name:'Capodichino',              country:'Italy',        lat:40.89, lon: 14.29, hub:true },
+  { code:'PMO', city:'Palermo',       name:'Falcone Borsellino',       country:'Italy',        lat:38.18, lon: 13.10, hub:true },
+  { code:'BNE', city:'Brisbane',      name:'Brisbane Airport',         country:'Australia',    lat:-27.38,lon:153.12, hub:true },
+  { code:'WLG', city:'Wellington',    name:'Wellington Intl',          country:'New Zealand',  lat:-41.33,lon:174.81, hub:true },
+  { code:'NOU', city:'Nouméa',        name:'La Tontouta Intl',         country:'New Caledonia',lat:-22.01,lon:166.21, hub:true },
+  { code:'POM', city:'Port Moresby',  name:'Jacksons Intl',            country:'Papua New Guinea',lat:-9.44,lon:147.22, hub:true },
+  { code:'HLP', city:'Jakarta',       name:'Halim Perdanakusuma',      country:'Indonesia',    lat:-6.27, lon:106.89, hub:true },
+  { code:'HND', city:'Tokyo',         name:'Haneda',                   country:'Japan',        lat:35.55, lon:139.78, hub:true },
+  { code:'MLE', city:'Malé',          name:'Velana Intl',              country:'Maldives',     lat: 4.19, lon: 73.53, hub:true },
+  { code:'MCT', city:'Muscat',        name:'Muscat Intl',              country:'Oman',         lat:23.59, lon: 58.28, hub:true },
+  { code:'SEZ', city:'Mahé',          name:'Seychelles Intl',          country:'Seychelles',   lat:-4.67, lon: 55.52, hub:true },
+  { code:'TNR', city:'Antananarivo',  name:'Ivato Intl',               country:'Madagascar',   lat:-18.80,lon: 47.48, hub:true },
+  { code:'MXP', city:'Milan',         name:'Malpensa',                 country:'Italy',        lat:45.63, lon:  8.72, hub:true },
   { code:'VIE', city:'Vienna',        name:'Vienna Intl',              country:'Austria',      lat:48.11, lon: 16.57 },
   { code:'MUC', city:'Munich',        name:'Franz Josef Strauss',      country:'Germany',      lat:48.35, lon: 11.79 },
   { code:'ATH', city:'Athens',        name:'Eleftherios Venizelos',    country:'Greece',       lat:37.94, lon: 23.94 },
@@ -199,14 +219,14 @@ const AIRPORTS = [
   { code:'OSL', city:'Oslo',          name:'Gardermoen',               country:'Norway',       lat:60.19, lon: 11.10 },
   { code:'DUB', city:'Dublin',        name:'Dublin Airport',           country:'Ireland',      lat:53.42, lon: -6.27 },
   { code:'ALA', city:'Almaty',        name:'Almaty Intl',              country:'Kazakhstan',   lat:43.35, lon: 77.04 },
-  { code:'TAS', city:'Tashkent',      name:'Islam Karimov Intl',       country:'Uzbekistan',   lat:41.26, lon: 69.28, hub:true },
-  { code:'SKD', city:'Samarkand',     name:'Samarkand Intl',           country:'Uzbekistan',   lat:39.70, lon: 66.98, focus:true },
+  { code:'TAS', city:'Tashkent',      name:'Islam Karimov Intl',       country:'Uzbekistan',   lat:41.26, lon: 69.28 },
+  { code:'SKD', city:'Samarkand',     name:'Samarkand Intl',           country:'Uzbekistan',   lat:39.70, lon: 66.98 },
   { code:'DXB', city:'Dubai',         name:'Dubai Intl',               country:'UAE',          lat:25.25, lon: 55.36 },
   { code:'DOH', city:'Doha',          name:'Hamad Intl',               country:'Qatar',        lat:25.27, lon: 51.61 },
-  { code:'RUH', city:'Riyadh',        name:'King Khalid Intl',         country:'Saudi Arabia', lat:24.96, lon: 46.70 },
+  { code:'RUH', city:'Riyadh',        name:'King Khalid Intl',         country:'Saudi Arabia', lat:24.96, lon: 46.70, hub:true },
   { code:'AMM', city:'Amman',         name:'Queen Alia Intl',          country:'Jordan',       lat:31.72, lon: 35.99 },
   { code:'TLV', city:'Tel Aviv',      name:'Ben Gurion',               country:'Israel',       lat:32.01, lon: 34.89 },
-  { code:'JNB', city:'Johannesburg',  name:'O. R. Tambo',              country:'South Africa', lat:-26.13,lon: 28.24 },
+  { code:'JNB', city:'Johannesburg',  name:'O. R. Tambo',              country:'South Africa', lat:-26.13,lon: 28.24, hub:true },
   { code:'NBO', city:'Nairobi',       name:'Jomo Kenyatta',            country:'Kenya',        lat: -1.32,lon: 36.93 },
   { code:'LOS', city:'Lagos',         name:'Murtala Muhammed',         country:'Nigeria',      lat:  6.58,lon:  3.32 },
   { code:'CMN', city:'Casablanca',    name:'Mohammed V',               country:'Morocco',      lat:33.37, lon: -7.59 },
@@ -228,7 +248,7 @@ const AIRPORTS = [
   { code:'DAC', city:'Dhaka',         name:'Hazrat Shahjalal',         country:'Bangladesh',   lat:23.84, lon: 90.40 },
   { code:'BKK', city:'Bangkok',       name:'Suvarnabhumi',             country:'Thailand',     lat:13.69, lon:100.75 },
   { code:'SIN', city:'Singapore',     name:'Changi',                   country:'Singapore',    lat: 1.36, lon:103.99 },
-  { code:'KUL', city:'Kuala Lumpur',  name:'KLIA',                     country:'Malaysia',     lat: 2.75, lon:101.71 },
+  { code:'KUL', city:'Kuala Lumpur',  name:'KLIA',                     country:'Malaysia',     lat: 2.75, lon:101.71, hub:true },
   { code:'HKG', city:'Hong Kong',     name:'Hong Kong Intl',           country:'Hong Kong',    lat:22.31, lon:113.91 },
   { code:'PEK', city:'Beijing',       name:'Capital Intl',             country:'China',        lat:40.08, lon:116.58 },
   { code:'CAN', city:'Guangzhou',     name:'Baiyun Intl',              country:'China',        lat:23.39, lon:113.31 },
@@ -237,8 +257,8 @@ const AIRPORTS = [
   { code:'KIX', city:'Osaka',         name:'Kansai Intl',              country:'Japan',        lat:34.43, lon:135.24 },
   { code:'ICN', city:'Seoul',         name:'Incheon Intl',             country:'South Korea',  lat:37.46, lon:126.44 },
   { code:'TPE', city:'Taipei',        name:'Taoyuan Intl',             country:'Taiwan',       lat:25.08, lon:121.23 },
-  { code:'MNL', city:'Manila',        name:'Ninoy Aquino Intl',        country:'Philippines',  lat:14.51, lon:121.02 },
-  { code:'CGK', city:'Jakarta',       name:'Soekarno–Hatta',           country:'Indonesia',    lat:-6.13, lon:106.66 },
+  { code:'MNL', city:'Manila',        name:'Ninoy Aquino Intl',        country:'Philippines',  lat:14.51, lon:121.02, hub:true },
+  { code:'CGK', city:'Jakarta',       name:'Soekarno–Hatta',           country:'Indonesia',    lat:-6.13, lon:106.66, hub:true },
   { code:'SYD', city:'Sydney',        name:'Kingsford Smith',          country:'Australia',    lat:-33.94,lon:151.18 },
   { code:'MEL', city:'Melbourne',     name:'Tullamarine',              country:'Australia',    lat:-37.67,lon:144.84 },
   { code:'AKL', city:'Auckland',      name:'Auckland Intl',            country:'New Zealand',  lat:-37.01,lon:174.79 },
@@ -256,7 +276,7 @@ const AIRPORTS = [
   { code:'GDL', city:'Guadalajara',   name:'Miguel Hidalgo',           country:'Mexico',       lat:20.52, lon:-103.31},
   { code:'BOG', city:'Bogotá',        name:'El Dorado',                country:'Colombia',     lat: 4.70, lon:-74.15 },
   { code:'LIM', city:'Lima',          name:'Jorge Chávez',             country:'Peru',         lat:-12.02,lon:-77.11 },
-  { code:'SCL', city:'Santiago',      name:'Arturo Merino Benítez',    country:'Chile',        lat:-33.39,lon:-70.79 },
+  { code:'SCL', city:'Santiago',      name:'Arturo Merino Benítez',    country:'Chile',        lat:-33.39,lon:-70.79, hub:true },
   { code:'EZE', city:'Buenos Aires',  name:'Ezeiza',                   country:'Argentina',    lat:-34.82,lon:-58.54 },
   { code:'MVD', city:'Montevideo',    name:'Carrasco',                 country:'Uruguay',      lat:-34.84,lon:-56.03 },
   { code:'REC', city:'Recife',        name:'Guararapes',               country:'Brazil',       lat:-8.13, lon:-34.92 },
@@ -305,7 +325,7 @@ const AIRCRAFT = [
 const PROGRAMME = 'Elara';
 const TIERS = [
   { name:'Member', need:0,      color:'#8FA6C4',
-    perks:['Mileage accrual across all fourteen carriers','Online check-in','Member fares'] },
+    perks:['Mileage accrual across all fifteen carriers','Online check-in','Member fares'] },
   { name:'Select', need:25000,  color:'#4E9BD4',
     perks:['Priority check-in','One additional checked bag','Preferred seating'] },
   { name:'Strata', need:60000,  color:'#1B4A8F',

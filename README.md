@@ -115,9 +115,9 @@ codes, seat numbers, booking references and map labels. The full list is the
 
 A member's bases are drawn on the network map as follows: carriers with four or
 fewer interconnect all of them, while a carrier with more radiates from its
-first listed hub. Avni Airlines has seventeen bases — drawing every pair would
-have added 136 lines over India alone and buried the map in a single airline's
-network. The first entry in a member's `hubs` array is therefore its primary
+first listed hub. Avni Airlines has seventeen bases and StrayaJet eighteen — drawing every pair
+would have added well over 250 lines between them and buried the map under two
+airlines' networks. The first entry in a member's `hubs` array is therefore its primary
 hub, and worth putting in a sensible order.
 
 ### The two Aranya carriers
