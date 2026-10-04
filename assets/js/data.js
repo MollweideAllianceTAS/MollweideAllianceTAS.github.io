@@ -52,18 +52,18 @@ const MEMBERS = [
   {
     name:'Dumont Linhas Aéreas', short:'Dumont', code:'DU', country:'Brazil', 
     color:'#1B3A63', tail:'assets/img/members/dumont.webp',
-    hubs:['GIG'], focus:['GRU'], joined:2024,
+    hubs:['GIG','GRU'], focus:[], joined:2024,
     blurb:'Named for the aviation pioneer, Dumont flies the alliance\'s ' +
-          'long-haul South Atlantic network from Rio de Janeiro–Galeão, with ' +
-          'São Paulo–Guarulhos as a second intercontinental point.'
+          'long-haul South Atlantic network from twin hubs at Rio de ' +
+          'Janeiro–Galeão and São Paulo–Guarulhos.'
   },
   {
     name:'Rogato Linhas Aéreas', short:'Rogato', code:'RG', country:'Brazil', 
     color:'#C0342F', tail:'assets/img/members/rogato.webp',
-    hubs:['CGH','BSB','SSA','BEL'], focus:[], joined:2025,
-    blurb:'Brazil\'s domestic backbone within the alliance. Four hubs — ' +
-          'Congonhas, Brasília, Salvador and Belém — put almost every Brazilian ' +
-          'city within one connection of the network.'
+    hubs:['CGH','BSB','SSA','BEL','GIG'], focus:[], joined:2025,
+    blurb:'Brazil\'s domestic backbone within the alliance. Hubs at Congonhas, ' +
+          'Brasília, Salvador, Belém and Galeão put almost every Brazilian city ' +
+          'within one connection of the network.'
   },
   {
     name:'Aranya Air', code:'AY', country:'India',
@@ -135,6 +135,13 @@ const MEMBERS = [
     blurb:'An eighteen-base operation spanning the Pacific, Southeast Asia and ' +
           'the Indian Ocean, reaching as far as Santiago, São Paulo and ' +
           'Johannesburg from its Brisbane base.'
+  },
+  {
+    name:'MaraJet', code:'MJ', country:'Kenya',
+    color:'#1550A0', tail:'assets/img/members/marajet.webp',
+    hubs:['NBO','DSS'], focus:[], joined:2026,
+    blurb:'The alliance\'s African member, linking East and West Africa through ' +
+          'twin hubs at Nairobi and Dakar.'
   },
   {
     name:'Aloha Air', code:'AO', country:'United States', 
@@ -227,7 +234,8 @@ const AIRPORTS = [
   { code:'AMM', city:'Amman',         name:'Queen Alia Intl',          country:'Jordan',       lat:31.72, lon: 35.99 },
   { code:'TLV', city:'Tel Aviv',      name:'Ben Gurion',               country:'Israel',       lat:32.01, lon: 34.89 },
   { code:'JNB', city:'Johannesburg',  name:'O. R. Tambo',              country:'South Africa', lat:-26.13,lon: 28.24, hub:true },
-  { code:'NBO', city:'Nairobi',       name:'Jomo Kenyatta',            country:'Kenya',        lat: -1.32,lon: 36.93 },
+  { code:'NBO', city:'Nairobi',       name:'Jomo Kenyatta',            country:'Kenya',        lat: -1.32,lon: 36.93, hub:true },
+  { code:'DSS', city:'Dakar',         name:'Blaise Diagne Intl',       country:'Senegal',      lat:14.67, lon:-17.07, hub:true },
   { code:'LOS', city:'Lagos',         name:'Murtala Muhammed',         country:'Nigeria',      lat:  6.58,lon:  3.32 },
   { code:'CMN', city:'Casablanca',    name:'Mohammed V',               country:'Morocco',      lat:33.37, lon: -7.59 },
   { code:'ADD', city:'Addis Ababa',   name:'Bole Intl',                country:'Ethiopia',     lat: 8.98, lon: 38.80 },
@@ -325,7 +333,7 @@ const AIRCRAFT = [
 const PROGRAMME = 'Elara';
 const TIERS = [
   { name:'Member', need:0,      color:'#8FA6C4',
-    perks:['Mileage accrual across all fifteen carriers','Online check-in','Member fares'] },
+    perks:['Mileage accrual across all sixteen carriers','Online check-in','Member fares'] },
   { name:'Select', need:25000,  color:'#4E9BD4',
     perks:['Priority check-in','One additional checked bag','Preferred seating'] },
   { name:'Strata', need:60000,  color:'#1B4A8F',
