@@ -802,6 +802,36 @@ select.field__in { appearance: none; cursor: pointer; padding-right: 2.25rem;
 .article__bd { font-size: .875rem; color: var(--tx-soft); line-height: 1.65; }
 
 /* ==========================================================================
+   SUBMISSION GUIDELINE
+   ========================================================================== */
+.spec { list-style: none; padding: 0; margin: 0; display: grid; gap: 1px; background: var(--rule);
+  border: 1px solid var(--rule); border-radius: var(--r-lg); overflow: hidden; }
+.spec__item { background: var(--paper); padding: clamp(1.25rem, 2.6vw, 1.75rem);
+  display: grid; gap: 1rem 1.5rem; grid-template-columns: 1fr; align-items: start; }
+@media (min-width: 760px) { .spec__item { grid-template-columns: 3rem 1fr; } }
+.spec__n { font-size: .8125rem; font-weight: 700; letter-spacing: .04em; color: var(--blue); padding-top: .125rem; }
+.spec__t { font-size: 1.0625rem; font-weight: 700; letter-spacing: -.012em; margin-bottom: .4375rem; }
+.spec__b { font-size: .9375rem; line-height: 1.65; color: var(--tx-soft); }
+.spec__eg { margin-top: .75rem; padding: .625rem .875rem; background: var(--sky-wash);
+  border-left: 2px solid var(--sky); border-radius: 0 var(--r) var(--r) 0;
+  font-size: .8125rem; line-height: 1.6; color: var(--tx); }
+.spec__eg b { font-weight: 700; color: var(--blue); }
+.spec__eg code { font-family: var(--f-data); font-size: .8125rem; }
+
+/* Checklist of hard requirements — the artwork spec */
+.reqs { list-style: none; padding: 0; margin: 0; display: grid; gap: .875rem; }
+.reqs li { display: grid; grid-template-columns: 1.25rem 1fr; gap: .875rem; align-items: start;
+  font-size: .9375rem; line-height: 1.6; color: var(--tx-on-ink-soft); }
+.reqs li::before { content: ''; width: 7px; height: 7px; margin-top: .5rem; border-radius: 50%;
+  background: var(--sky); }
+.reqs b { color: #fff; font-weight: 600; }
+
+.codes { display: flex; flex-wrap: wrap; gap: .4375rem; }
+.codes span { font-family: var(--f-data); font-size: .8125rem; font-weight: 500; letter-spacing: .06em;
+  background: var(--sky-pale); color: var(--blue); border: 1px solid var(--rule);
+  border-radius: 3px; padding: .3125rem .5625rem; }
+
+/* ==========================================================================
    NEWSROOM — press releases
    ========================================================================== */
 .releases { display: grid; gap: clamp(2.5rem, 5vw, 4rem); max-width: 48rem; }

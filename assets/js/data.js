@@ -18,6 +18,9 @@ const ALLIANCE = {
   game:      'The Airline Simulator',
   discord:   null,                        // add a URL to show the Discord link
 
+  // Where member airlines send material for the site. Shown on submit.html.
+  submitTo:  'the alliance Discord',      // TODO replace with the real channel or address
+
   statement:
     'Mollweide Alliance brings independently operated carriers together under ' +
     'one standard of service, one loyalty programme and one coordinated ' +

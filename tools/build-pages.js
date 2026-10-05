@@ -87,6 +87,7 @@ const footer = () => `
         <li><a href="network.html">Route network</a></li>
         <li><a href="lounges.html#loyalty">Elara programme</a></li>
         <li><a href="news.html">Newsroom</a></li>
+        <li><a href="submit.html">Member submissions</a></li>
       </ul>
     </div>
     <div>
@@ -590,9 +591,155 @@ const news = head('Newsroom', 'Press releases and announcements from the Mollwei
 </script>
 </body></html>`;
 
+
+/* ========================================================================== */
+/*  MEMBER SUBMISSIONS                                                        */
+/* ========================================================================== */
+const submit = head('Member submissions', 'What member airlines need to send for the Mollweide Alliance website to be updated.')
++ chrome('submit.html') + `
+<section class="phead">
+  <img class="phead__bg" src="assets/img/photos/lineup-four.jpg" alt="" width="1440" height="296">
+  <div class="wrap phead__in">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span>/</span> Member submissions</nav>
+    <h1 class="display">What to send us, <b>and in what form.</b></h1>
+    <div class="brandrule"></div>
+    <p class="lede mt-3">Everything on this site is generated from one data file, so an airline can be added or changed quickly — provided the material arrives complete. This page is the checklist.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow">Required</p>
+      <h2 class="display">Six things for <b>every airline.</b></h2>
+      <p class="lede mt-2">Send all six together. A submission missing any one of them cannot be published, because each drives something the site renders.</p></div>
+    </div>
+
+    <ol class="spec">
+      <li class="spec__item"><span class="spec__n">01</span><div>
+        <h3 class="spec__t">Airline name</h3>
+        <p class="spec__b">Exactly as it should appear, including any accents. If you also use a shorter trading name, send both and say which is which — the long form is used on your card, the short form in flight results and footers.</p>
+        <p class="spec__eg"><b>Example</b> &nbsp;Dumont Linhas Aéreas, short form Dumont</p>
+      </div></li>
+
+      <li class="spec__item"><span class="spec__n">02</span><div>
+        <h3 class="spec__t">Two-letter code</h3>
+        <p class="spec__b">Used on your flight numbers, on result rows and on boarding passes. It must not clash with another member, so check the list below and send a second choice in case your first is taken.</p>
+        <p class="spec__eg"><b>Codes already in use</b></p>
+        <div class="codes mt-1" id="codesInUse"></div>
+      </div></li>
+
+      <li class="spec__item"><span class="spec__n">03</span><div>
+        <h3 class="spec__t">Country of registration</h3>
+        <p class="spec__b">The country the airline is based in, written out in full. It appears on your member card and nowhere else.</p>
+      </div></li>
+
+      <li class="spec__item"><span class="spec__n">04</span><div>
+        <h3 class="spec__t">Brand colour</h3>
+        <p class="spec__b">One hex value. It tints your member card, your rows in flight results, your seat map and any lounge you operate. Choose the dominant colour of your tail rather than the lightest — it has to stay legible as a thin rule and as small text.</p>
+        <p class="spec__eg"><b>Example</b> &nbsp;<code>#1B3A63</code></p>
+      </div></li>
+
+      <li class="spec__item"><span class="spec__n">05</span><div>
+        <h3 class="spec__t">Hubs, in order of importance</h3>
+        <p class="spec__b">IATA codes preferred; full airport names are fine if you are unsure. <strong style="color:var(--blue)">The first hub you list is treated as your primary</strong> — on the network map your routes radiate from it, so put your real base first. List focus cities separately from hubs. If you base somewhere not already in the network, say so, because we need its latitude and longitude before the map can plot it.</p>
+        <p class="spec__eg"><b>Example</b> &nbsp;Hubs: GIG, GRU &nbsp;·&nbsp; Focus cities: none<br><span id="netSize"></span></p>
+      </div></li>
+
+      <li class="spec__item"><span class="spec__n">06</span><div>
+        <h3 class="spec__t">A short description</h3>
+        <p class="spec__b">One or two sentences, around forty words, written in the third person. Say what the airline does and where it flies rather than how good it is — the tone across the site is factual.</p>
+        <p class="spec__eg"><b>Example</b> &nbsp;“The alliance's African member, linking East and West Africa through twin hubs at Nairobi and Dakar.”</p>
+      </div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section on-ink" style="background:var(--blue-ink)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow">Artwork</p>
+      <h2 class="display">One livery image, <b>to a fixed specification.</b></h2>
+      <p class="lede mt-2">This is the part most submissions get wrong. Every member is shown as a cutout on a white page, side by side with the rest of the fleet, so an image that does not match the specification stands out immediately.</p></div>
+    </div>
+    <div class="two-col">
+      <ul class="reqs">
+        <li><b>A side view of the rear fuselage and tail</b>, with the nose to the left and the tail to the right, matching the existing fleet.</li>
+        <li><b>A transparent background.</b> PNG or WebP with a real alpha channel — not a white rectangle, which shows as a white box on the page.</li>
+        <li><b>At least 1448 × 1086 pixels</b>, in a 4:3 frame. We resize to 760 pixels wide for the site, so anything smaller will soften.</li>
+        <li><b>No text of any kind</b> — no titles, no registration, no captions, no watermark.</li>
+        <li><b>No background</b> — no sky, no tarmac, no other aircraft.</li>
+      </ul>
+      <div>
+        <p class="lede" style="font-size:1rem">If you have only a photograph, send it anyway and say so. A photograph can be used temporarily, but it will be visibly different from the rest of the wall until a cutout replaces it.</p>
+        <p class="body-copy mt-3" style="color:var(--tx-on-ink-soft)">Keep the aircraft roughly the same size within the frame as the existing fleet. The images sit next to one another with no borders, so a tail that is much larger or smaller than its neighbours is the first thing a reader notices.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section on-wash">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow">Optional</p>
+      <h2 class="display">Lounges and <b>press releases.</b></h2>
+      <p class="lede mt-2">Neither is needed to join. Send them whenever you have them.</p></div>
+    </div>
+    <div class="feats" style="grid-template-columns:repeat(auto-fit,minmax(18rem,1fr))">
+      <article class="feat">
+        <span class="feat__n">Lounge</span>
+        <h3 class="feat__t">What a lounge entry needs</h3>
+        <p class="feat__b">The lounge name, the airport, where it is inside the terminal, opening hours, who may use it, and a handful of facilities. A photograph is optional — a 4:3 image of at least 1200 × 900 pixels, which may be a normal photograph rather than a cutout. Without one, the card falls back to a panel in your brand colour.</p>
+      </article>
+      <article class="feat">
+        <span class="feat__n">Press</span>
+        <h3 class="feat__t">What a press release needs</h3>
+        <p class="feat__b">A headline, the city and date it is issued from, an opening sentence that stands alone, the body in paragraphs, and a quote with the name and job title of whoever is speaking. Send it as plain text; the newsroom applies its own formatting.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow">Sending it</p>
+      <h2 class="display">Where it goes, <b>and what happens next.</b></h2></div>
+    </div>
+    <div class="two-col">
+      <p class="lede">Send everything in one message to <strong style="color:var(--blue)" data-slot="submitTo">the alliance Discord</strong>, with the images attached rather than linked. Partial submissions are held until the missing pieces arrive, so it is quicker to gather it all first.</p>
+      <div>
+        <p class="body-copy">Changes to an existing airline work the same way: say what is changing and send only the parts that differ. Hub changes are the most common, and the order matters — if your primary base changes, make that clear, because it moves where your routes anchor on the map.</p>
+        <p class="body-copy mt-2">Once published, your airline appears on the member wall, in flight search as an operating carrier, on the network map, and in any connecting itinerary the search builds through your hubs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band section--tight">
+  <div class="wrap band__in">
+    <div><h2 class="display" style="font-size:clamp(1.6rem,3.4vw,2.6rem)">See how it <b>ends up looking.</b></h2></div>
+    <a class="btn btn--lg" style="background:#fff;color:var(--blue)" href="members.html">The member airlines <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</section>
+` + footer() + `
+<script>
+  document.getElementById('ftMembers').innerHTML =
+    MEMBERS.slice(0,6).map(m => '<li><a href="members.html#'+m.code+'">'+ (m.short||m.name) +'</a></li>').join('');
+
+  // Generated from the live data so the guidance can never go stale
+  document.getElementById('codesInUse').innerHTML =
+    MEMBERS.map(m => m.code).sort().map(c => '<span>'+c+'</span>').join('');
+  document.getElementById('netSize').textContent =
+    'The network currently holds ' + AIRPORTS.length + ' airports, of which ' +
+    AIRPORTS.filter(function(a){return a.hub;}).length + ' are alliance hubs.';
+  document.querySelectorAll('[data-slot="submitTo"]').forEach(function(e){ e.textContent = ALLIANCE.submitTo; });
+</script>
+</body></html>`;
+
 /* ========================================================================== */
 const pages = { 'index.html': index, 'members.html': members, 'network.html': network,
-                'lounges.html': lounges, 'news.html': news,
+                'lounges.html': lounges, 'news.html': news, 'submit.html': submit,
                 'book.html': book, 'bookings.html': bookings };
 Object.entries(pages).forEach(([f, html]) => {
   fs.writeFileSync(`${ROOT}/${f}`, html);

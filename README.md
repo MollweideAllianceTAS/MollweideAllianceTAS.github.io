@@ -5,7 +5,7 @@ in *The Airline Simulator*. Static HTML, CSS and JavaScript — no build step, n
 dependencies, no server. It works by double-clicking `index.html`, and deploys to
 GitHub Pages by pushing the folder.
 
-**Pages** — Home · Members · Network · Lounges · Newsroom · Book a flight · My bookings
+**Pages** — Home · Members · Network · Lounges · Newsroom · Member submissions · Book a flight · My bookings
 
 ---
 
@@ -58,6 +58,7 @@ airports or its fares.
 | Cities in the rotating homepage headline | `HERO_CITIES` |
 | Lounges, their operator, access rules and photos | `LOUNGES` |
 | Press releases | `PRESS` |
+| Where members send material | `ALLIANCE.submitTo` |
 | Currency | `CURRENCY` near the top of `assets/js/site.js` |
 
 Items marked `// TODO` in `data.js` are guesses worth confirming — currently the
@@ -141,6 +142,17 @@ Bangalore and Kolkata.
   lounge access is what the tiers buy.
 - **Newsroom** — press releases, from `PRESS` in `data.js`.
 
+### Member submissions
+
+`submit.html` is the checklist member airlines work from: the six required
+fields, the livery artwork specification, and the optional lounge and press
+material. The list of two-letter codes already in use and the airport counts are
+generated from the live data at page load, so the guidance cannot drift out of
+date as members join.
+
+Set `ALLIANCE.submitTo` in `data.js` to wherever material should actually be
+sent — it currently reads "the alliance Discord" as a placeholder.
+
 ### The lounge finder
 
 `lounges.html` lists alliance lounges, filtered by airport. Each entry names the
@@ -215,7 +227,7 @@ The livery renders are stored at 760px wide, which is twice their display size.
 
 ```
 index.html  members.html  network.html  lounges.html
-news.html   book.html      bookings.html
+news.html   submit.html    book.html      bookings.html
 assets/
   css/site.css        design system — colours, type, every component
   js/data.js          ← all content lives here
