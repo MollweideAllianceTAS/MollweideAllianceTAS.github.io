@@ -1,8 +1,9 @@
 /* ---------------------------------------------------------------------------
  *  PAGE GENERATOR  —  run with:  node tools/build-pages.js
  *
- *  WARNING: this OVERWRITES index.html, members.html, network.html,
- *  book.html and bookings.html. The header, footer and nav live here so you
+ *  WARNING: this OVERWRITES every .html file in the project root —
+ *  index, members, network, lounges, news, join, submit, book and bookings.
+ *  The header, footer and nav live here so you
  *  only edit them once. If you have hand-edited those .html files, either
  *  port your change into this file first, or simply never run this script
  *  again and edit the .html files directly.
@@ -61,6 +62,7 @@ const chrome = (current) => `
     <button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="navlinks"><span></span><span></span><span></span></button>
     <nav class="nav__links" id="navlinks" data-open="false" aria-label="Main">
       ${NAV.map(([h, l]) => `<a class="nav__link" href="${h}"${h === current ? ' aria-current="page"' : ''}>${l}</a>`).join('\n      ')}
+      <a class="btn btn--line nav__cta" href="join.html"${current === 'join.html' ? ' aria-current="page"' : ''}>Join the Alliance</a>
       <a class="btn btn--primary nav__cta" href="book.html">Book</a>
     </nav>
   </div>
@@ -87,6 +89,7 @@ const footer = () => `
         <li><a href="network.html">Route network</a></li>
         <li><a href="lounges.html#loyalty">Elara programme</a></li>
         <li><a href="news.html">Newsroom</a></li>
+        <li><a href="join.html">Join the alliance</a></li>
         <li><a href="submit.html">Member submissions</a></li>
       </ul>
     </div>
@@ -169,7 +172,15 @@ const index = head('Mollweide Alliance', 'Seventeen airlines, one network. Explo
       <h2 class="display" data-rv>Seventeen carriers, <b>each strongest at home.</b></h2></div>
       <a class="btn btn--line" href="members.html" data-rv>View all members</a>
     </div>
-    <div class="liveries" id="membersHome"></div>
+    <div class="rail" data-rv data-at="start">
+      <button class="rail__nav rail__nav--prev" type="button" data-rail="prev" aria-label="Previous airlines">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <div class="liveries liveries--rail" id="membersHome"></div>
+      <button class="rail__nav rail__nav--next" type="button" data-rail="next" aria-label="Next airlines">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
   </div>
 </section>
 
@@ -201,6 +212,7 @@ const index = head('Mollweide Alliance', 'Seventeen airlines, one network. Explo
 ` + footer() + `
 <script>
   renderMembers(document.getElementById('membersHome'));
+  initRail(document.querySelector('.rail'));
   startCityRotator(document.getElementById('cityA'), document.getElementById('cityB'));
   renderMap(document.getElementById('map'));
   document.getElementById('ftMembers').innerHTML =
@@ -738,8 +750,103 @@ const submit = head('Member submissions', 'What member airlines need to send for
 </body></html>`;
 
 /* ========================================================================== */
+/*  JOIN                                                                      */
+/* ========================================================================== */
+const join = head('Join the alliance', 'How to join the Mollweide Alliance or Mollweide Connect from inside The Airline Simulator.')
++ chrome('join.html') + `
+<section class="phead">
+  <img class="phead__bg" src="assets/img/photos/lineup-six.jpg" alt="" width="1440" height="296">
+  <div class="wrap phead__in">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span>/</span> Join the alliance</nav>
+    <h1 class="display">Two ways in, <b>both from inside the game.</b></h1>
+    <div class="brandrule"></div>
+    <p class="lede mt-3">Membership is arranged in <span data-slot="game">The Airline Simulator</span> itself. There is nothing to fill in on this site: find the group in the game's alliance search, apply there, and join the Discord channel.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow" data-rv>The two groups</p>
+      <h2 class="display" data-rv>Mollweide Alliance, <b>and Mollweide Connect.</b></h2>
+      <p class="lede mt-2" data-rv>Each is listed separately in game. Search for the name exactly as it is written below — these strings are what the game matches on, and a near miss returns nothing.</p></div>
+    </div>
+    <div class="joins" id="joinGroups"></div>
+  </div>
+</section>
+
+<section class="section on-wash">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow">How it works</p>
+      <h2 class="display">Four steps, <b>in this order.</b></h2>
+      <p class="lede mt-2">The whole process runs through the game and the Discord channel. Nothing is submitted here.</p></div>
+    </div>
+
+    <ol class="spec">
+      <li class="spec__item"><span class="spec__n">01</span><div>
+        <h3 class="spec__t">Find the group in game</h3>
+        <p class="spec__b">Open the alliance search and type the name for whichever group you are applying to. Both are given above, and both can be copied straight from this page.</p>
+      </div></li>
+
+      <li class="spec__item"><span class="spec__n">02</span><div>
+        <h3 class="spec__t">Apply from inside the game</h3>
+        <p class="spec__b">Send your application through the game. Applications are reviewed by the alliance rather than accepted automatically, so expect a short wait.</p>
+      </div></li>
+
+      <li class="spec__item"><span class="spec__n">03</span><div>
+        <h3 class="spec__t">Join the Discord channel</h3>
+        <p class="spec__b">The invite links are provided in game, not on this site. <strong style="color:var(--blue)">Joining the channel is a condition of membership</strong> — it is where the alliance is coordinated and where everything published on this site is sent.</p>
+      </div></li>
+
+      <li class="spec__item"><span class="spec__n">04</span><div>
+        <h3 class="spec__t">Send your airline's details</h3>
+        <p class="spec__b">Once you are in, your carrier is added to this site: the member wall, the route map, and flight search as an operating carrier. The submissions page lists the six things required and the specification the livery artwork has to meet.</p>
+        <p class="spec__eg"><b>Next</b> &nbsp;<a href="submit.html" style="color:var(--blue);font-weight:600">What to send for the website</a></p>
+      </div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section on-ink" style="background:var(--blue-ink)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow">Discord</p>
+      <h2 class="display">The channel is <b>not optional.</b></h2>
+      <p class="lede mt-2">Every member airline is required to be in it, and to stay in it for as long as they are a member.</p></div>
+    </div>
+    <div class="two-col">
+      <ul class="reqs">
+        <li><b>The invite is given in game.</b> It is not published here, and it is not shared outside the alliance.</li>
+        <li><b>Membership of the channel is a condition of membership of the alliance</b>, for both groups.</li>
+        <li><b>Everything that appears on this site is sent there</b> — airline details, livery artwork, lounges and press releases.</li>
+      </ul>
+      <div>
+        <p class="lede" style="font-size:1rem">An airline that leaves the channel is treated as having left the alliance, because there is no other way to reach it.</p>
+        <p class="body-copy mt-3" style="color:var(--tx-on-ink-soft)">If you have applied in game and cannot find the invite, say so in your application. Someone will send it to you directly rather than leave you waiting.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band section--tight">
+  <div class="wrap band__in">
+    <div><h2 class="display" style="font-size:clamp(1.6rem,3.4vw,2.6rem)">Already in? <b>Here is what we need.</b></h2></div>
+    <a class="btn btn--lg" style="background:#fff;color:var(--blue)" href="submit.html">Member submissions <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</section>
+` + footer() + `
+<script>
+  renderJoin(document.getElementById('joinGroups'));
+  initCopy();
+  document.getElementById('ftMembers').innerHTML =
+    MEMBERS.slice(0,6).map(m => '<li><a href="members.html#'+m.code+'">'+ (m.short||m.name) +'</a></li>').join('');
+</script>
+</body></html>`;
+
+/* ========================================================================== */
 const pages = { 'index.html': index, 'members.html': members, 'network.html': network,
-                'lounges.html': lounges, 'news.html': news, 'submit.html': submit,
+                'lounges.html': lounges, 'news.html': news, 'join.html': join, 'submit.html': submit,
                 'book.html': book, 'bookings.html': bookings };
 Object.entries(pages).forEach(([f, html]) => {
   fs.writeFileSync(`${ROOT}/${f}`, html);

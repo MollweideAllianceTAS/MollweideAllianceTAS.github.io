@@ -502,3 +502,34 @@ const LOUNGES = [
     amenities:['Georgian wine bar','Hot kitchen','City and ramp view','Wi-Fi']
   }
 ];
+
+/* ==========================================================================
+   JOINING
+   ----------------------------------------------------------------------------
+   The two groups a player can apply to from inside the game. `search` is the
+   exact string to type into the game's alliance search — it is reproduced
+   character for character on join.html and must not be reworded.
+
+   `accent` only tints the rule along the top of each card; both groups use
+   the same mark and wordmark, because they are the same brand.
+   ========================================================================== */
+
+const JOIN = [
+  {
+    key:'alliance', name:'Mollweide Alliance', sub:'Alliance',
+    accent:'#13398C',
+    search:'frame-beyond-dropped',
+    blurb:'Full membership. Member carriers appear on the member wall and the ' +
+          'route map, operate alongside one another in flight search, and ' +
+          'recognise Elara status and lounge access on every other member.'
+  },
+  {
+    key:'connect', name:'Mollweide Connect', sub:'Connect',
+    accent:'#4E9BD4',
+    search:'smell-easily-go',
+    // TODO: say here how Connect differs from full membership in game.
+    blurb:'The alliance\'s second group, listed separately in game. Apply here ' +
+          'if you have been directed to Connect rather than to the alliance ' +
+          'itself.'
+  }
+];

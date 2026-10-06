@@ -185,21 +185,34 @@ header.nav {
 .burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
 .burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
-@media (max-width: 1020px) {
+/* Two call-to-action buttons now sit at the end of the nav, so the row needs
+   more room before it has to collapse. Between those two widths the links and
+   the buttons tighten rather than the whole bar folding into the burger. */
+@media (min-width: 1121px) and (max-width: 1340px) {
+  .nav__link { padding: .5rem .5625rem; }
+  .nav__cta  { padding: .8125rem 1.0625rem; }
+}
+
+@media (max-width: 1120px) {
   .burger { display: block; }
+  /* Hung off the bottom of the bar rather than from a fixed offset: the
+     ribbon above wraps to two lines on a narrow phone, and a hard-coded
+     108px left a strip of the page showing through the seam. */
   .nav__links {
-    position: fixed; inset: 108px 0 auto 0; flex-direction: column; align-items: stretch; gap: 0;
+    position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; align-items: stretch; gap: 0;
     background: var(--paper); border-bottom: 1px solid var(--rule);
     padding: .5rem var(--gut) 1.5rem; margin-left: 0;
     clip-path: inset(0 0 100% 0); pointer-events: none;
     transition: clip-path .42s var(--ease-out);
-    max-height: calc(100dvh - 108px); overflow-y: auto;
+    max-height: calc(100dvh - 8.5rem); overflow-y: auto;
     box-shadow: 0 24px 40px -24px rgba(7,26,69,.3);
   }
   .nav__links[data-open="true"] { clip-path: inset(0 0 0 0); pointer-events: auto; }
   .nav__link { padding: 1rem .25rem; font-size: 1.0625rem; border-bottom: 1px solid var(--rule); }
   .nav__link::after { display: none; }
   .nav__cta { margin: 1.25rem .25rem 0; }
+  .nav__cta + .nav__cta { margin-top: .625rem; }
 }
 
 /* --- Buttons -------------------------------------------------------------- */
@@ -226,74 +239,12 @@ header.nav {
 .btn[disabled] { opacity: .4; cursor: not-allowed; }
 .btn__arrow { transition: transform .25s var(--ease-out); }
 .btn:hover .btn__arrow { transform: translateX(4px); }
-.nav__cta { margin-left: .75rem; }
-
-/* ==========================================================================
-   HERO
-   ========================================================================== */
-.hero { position: relative; overflow: hidden; isolation: isolate; background: var(--blue-ink); color: var(--tx-on-ink); }
-.hero__bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 34% 46%; }
-.hero::before {           /* legibility scrim + brand wash */
-  content: ''; position: absolute; inset: 0; z-index: -1;
-  background:
-    linear-gradient(to right, rgba(7,26,69,.88) 0%, rgba(7,26,69,.74) 46%, rgba(7,26,69,.48) 76%, rgba(7,26,69,.38) 100%),
-    linear-gradient(to bottom, rgba(7,26,69,.52), rgba(7,26,69,.12) 50%, rgba(7,26,69,.58) 100%);
+/* Scoped, because unscoped these longhands outrank the drawer's margin
+   shorthand further up the file and knock the stacked buttons out of line. */
+@media (min-width: 1121px) {
+  .nav__cta { margin-left: .75rem; }
+  .nav__cta + .nav__cta { margin-left: .5rem; }
 }
-.hero__in { position: relative; padding-block: clamp(3.25rem, 8vw, 6.5rem) clamp(3rem, 7vw, 5.5rem); }
-.hero__grid { display: grid; gap: clamp(2rem, 5vw, 4rem); grid-template-columns: 1fr; align-items: end; }
-.hero__grid > * { max-width: 62ch; }
-.hero .display { color: rgba(255,255,255,.74); }
-.hero .display b { color: #fff; }
-.hero .lede { color: rgba(255,255,255,.84); max-width: 54ch;
-  text-shadow: 0 1px 24px rgba(7,26,69,.55); }
-.hero .tracked { color: var(--sky-soft); }
-.hero__actions { display: flex; flex-wrap: wrap; gap: .875rem; margin-top: 2.25rem; }
-
-/* Rotating headline. Each city sits at the end of its own line, so a change
-   of name never reflows text that follows it. */
-/* Height is reserved by startCityRotator(), which measures the tallest city
-   pairing at the current viewport. Nothing is reserved without JS, because
-   without JS the names never change and so nothing can shift.
-   The hero headline runs smaller than other h1s so that even the longest
-   name ("Fernando de Noronha") fits on one line, keeping that reserved
-   block tight instead of leaving a crater under short names. */
-.hero h1.display { font-size: clamp(1.9rem, 3.9vw, 3.05rem); }
-.hero__line { display: block; }
-.hero__city {
-  color: #fff; font-weight: 700;
-  display: inline-block; transition: opacity .18s var(--ease), transform .18s var(--ease-out);
-}
-.hero__city[data-out="true"] { opacity: 0; transform: translateY(-.2em); }
-@media (prefers-reduced-motion: reduce) {
-  .hero__city { transition: none; }
-  .hero__city[data-out="true"] { opacity: 1; transform: none; }
-}
-
-/* --- Buttons -------------------------------------------------------------- */
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: .625rem;
-  font-size: .875rem; font-weight: 600; letter-spacing: -.005em;
-  padding: .875rem 1.5rem; border-radius: var(--r);
-  border: 1px solid transparent; cursor: pointer; text-align: center;
-  transition: background .2s var(--ease), color .2s var(--ease),
-              border-color .2s var(--ease), transform .18s var(--ease), box-shadow .2s var(--ease);
-}
-.btn:active { transform: translateY(1px); }
-.btn--primary { background: var(--blue); color: #fff; }
-.btn--primary:hover { background: var(--blue-deep); box-shadow: 0 8px 22px -10px rgba(19,57,140,.7); }
-.btn--sky { background: var(--sky); color: #06203C; }
-.btn--sky:hover { background: var(--sky-soft); }
-.btn--line { background: transparent; color: var(--blue); border-color: var(--rule-strong); }
-.btn--line:hover { border-color: var(--blue); background: var(--sky-pale); }
-.btn--ghost { background: transparent; color: var(--tx-on-ink); border-color: rgba(255,255,255,.34); }
-.btn--ghost:hover { border-color: #fff; background: rgba(255,255,255,.08); }
-.btn--block { width: 100%; }
-.btn--lg { padding: 1.0625rem 2rem; font-size: .9375rem; }
-.btn--sm { padding: .5625rem .9375rem; font-size: .75rem; }
-.btn[disabled] { opacity: .4; cursor: not-allowed; }
-.btn__arrow { transition: transform .25s var(--ease-out); }
-.btn:hover .btn__arrow { transform: translateX(4px); }
-.nav__cta { margin-left: .75rem; }
 
 /* ==========================================================================
    HERO
@@ -406,6 +357,67 @@ header.nav {
 @media (hover: none) {
   .livery__name { opacity: 1; transform: none; }
 }
+
+/* --- The wall as a rail ---------------------------------------------------
+   On the home page seventeen tails stacked four to a row is simply too much
+   page. The same cards run along one scrollable line instead, deep enough to
+   show four at a desktop width and to let the next one peek in below that,
+   which is what tells a reader there is more to the right.
+   -------------------------------------------------------------------------- */
+.rail { position: relative; }
+
+.liveries--rail {
+  flex-wrap: nowrap; justify-content: flex-start;
+  overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none; -ms-overflow-style: none;
+  /* The track is masked rather than overlaid with a coloured gradient, so the
+     fade works on whatever the section behind it happens to be. */
+  --rail-fade: 2.75rem;
+  -webkit-mask-image: var(--rail-mask, none);
+          mask-image: var(--rail-mask, none);
+}
+.liveries--rail::-webkit-scrollbar { display: none; }
+
+.rail[data-at="start"]  .liveries--rail { --rail-mask: linear-gradient(to right, #000 calc(100% - var(--rail-fade)), transparent 100%); }
+.rail[data-at="middle"] .liveries--rail { --rail-mask: linear-gradient(to right, transparent 0, #000 var(--rail-fade), #000 calc(100% - var(--rail-fade)), transparent 100%); }
+.rail[data-at="end"]    .liveries--rail { --rail-mask: linear-gradient(to right, transparent 0, #000 var(--rail-fade)); }
+
+.liveries--rail .livery {
+  flex: 0 0 auto; min-width: 0; scroll-snap-align: start;
+  width: 62%;
+}
+@media (min-width: 560px)  { .liveries--rail .livery { width: calc((100% - 1.4 * var(--lv-gap)) / 2.4); } }
+@media (min-width: 900px)  { .liveries--rail .livery { width: calc((100% - 2.2 * var(--lv-gap)) / 3.2); } }
+@media (min-width: 1200px) { .liveries--rail .livery { width: calc((100% - 3 * var(--lv-gap)) / 4); } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .liveries--rail { scroll-behavior: smooth; }
+}
+
+/* Arrows sit over the artwork rather than the caption, so they clear the
+   airline name when it appears on hover. */
+.rail__nav {
+  position: absolute; top: 38%; transform: translateY(-50%);
+  width: 42px; height: 42px; border-radius: 50%; z-index: 3;
+  display: grid; place-items: center; cursor: pointer;
+  background: var(--paper); color: var(--blue);
+  border: 1px solid var(--rule-strong);
+  box-shadow: 0 10px 26px -12px rgba(7,26,69,.45);
+  transition: opacity .2s var(--ease), background .2s var(--ease),
+              border-color .2s var(--ease), transform .18s var(--ease);
+}
+.rail__nav:hover { background: var(--sky-wash); border-color: var(--blue); }
+.rail__nav:active { transform: translateY(-50%) scale(.94); }
+.rail__nav--prev { left: calc(var(--rail-fade, 2.75rem) / -2); }
+.rail__nav--next { right: calc(var(--rail-fade, 2.75rem) / -2); }
+.rail[data-at="start"] .rail__nav--prev,
+.rail[data-at="end"]   .rail__nav--next,
+.rail[data-at="none"]  .rail__nav { opacity: 0; pointer-events: none; }
+
+/* A touch screen scrolls the rail by swiping, so the arrows only get in the
+   way there. Nothing is lost: the cards are still tab-reachable. */
+@media (hover: none), (max-width: 700px) { .rail__nav { display: none; } }
 
 /* ==========================================================================
    LOUNGE FINDER
@@ -825,6 +837,62 @@ select.field__in { appearance: none; cursor: pointer; padding-right: 2.25rem;
 .reqs li::before { content: ''; width: 7px; height: 7px; margin-top: .5rem; border-radius: 50%;
   background: var(--sky); }
 .reqs b { color: #fff; font-weight: 600; }
+
+/* ==========================================================================
+   JOINING
+   The two groups a player can apply to in game. Both lockups are the real
+   brand assets — the same mark and wordmark the header uses — differing only
+   in the sub-label beneath, which is how the alliance signs its two groups.
+   ========================================================================== */
+.brand--xl { gap: 1.125rem; }
+.brand--xl .brand__mark { height: 58px; }
+.brand--xl .brand__word { height: 26px; }
+.brand--xl .brand__sub  { font-size: .5625rem; letter-spacing: .46em; margin-top: .5rem; }
+
+.joins { display: grid; gap: clamp(1rem, 2.2vw, 1.75rem); grid-template-columns: 1fr; }
+@media (min-width: 860px) { .joins { grid-template-columns: repeat(2, 1fr); } }
+
+.joinc {
+  position: relative; display: flex; flex-direction: column;
+  padding: clamp(1.75rem, 3.4vw, 2.5rem);
+  background: var(--paper); border: 1px solid var(--rule); border-radius: var(--r-lg);
+}
+/* The accent rule is the only thing that separates the two cards. The marks
+   themselves stay identical, because they are the same brand. */
+.joinc::before {
+  content: ''; position: absolute; inset: 0 0 auto 0; height: 3px;
+  border-radius: var(--r-lg) var(--r-lg) 0 0; background: var(--jc, var(--blue));
+}
+.joinc__b { font-size: .9375rem; line-height: 1.7; color: var(--tx-soft); margin-top: 1.5rem; }
+.joinc__lab {
+  margin-top: auto; padding-top: 1.75rem;
+  font-size: .625rem; font-weight: 700; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--tx-faint);
+}
+
+/* The in-game search string. Monospaced because it has to be typed back
+   character for character, and set out on its own so it cannot be misread. */
+.codechip {
+  display: flex; align-items: stretch; gap: 0; margin-top: .625rem;
+  border: 1px solid var(--rule-strong); border-radius: var(--r);
+  background: var(--sky-wash); overflow: hidden;
+}
+.codechip__v {
+  flex: 1 1 auto; min-width: 0; padding: .875rem 1rem;
+  font-family: var(--f-data); font-size: .9375rem; font-weight: 500;
+  letter-spacing: .01em; color: var(--blue);
+  overflow-x: auto; white-space: nowrap; scrollbar-width: none;
+  display: flex; align-items: center;
+}
+.codechip__v::-webkit-scrollbar { display: none; }
+.codechip__btn {
+  flex: 0 0 auto; padding: 0 1rem; cursor: pointer;
+  background: transparent; border: 0; border-left: 1px solid var(--rule-strong);
+  font-family: var(--f-ui); font-size: .75rem; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase; color: var(--tx-soft);
+  transition: background .2s var(--ease), color .2s var(--ease);
+}
+.codechip__btn:hover { background: var(--sky-pale); color: var(--blue); }
 
 .codes { display: flex; flex-wrap: wrap; gap: .4375rem; }
 .codes span { font-family: var(--f-data); font-size: .8125rem; font-weight: 500; letter-spacing: .06em;

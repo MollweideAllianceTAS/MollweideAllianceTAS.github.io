@@ -8,7 +8,7 @@ vm.createContext(ctx);
 vm.runInContext(fs.readFileSync('assets/js/data.js','utf8'), ctx);
 vm.runInContext(fs.readFileSync('assets/js/site.js','utf8'), ctx);
 // const-declared bindings are not properties of the VM global; surface them.
-vm.runInContext('globalThis._x = {airport, memberOf, distKm, hhmm, durTxt, money, CABINS, AIRCRAFT, MEMBERS, AIRPORTS, ALLIANCE, TIERS, PRESS, HERO_CITIES, PROGRAMME, LOUNGES};', ctx);
+vm.runInContext('globalThis._x = {airport, memberOf, distKm, hhmm, durTxt, money, CABINS, AIRCRAFT, MEMBERS, AIRPORTS, ALLIANCE, TIERS, PRESS, HERO_CITIES, PROGRAMME, LOUNGES, JOIN};', ctx);
 Object.assign(ctx, ctx._x);
 const S = ctx;
 let fails = 0;
@@ -97,6 +97,22 @@ S.LOUNGES.forEach(l => {
 });
 ok('Every lounge resolves to a real airport and operator', loungeRefs, S.LOUNGES.length + ' lounges');
 ok('Every lounge photo that is set exists on disk', loungePhotos);
+// --- joining ---------------------------------------------------------------
+ok('Both joinable groups are configured', S.JOIN.length === 2,
+   S.JOIN.map(j => j.name).join(' / '));
+ok('Every group carries an in-game search string',
+   S.JOIN.every(j => typeof j.search === 'string' && j.search.length > 2));
+/* These strings are typed back into the game verbatim, so stray whitespace or
+   a capital letter would send a player looking for a listing that is not
+   there. Guard the exact form rather than merely that something is present. */
+ok('Search strings are exact — lower case, hyphenated, no stray spaces',
+   S.JOIN.every(j => /^[a-z]+(-[a-z]+)*$/.test(j.search)),
+   S.JOIN.map(j => j.search).join('  '));
+ok('The two groups do not share a search string',
+   new Set(S.JOIN.map(j => j.search)).size === S.JOIN.length);
+ok('Every group has a name, sub-label, accent and description',
+   S.JOIN.every(j => j.name && j.sub && /^#[0-9A-Fa-f]{6}$/.test(j.accent) && j.blurb));
+
 // --- press releases --------------------------------------------------------
 ok('Press releases are present', S.PRESS.length > 0, S.PRESS.length + ' releases');
 ok('Every release has a date, title, quote and closing paragraphs',

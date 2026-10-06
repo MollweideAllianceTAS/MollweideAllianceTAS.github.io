@@ -467,13 +467,107 @@ function toast(msg) {
 function renderMembers(el, limit) {
   if (!el) return;
   const list = limit ? MEMBERS.slice(0, limit) : MEMBERS;
+  /* In a rail the cards sit off to the right of a clipped box, so revealing
+     them one by one on intersection would leave most of the line blank until
+     it was scrolled to. The rail reveals as a single block instead. */
+  const rail = el.classList.contains('liveries--rail');
   el.innerHTML = list.map((m, i) => `
-    <figure class="livery" id="${m.code}" tabindex="0" data-rv style="transition-delay:${i * 40}ms">
+    <figure class="livery" id="${m.code}" tabindex="0"${rail ? '' : ` data-rv style="transition-delay:${i * 40}ms"`}>
       <img class="livery__img" src="${m.tail}" alt="${m.name} aircraft livery"
            loading="lazy" width="380" height="285" decoding="async">
       <figcaption class="livery__name">${m.name}</figcaption>
     </figure>`).join('');
+  if (!rail) observeReveals(el);
+}
+
+/* Horizontal rail: arrows, and the edge fades that say which way there is
+   more to see. Scrolling itself is the browser's — this only drives the
+   chrome around it, so the rail still works if this never runs. */
+function initRail(rail) {
+  if (!rail) return;
+  const track = rail.querySelector('.liveries--rail');
+  if (!track) return;
+  const prev = rail.querySelector('[data-rail="prev"]');
+  const next = rail.querySelector('[data-rail="next"]');
+  const still = matchMedia('(prefers-reduced-motion: reduce)');
+
+  /* Scroll by as many whole cards as are on screen, so the rail always comes
+     to rest on a card edge rather than halfway through one. */
+  const step = () => {
+    const card = track.querySelector('.livery');
+    if (!card) return track.clientWidth;
+    const gap  = parseFloat(getComputedStyle(track).columnGap) || 0;
+    const unit = card.getBoundingClientRect().width + gap;
+    return Math.max(unit, Math.floor(track.clientWidth / unit) * unit);
+  };
+
+  const sync = () => {
+    const max = track.scrollWidth - track.clientWidth;
+    const x   = track.scrollLeft;
+    rail.dataset.at = max < 4 ? 'none' : x < 4 ? 'start' : x > max - 4 ? 'end' : 'middle';
+  };
+
+  const go = dir => track.scrollBy({
+    left: dir * step(),
+    behavior: still.matches ? 'auto' : 'smooth'
+  });
+
+  prev && prev.addEventListener('click', () => go(-1));
+  next && next.addEventListener('click', () => go(1));
+  track.addEventListener('scroll', sync, { passive: true });
+  addEventListener('resize', sync);
+  /* The cards are lazy-loaded, so scrollWidth is not final at first paint. */
+  addEventListener('load', sync);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(sync);
+  sync();
+}
+
+/* The two in-game groups, each with the string to search for. */
+function renderJoin(el) {
+  if (!el) return;
+  el.innerHTML = JOIN.map(j => `
+    <article class="joinc" style="--jc:${j.accent}" data-rv>
+      <div class="brand brand--xl">
+        <img class="brand__mark" src="assets/img/mark-blue.png" alt="" width="58" height="51">
+        <span class="brand__txt">
+          <img class="brand__word" src="assets/img/wordmark-blue.png" alt="Mollweide" width="300" height="26">
+          <span class="brand__sub">${j.sub}</span>
+        </span>
+      </div>
+      <p class="joinc__b">${j.blurb}</p>
+      <p class="joinc__lab">Search in game for</p>
+      <div class="codechip">
+        <code class="codechip__v">${j.search}</code>
+        <button class="codechip__btn" type="button" data-copy="${j.search}"
+                aria-label="Copy ${j.search}">Copy</button>
+      </div>
+    </article>`).join('');
   observeReveals(el);
+}
+
+/* Copy-to-clipboard for anything carrying data-copy. The clipboard API needs
+   a secure context, which a page opened straight off disk is not, so fall
+   back to a selection the old way rather than failing silently. */
+function initCopy(root) {
+  (root || document).addEventListener('click', e => {
+    const btn = e.target.closest('[data-copy]');
+    if (!btn) return;
+    const text = btn.dataset.copy;
+    const done = () => toast('Copied \u2014 ' + text);
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(done, () => toast('Could not copy. Select the text instead.'));
+      return;
+    }
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:fixed;top:-100px;opacity:0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); done(); }
+    catch (err) { toast('Could not copy. Select the text instead.'); }
+    document.body.removeChild(ta);
+  });
 }
 
 function renderTiers(el) {

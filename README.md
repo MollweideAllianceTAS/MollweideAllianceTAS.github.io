@@ -5,7 +5,7 @@ in *The Airline Simulator*. Static HTML, CSS and JavaScript — no build step, n
 dependencies, no server. It works by double-clicking `index.html`, and deploys to
 GitHub Pages by pushing the folder.
 
-**Pages** — Home · Members · Network · Lounges · Newsroom · Member submissions · Book a flight · My bookings
+**Pages** — Home · Members · Network · Lounges · Newsroom · Join the alliance · Member submissions · Book a flight · My bookings
 
 ---
 
@@ -57,6 +57,7 @@ airports or its fares.
 | Loyalty tiers (Member / Select / Strata / Aurora) | `TIERS` and `PROGRAMME` (the programme is called **Elara**) |
 | Cities in the rotating homepage headline | `HERO_CITIES` |
 | Lounges, their operator, access rules and photos | `LOUNGES` |
+| The two in-game groups and their search strings | `JOIN` |
 | Press releases | `PRESS` |
 | Where members send material | `ALLIANCE.submitTo` |
 | Currency | `CURRENCY` near the top of `assets/js/site.js` |
@@ -142,6 +143,26 @@ Bangalore and Kolkata.
   lounge access is what the tiers buy.
 - **Newsroom** — press releases, from `PRESS` in `data.js`.
 
+### Joining
+
+`join.html` is the page the "Join the Alliance" button in the header points at.
+It carries the two in-game groups a player can apply to, each with the exact
+string to search for, and the four-step process around them.
+
+Both entries live in `JOIN` in `data.js`. `search` is reproduced on the page
+character for character and is typed straight back into the game, so a stray
+space or a capital letter would send someone looking for a listing that is not
+there — `node tools/test.js` holds it to lower-case hyphenated words and checks
+the two do not collide.
+
+The two lockups are the real mark and wordmark, differing only in the sub-label
+beneath, which is the same `.brand` component the header uses at a larger size.
+There is no separate Connect artwork; if one exists, drop it in and replace the
+lockup in `renderJoin()`.
+
+The Discord invite is deliberately **not** on the site. It is given in game, and
+the page says so.
+
 ### Member submissions
 
 `submit.html` is the checklist member airlines work from: the six required
@@ -152,6 +173,23 @@ date as members join.
 
 Set `ALLIANCE.submitTo` in `data.js` to wherever material should actually be
 sent — it currently reads "the alliance Discord" as a placeholder.
+
+### The member rail
+
+On the home page the member liveries run along one horizontal rail rather than
+wrapping into rows — seventeen tails stacked four deep was more page than the
+section warranted. `members.html` still shows the full wall; the difference is
+the `liveries--rail` class on the container.
+
+The card width is set so a fraction of the next card always shows, which is what
+tells a reader there is more to the right. Arrows appear from 768px up and
+paginate by whole cards; they are hidden on touch screens, where swiping is the
+obvious gesture. The edge fade is a CSS mask rather than a coloured gradient, so
+it works over whatever the section background happens to be.
+
+`renderMembers()` skips the per-card reveal animation inside a rail: the cards
+off to the right sit in a clipped box, so revealing them on intersection would
+leave most of the line blank until it was scrolled to.
 
 ### The lounge finder
 
@@ -226,8 +264,8 @@ The livery renders are stored at 760px wide, which is twice their display size.
 ## Project layout
 
 ```
-index.html  members.html  network.html  lounges.html
-news.html   submit.html    book.html      bookings.html
+index.html  members.html  network.html  lounges.html  news.html
+join.html   submit.html   book.html     bookings.html
 assets/
   css/site.css        design system — colours, type, every component
   js/data.js          ← all content lives here
