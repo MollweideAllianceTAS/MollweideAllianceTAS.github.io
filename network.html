@@ -67,12 +67,22 @@
   </div>
 </section>
 
-<section class="section" id="hubs">
+<section class="section on-ink" id="hubs" style="background:var(--blue-ink)">
   <div class="wrap">
     <div class="sec-head">
-      <div><p class="eyebrow">Hub airports</p><h2 class="display">Principal <b>connecting points.</b></h2></div>
+      <div><p class="eyebrow">Hub airports</p>
+      <h2 class="display">Principal <b>connecting points.</b></h2>
+      <p class="lede mt-2">Choose a carrier to lift its own bases out of the network. The rest of the alliance stays on the map, so you can see where each airline sits within it.</p></div>
     </div>
-    <div class="feats" id="hubGrid" style="grid-template-columns:repeat(auto-fill,minmax(15rem,1fr))"></div>
+
+    <div class="hubx" id="hubx">
+      <div class="hubx__side" data-hx="side" role="group" aria-label="Choose a carrier"></div>
+      <div>
+        <div class="map-frame"><svg data-hx="map" role="img" aria-label="Alliance hub airports"></svg></div>
+        <p class="hx__note" data-hx="note"></p>
+        <ul class="hx__hubs" data-hx="list"></ul>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -138,16 +148,7 @@
   document.getElementById('ftMembers').innerHTML =
     MEMBERS.slice(0,6).map(m => '<li><a href="members.html#'+m.code+'">'+ (m.short||m.name) +'</a></li>').join('');
 
-  var hubs = AIRPORTS.filter(function(a){return a.hub;});
-  document.getElementById('hubGrid').innerHTML = hubs.map(function(h){
-    var ms = MEMBERS.filter(function(m){ return (m.hubs||[]).indexOf(h.code)>-1; });
-    return '<article class="feat">'
-      + '<span class="feat__n">'+h.code+'</span>'
-      + '<h3 class="feat__t">'+h.city+'</h3>'
-      + '<p class="feat__b">'+h.name+'<br>'+h.country+'</p>'
-      + '<p class="feat__b" style="color:var(--blue);font-weight:600">'+ (ms.length ? ms.map(function(m){return (m.short||m.name);}).join(', ') : 'Alliance destination') +'</p>'
-      + '</article>';
-  }).join('');
+  initHubExplorer(document.getElementById('hubx'));
 
 </script>
 </body></html>

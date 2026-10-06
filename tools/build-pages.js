@@ -286,12 +286,22 @@ const network = head('Network', 'The Mollweide Alliance route network, drawn on 
   </div>
 </section>
 
-<section class="section" id="hubs">
+<section class="section on-ink" id="hubs" style="background:var(--blue-ink)">
   <div class="wrap">
     <div class="sec-head">
-      <div><p class="eyebrow">Hub airports</p><h2 class="display">Principal <b>connecting points.</b></h2></div>
+      <div><p class="eyebrow">Hub airports</p>
+      <h2 class="display">Principal <b>connecting points.</b></h2>
+      <p class="lede mt-2">Choose a carrier to lift its own bases out of the network. The rest of the alliance stays on the map, so you can see where each airline sits within it.</p></div>
     </div>
-    <div class="feats" id="hubGrid" style="grid-template-columns:repeat(auto-fill,minmax(15rem,1fr))"></div>
+
+    <div class="hubx" id="hubx">
+      <div class="hubx__side" data-hx="side" role="group" aria-label="Choose a carrier"></div>
+      <div>
+        <div class="map-frame"><svg data-hx="map" role="img" aria-label="Alliance hub airports"></svg></div>
+        <p class="hx__note" data-hx="note"></p>
+        <ul class="hx__hubs" data-hx="list"></ul>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -307,16 +317,7 @@ const network = head('Network', 'The Mollweide Alliance route network, drawn on 
   document.getElementById('ftMembers').innerHTML =
     MEMBERS.slice(0,6).map(m => '<li><a href="members.html#'+m.code+'">'+ (m.short||m.name) +'</a></li>').join('');
 
-  var hubs = AIRPORTS.filter(function(a){return a.hub;});
-  document.getElementById('hubGrid').innerHTML = hubs.map(function(h){
-    var ms = MEMBERS.filter(function(m){ return (m.hubs||[]).indexOf(h.code)>-1; });
-    return '<article class="feat">'
-      + '<span class="feat__n">'+h.code+'</span>'
-      + '<h3 class="feat__t">'+h.city+'</h3>'
-      + '<p class="feat__b">'+h.name+'<br>'+h.country+'</p>'
-      + '<p class="feat__b" style="color:var(--blue);font-weight:600">'+ (ms.length ? ms.map(function(m){return (m.short||m.name);}).join(', ') : 'Alliance destination') +'</p>'
-      + '</article>';
-  }).join('');
+  initHubExplorer(document.getElementById('hubx'));
 
 </script>
 </body></html>`;
@@ -613,18 +614,18 @@ const submit = head('Member submissions', 'What member airlines need to send for
   <img class="phead__bg" src="assets/img/photos/lineup-four.jpg" alt="" width="1440" height="296">
   <div class="wrap phead__in">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span>/</span> Member submissions</nav>
-    <h1 class="display">What to send us, <b>and in what form.</b></h1>
+    <h1 class="display">What to send us, <b>and roughly what form.</b></h1>
     <div class="brandrule"></div>
-    <p class="lede mt-3">Everything on this site is generated from one data file, so an airline can be added or changed quickly — provided the material arrives complete. This page is the checklist.</p>
+    <p class="lede mt-3">Everything on this site comes out of one data file, so an airline can be added or changed in a few minutes. This page is a guide to what helps rather than a set of hurdles — send what you have and we will fill in the gaps together.</p>
   </div>
 </section>
 
 <section class="section">
   <div class="wrap">
     <div class="sec-head">
-      <div><p class="eyebrow">Required</p>
-      <h2 class="display">Six things for <b>every airline.</b></h2>
-      <p class="lede mt-2">Send all six together. A submission missing any one of them cannot be published, because each drives something the site renders.</p></div>
+      <div><p class="eyebrow">The basics</p>
+      <h2 class="display">Six things that <b>get you on the page.</b></h2>
+      <p class="lede mt-2">Each one drives something the site renders, so having all six to hand saves a round of questions. If one is still undecided, send the rest anyway.</p></div>
     </div>
 
     <ol class="spec">
@@ -636,7 +637,7 @@ const submit = head('Member submissions', 'What member airlines need to send for
 
       <li class="spec__item"><span class="spec__n">02</span><div>
         <h3 class="spec__t">Two-letter code</h3>
-        <p class="spec__b">Used on your flight numbers, on result rows and on boarding passes. It must not clash with another member, so check the list below and send a second choice in case your first is taken.</p>
+        <p class="spec__b">Used on your flight numbers, on result rows and on boarding passes. It needs to be unique, so have a glance at the list below — and a second choice is handy in case your first is already taken.</p>
         <p class="spec__eg"><b>Codes already in use</b></p>
         <div class="codes mt-1" id="codesInUse"></div>
       </div></li>
@@ -648,19 +649,19 @@ const submit = head('Member submissions', 'What member airlines need to send for
 
       <li class="spec__item"><span class="spec__n">04</span><div>
         <h3 class="spec__t">Brand colour</h3>
-        <p class="spec__b">One hex value. It tints your member card, your rows in flight results, your seat map and any lounge you operate. Choose the dominant colour of your tail rather than the lightest — it has to stay legible as a thin rule and as small text.</p>
+        <p class="spec__b">One hex value. It tints your member card, your rows in flight results, your seat map and any lounge you operate. The dominant colour of your tail usually works better than the lightest, since it has to hold up as a thin rule and as small text.</p>
         <p class="spec__eg"><b>Example</b> &nbsp;<code>#1B3A63</code></p>
       </div></li>
 
       <li class="spec__item"><span class="spec__n">05</span><div>
         <h3 class="spec__t">Hubs, in order of importance</h3>
-        <p class="spec__b">IATA codes preferred; full airport names are fine if you are unsure. <strong style="color:var(--blue)">The first hub you list is treated as your primary</strong> — on the network map your routes radiate from it, so put your real base first. List focus cities separately from hubs. If you base somewhere not already in the network, say so, because we need its latitude and longitude before the map can plot it.</p>
+        <p class="spec__b">IATA codes preferred; full airport names are fine if you are unsure. <strong style="color:var(--blue)">The first hub you list is treated as your primary</strong> — on the network map your routes radiate from it, so it is worth putting your real base first. Focus cities are welcome too, just say which is which. If you are based somewhere not already in the network, mention it: we will need its latitude and longitude before the map can plot it.</p>
         <p class="spec__eg"><b>Example</b> &nbsp;Hubs: GIG, GRU &nbsp;·&nbsp; Focus cities: none<br><span id="netSize"></span></p>
       </div></li>
 
       <li class="spec__item"><span class="spec__n">06</span><div>
         <h3 class="spec__t">A short description</h3>
-        <p class="spec__b">One or two sentences, around forty words, written in the third person. Say what the airline does and where it flies rather than how good it is — the tone across the site is factual.</p>
+        <p class="spec__b">One or two sentences, around forty words, written in the third person. What the airline does and where it flies tends to read better than how good it is, since the rest of the site is written that way. A rough draft is fine — we are happy to tidy it.</p>
         <p class="spec__eg"><b>Example</b> &nbsp;“The alliance's African member, linking East and West Africa through twin hubs at Nairobi and Dakar.”</p>
       </div></li>
     </ol>
@@ -671,20 +672,20 @@ const submit = head('Member submissions', 'What member airlines need to send for
   <div class="wrap">
     <div class="sec-head">
       <div><p class="eyebrow">Artwork</p>
-      <h2 class="display">One livery image, <b>to a fixed specification.</b></h2>
-      <p class="lede mt-2">This is the part most submissions get wrong. Every member is shown as a cutout on a white page, side by side with the rest of the fleet, so an image that does not match the specification stands out immediately.</p></div>
+      <h2 class="display">One livery image, <b>and how it sits.</b></h2>
+      <p class="lede mt-2">This is the part that most often needs a second go, so it is worth a closer look. Every member appears as a cutout on a white page beside the rest of the fleet, which means an image framed differently from the others tends to show.</p></div>
     </div>
     <div class="two-col">
       <ul class="reqs">
-        <li><b>A side view of the rear fuselage and tail</b>, with the nose to the left and the tail to the right, matching the existing fleet.</li>
-        <li><b>A transparent background.</b> PNG or WebP with a real alpha channel — not a white rectangle, which shows as a white box on the page.</li>
-        <li><b>At least 1448 × 1086 pixels</b>, in a 4:3 frame. We resize to 760 pixels wide for the site, so anything smaller will soften.</li>
-        <li><b>No text of any kind</b> — no titles, no registration, no captions, no watermark.</li>
-        <li><b>No background</b> — no sky, no tarmac, no other aircraft.</li>
+        <li><b>A side view of the rear fuselage and tail</b>, nose to the left and tail to the right, which is how the rest of the fleet is framed.</li>
+        <li><b>A transparent background</b> — PNG or WebP with a real alpha channel. A white rectangle will show as a white box on the page.</li>
+        <li><b>Around 1448 × 1086 pixels or larger</b>, in a 4:3 frame. We resize to 760 pixels wide, so anything much smaller softens.</li>
+        <li><b>No lettering</b> — titles, registrations, captions and watermarks all tend to fight with the layout.</li>
+        <li><b>Nothing behind the aircraft</b> — no sky, no tarmac, no neighbours.</li>
       </ul>
       <div>
-        <p class="lede" style="font-size:1rem">If you have only a photograph, send it anyway and say so. A photograph can be used temporarily, but it will be visibly different from the rest of the wall until a cutout replaces it.</p>
-        <p class="body-copy mt-3" style="color:var(--tx-on-ink-soft)">Keep the aircraft roughly the same size within the frame as the existing fleet. The images sit next to one another with no borders, so a tail that is much larger or smaller than its neighbours is the first thing a reader notices.</p>
+        <p class="lede" style="font-size:1rem">If all you have is a photograph, send it anyway and say so. We can use one in the meantime — it will simply look a little different from the rest of the wall until a cutout comes along.</p>
+        <p class="body-copy mt-3" style="color:var(--tx-on-ink-soft)">It also helps if the aircraft fills roughly as much of the frame as its neighbours do. The images sit side by side with no borders, so a tail much larger or smaller than the rest is the first thing the eye lands on. If yours is framed differently we can usually re-crop it.</p>
       </div>
     </div>
   </div>
@@ -695,18 +696,18 @@ const submit = head('Member submissions', 'What member airlines need to send for
     <div class="sec-head">
       <div><p class="eyebrow">Optional</p>
       <h2 class="display">Lounges and <b>press releases.</b></h2>
-      <p class="lede mt-2">Neither is needed to join. Send them whenever you have them.</p></div>
+      <p class="lede mt-2">Neither is needed to join, and neither is expected. Send them whenever you have them.</p></div>
     </div>
     <div class="feats" style="grid-template-columns:repeat(auto-fit,minmax(18rem,1fr))">
       <article class="feat">
         <span class="feat__n">Lounge</span>
         <h3 class="feat__t">What a lounge entry needs</h3>
-        <p class="feat__b">The lounge name, the airport, where it is inside the terminal, opening hours, who may use it, and a handful of facilities. A photograph is optional — a 4:3 image of at least 1200 × 900 pixels, which may be a normal photograph rather than a cutout. Without one, the card falls back to a panel in your brand colour.</p>
+        <p class="feat__b">The lounge name, the airport, where it is inside the terminal, opening hours, who may use it, and a handful of facilities. A photograph is a bonus — a 4:3 image of around 1200 × 900 pixels, and an ordinary photograph is fine here rather than a cutout. Without one the card simply falls back to a panel in your brand colour, which looks perfectly deliberate.</p>
       </article>
       <article class="feat">
         <span class="feat__n">Press</span>
         <h3 class="feat__t">What a press release needs</h3>
-        <p class="feat__b">A headline, the city and date it is issued from, an opening sentence that stands alone, the body in paragraphs, and a quote with the name and job title of whoever is speaking. Send it as plain text; the newsroom applies its own formatting.</p>
+        <p class="feat__b">A headline, the city and date it is issued from, an opening sentence that stands alone, the body in paragraphs, and a quote with the name and job title of whoever is speaking. Plain text is ideal — the newsroom applies its own formatting on top.</p>
       </article>
     </div>
   </div>
@@ -716,12 +717,13 @@ const submit = head('Member submissions', 'What member airlines need to send for
   <div class="wrap">
     <div class="sec-head">
       <div><p class="eyebrow">Sending it</p>
-      <h2 class="display">Where it goes, <b>and what happens next.</b></h2></div>
+      <h2 class="display">Where it goes, <b>and what happens next.</b></h2>
+      <p class="lede mt-2">Nothing here is set in stone. If you are unsure about any of it, send what you have and ask.</p></div>
     </div>
     <div class="two-col">
-      <p class="lede">Send everything in one message to <strong style="color:var(--blue)" data-slot="submitTo">the alliance Discord</strong>, with the images attached rather than linked. Partial submissions are held until the missing pieces arrive, so it is quicker to gather it all first.</p>
+      <p class="lede">Send it in one message to <strong style="color:var(--blue)" data-slot="submitTo">the alliance Discord</strong>, with any images attached rather than linked. If something is missing we will just ask, though gathering it first usually gets you on the site sooner.</p>
       <div>
-        <p class="body-copy">Changes to an existing airline work the same way: say what is changing and send only the parts that differ. Hub changes are the most common, and the order matters — if your primary base changes, make that clear, because it moves where your routes anchor on the map.</p>
+        <p class="body-copy">Changes to an existing airline work the same way: say what is changing and send only the parts that differ. Hub changes are the most common, and the order matters — if your primary base has moved, do mention it, because that is what anchors your routes on the map.</p>
         <p class="body-copy mt-2">Once published, your airline appears on the member wall, in flight search as an operating carrier, on the network map, and in any connecting itinerary the search builds through your hubs.</p>
       </div>
     </div>
@@ -758,9 +760,9 @@ const join = head('Join the alliance', 'How to join the Mollweide Alliance or Mo
   <img class="phead__bg" src="assets/img/photos/lineup-six.jpg" alt="" width="1440" height="296">
   <div class="wrap phead__in">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span>/</span> Join the alliance</nav>
-    <h1 class="display">Two ways in, <b>both from inside the game.</b></h1>
+    <h1 class="display">Two ways in, <b>both starting in the game.</b></h1>
     <div class="brandrule"></div>
-    <p class="lede mt-3">Membership is arranged in <span data-slot="game">The Airline Simulator</span> itself. There is nothing to fill in on this site: find the group in the game's alliance search, apply there, and join the Discord channel.</p>
+    <p class="lede mt-3">New carriers are always welcome. Find us in the alliance search in <span data-slot="game">The Airline Simulator</span>, then come and say hello on Discord — the rest is a conversation rather than a form.</p>
   </div>
 </section>
 
@@ -769,7 +771,7 @@ const join = head('Join the alliance', 'How to join the Mollweide Alliance or Mo
     <div class="sec-head">
       <div><p class="eyebrow" data-rv>The two groups</p>
       <h2 class="display" data-rv>Mollweide Alliance, <b>and Mollweide Connect.</b></h2>
-      <p class="lede mt-2" data-rv>Each is listed separately in game. Search for the name exactly as it is written below — these strings are what the game matches on, and a near miss returns nothing.</p></div>
+      <p class="lede mt-2" data-rv>Each is listed separately in game. The names below are what the game matches on, so it is worth copying them across rather than typing them out.</p></div>
     </div>
     <div class="joins" id="joinGroups"></div>
   </div>
@@ -779,29 +781,24 @@ const join = head('Join the alliance', 'How to join the Mollweide Alliance or Mo
   <div class="wrap">
     <div class="sec-head">
       <div><p class="eyebrow">How it works</p>
-      <h2 class="display">Four steps, <b>in this order.</b></h2>
-      <p class="lede mt-2">The whole process runs through the game and the Discord channel. Nothing is submitted here.</p></div>
+      <h2 class="display">Three steps, <b>and none of them here.</b></h2>
+      <p class="lede mt-2">There is no application form — not on this site and not in the game. Finding us and getting in touch is the whole of it.</p></div>
     </div>
 
     <ol class="spec">
       <li class="spec__item"><span class="spec__n">01</span><div>
-        <h3 class="spec__t">Find the group in game</h3>
-        <p class="spec__b">Open the alliance search and type the name for whichever group you are applying to. Both are given above, and both can be copied straight from this page.</p>
+        <h3 class="spec__t">Find us in the game</h3>
+        <p class="spec__b">Open the alliance search and look up whichever of the two groups you are interested in. Both names are above, and both can be copied straight from this page.</p>
       </div></li>
 
       <li class="spec__item"><span class="spec__n">02</span><div>
-        <h3 class="spec__t">Apply from inside the game</h3>
-        <p class="spec__b">Send your application through the game. Applications are reviewed by the alliance rather than accepted automatically, so expect a short wait.</p>
+        <h3 class="spec__t">Come and say hello on Discord</h3>
+        <p class="spec__b">The invite links are given in game rather than published here. Since there is nothing to apply through, the channel is where joining is actually arranged — introduce your airline and someone will pick it up from there.</p>
       </div></li>
 
       <li class="spec__item"><span class="spec__n">03</span><div>
-        <h3 class="spec__t">Join the Discord channel</h3>
-        <p class="spec__b">The invite links are provided in game, not on this site. <strong style="color:var(--blue)">Joining the channel is a condition of membership</strong> — it is where the alliance is coordinated and where everything published on this site is sent.</p>
-      </div></li>
-
-      <li class="spec__item"><span class="spec__n">04</span><div>
-        <h3 class="spec__t">Send your airline's details</h3>
-        <p class="spec__b">Once you are in, your carrier is added to this site: the member wall, the route map, and flight search as an operating carrier. The submissions page lists the six things required and the specification the livery artwork has to meet.</p>
+        <h3 class="spec__t">Send a few details when you are ready</h3>
+        <p class="spec__b">Once you are in, we will add your carrier to this site: the member wall, the route map, and flight search as an operating carrier. The submissions page sets out what is useful to send, though there is no hurry about it.</p>
         <p class="spec__eg"><b>Next</b> &nbsp;<a href="submit.html" style="color:var(--blue);font-weight:600">What to send for the website</a></p>
       </div></li>
     </ol>
@@ -812,18 +809,18 @@ const join = head('Join the alliance', 'How to join the Mollweide Alliance or Mo
   <div class="wrap">
     <div class="sec-head">
       <div><p class="eyebrow">Discord</p>
-      <h2 class="display">The channel is <b>not optional.</b></h2>
-      <p class="lede mt-2">Every member airline is required to be in it, and to stay in it for as long as they are a member.</p></div>
+      <h2 class="display">Where the alliance <b>actually happens.</b></h2>
+      <p class="lede mt-2">We ask every member airline to be in the channel. It is how the alliance keeps in touch, and it is the only way we have of reaching you.</p></div>
     </div>
     <div class="two-col">
       <ul class="reqs">
-        <li><b>The invite is given in game.</b> It is not published here, and it is not shared outside the alliance.</li>
-        <li><b>Membership of the channel is a condition of membership of the alliance</b>, for both groups.</li>
-        <li><b>Everything that appears on this site is sent there</b> — airline details, livery artwork, lounges and press releases.</li>
+        <li><b>The invite links are given in game.</b> We do not publish them here, so the in-game listing is the place to look.</li>
+        <li><b>Both groups share the same channel</b>, so you will find everyone in one place whichever you join through.</li>
+        <li><b>Anything you would like shown on this site is sent there</b> — airline details, livery artwork, lounges and news.</li>
       </ul>
       <div>
-        <p class="lede" style="font-size:1rem">An airline that leaves the channel is treated as having left the alliance, because there is no other way to reach it.</p>
-        <p class="body-copy mt-3" style="color:var(--tx-on-ink-soft)">If you have applied in game and cannot find the invite, say so in your application. Someone will send it to you directly rather than leave you waiting.</p>
+        <p class="lede" style="font-size:1rem">It is also where route coordination and codeshare requests are handled, so it is worth being around for reasons beyond the formality.</p>
+        <p class="body-copy mt-3" style="color:var(--tx-on-ink-soft)">If you have found us in game but cannot see an invite anywhere, just mention it when you get in touch and someone will send one over.</p>
       </div>
     </div>
   </div>
@@ -831,7 +828,7 @@ const join = head('Join the alliance', 'How to join the Mollweide Alliance or Mo
 
 <section class="band section--tight">
   <div class="wrap band__in">
-    <div><h2 class="display" style="font-size:clamp(1.6rem,3.4vw,2.6rem)">Already in? <b>Here is what we need.</b></h2></div>
+    <div><h2 class="display" style="font-size:clamp(1.6rem,3.4vw,2.6rem)">Already in? <b>Here is what helps.</b></h2></div>
     <a class="btn btn--lg" style="background:#fff;color:var(--blue)" href="submit.html">Member submissions <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
   </div>
 </section>

@@ -274,12 +274,10 @@ const LAND = [
 ];
 
 /* Draw the network map into an <svg>. */
-function renderMap(svg, opts) {
-  if (!svg) return;
-  const W = 400, H = 200, lon0 = (opts && opts.lon0) || 10;
-  const proj = projector(W, H, lon0);
-  svg.setAttribute('viewBox', `-6 -6 ${W + 12} ${H + 12}`);
-
+/* The ellipse, graticule and coastlines. The route map and the hub explorer
+   are the same projection with different things drawn on top, so they share
+   this layer rather than each building their own. */
+function mapBase(proj, W, H, lon0) {
   const parts = [];
 
   /* Projection outline — the Mollweide ellipse */
@@ -310,6 +308,17 @@ function renderMap(svg, opts) {
       parts.push(`<path class="map__land" d="M${s.map(p => p[0].toFixed(2)+' '+p[1].toFixed(2)).join('L')}Z"/>`);
     });
   });
+
+  return parts;
+}
+
+function renderMap(svg, opts) {
+  if (!svg) return;
+  const W = 400, H = 200, lon0 = (opts && opts.lon0) || 10;
+  const proj = projector(W, H, lon0);
+  svg.setAttribute('viewBox', `-6 -6 ${W + 12} ${H + 12}`);
+
+  const parts = mapBase(proj, W, H, lon0);
 
   /* Routes, built the way a real alliance map is:
        · trunk arcs between each member's PRIMARY hub
@@ -520,6 +529,162 @@ function initRail(rail) {
   addEventListener('load', sync);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(sync);
   sync();
+}
+
+/* Brand colours are picked to work on a white page. Seven of the seventeen
+   fall under 2.6:1 against the navy map — Dumont's sits at 1.47, which is
+   invisible — so anything drawn on ink lifts the colour's lightness until it
+   clears a comfortable contrast. Hue and saturation are kept, so the airline
+   still reads as itself. */
+function inkTint(hex, bg) {
+  const rgb = h => [1, 3, 5].map(i => parseInt(h.substr(i, 2), 16));
+  const lin = v => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); };
+  const lum = c => .2126 * lin(c[0]) + .7152 * lin(c[1]) + .0722 * lin(c[2]);
+  const bgL = lum(rgb(bg || '#071A45'));
+  const cr  = c => { const l = lum(c); return (Math.max(l, bgL) + .05) / (Math.min(l, bgL) + .05); };
+  if (!/^#[0-9a-fA-F]{6}$/.test(hex)) return hex;
+  if (cr(rgb(hex)) >= 3.6) return hex;
+
+  const [r, g, b] = rgb(hex).map(v => v / 255);
+  const mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn;
+  let h = 0;
+  if (d) {
+    if (mx === r)      h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+    else if (mx === g) h = ((b - r) / d + 2) / 6;
+    else               h = ((r - g) / d + 4) / 6;
+  }
+  const l0 = (mx + mn) / 2;
+  const sat = d ? d / (1 - Math.abs(2 * l0 - 1)) : 0;
+
+  const toRgb = (hh, ss, ll) => {
+    const k = n => (n + hh * 12) % 12;
+    const a = ss * Math.min(ll, 1 - ll);
+    const f = n => Math.round(255 * (ll - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))));
+    return [f(0), f(8), f(4)];
+  };
+  for (let l = l0; l <= .92; l += .02) {
+    const c = toRgb(h, sat, l);
+    if (cr(c) >= 3.6) return '#' + c.map(v => v.toString(16).padStart(2, '0')).join('');
+  }
+  return '#FFFFFF';
+}
+
+/* ============================================================================
+   HUB EXPLORER
+   A list of carriers beside the projection. Picking one lifts that airline's
+   bases out of the map and dims the rest, which answers "where does this
+   airline actually fly from" far quicker than sixty cards in a grid did.
+   ========================================================================== */
+function initHubExplorer(root) {
+  if (!root) return;
+  const svg  = root.querySelector('[data-hx="map"]');
+  const side = root.querySelector('[data-hx="side"]');
+  const list = root.querySelector('[data-hx="list"]');
+  const note = root.querySelector('[data-hx="note"]');
+  if (!svg || !side) return;
+
+  const AP = {};
+  AIRPORTS.forEach(a => AP[a.code] = a);
+  const allHubs = AIRPORTS.filter(a => a.hub);
+  const hubsOf  = m => (m.hubs || []).map(c => AP[c]).filter(Boolean);
+
+  /* --- the carrier list ---------------------------------------------- */
+  side.innerHTML =
+    `<button class="hx__opt" type="button" data-code="" aria-pressed="true">
+       <i class="hx__dot hx__dot--all"></i>
+       <span class="hx__name">All members</span>
+       <span class="hx__n">${allHubs.length}</span>
+     </button>` +
+    MEMBERS.slice().sort((a, b) => (a.short || a.name).localeCompare(b.short || b.name))
+      .map(m => `
+      <button class="hx__opt" type="button" data-code="${m.code}" aria-pressed="false">
+        <i class="hx__dot" style="background:${inkTint(m.color)}"></i>
+        <span class="hx__name">${m.short || m.name}</span>
+        <span class="hx__n">${(m.hubs || []).length}</span>
+      </button>`).join('');
+
+  /* --- the map -------------------------------------------------------- */
+  const W = 400, H = 200, lon0 = 10;
+  const proj = projector(W, H, lon0);
+  svg.setAttribute('viewBox', `-6 -6 ${W + 12} ${H + 12}`);
+
+  function draw(code) {
+    const m    = code ? MEMBERS.find(x => x.code === code) : null;
+    const tint = m ? inkTint(m.color) : null;
+    const mine = m ? hubsOf(m) : allHubs;
+    const set  = new Set(mine.map(a => a.code));
+    const parts = mapBase(proj, W, H, lon0);
+
+    /* A selected carrier's bases are tied back to its primary, so the shape
+       of the operation reads at a glance rather than as scattered dots. */
+    if (m && mine.length > 1) {
+      mine.slice(1).forEach((h, i) => {
+        const d = gcPath(mine[0], h, proj, lon0);
+        if (d) parts.push(`<path class="hx__arc" style="stroke:${tint};animation-delay:${i * 45}ms" d="${d}"/>`);
+      });
+    }
+
+    /* Everything not belonging to the selection stays on the map, faint, so
+       the airline is still seen in the context of the whole network. */
+    allHubs.filter(a => !set.has(a.code)).forEach(a => {
+      const [x, y] = proj(a.lat, a.lon);
+      parts.push(`<circle class="hx__off" cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="1.5"><title>${a.city} (${a.code})</title></circle>`);
+    });
+
+    const placed = [];
+    const fits = (x, y, w, h) => !placed.some(p =>
+      x < p.x + p.w + 1 && x + w + 1 > p.x && y < p.y + p.h + 1 && y + h + 1 > p.y);
+
+    mine.forEach((a, i) => {
+      const [x, y] = proj(a.lat, a.lon);
+      const primary = !!m && i === 0;
+      const fill = tint || '#FFFFFF';
+      parts.push(`<circle class="hx__halo" cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="${primary ? 6.2 : 4.6}" style="stroke:${tint || 'var(--sky-soft)'}"/>`);
+      parts.push(`<circle class="hx__on" cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="${primary ? 3.4 : 2.5}" style="fill:${fill}"><title>${a.city} (${a.code}) \u2014 ${a.name}</title></circle>`);
+
+      const Wl = 11, Hl = 5;
+      const spots = [[x + 4, y - 4], [x - 4 - Wl, y - 4], [x + 4, y + 7], [x - 4 - Wl, y + 7]];
+      for (const [lx, ly] of spots) {
+        if (fits(lx, ly - Hl, Wl, Hl)) {
+          placed.push({ x: lx, y: ly - Hl, w: Wl, h: Hl });
+          parts.push(`<text class="map__label" x="${lx.toFixed(2)}" y="${ly.toFixed(2)}">${a.code}</text>`);
+          break;
+        }
+      }
+    });
+
+    svg.innerHTML = parts.join('');
+    svg.setAttribute('aria-label', m
+      ? `${m.name} bases, on an equal-area world projection`
+      : 'Every alliance hub, on an equal-area world projection');
+
+    /* --- the list under the map --------------------------------------- */
+    if (list) {
+      list.innerHTML = mine.map((a, i) => `
+        <li class="hx__hub">
+          <span class="hx__code" style="color:${tint || 'var(--sky-soft)'}">${a.code}</span>
+          <span class="hx__city">${a.city}${m && i === 0 ? ' <em>primary</em>' : ''}</span>
+          <span class="hx__apt">${a.name}, ${a.country}</span>
+        </li>`).join('');
+    }
+    if (note) {
+      note.textContent = m
+        ? `${m.name} operates from ${mine.length} ${mine.length === 1 ? 'base' : 'bases'}, led by ${mine[0] ? mine[0].city : ''}.`
+        : `${allHubs.length} hub airports across ${MEMBERS.length} member carriers. Choose a carrier to see its own bases.`;
+    }
+  }
+
+  side.addEventListener('click', e => {
+    const btn = e.target.closest('.hx__opt');
+    if (!btn) return;
+    side.querySelectorAll('.hx__opt').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+    /* On a phone the list is a horizontal row, so the chosen carrier can sit
+       off-screen the moment it is chosen. */
+    if (btn.scrollIntoView) btn.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    draw(btn.dataset.code);
+  });
+
+  draw('');
 }
 
 /* The two in-game groups, each with the string to search for. */

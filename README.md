@@ -146,8 +146,12 @@ Bangalore and Kolkata.
 ### Joining
 
 `join.html` is the page the "Join the Alliance" button in the header points at.
-It carries the two in-game groups a player can apply to, each with the exact
-string to search for, and the four-step process around them.
+It carries the two groups listed in game, each with the exact string to search
+for, and the three steps around them.
+
+**There is no application form** — not on the site and not in the game. The
+page says so plainly: find the alliance in the in-game search, then arrange it
+on Discord. Do not reintroduce an "apply in game" step.
 
 Both entries live in `JOIN` in `data.js`. `search` is reproduced on the page
 character for character and is typed straight back into the game, so a stray
@@ -163,6 +167,13 @@ lockup in `renderJoin()`.
 The Discord invite is deliberately **not** on the site. It is given in game, and
 the page says so.
 
+### Tone
+
+The join and submissions pages are written to invite rather than to instruct.
+They set out what helps and why, and say that a partial submission is fine and
+will simply prompt a question. If you are editing either page, keep that
+register: no "required", no "must", no "cannot be published".
+
 ### Member submissions
 
 `submit.html` is the checklist member airlines work from: the six required
@@ -173,6 +184,22 @@ date as members join.
 
 Set `ALLIANCE.submitTo` in `data.js` to wherever material should actually be
 sent — it currently reads "the alliance Discord" as a placeholder.
+
+### The hub explorer
+
+`network.html` ends with a carrier picker beside the projection rather than the
+grid of sixty hub cards it used to carry. Choosing an airline lifts its bases
+out of the map in its own colour, draws arcs from the primary to the rest, and
+dims every other hub so the carrier is still seen in context. `initHubExplorer()`
+drives it; the base layer — ellipse, graticule and coastlines — comes from
+`mapBase()`, shared with the route map.
+
+Brand colours are chosen against a white page, and seven of the seventeen fall
+below 2.6:1 on the navy map — Dumont's sits at 1.47, which is invisible.
+`inkTint()` raises a colour's lightness in HSL until it clears 3.6:1, keeping
+hue and saturation, so the airline still reads as itself. A test asserts every
+member clears the threshold, so a new member with a dark livery cannot quietly
+disappear.
 
 ### The member rail
 

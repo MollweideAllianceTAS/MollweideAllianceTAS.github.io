@@ -8,7 +8,7 @@ vm.createContext(ctx);
 vm.runInContext(fs.readFileSync('assets/js/data.js','utf8'), ctx);
 vm.runInContext(fs.readFileSync('assets/js/site.js','utf8'), ctx);
 // const-declared bindings are not properties of the VM global; surface them.
-vm.runInContext('globalThis._x = {airport, memberOf, distKm, hhmm, durTxt, money, CABINS, AIRCRAFT, MEMBERS, AIRPORTS, ALLIANCE, TIERS, PRESS, HERO_CITIES, PROGRAMME, LOUNGES, JOIN};', ctx);
+vm.runInContext('globalThis._x = {airport, memberOf, distKm, hhmm, durTxt, money, CABINS, AIRCRAFT, MEMBERS, AIRPORTS, ALLIANCE, TIERS, PRESS, HERO_CITIES, PROGRAMME, LOUNGES, JOIN, inkTint};', ctx);
 Object.assign(ctx, ctx._x);
 const S = ctx;
 let fails = 0;
@@ -97,6 +97,28 @@ S.LOUNGES.forEach(l => {
 });
 ok('Every lounge resolves to a real airport and operator', loungeRefs, S.LOUNGES.length + ' lounges');
 ok('Every lounge photo that is set exists on disk', loungePhotos);
+// --- member colours on the dark map ----------------------------------------
+const _lin = v => (v /= 255) <= 0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055, 2.4);
+const _lum = h => { const c = [1,3,5].map(i => parseInt(h.substr(i,2),16));
+                    return 0.2126*_lin(c[0]) + 0.7152*_lin(c[1]) + 0.0722*_lin(c[2]); };
+const _cr  = (a,b) => { const x = _lum(a), y = _lum(b);
+                        return (Math.max(x,y)+0.05) / (Math.min(x,y)+0.05); };
+const INK = '#071A45';
+let tinted = true, worst = 99, lifted = 0;
+S.MEMBERS.forEach(m => {
+  const t = S.inkTint(m.color);
+  if (t !== m.color) lifted++;
+  const c = _cr(t, INK);
+  worst = Math.min(worst, c);
+  if (c < 3.5) { tinted = false; console.log('        ' + m.code + ' ' + m.color + ' -> ' + t + ' only ' + c.toFixed(2) + ':1'); }
+});
+ok('Every member colour is legible on the dark map', tinted,
+   'worst ' + worst.toFixed(2) + ':1 after lifting ' + lifted + ' of ' + S.MEMBERS.length);
+ok('inkTint leaves an already-legible colour alone',
+   S.inkTint('#19A7DE') === '#19A7DE');
+ok('inkTint returns a usable hex for a near-black brand colour',
+   /^#[0-9a-f]{6}$/.test(S.inkTint('#2A2F38')), S.inkTint('#2A2F38'));
+
 // --- joining ---------------------------------------------------------------
 ok('Both joinable groups are configured', S.JOIN.length === 2,
    S.JOIN.map(j => j.name).join(' / '));
