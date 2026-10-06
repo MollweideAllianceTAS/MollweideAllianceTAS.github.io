@@ -124,6 +124,14 @@ const MEMBERS = [
           'and San Francisco and feeding both gateways from across the West Coast.'
   },
   {
+    name:'Pacific Air', code:'PA', country:'United States',
+    color:'#01C7FC', tail:'assets/img/members/pacific-air.webp',
+    hubs:['SFO','BOS','HNL','DEN','MIA','IAH'], focus:[], joined:2026,
+    blurb:'A United States premium carrier operating more than 800 aircraft ' +
+          'across a rapidly growing global network, with service to six ' +
+          'continents and over thirty countries.'
+  },
+  {
     name:'Volare', code:'VO', country:'Italy',
     color:'#1E7A3E', tail:'assets/img/members/volare.webp',
     hubs:['LIN','MXP','FCO','PMO','NAP'], focus:[], joined:2026,
@@ -146,6 +154,14 @@ const MEMBERS = [
     blurb:'An eighteen-base operation spanning the Pacific, Southeast Asia and ' +
           'the Indian Ocean, reaching as far as Santiago, São Paulo and ' +
           'Johannesburg from its Brisbane base.'
+  },
+  {
+    name:'Jet Oceania', code:'JO', country:'Australia',
+    color:'#00398A', tail:'assets/img/members/jet-oceania.webp',
+    hubs:['BNE','SYD','CNS','PER'], focus:[], joined:2026,
+    blurb:'The alliance\'s second Australian member, operating from Brisbane ' +
+          'with further bases at Sydney, Cairns and Perth, linking the east ' +
+          'coast to the west and north.'
   },
   {
     name:'MaraJet', code:'MJ', country:'Kenya',
@@ -280,7 +296,9 @@ const AIRPORTS = [
   { code:'TPE', city:'Taipei',        name:'Taoyuan Intl',             country:'Taiwan',       lat:25.08, lon:121.23 },
   { code:'MNL', city:'Manila',        name:'Ninoy Aquino Intl',        country:'Philippines',  lat:14.51, lon:121.02, hub:true },
   { code:'CGK', city:'Jakarta',       name:'Soekarno–Hatta',           country:'Indonesia',    lat:-6.13, lon:106.66, hub:true },
-  { code:'SYD', city:'Sydney',        name:'Kingsford Smith',          country:'Australia',    lat:-33.94,lon:151.18 },
+  { code:'SYD', city:'Sydney',        name:'Kingsford Smith',          country:'Australia',    lat:-33.94,lon:151.18, hub:true },
+  { code:'CNS', city:'Cairns',        name:'Cairns Airport',           country:'Australia',    lat:-16.88,lon:145.76, hub:true },
+  { code:'PER', city:'Perth',         name:'Perth Airport',            country:'Australia',    lat:-31.94,lon:115.97, hub:true },
   { code:'MEL', city:'Melbourne',     name:'Tullamarine',              country:'Australia',    lat:-37.67,lon:144.84 },
   { code:'AKL', city:'Auckland',      name:'Auckland Intl',            country:'New Zealand',  lat:-37.01,lon:174.79 },
   { code:'NAN', city:'Nadi',          name:'Nadi Intl',                country:'Fiji',         lat:-17.76,lon:177.44 },
@@ -290,7 +308,10 @@ const AIRPORTS = [
   { code:'ORD', city:'Chicago',       name:'O\'Hare',                  country:'United States',lat:41.98, lon:-87.90 },
   { code:'SEA', city:'Seattle',       name:'Seattle–Tacoma',           country:'United States',lat:47.45, lon:-122.31},
   { code:'DFW', city:'Dallas',        name:'Dallas/Fort Worth',        country:'United States',lat:32.90, lon:-97.04 },
-  { code:'MIA', city:'Miami',         name:'Miami Intl',               country:'United States',lat:25.80, lon:-80.29 },
+  { code:'MIA', city:'Miami',         name:'Miami Intl',               country:'United States',lat:25.80, lon:-80.29, hub:true },
+  { code:'BOS', city:'Boston',        name:'Logan Intl',               country:'United States',lat:42.36, lon:-71.01, hub:true },
+  { code:'DEN', city:'Denver',        name:'Denver Intl',              country:'United States',lat:39.86, lon:-104.67,hub:true },
+  { code:'IAH', city:'Houston',       name:'George Bush Intl',         country:'United States',lat:29.98, lon:-95.34, hub:true },
   { code:'YYZ', city:'Toronto',       name:'Pearson',                  country:'Canada',       lat:43.68, lon:-79.63 },
   { code:'YVR', city:'Vancouver',     name:'Vancouver Intl',           country:'Canada',       lat:49.19, lon:-123.18},
   { code:'CUN', city:'Cancún',        name:'Cancún Intl',              country:'Mexico',       lat:21.04, lon:-86.87 },
@@ -346,7 +367,7 @@ const AIRCRAFT = [
 const PROGRAMME = 'Elara';
 const TIERS = [
   { name:'Member', need:0,      color:'#8FA6C4',
-    perks:['Mileage accrual across all seventeen carriers','Online check-in','Member fares'] },
+    perks:['Mileage accrual across all nineteen carriers','Online check-in','Member fares'] },
   { name:'Select', need:25000,  color:'#4E9BD4',
     perks:['Priority check-in','One additional checked bag','Preferred seating'] },
   { name:'Strata', need:60000,  color:'#1B4A8F',
@@ -484,6 +505,14 @@ const LOUNGES = [
     photo:'assets/img/lounges/strayajet-bne.jpg',
     access:['Business and First', 'Strata and Aurora members'],
     amenities:['All-day dining','Shower suites','Apron view','Work booths','Wi-Fi']
+  },
+  {
+    name:'Jet Oceania Lounge', operator:'JO', airport:'BNE',
+    location:'International terminal, level 3, past the central atrium',
+    hours:'04:30 – 23:30',
+    photo:'assets/img/lounges/jet-oceania-bne.jpg',
+    access:['Business and First', 'Strata and Aurora members'],
+    amenities:['Tended bar','Barista coffee','Hot kitchen','Apron view','Wi-Fi']
   },
   {
     name:'Eagle\'s Nest', operator:'PL', airport:'WAW',

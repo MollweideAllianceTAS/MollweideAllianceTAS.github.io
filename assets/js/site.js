@@ -536,8 +536,8 @@ function initRail(rail) {
   sync();
 }
 
-/* Brand colours are picked against a white page. Seven of the seventeen fall
-   under 2.6:1 on the navy map — Dumont's sits at 1.47, which is invisible —
+/* Brand colours are picked against a white page, so most of them fall short
+   on the navy map — Dumont's sits at 1.47, which is invisible —
    and a couple of the brighter ones are weak as small text on white. This
    walks a colour's lightness away from whatever it is sitting on until it
    clears a comfortable contrast, keeping hue and saturation so the airline

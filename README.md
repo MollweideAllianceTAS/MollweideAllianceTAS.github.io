@@ -199,8 +199,8 @@ the explorer paints on two surfaces. `tintOn(hex, bg)` walks a colour's
 lightness away from whichever ground it is on until it clears 3.6:1, keeping
 hue and saturation so the airline still reads as itself — up against the map's
 navy, down against the white section. Brand colours are chosen for white, so
-fifteen of the seventeen need lifting for the map (Dumont's sits at 1.47:1,
-which is invisible) and two need darkening for the page. A test asserts every
+sixteen of the nineteen need lifting for the map (Dumont's sits at 1.47:1,
+which is invisible) and three need darkening for the page. A test asserts every
 member clears the threshold on both, so a new member with an awkward livery
 colour cannot quietly disappear.
 
@@ -217,7 +217,7 @@ empty `<svg>`.
 ### The member rail
 
 On the home page the member liveries run along one horizontal rail rather than
-wrapping into rows — seventeen tails stacked four deep was more page than the
+wrapping into rows — nineteen tails stacked four deep was more page than the
 section warranted. `members.html` still shows the full wall; the difference is
 the `liveries--rail` class on the container.
 
