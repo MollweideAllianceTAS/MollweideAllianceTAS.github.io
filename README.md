@@ -187,19 +187,32 @@ sent — it currently reads "the alliance Discord" as a placeholder.
 
 ### The hub explorer
 
-`network.html` ends with a carrier picker beside the projection rather than the
-grid of sixty hub cards it used to carry. Choosing an airline lifts its bases
+`network.html` is a carrier picker beside the projection. It replaced a grid of
+sixty hub cards, and then the full route map that used to sit above it. Choosing an airline lifts its bases
 out of the map in its own colour, draws arcs from the primary to the rest, and
 dims every other hub so the carrier is still seen in context. `initHubExplorer()`
 drives it; the base layer — ellipse, graticule and coastlines — comes from
 `mapBase()`, shared with the route map.
 
-Brand colours are chosen against a white page, and seven of the seventeen fall
-below 2.6:1 on the navy map — Dumont's sits at 1.47, which is invisible.
-`inkTint()` raises a colour's lightness in HSL until it clears 3.6:1, keeping
-hue and saturation, so the airline still reads as itself. A test asserts every
-member clears the threshold, so a new member with a dark livery cannot quietly
-disappear.
+The section runs light and only the map panel inside `.map-frame` is dark, so
+the explorer paints on two surfaces. `tintOn(hex, bg)` walks a colour's
+lightness away from whichever ground it is on until it clears 3.6:1, keeping
+hue and saturation so the airline still reads as itself — up against the map's
+navy, down against the white section. Brand colours are chosen for white, so
+fifteen of the seventeen need lifting for the map (Dumont's sits at 1.47:1,
+which is invisible) and two need darkening for the page. A test asserts every
+member clears the threshold on both, so a new member with an awkward livery
+colour cannot quietly disappear.
+
+### The route map
+
+`renderMap()` draws the full network: trunk arcs between primary hubs, feeders,
+and a spoke from every destination. **Nothing calls it at the moment.** It was
+on the home page and above the hub explorer, and both were removed — the
+explorer answers the same question with far less on screen. The function, its
+`.map__*` styles and its tests are kept because it is the piece the alliance is
+named for, and putting it back is one call against a `.map-frame` holding an
+empty `<svg>`.
 
 ### The member rail
 

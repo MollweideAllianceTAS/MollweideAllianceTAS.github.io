@@ -74,7 +74,7 @@
         <p class="eyebrow" data-rv>The alliance</p>
         <h2 class="display" data-rv>Named for a projection that <b>shows the world at true size.</b></h2>
       </div>
-      <a class="btn btn--line" href="members.html" data-rv>All member airlines</a>
+      <a class="btn btn--line" href="network.html" data-rv>The route network</a>
     </div>
     <div class="two-col">
       <p class="lede" data-rv>Mollweide Alliance brings seventeen independently operated airlines together under one standard of service, one loyalty programme and one coordinated schedule. The name comes from the equal-area projection that shows every part of the world at its true size — a fair description of how the network is put together, region by region, around the carriers that know each one best.</p>
@@ -101,22 +101,6 @@
       <button class="rail__nav rail__nav--next" type="button" data-rail="next" aria-label="Next airlines">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
       </button>
-    </div>
-  </div>
-</section>
-
-<section class="section on-ink" style="background:var(--blue-ink)">
-  <div class="wrap">
-    <div class="sec-head">
-      <div><p class="eyebrow" data-rv>The network</p>
-      <h2 class="display" data-rv>Drawn on an <b>equal-area projection</b></h2>
-      <p class="lede mt-2" data-rv>Every route below is a true great circle, plotted on the Mollweide projection the alliance is named for.</p></div>
-      <a class="btn btn--ghost" href="network.html" data-rv>Network detail</a>
-    </div>
-    <div class="map-frame" data-rv><svg id="map" role="img" aria-label="Mollweide Alliance route network on an equal-area world projection"></svg></div>
-    <div class="map-legend">
-      <span><i></i>Alliance hub</span><span><i class="spoke"></i>Destination</span>
-      <span><i class="line"></i>Great-circle route</span>
     </div>
   </div>
 </section>
@@ -185,7 +169,6 @@
   renderMembers(document.getElementById('membersHome'));
   initRail(document.querySelector('.rail'));
   startCityRotator(document.getElementById('cityA'), document.getElementById('cityB'));
-  renderMap(document.getElementById('map'));
   document.getElementById('ftMembers').innerHTML =
     MEMBERS.slice(0,6).map(m => '<li><a href="members.html#'+m.code+'">'+ (m.short||m.name) +'</a></li>').join('');
 </script>

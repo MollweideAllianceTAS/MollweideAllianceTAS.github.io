@@ -312,6 +312,11 @@ function mapBase(proj, W, H, lon0) {
   return parts;
 }
 
+/* The full route map. No page draws it at the moment — both places that did
+   were removed because the hub explorer below answers the same question more
+   calmly. Kept because it is the piece the alliance is named for and costs
+   one call to put back: renderMap(document.getElementById('map')) against a
+   .map-frame holding an empty <svg>. */
 function renderMap(svg, opts) {
   if (!svg) return;
   const W = 400, H = 200, lon0 = (opts && opts.lon0) || 10;
@@ -531,19 +536,22 @@ function initRail(rail) {
   sync();
 }
 
-/* Brand colours are picked to work on a white page. Seven of the seventeen
-   fall under 2.6:1 against the navy map — Dumont's sits at 1.47, which is
-   invisible — so anything drawn on ink lifts the colour's lightness until it
-   clears a comfortable contrast. Hue and saturation are kept, so the airline
-   still reads as itself. */
-function inkTint(hex, bg) {
+/* Brand colours are picked against a white page. Seven of the seventeen fall
+   under 2.6:1 on the navy map — Dumont's sits at 1.47, which is invisible —
+   and a couple of the brighter ones are weak as small text on white. This
+   walks a colour's lightness away from whatever it is sitting on until it
+   clears a comfortable contrast, keeping hue and saturation so the airline
+   still reads as itself. Direction follows the background. */
+const MAP_INK = '#0E2A63';          // the lightest part of the map panel
+function tintOn(hex, bg) {
   const rgb = h => [1, 3, 5].map(i => parseInt(h.substr(i, 2), 16));
   const lin = v => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); };
   const lum = c => .2126 * lin(c[0]) + .7152 * lin(c[1]) + .0722 * lin(c[2]);
-  const bgL = lum(rgb(bg || '#071A45'));
+  const bgL = lum(rgb(bg || MAP_INK));
   const cr  = c => { const l = lum(c); return (Math.max(l, bgL) + .05) / (Math.min(l, bgL) + .05); };
   if (!/^#[0-9a-fA-F]{6}$/.test(hex)) return hex;
   if (cr(rgb(hex)) >= 3.6) return hex;
+  const lighten = bgL < 0.18;       // dark ground: go up. Light ground: down.
 
   const [r, g, b] = rgb(hex).map(v => v / 255);
   const mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn;
@@ -562,11 +570,13 @@ function inkTint(hex, bg) {
     const f = n => Math.round(255 * (ll - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))));
     return [f(0), f(8), f(4)];
   };
-  for (let l = l0; l <= .92; l += .02) {
+  const step = lighten ? .02 : -.02;
+  const stop = lighten ? .92 : .06;
+  for (let l = l0; lighten ? l <= stop : l >= stop; l += step) {
     const c = toRgb(h, sat, l);
     if (cr(c) >= 3.6) return '#' + c.map(v => v.toString(16).padStart(2, '0')).join('');
   }
-  return '#FFFFFF';
+  return lighten ? '#FFFFFF' : '#000000';
 }
 
 /* ============================================================================
@@ -598,7 +608,7 @@ function initHubExplorer(root) {
     MEMBERS.slice().sort((a, b) => (a.short || a.name).localeCompare(b.short || b.name))
       .map(m => `
       <button class="hx__opt" type="button" data-code="${m.code}" aria-pressed="false">
-        <i class="hx__dot" style="background:${inkTint(m.color)}"></i>
+        <i class="hx__dot" style="background:${tintOn(m.color, '#FFFFFF')}"></i>
         <span class="hx__name">${m.short || m.name}</span>
         <span class="hx__n">${(m.hubs || []).length}</span>
       </button>`).join('');
@@ -610,7 +620,8 @@ function initHubExplorer(root) {
 
   function draw(code) {
     const m    = code ? MEMBERS.find(x => x.code === code) : null;
-    const tint = m ? inkTint(m.color) : null;
+    const onMap  = m ? tintOn(m.color, MAP_INK)  : null;   // drawn on the dark panel
+    const onPage = m ? tintOn(m.color, '#FFFFFF') : null;   // set on the white section
     const mine = m ? hubsOf(m) : allHubs;
     const set  = new Set(mine.map(a => a.code));
     const parts = mapBase(proj, W, H, lon0);
@@ -620,7 +631,7 @@ function initHubExplorer(root) {
     if (m && mine.length > 1) {
       mine.slice(1).forEach((h, i) => {
         const d = gcPath(mine[0], h, proj, lon0);
-        if (d) parts.push(`<path class="hx__arc" style="stroke:${tint};animation-delay:${i * 45}ms" d="${d}"/>`);
+        if (d) parts.push(`<path class="hx__arc" style="stroke:${onMap};animation-delay:${i * 45}ms" d="${d}"/>`);
       });
     }
 
@@ -638,8 +649,8 @@ function initHubExplorer(root) {
     mine.forEach((a, i) => {
       const [x, y] = proj(a.lat, a.lon);
       const primary = !!m && i === 0;
-      const fill = tint || '#FFFFFF';
-      parts.push(`<circle class="hx__halo" cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="${primary ? 6.2 : 4.6}" style="stroke:${tint || 'var(--sky-soft)'}"/>`);
+      const fill = onMap || '#FFFFFF';
+      parts.push(`<circle class="hx__halo" cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="${primary ? 6.2 : 4.6}" style="stroke:${onMap || 'var(--sky-soft)'}"/>`);
       parts.push(`<circle class="hx__on" cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="${primary ? 3.4 : 2.5}" style="fill:${fill}"><title>${a.city} (${a.code}) \u2014 ${a.name}</title></circle>`);
 
       const Wl = 11, Hl = 5;
@@ -662,7 +673,7 @@ function initHubExplorer(root) {
     if (list) {
       list.innerHTML = mine.map((a, i) => `
         <li class="hx__hub">
-          <span class="hx__code" style="color:${tint || 'var(--sky-soft)'}">${a.code}</span>
+          <span class="hx__code" style="color:${onPage || 'var(--blue)'}">${a.code}</span>
           <span class="hx__city">${a.city}${m && i === 0 ? ' <em>primary</em>' : ''}</span>
           <span class="hx__apt">${a.name}, ${a.country}</span>
         </li>`).join('');

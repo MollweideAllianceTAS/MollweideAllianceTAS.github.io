@@ -521,32 +521,33 @@ header.nav {
   .hubx__side {
     flex-direction: column; overflow-x: visible; overflow-y: auto;
     max-height: 30rem; padding: .25rem .5rem .25rem .25rem;
-    border-right: 1px solid var(--rule-ink);
+    border-right: 1px solid var(--rule);
   }
 }
 
 .hx__opt {
   flex: 0 0 auto; display: flex; align-items: center; gap: .625rem;
   padding: .5625rem .75rem; border-radius: var(--r); cursor: pointer;
-  background: transparent; border: 1px solid var(--rule-ink);
-  font-family: var(--f-ui); font-size: .8125rem; color: var(--tx-on-ink-soft);
+  background: transparent; border: 1px solid var(--rule);
+  font-family: var(--f-ui); font-size: .8125rem; color: var(--tx-soft);
   text-align: left; white-space: nowrap;
   transition: background .18s var(--ease), color .18s var(--ease), border-color .18s var(--ease);
 }
 @media (min-width: 900px) { .hx__opt { width: 100%; border-color: transparent; } }
-.hx__opt:hover { background: rgba(255,255,255,.06); color: #fff; }
+.hx__opt:hover { background: var(--sky-wash); color: var(--tx); }
 .hx__opt[aria-pressed="true"] {
-  background: rgba(255,255,255,.1); color: #fff; border-color: rgba(255,255,255,.28);
+  background: var(--sky-pale); color: var(--blue); border-color: var(--rule-strong);
+  font-weight: 600;
 }
 .hx__dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
-.hx__dot--all { background: linear-gradient(135deg, var(--sky-soft), var(--sky)); }
+.hx__dot--all { background: linear-gradient(135deg, var(--sky), var(--blue)); }
 .hx__name { flex: 1 1 auto; font-weight: 500; }
 .hx__n {
   font-family: var(--f-data); font-size: .6875rem; opacity: .65;
   padding-left: .5rem;
 }
 
-.hx__note { font-size: .8125rem; color: var(--tx-on-ink-soft); margin-top: 1rem; }
+.hx__note { font-size: .8125rem; color: var(--tx-soft); margin-top: 1rem; }
 
 .hx__off { fill: rgba(255,255,255,.2); transition: fill .25s var(--ease); }
 .hx__halo { fill: none; stroke-width: .7; opacity: .55; }
@@ -566,23 +567,16 @@ header.nav {
 .hx__hub {
   display: grid; grid-template-columns: 2.75rem 1fr; gap: .125rem .75rem;
   padding: .625rem .75rem; border-radius: var(--r);
-  background: rgba(255,255,255,.045); border: 1px solid var(--rule-ink);
+  background: var(--sky-wash); border: 1px solid var(--rule);
 }
 .hx__code { grid-row: span 2; font-family: var(--f-data); font-size: .8125rem;
   font-weight: 500; letter-spacing: .04em; align-self: center; }
-.hx__city { font-size: .875rem; font-weight: 600; color: #fff; }
+.hx__city { font-size: .875rem; font-weight: 600; color: var(--tx); }
 .hx__city em { font-style: normal; font-size: .625rem; font-weight: 700;
-  letter-spacing: .1em; text-transform: uppercase; color: var(--sky-soft);
+  letter-spacing: .1em; text-transform: uppercase; color: var(--blue);
   margin-left: .375rem; }
-.hx__apt { font-size: .75rem; color: var(--tx-on-ink-soft); }
+.hx__apt { font-size: .75rem; color: var(--tx-soft); }
 
-.map-legend { display: flex; flex-wrap: wrap; gap: .875rem 1.75rem; margin-top: 1.25rem;
-  font-family: var(--f-label); font-size: .625rem; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--tx-on-ink-soft); }
-.map-legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%;
-  background: #fff; border: 1.5px solid var(--sky); margin-right: .5rem; vertical-align: -1px; }
-.map-legend i.spoke { background: rgba(255,255,255,.62); border: 0; width: 5px; height: 5px; }
-.map-legend i.line { width: 20px; height: 1px; border-radius: 0; background: var(--sky-soft); border: 0; vertical-align: 4px; }
 
 /* ==========================================================================
    BOOKING — search

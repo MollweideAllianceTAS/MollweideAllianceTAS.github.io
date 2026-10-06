@@ -56,23 +56,12 @@
   </div>
 </section>
 
-<section class="section on-ink" style="background:var(--blue-ink)">
-  <div class="wrap">
-    <div class="map-frame"><svg id="map" role="img" aria-label="Mollweide Alliance route network"></svg></div>
-    <div class="map-legend">
-      <span><i></i>Alliance hub</span><span><i class="spoke"></i>Destination</span>
-      <span><i class="line"></i>Great-circle route</span>
-      <span style="margin-left:auto;opacity:.7">Projection: Mollweide (equal-area) · central meridian 10°E</span>
-    </div>
-  </div>
-</section>
-
-<section class="section on-ink" id="hubs" style="background:var(--blue-ink)">
+<section class="section" id="hubs">
   <div class="wrap">
     <div class="sec-head">
       <div><p class="eyebrow">Hub airports</p>
       <h2 class="display">Principal <b>connecting points.</b></h2>
-      <p class="lede mt-2">Choose a carrier to lift its own bases out of the network. The rest of the alliance stays on the map, so you can see where each airline sits within it.</p></div>
+      <p class="lede mt-2">Choose a carrier to lift its own bases out of the network. The rest of the alliance stays on the map, so you can see where each airline sits within it — plotted on the Mollweide equal-area projection the alliance is named for, central meridian 10&deg;E.</p></div>
     </div>
 
     <div class="hubx" id="hubx">
@@ -144,7 +133,6 @@
 <script src="assets/js/data.js"></script>
 <script src="assets/js/site.js"></script>
 <script>
-  renderMap(document.getElementById('map'));
   document.getElementById('ftMembers').innerHTML =
     MEMBERS.slice(0,6).map(m => '<li><a href="members.html#'+m.code+'">'+ (m.short||m.name) +'</a></li>').join('');
 

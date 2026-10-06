@@ -153,7 +153,7 @@ const index = head('Mollweide Alliance', 'Seventeen airlines, one network. Explo
         <p class="eyebrow" data-rv>The alliance</p>
         <h2 class="display" data-rv>Named for a projection that <b>shows the world at true size.</b></h2>
       </div>
-      <a class="btn btn--line" href="members.html" data-rv>All member airlines</a>
+      <a class="btn btn--line" href="network.html" data-rv>The route network</a>
     </div>
     <div class="two-col">
       <p class="lede" data-rv>Mollweide Alliance brings seventeen independently operated airlines together under one standard of service, one loyalty programme and one coordinated schedule. The name comes from the equal-area projection that shows every part of the world at its true size — a fair description of how the network is put together, region by region, around the carriers that know each one best.</p>
@@ -184,22 +184,6 @@ const index = head('Mollweide Alliance', 'Seventeen airlines, one network. Explo
   </div>
 </section>
 
-<section class="section on-ink" style="background:var(--blue-ink)">
-  <div class="wrap">
-    <div class="sec-head">
-      <div><p class="eyebrow" data-rv>The network</p>
-      <h2 class="display" data-rv>Drawn on an <b>equal-area projection</b></h2>
-      <p class="lede mt-2" data-rv>Every route below is a true great circle, plotted on the Mollweide projection the alliance is named for.</p></div>
-      <a class="btn btn--ghost" href="network.html" data-rv>Network detail</a>
-    </div>
-    <div class="map-frame" data-rv><svg id="map" role="img" aria-label="Mollweide Alliance route network on an equal-area world projection"></svg></div>
-    <div class="map-legend">
-      <span><i></i>Alliance hub</span><span><i class="spoke"></i>Destination</span>
-      <span><i class="line"></i>Great-circle route</span>
-    </div>
-  </div>
-</section>
-
 <section class="band section--tight">
   <div class="wrap band__in">
     <div>
@@ -214,7 +198,6 @@ const index = head('Mollweide Alliance', 'Seventeen airlines, one network. Explo
   renderMembers(document.getElementById('membersHome'));
   initRail(document.querySelector('.rail'));
   startCityRotator(document.getElementById('cityA'), document.getElementById('cityB'));
-  renderMap(document.getElementById('map'));
   document.getElementById('ftMembers').innerHTML =
     MEMBERS.slice(0,6).map(m => '<li><a href="members.html#'+m.code+'">'+ (m.short||m.name) +'</a></li>').join('');
 </script>
@@ -275,23 +258,12 @@ const network = head('Network', 'The Mollweide Alliance route network, drawn on 
   </div>
 </section>
 
-<section class="section on-ink" style="background:var(--blue-ink)">
-  <div class="wrap">
-    <div class="map-frame"><svg id="map" role="img" aria-label="Mollweide Alliance route network"></svg></div>
-    <div class="map-legend">
-      <span><i></i>Alliance hub</span><span><i class="spoke"></i>Destination</span>
-      <span><i class="line"></i>Great-circle route</span>
-      <span style="margin-left:auto;opacity:.7">Projection: Mollweide (equal-area) · central meridian 10°E</span>
-    </div>
-  </div>
-</section>
-
-<section class="section on-ink" id="hubs" style="background:var(--blue-ink)">
+<section class="section" id="hubs">
   <div class="wrap">
     <div class="sec-head">
       <div><p class="eyebrow">Hub airports</p>
       <h2 class="display">Principal <b>connecting points.</b></h2>
-      <p class="lede mt-2">Choose a carrier to lift its own bases out of the network. The rest of the alliance stays on the map, so you can see where each airline sits within it.</p></div>
+      <p class="lede mt-2">Choose a carrier to lift its own bases out of the network. The rest of the alliance stays on the map, so you can see where each airline sits within it — plotted on the Mollweide equal-area projection the alliance is named for, central meridian 10&deg;E.</p></div>
     </div>
 
     <div class="hubx" id="hubx">
@@ -313,7 +285,6 @@ const network = head('Network', 'The Mollweide Alliance route network, drawn on 
 </section>
 ` + footer() + `
 <script>
-  renderMap(document.getElementById('map'));
   document.getElementById('ftMembers').innerHTML =
     MEMBERS.slice(0,6).map(m => '<li><a href="members.html#'+m.code+'">'+ (m.short||m.name) +'</a></li>').join('');
 
