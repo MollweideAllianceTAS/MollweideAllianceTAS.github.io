@@ -131,6 +131,14 @@ const MEMBERS = [
           'Rome Fiumicino, Palermo and Naples.'
   },
   {
+    name:'PolAir', code:'PL', country:'Poland',
+    color:'#C9240C', tail:'assets/img/members/polair.webp',
+    hubs:['WAW','KRK','SZY'], focus:[], joined:2026,
+    blurb:'The alliance\'s Polish member, linking Central Europe to the wider ' +
+          'network through Warsaw Chopin, with bases at Krakow and ' +
+          'Olsztyn-Mazury serving the south and the north-east.'
+  },
+  {
     name:'StrayaJet', code:'SJ', country:'Australia',
     color:'#AE1457', tail:'assets/img/members/strayajet.webp',
     hubs:['BNE','WLG','NOU','POM','MNL','CGK','HLP','KUL','HND','MLE',
@@ -223,7 +231,9 @@ const AIRPORTS = [
   { code:'ATH', city:'Athens',        name:'Eleftherios Venizelos',    country:'Greece',       lat:37.94, lon: 23.94 },
   { code:'IST', city:'Istanbul',      name:'Istanbul Airport',         country:'Türkiye',      lat:41.26, lon: 28.74 },
   { code:'KBP', city:'Kyiv',          name:'Boryspil',                 country:'Ukraine',      lat:50.34, lon: 30.89 },
-  { code:'WAW', city:'Warsaw',        name:'Chopin',                   country:'Poland',       lat:52.17, lon: 20.97 },
+  { code:'WAW', city:'Warsaw',        name:'Chopin',                   country:'Poland',       lat:52.17, lon: 20.97, hub:true },
+  { code:'KRK', city:'Krakow',        name:'John Paul II',             country:'Poland',       lat:50.08, lon: 19.80, hub:true },
+  { code:'SZY', city:'Olsztyn',       name:'Olsztyn-Mazury',           country:'Poland',       lat:53.48, lon: 20.94, hub:true },
   { code:'CPH', city:'Copenhagen',    name:'Kastrup',                  country:'Denmark',      lat:55.62, lon: 12.66 },
   { code:'ARN', city:'Stockholm',     name:'Arlanda',                  country:'Sweden',       lat:59.65, lon: 17.92 },
   { code:'OSL', city:'Oslo',          name:'Gardermoen',               country:'Norway',       lat:60.19, lon: 11.10 },
@@ -336,7 +346,7 @@ const AIRCRAFT = [
 const PROGRAMME = 'Elara';
 const TIERS = [
   { name:'Member', need:0,      color:'#8FA6C4',
-    perks:['Mileage accrual across all sixteen carriers','Online check-in','Member fares'] },
+    perks:['Mileage accrual across all seventeen carriers','Online check-in','Member fares'] },
   { name:'Select', need:25000,  color:'#4E9BD4',
     perks:['Priority check-in','One additional checked bag','Preferred seating'] },
   { name:'Strata', need:60000,  color:'#1B4A8F',
@@ -466,6 +476,22 @@ const LOUNGES = [
     photo:'assets/img/lounges/dumont-gig.jpg',   // Galeão photograph, reused here
     access:['Business and First', 'Strata and Aurora members'],
     amenities:['Buffet dining','Shower suites','Business desks','Wi-Fi']
+  },
+  {
+    name:'Kangaroo Lounge', operator:'SJ', airport:'BNE',
+    location:'International terminal, level 3, above the gate A concourse',
+    hours:'04:30 – 23:00',
+    photo:'assets/img/lounges/strayajet-bne.jpg',
+    access:['Business and First', 'Strata and Aurora members'],
+    amenities:['All-day dining','Shower suites','Apron view','Work booths','Wi-Fi']
+  },
+  {
+    name:'Eagle\'s Nest', operator:'PL', airport:'WAW',
+    location:'Terminal A, Schengen pier, after security',
+    hours:'05:00 – 22:30',
+    photo:'assets/img/lounges/polair-waw.jpg',
+    access:['Business and First', 'Strata and Aurora members'],
+    amenities:['Polish kitchen','Barista bar','Apron view','Quiet zone','Wi-Fi']
   },
   {
     name:'Marani Lounge', operator:'CS', airport:'TBS',
