@@ -148,7 +148,7 @@ const MEMBERS = [
   },
   {
     name:'StrayaJet', code:'SJ', country:'Australia',
-    color:'#AE1457', tail:'assets/img/members/strayajet.webp',
+    color:'#70153A', tail:'assets/img/members/strayajet.webp',
     hubs:['BNE','WLG','NOU','POM','MNL','CGK','HLP','KUL','HND','MLE',
           'HYD','MCT','RUH','SCL','GRU','JNB','SEZ','TNR'], focus:[], joined:2026,
     blurb:'An eighteen-base operation spanning the Pacific, Southeast Asia and ' +
