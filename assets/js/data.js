@@ -33,6 +33,11 @@ const ALLIANCE = {
    MEMBER AIRLINES
    `tail` is the livery photograph used on member cards.
    `color` tints that airline throughout the UI (result rows, chips, seat maps).
+   `group` is 'connect' for carriers that joined through Mollweide Connect
+   rather than the alliance itself; leave it out for full members, which is
+   what the site assumes. Both groups fly the same network, so a Connect
+   carrier still appears on the wall, on the map and in flight search — it is
+   only labelled differently.
    ========================================================================== */
 
 const MEMBERS = [
@@ -83,6 +88,15 @@ const MEMBERS = [
     blurb:'Operating from Mumbai, Delhi, Bangalore and Kolkata, Aranya ' +
           'Rukmanidoot reinforces the alliance presence in the Indian domestic ' +
           'market. Its flowering livery is among the most recognisable in the network.'
+  },
+  {
+    name:'China Intercontinental Air Systems', short:'CIAS', code:'QH',
+    country:'People\'s Republic of China',
+    color:'#B4191F', tail:'assets/img/members/cias.webp',   // second brand colour: #063A76
+    hubs:['PVG','PEK','KMG','URC','YNT','SZX'], focus:[], joined:2026,
+    blurb:'An actively growing Chinese carrier with big ambitions, flying from ' +
+          'Shanghai Pudong and Beijing Capital with further bases across the ' +
+          'mainland from Kunming to Ürümqi.'
   },
   {
     name:'Avni Airlines', code:'AV', country:'India',
@@ -137,6 +151,15 @@ const MEMBERS = [
     hubs:['LIN','MXP','FCO','PMO','NAP'], focus:[], joined:2026,
     blurb:'The alliance\'s Italian member, operating from both Milan airports, ' +
           'Rome Fiumicino, Palermo and Naples.'
+  },
+  {
+    name:'PJSC AkerAir Ukraine International', short:'AkerAir', code:'5K',
+    country:'Ukraine', group:'connect',
+    color:'#0063D3', tail:'assets/img/members/akerair.webp',  // second brand colour: #FFCC00
+    hubs:['KBP','LWO','OZH','HRK'], focus:[], joined:2026,
+    blurb:'Ukraine\'s largest carrier, flying scheduled and charter services ' +
+          'from Kyiv Boryspil to Europe, Asia, Africa and North America, with ' +
+          'further bases at Lviv, Zaporizhzhia and Kharkiv.'
   },
   {
     name:'PolAir', code:'PL', country:'Poland',
@@ -211,7 +234,11 @@ const AIRPORTS = [
   { code:'BEY', city:'Beirut',        name:'Rafic Hariri Intl',        country:'Lebanon',      lat:33.82, lon: 35.49, hub:true },
   { code:'CAI', city:'Cairo',         name:'Cairo Intl',               country:'Egypt',        lat:30.11, lon: 31.41, hub:true },
   { code:'MEX', city:'Mexico City',   name:'Benito Juárez Intl',       country:'Mexico',       lat:19.44, lon:-99.07, hub:true },
-  { code:'PVG', city:'Shanghai',      name:'Pudong Intl',              country:'China',        lat:31.14, lon:121.81 },
+  { code:'PVG', city:'Shanghai',      name:'Pudong Intl',              country:'China',        lat:31.14, lon:121.81, hub:true },
+  { code:'KMG', city:'Kunming',       name:'Changshui Intl',           country:'China',        lat:25.10, lon:102.93, hub:true },
+  { code:'URC', city:'Ürümqi',        name:'Tianshan Intl',            country:'China',        lat:43.91, lon: 87.47, hub:true },
+  { code:'YNT', city:'Yantai',        name:'Penglai Intl',             country:'China',        lat:37.66, lon:120.98, hub:true },
+  { code:'SZX', city:'Shenzhen',      name:'Bao\'an Intl',             country:'China',        lat:22.64, lon:113.81, hub:true },
   { code:'CKG', city:'Chongqing',     name:'Jiangbei Intl',            country:'China',        lat:29.72, lon:106.64 },
   { code:'LAX', city:'Los Angeles',   name:'Los Angeles Intl',         country:'United States',lat:33.94, lon:-118.41,hub:true },
   { code:'SFO', city:'San Francisco', name:'San Francisco Intl',       country:'United States',lat:37.62, lon:-122.38,hub:true },
@@ -246,7 +273,10 @@ const AIRPORTS = [
   { code:'MUC', city:'Munich',        name:'Franz Josef Strauss',      country:'Germany',      lat:48.35, lon: 11.79 },
   { code:'ATH', city:'Athens',        name:'Eleftherios Venizelos',    country:'Greece',       lat:37.94, lon: 23.94 },
   { code:'IST', city:'Istanbul',      name:'Istanbul Airport',         country:'Türkiye',      lat:41.26, lon: 28.74 },
-  { code:'KBP', city:'Kyiv',          name:'Boryspil',                 country:'Ukraine',      lat:50.34, lon: 30.89 },
+  { code:'KBP', city:'Kyiv',          name:'Boryspil',                 country:'Ukraine',      lat:50.34, lon: 30.89, hub:true },
+  { code:'LWO', city:'Lviv',          name:'Danylo Halytskyi Intl',    country:'Ukraine',      lat:49.81, lon: 23.96, hub:true },
+  { code:'OZH', city:'Zaporizhzhia',  name:'Zaporizhzhia Intl',        country:'Ukraine',      lat:47.87, lon: 35.32, hub:true },
+  { code:'HRK', city:'Kharkiv',       name:'Kharkiv Intl',             country:'Ukraine',      lat:49.92, lon: 36.29, hub:true },
   { code:'WAW', city:'Warsaw',        name:'Chopin',                   country:'Poland',       lat:52.17, lon: 20.97, hub:true },
   { code:'KRK', city:'Krakow',        name:'John Paul II',             country:'Poland',       lat:50.08, lon: 19.80, hub:true },
   { code:'SZY', city:'Olsztyn',       name:'Olsztyn-Mazury',           country:'Poland',       lat:53.48, lon: 20.94, hub:true },
@@ -287,7 +317,7 @@ const AIRPORTS = [
   { code:'SIN', city:'Singapore',     name:'Changi',                   country:'Singapore',    lat: 1.36, lon:103.99 },
   { code:'KUL', city:'Kuala Lumpur',  name:'KLIA',                     country:'Malaysia',     lat: 2.75, lon:101.71, hub:true },
   { code:'HKG', city:'Hong Kong',     name:'Hong Kong Intl',           country:'Hong Kong',    lat:22.31, lon:113.91 },
-  { code:'PEK', city:'Beijing',       name:'Capital Intl',             country:'China',        lat:40.08, lon:116.58 },
+  { code:'PEK', city:'Beijing',       name:'Capital Intl',             country:'China',        lat:40.08, lon:116.58, hub:true },
   { code:'CAN', city:'Guangzhou',     name:'Baiyun Intl',              country:'China',        lat:23.39, lon:113.31 },
   { code:'CTU', city:'Chengdu',       name:'Tianfu Intl',              country:'China',        lat:30.31, lon:104.44 },
   { code:'NRT', city:'Tokyo',         name:'Narita Intl',              country:'Japan',        lat:35.77, lon:140.39 },
@@ -367,7 +397,7 @@ const AIRCRAFT = [
 const PROGRAMME = 'Elara';
 const TIERS = [
   { name:'Member', need:0,      color:'#8FA6C4',
-    perks:['Mileage accrual across all nineteen carriers','Online check-in','Member fares'] },
+    perks:['Mileage accrual across every member carrier','Online check-in','Member fares'] },
   { name:'Select', need:25000,  color:'#4E9BD4',
     perks:['Priority check-in','One additional checked bag','Preferred seating'] },
   { name:'Strata', need:60000,  color:'#1B4A8F',

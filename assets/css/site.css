@@ -346,6 +346,18 @@ header.nav {
   opacity: 0; transform: translateY(5px);
   transition: opacity .3s var(--ease), transform .35s var(--ease-out);
 }
+/* Carriers that joined through Mollweide Connect rather than the alliance
+   itself are marked. Nothing else about them differs here — they fly the
+   same network and appear in the same wall. */
+.livery__grp, .hx__grp {
+  font-style: normal; font-size: .5625rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--sky); border: 1px solid currentColor;
+  border-radius: 2px; padding: .0625rem .25rem; margin-left: .4375rem;
+  vertical-align: .08em;
+}
+.hx__grp { font-size: .5rem; margin-left: .3125rem; }
+
 /* :focus (not :focus-visible) so the name also appears for keyboard users;
    the focus ring itself stays :focus-visible so clicking does not draw one. */
 .livery:hover, .livery:focus { background: var(--sky-wash); outline: none; }

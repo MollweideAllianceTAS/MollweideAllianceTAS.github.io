@@ -484,12 +484,18 @@ function renderMembers(el, limit) {
   /* In a rail the cards sit off to the right of a clipped box, so revealing
      them one by one on intersection would leave most of the line blank until
      it was scrolled to. The rail reveals as a single block instead. */
+  /* The caption carries the trading name: two members are registered under
+     names long enough to wrap, and the caption's height is reserved so that
+     revealing it cannot reflow the wall. The registered name stays on the
+     figure's title and in the image's alt text. */
   const rail = el.classList.contains('liveries--rail');
   el.innerHTML = list.map((m, i) => `
-    <figure class="livery" id="${m.code}" tabindex="0"${rail ? '' : ` data-rv style="transition-delay:${i * 40}ms"`}>
+    <figure class="livery" id="${m.code}" tabindex="0"${
+      m.short ? ` title="${m.name}"` : ''}${rail ? '' : ` data-rv style="transition-delay:${i * 40}ms"`}>
       <img class="livery__img" src="${m.tail}" alt="${m.name} aircraft livery"
            loading="lazy" width="380" height="285" decoding="async">
-      <figcaption class="livery__name">${m.name}</figcaption>
+      <figcaption class="livery__name">${m.short || m.name}${
+        m.group === 'connect' ? ' <span class="livery__grp">Connect</span>' : ''}</figcaption>
     </figure>`).join('');
   if (!rail) observeReveals(el);
 }
@@ -609,7 +615,8 @@ function initHubExplorer(root) {
       .map(m => `
       <button class="hx__opt" type="button" data-code="${m.code}" aria-pressed="false">
         <i class="hx__dot" style="background:${tintOn(m.color, '#FFFFFF')}"></i>
-        <span class="hx__name">${m.short || m.name}</span>
+        <span class="hx__name">${m.short || m.name}${
+          m.group === 'connect' ? ' <em class="hx__grp">Connect</em>' : ''}</span>
         <span class="hx__n">${(m.hubs || []).length}</span>
       </button>`).join('');
 
@@ -680,7 +687,7 @@ function initHubExplorer(root) {
     }
     if (note) {
       note.textContent = m
-        ? `${m.name} operates from ${mine.length} ${mine.length === 1 ? 'base' : 'bases'}, led by ${mine[0] ? mine[0].city : ''}.`
+        ? `${m.short || m.name} operates from ${mine.length} ${mine.length === 1 ? 'base' : 'bases'}, led by ${mine[0] ? mine[0].city : ''}.`
         : `${allHubs.length} hub airports across ${MEMBERS.length} member carriers. Choose a carrier to see its own bases.`;
     }
   }

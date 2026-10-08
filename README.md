@@ -51,6 +51,7 @@ airports or its fares.
 |---|---|
 | Alliance name, tagline, HQ, statement | `ALLIANCE` at the top of `data.js` |
 | Member airlines, hubs, colours, blurbs | `MEMBERS` |
+| Whether a carrier joined via Connect | `group:'connect'` on that member |
 | Airports the search and map know about | `AIRPORTS` |
 | Cabins, fare multipliers, seat layouts | `CABINS` |
 | Aircraft types by range | `AIRCRAFT` |
@@ -167,6 +168,25 @@ lockup in `renderJoin()`.
 The Discord invite is deliberately **not** on the site. It is given in game, and
 the page says so.
 
+### The two groups
+
+A member that joined through **Mollweide Connect** rather than the alliance
+itself carries `group:'connect'`. Full members leave the field out — absence is
+what the site assumes. It is a membership label only: a Connect carrier still
+appears on the member wall, on the map and in flight search, and is marked with
+a small badge on the wall and in the hub explorer. Nothing claims what Connect
+membership does or does not include, because that has not been established —
+the Elara copy says "every member" rather than counting them.
+
+### Counts in the copy
+
+The carrier count appears in nine strings. It used to be typed by hand, which
+went wrong twice — once silently, and once when a find-and-replace for the
+count also rewrote a member's base count. `tools/build-pages.js` now loads
+`data.js` and spells `MEMBERS.length` out itself, so adding a carrier updates
+every page. Nothing else in the copy should carry a number you would have to
+remember to change.
+
 ### Tone
 
 The join and submissions pages are written to invite rather than to instruct.
@@ -199,8 +219,8 @@ the explorer paints on two surfaces. `tintOn(hex, bg)` walks a colour's
 lightness away from whichever ground it is on until it clears 3.6:1, keeping
 hue and saturation so the airline still reads as itself — up against the map's
 navy, down against the white section. Brand colours are chosen for white, so
-sixteen of the nineteen need lifting for the map (Dumont's sits at 1.47:1,
-which is invisible) and three need darkening for the page. A test asserts every
+most need lifting for the map (Dumont's sits at 1.47:1, which is invisible)
+and a few of the brighter ones need darkening for the page. A test asserts every
 member clears the threshold on both, so a new member with an awkward livery
 colour cannot quietly disappear.
 
@@ -217,7 +237,7 @@ empty `<svg>`.
 ### The member rail
 
 On the home page the member liveries run along one horizontal rail rather than
-wrapping into rows — nineteen tails stacked four deep was more page than the
+wrapping into rows — twenty-one tails stacked four deep was more page than the
 section warranted. `members.html` still shows the full wall; the difference is
 the `liveries--rail` class on the container.
 

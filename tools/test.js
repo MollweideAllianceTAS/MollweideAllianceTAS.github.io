@@ -124,6 +124,24 @@ ok('tintOn darkens rather than lightens against a white ground',
 ok('tintOn returns a usable hex for a near-black brand colour',
    /^#[0-9a-f]{6}$/.test(S.tintOn('#2A2F38', S.MAP_INK)), S.tintOn('#2A2F38', S.MAP_INK));
 
+// --- membership groups -----------------------------------------------------
+const GROUPS = ['connect'];   // anything else is a full alliance member
+ok('Every member group is one the site knows about',
+   S.MEMBERS.every(m => !m.group || GROUPS.indexOf(m.group) > -1),
+   S.MEMBERS.filter(m => m.group).map(m => m.code + ':' + m.group).join(' ') || 'all full members');
+/* A Connect carrier is a membership tier, not a separate network: it still has
+   to resolve everywhere a full member does. */
+S.MEMBERS.filter(m => m.group === 'connect').forEach(m => {
+  ok('Connect carrier ' + m.code + ' resolves like any other member',
+     !!m.tail && !!m.color && (m.hubs || []).length > 0 &&
+     (m.hubs || []).every(h => S.airport(h)));
+});
+/* Codes are not always two letters — 5K is a real form — so nothing may
+   assume a leading letter. */
+ok('Every code is two characters, letters or digits',
+   S.MEMBERS.every(m => /^[A-Z0-9]{2}$/.test(m.code)),
+   S.MEMBERS.map(m => m.code).sort().join(' '));
+
 // --- joining ---------------------------------------------------------------
 ok('Both joinable groups are configured', S.JOIN.length === 2,
    S.JOIN.map(j => j.name).join(' / '));
