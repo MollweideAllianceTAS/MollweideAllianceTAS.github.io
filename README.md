@@ -64,8 +64,8 @@ airports or its fares.
 | Currency | `CURRENCY` near the top of `assets/js/site.js` |
 
 Items marked `// TODO` in `data.js` are guesses worth confirming — currently the
-founding year, the aircraft count, the HQ city, and **Californio Air's hub**
-(assumed LAX with SFO as a focus city, since you didn't specify one).
+founding year, the aircraft count, the HQ city, and one member's hub, which
+was assumed because none was specified.
 
 ### Adding a member airline
 
@@ -118,23 +118,9 @@ codes, seat numbers, booking references and map labels. The full list is the
 
 A member's bases are drawn on the network map as follows: carriers with four or
 fewer interconnect all of them, while a carrier with more radiates from its
-first listed hub. Avni Airlines has seventeen bases and StrayaJet eighteen — drawing every pair
-would have added well over 250 lines between them and buried the map under two
-airlines' networks. The first entry in a member's `hubs` array is therefore its primary
+first listed hub. Some members have well over a dozen bases — drawing every pair
+would add hundreds of lines and bury the map under a handful of networks. The first entry in a member's `hubs` array is therefore its primary
 hub, and worth putting in a sensible order.
-
-### The two Aranya carriers
-
-**Aranya Air** and **Aranya Rukmanidoot** are separate members, not one airline
-under two names — the press releases of 23 and 27 September 2026 announce them
-individually. They carry the same flowering livery on different airframes:
-Aranya Air on the jet (`aranya-air.webp`), Aranya Rukmanidoot on the turboprop
-(`aranya-rukmanidoot.webp`). **That pairing is a guess**; swap the two `tail:`
-paths in `data.js` if it is the wrong way round.
-
-Their hubs follow their respective releases — Aranya Air at Mumbai, Delhi,
-Bangalore, Hyderabad and Chennai; Aranya Rukmanidoot at Mumbai, Delhi,
-Bangalore and Kolkata.
 
 ### Where things live
 
@@ -219,7 +205,7 @@ the explorer paints on two surfaces. `tintOn(hex, bg)` walks a colour's
 lightness away from whichever ground it is on until it clears 3.6:1, keeping
 hue and saturation so the airline still reads as itself — up against the map's
 navy, down against the white section. Brand colours are chosen for white, so
-most need lifting for the map (Dumont's sits at 1.47:1, which is invisible)
+most need lifting for the map (the darkest sit below 1.5:1, which is invisible)
 and a few of the brighter ones need darkening for the page. A test asserts every
 member clears the threshold on both, so a new member with an awkward livery
 colour cannot quietly disappear.
@@ -285,9 +271,6 @@ Your supplied key visuals were processed into reusable assets:
   cutouts, so they sit cleanly on any background
 - `assets/img/photos/*.jpg` — the ramp photography with the marketing text cropped out
 
-`assets/img/members/aranya-turboprop.webp` is a spare second Aranya frame that is
-not currently used anywhere.
-
 **To use different artwork**, overwrite these files, keeping the same filenames.
 The livery renders are stored at 760px wide, which is twice their display size.
 
@@ -306,7 +289,7 @@ The livery renders are stored at 760px wide, which is twice their display size.
 - **Routes are generated, not listed.** A direct sector exists when at least one
   member serves either end. If none does, the engine builds a one-stop itinerary
   via the alliance hub with the smallest detour, honouring a 55-minute minimum
-  connection. Interline connections credit both carriers ("Lemanair + Dumont").
+  connection. Interline connections credit both carriers ("Carrier A + Carrier B").
 - **Bookings are stored in `localStorage`** under the key `mwa-bookings`. Nothing
   is sent anywhere — there is no backend and no analytics. Bookings are per
   browser and per device, and clearing browser data removes them.

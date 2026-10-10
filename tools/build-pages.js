@@ -25,7 +25,7 @@ const DATA = (() => {
 })();
 const WORDS = ['zero','one','two','three','four','five','six','seven','eight',
   'nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen',
-  'seventeen','eighteen','${CARRIERS}','twenty'];
+  'seventeen','eighteen','nineteen','twenty'];
 const TENS = { 20:'twenty', 30:'thirty', 40:'forty', 50:'fifty' };
 const words = n => n <= 20 ? WORDS[n]
   : (TENS[Math.floor(n / 10) * 10] || String(n)) + (n % 10 ? '-' + WORDS[n % 10] : '');
@@ -142,7 +142,7 @@ const footer = () => `
 /* ========================================================================== */
 /*  INDEX                                                                     */
 /* ========================================================================== */
-const index = head('Mollweide Alliance', '${Carriers} airlines, one network. Explore the Mollweide Alliance route map, member carriers and book a simulated flight.')
+const index = head('Mollweide Alliance', `${Carriers} airlines, one network. Explore the Mollweide Alliance route map, member carriers and book a simulated flight.`)
 + chrome('index.html') + `
 <section class="hero">
   <img class="hero__bg" src="assets/img/photos/hero-departures.jpg" alt="" width="1800" height="667" fetchpriority="high">
@@ -225,7 +225,7 @@ const index = head('Mollweide Alliance', '${Carriers} airlines, one network. Exp
 /* ========================================================================== */
 /*  MEMBERS                                                                   */
 /* ========================================================================== */
-const members = head('Member airlines', 'The ${CARRIERS} carriers of the Mollweide Alliance, their hubs and home markets.')
+const members = head('Member airlines', `The ${CARRIERS} carriers of the Mollweide Alliance, their hubs and home markets.`)
 + chrome('members.html') + `
 <section class="phead">
   <img class="phead__bg" src="assets/img/photos/lineup-four.jpg" alt="" width="1440" height="380">

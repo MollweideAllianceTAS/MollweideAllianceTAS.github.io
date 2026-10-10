@@ -146,6 +146,14 @@ const MEMBERS = [
           'continents and over thirty countries.'
   },
   {
+    name:'Western Airways', code:'WA', country:'United States',
+    color:'#043167', tail:'assets/img/members/western-airways.webp',
+    hubs:['LAX','JFK','DEN','ORD','DXB','MIA'], focus:[], joined:2026,
+    blurb:'A coast-to-coast United States carrier flying from Los Angeles and ' +
+          'New York JFK, with further bases at Denver, Chicago O\'Hare and ' +
+          'Miami, and a long-haul base at Dubai.'
+  },
+  {
     name:'Volare', code:'VO', country:'Italy',
     color:'#1E7A3E', tail:'assets/img/members/volare.webp',
     hubs:['LIN','MXP','FCO','PMO','NAP'], focus:[], joined:2026,
@@ -287,7 +295,7 @@ const AIRPORTS = [
   { code:'ALA', city:'Almaty',        name:'Almaty Intl',              country:'Kazakhstan',   lat:43.35, lon: 77.04 },
   { code:'TAS', city:'Tashkent',      name:'Islam Karimov Intl',       country:'Uzbekistan',   lat:41.26, lon: 69.28 },
   { code:'SKD', city:'Samarkand',     name:'Samarkand Intl',           country:'Uzbekistan',   lat:39.70, lon: 66.98 },
-  { code:'DXB', city:'Dubai',         name:'Dubai Intl',               country:'UAE',          lat:25.25, lon: 55.36 },
+  { code:'DXB', city:'Dubai',         name:'Dubai Intl',               country:'UAE',          lat:25.25, lon: 55.36, hub:true },
   { code:'DOH', city:'Doha',          name:'Hamad Intl',               country:'Qatar',        lat:25.27, lon: 51.61 },
   { code:'RUH', city:'Riyadh',        name:'King Khalid Intl',         country:'Saudi Arabia', lat:24.96, lon: 46.70, hub:true },
   { code:'AMM', city:'Amman',         name:'Queen Alia Intl',          country:'Jordan',       lat:31.72, lon: 35.99 },
@@ -334,8 +342,8 @@ const AIRPORTS = [
   { code:'NAN', city:'Nadi',          name:'Nadi Intl',                country:'Fiji',         lat:-17.76,lon:177.44 },
   { code:'PPT', city:'Papeete',       name:'Faa\'a Intl',              country:'French Polynesia',lat:-17.56,lon:-149.61 },
   { code:'GUM', city:'Guam',          name:'A.B. Won Pat Intl',        country:'Guam',         lat:13.48, lon:144.80 },
-  { code:'JFK', city:'New York',      name:'John F. Kennedy',          country:'United States',lat:40.64, lon:-73.78 },
-  { code:'ORD', city:'Chicago',       name:'O\'Hare',                  country:'United States',lat:41.98, lon:-87.90 },
+  { code:'JFK', city:'New York',      name:'John F. Kennedy',          country:'United States',lat:40.64, lon:-73.78, hub:true },
+  { code:'ORD', city:'Chicago',       name:'O\'Hare',                  country:'United States',lat:41.98, lon:-87.90, hub:true },
   { code:'SEA', city:'Seattle',       name:'Seattle–Tacoma',           country:'United States',lat:47.45, lon:-122.31},
   { code:'DFW', city:'Dallas',        name:'Dallas/Fort Worth',        country:'United States',lat:32.90, lon:-97.04 },
   { code:'MIA', city:'Miami',         name:'Miami Intl',               country:'United States',lat:25.80, lon:-80.29, hub:true },
