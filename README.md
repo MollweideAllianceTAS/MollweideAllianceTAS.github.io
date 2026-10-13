@@ -106,6 +106,10 @@ much or little they sent:
    membership group with the year joined.
 3. **Network** — the `network` paragraphs, every hub, and the key `routes`
    grouped by the hub they leave from.
+
+`founded` and `routes` are optional. If a member did not give a year, or named
+regions rather than airport pairs, leave the field out: the Founded row or the
+route list is simply not drawn. Do not fill either in by guessing.
 4. **Fleet** — `fleet.current`, grouped by manufacturer, then
    `fleet.incoming` under *Joining the fleet* if there is anything in it.
    Notes such as *Leased* or an aircraft's role sit under the type.

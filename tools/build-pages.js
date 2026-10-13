@@ -886,8 +886,8 @@ const airlinePage = m => {
       <dl class="al-facts">
         <div><dt>Airline code</dt><dd><span class="code">${m.code}</span></dd></div>
         <div><dt>Country</dt><dd>${esc(m.country)}</dd></div>
-        <div><dt>Founded</dt><dd>${esc(P.founded)}</dd></div>
-        <div><dt>Primary hub</dt><dd>${esc(hub.city)} ${esc(hub.name)} <span class="code">${hub.code}</span></dd></div>
+${P.founded ? `        <div><dt>Founded</dt><dd>${esc(P.founded)}</dd></div>
+` : ''}        <div><dt>Primary hub</dt><dd>${esc(hub.city)} ${esc(hub.name)} <span class="code">${hub.code}</span></dd></div>
         <div><dt>Membership</dt><dd>${group}, since ${m.joined}</dd></div>
       </dl>
     </aside>
@@ -897,14 +897,14 @@ const airlinePage = m => {
 <section class="section on-wash">
   <div class="wrap">
     <div class="sec-head"><div><p class="eyebrow">Network</p><h2 class="display">Where it <b>flies.</b></h2></div></div>
-    <div class="two-col">
+    <div class="${(P.routes || []).length ? 'two-col' : 'al-solo'}">
       <div>
         ${P.network.map(t => `<p class="body-copy al-p">${esc(t)}</p>`).join('\n        ')}
         <h3 class="al-sub">Hubs</h3>
         <ul class="al-hubs">${m.hubs.map((c, i) => { const a = airport(c); return `
           <li class="al-hub"><span class="al-hub__code code">${c}</span><span class="al-hub__city">${esc(a.city)}${i === 0 ? ' <em>Primary</em>' : ''}</span><span class="al-hub__apt">${esc(a.name)}, ${esc(a.country)}</span></li>`; }).join('')}
         </ul>
-      </div>
+      </div>${(P.routes || []).length ? `
       <div>
         <h3 class="al-sub al-sub--top">Key routes</h3>${[...groupBy(P.routes, r => r[0])].map(([from, rows]) => `
         <div class="al-rgrp">
@@ -913,7 +913,7 @@ const airlinePage = m => {
             <li><span class="code">${to}</span><span class="al-routes__city">${esc(a.city)}</span><span class="al-routes__ctry">${esc(a.country)}</span></li>`; }).join('')}
           </ul>
         </div>`).join('')}
-      </div>
+      </div>` : ''}
     </div>
   </div>
 </section>

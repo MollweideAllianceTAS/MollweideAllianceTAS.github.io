@@ -173,15 +173,15 @@ const profiled = S.MEMBERS.filter(m => m.profile);
 const isEntry = e => Array.isArray(e) && (e.length === 2 || e.length === 3) &&
                      e.every(x => typeof x === 'string' && x.trim() === x && x);
 ok('Every profile has the standard parts',
-   profiled.every(({profile:p}) => /^\d{4}$/.test(p.founded) &&
+   profiled.every(({profile:p}) => (p.founded === undefined || /^\d{4}$/.test(p.founded)) &&
      Array.isArray(p.about) && p.about.length && Array.isArray(p.network) && p.network.length &&
-     Array.isArray(p.routes) && p.routes.length && p.fleet &&
+     (p.routes === undefined || Array.isArray(p.routes) && p.routes.length) && p.fleet &&
      Array.isArray(p.fleet.current) && p.fleet.current.length && Array.isArray(p.fleet.incoming)),
    profiled.map(m => m.code).join(' '));
 ok('Every fleet entry is [maker, type] or [maker, type, note]',
    profiled.every(m => m.profile.fleet.current.concat(m.profile.fleet.incoming).every(isEntry)));
 let routesOK = true;
-profiled.forEach(m => m.profile.routes.forEach(([a, b]) => {
+profiled.forEach(m => (m.profile.routes || []).forEach(([a, b]) => {
   if (!S.airport(a) || !S.airport(b)) { routesOK = false; console.log('        unknown route airport: '+a+'-'+b+' ('+m.code+')'); }
   if (!m.hubs.includes(a)) { routesOK = false; console.log('        route does not start at a hub: '+a+'-'+b+' ('+m.code+')'); }
 }));

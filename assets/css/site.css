@@ -1117,6 +1117,9 @@ footer.ft { background: var(--blue-ink); color: var(--tx-on-ink-soft); }
   letter-spacing: .2em; text-transform: uppercase; color: var(--blue); }
 .al-sub--top { margin-top: 0; }
 
+/* Without a route list the network runs full width; hubs then fill three columns. */
+.al-solo .body-copy { max-width: 68ch; }
+@media (min-width: 1000px) { .al-solo .al-hubs { grid-template-columns: repeat(3, 1fr); } }
 .al-hubs { list-style: none; padding: 0; margin: 0; display: grid; gap: .5rem; grid-template-columns: 1fr; }
 @media (min-width: 620px) { .al-hubs { grid-template-columns: repeat(2, 1fr); } }
 .al-hub { display: grid; grid-template-columns: 2.75rem 1fr; gap: .125rem .75rem;
