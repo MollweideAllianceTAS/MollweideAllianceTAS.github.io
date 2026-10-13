@@ -141,14 +141,15 @@ const MEMBERS = [
         'Galeão carries most of the long-haul flying, to Sydney, New York, Los ' +
         'Angeles, western Europe, Lagos, Cape Town and Tbilisi, and on to ' +
         'Papeete by way of Easter Island. Guarulhos adds Sydney, New York, ' +
-        'Miami, London, Madrid, Barcelona, Dubai and Beirut.'
+        'Miami, London, Madrid, Barcelona, Dubai and Beirut, and Bali by way ' +
+        'of Melbourne.'
       ],
       routes:[
         ['GIG','SYD'],['GIG','JFK'],['GIG','STN'],['GIG','LIS'],['GIG','FCO'],
         ['GIG','LOS'],['GIG','PPT','IPC'],['GIG','CPT'],['GIG','LAX'],
         ['GIG','ORY'],['GIG','TBS'],
         ['GRU','SYD'],['GRU','JFK'],['GRU','LHR'],['GRU','MIA'],['GRU','DXB'],
-        ['GRU','BEY'],['GRU','MAD'],['GRU','BCN']
+        ['GRU','BEY'],['GRU','MAD'],['GRU','BCN'],['GRU','DPS','MEL']
       ],
       fleet:{
         current:[
