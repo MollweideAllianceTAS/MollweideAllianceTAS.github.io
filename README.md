@@ -292,9 +292,10 @@ colour. Entries come from `LOUNGES` in `data.js`:
 
 The site deliberately shows **no statistics** — no destination counts, country
 counts, fleet totals or similar. The band that used to carry them has been
-removed from every page. Airline pages follow the same rule: the fleet section
-lists aircraft types, not how many of each, and fleet sizes are left out of the
-profile text.
+removed from every page. Airline pages are the one exception: a member's own
+figures, such as fleet sizes or a route count, may appear on its page when the
+member supplied them, written as they gave them (*35+ aircraft*). Never work
+one out or round one on a member's behalf.
 
 ---
 

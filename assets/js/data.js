@@ -51,7 +51,8 @@ const ALLIANCE = {
                member actually named, never inferred from a region
      fleet     { current:[...], incoming:[...] }, each entry
                [manufacturer, type] or [manufacturer, type, note]
-   No fleet totals or other counts — see "No published figures" in the README.
+   Figures (fleet sizes, route counts) appear only where the member supplied
+   them, and as they supplied them — see "No published figures" in the README.
    ========================================================================== */
 
 const MEMBERS = [
@@ -285,14 +286,15 @@ const MEMBERS = [
         'Polish heritage.'
       ],
       network:[
-        'The European network reaches from Portugal to Romania and Finland. ' +
-        'Long-haul services fly to the United States, Asia, Dubai and Zanzibar.'
+        'More than 140 direct routes reach across Europe, from Portugal to ' +
+        'Romania and Finland. Long-haul services fly to the United States, ' +
+        'Asia, Dubai and Zanzibar.'
       ],
       fleet:{
         current:[
-          ['Boeing','787 Dreamliner','Intercontinental services'],
-          ['Boeing','737 MAX','The European backbone, and medium-haul flying'],
-          ['Embraer','E-Jets','Feeder and short-haul services']
+          ['Boeing','787 Dreamliner','35+ aircraft · Intercontinental services'],
+          ['Boeing','737 MAX','85+ aircraft · The European backbone, and medium-haul flying'],
+          ['Embraer','E-Jets','15+ aircraft · Feeder and short-haul services']
         ],
         incoming:[]
       }
