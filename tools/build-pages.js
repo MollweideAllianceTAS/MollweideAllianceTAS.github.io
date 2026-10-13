@@ -2,7 +2,9 @@
  *  PAGE GENERATOR  —  run with:  node tools/build-pages.js
  *
  *  WARNING: this OVERWRITES every .html file in the project root —
- *  index, members, network, lounges, news, join, submit, book and bookings.
+ *  index, members, network, lounges, news, join, submit, book and bookings,
+ *  plus one airline-<slug>.html per member with a `profile` in data.js.
+ *  Airline pages for members that no longer have a profile are deleted.
  *  The header, footer and nav live here so you
  *  only edit them once. If you have hand-edited those .html files, either
  *  port your change into this file first, or simply never run this script
@@ -17,12 +19,17 @@ const ROOT = path.resolve(__dirname, '..');
 /* The carrier count is written out in nine places. Typing it by hand went
    wrong twice — once silently, and once when a find-and-replace for the count
    also caught a member's base count — so it is read off the data instead. */
+/* site.js is loaded too, so the airline pages are named, and their airports
+   and colours resolved, by exactly the functions the browser uses. */
 const DATA = (() => {
-  const ctx = vm.createContext({ console, Math, Date, JSON });
-  vm.runInContext(fs.readFileSync(`${ROOT}/assets/js/data.js`, 'utf8') +
-                  '\nglobalThis._x = { MEMBERS };', ctx);
+  const ctx = vm.createContext({ console, Math, Date, JSON, Set, Intl, window:{},
+    document:{ addEventListener(){}, querySelector:()=>null, querySelectorAll:()=>[] } });
+  vm.runInContext(fs.readFileSync(`${ROOT}/assets/js/data.js`, 'utf8'), ctx);
+  vm.runInContext(fs.readFileSync(`${ROOT}/assets/js/site.js`, 'utf8'), ctx);
+  vm.runInContext('globalThis._x = { MEMBERS, airport, nameOf, memberPage, tintOn };', ctx);
   return ctx._x;
 })();
+const { airport, nameOf, memberPage, tintOn } = DATA;
 const WORDS = ['zero','one','two','three','four','five','six','seven','eight',
   'nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen',
   'seventeen','eighteen','nineteen','twenty'];
@@ -41,7 +48,7 @@ const NAV = [
   ['bookings.html', 'My bookings']
 ];
 
-const head = (title, desc) => `<!DOCTYPE html>
+const head = (title, desc, image = 'assets/img/photos/lineup-six.jpg') => `<!DOCTYPE html>
 <html lang="en">
 <head>
 <script>document.documentElement.classList.add('js')</script>
@@ -52,7 +59,7 @@ const head = (title, desc) => `<!DOCTYPE html>
 <meta name="theme-color" content="#13398C">
 <meta property="og:title" content="${title === "Mollweide Alliance" ? title : title + " · Mollweide Alliance"}">
 <meta property="og:description" content="${desc}">
-<meta property="og:image" content="assets/img/photos/lineup-six.jpg">
+<meta property="og:image" content="${image}">
 <link rel="icon" href="assets/img/mark-blue.png">
 <link rel="apple-touch-icon" href="assets/img/mark-blue.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -218,7 +225,7 @@ const index = head('Mollweide Alliance', `${Carriers} airlines, one network. Exp
   initRail(document.querySelector('.rail'));
   startCityRotator(document.getElementById('cityA'), document.getElementById('cityB'));
   document.getElementById('ftMembers').innerHTML =
-    MEMBERS.slice(0,6).map(m => '<li><a href="members.html#'+m.code+'">'+ (m.short||m.name) +'</a></li>').join('');
+    MEMBERS.slice(0,6).map(m => '<li><a href="'+(memberPage(m)||'members.html#'+m.code)+'">'+ (m.short||m.name) +'</a></li>').join('');
 </script>
 </body></html>`;
 
@@ -257,7 +264,7 @@ const members = head('Member airlines', `The ${CARRIERS} carriers of the Mollwei
 <script>
   renderMembers(document.getElementById('membersAll'));
   document.getElementById('ftMembers').innerHTML =
-    MEMBERS.slice(0,6).map(m => '<li><a href="members.html#'+m.code+'">'+ (m.short||m.name) +'</a></li>').join('');
+    MEMBERS.slice(0,6).map(m => '<li><a href="'+(memberPage(m)||'members.html#'+m.code)+'">'+ (m.short||m.name) +'</a></li>').join('');
 
 </script>
 </body></html>`;
@@ -305,7 +312,7 @@ const network = head('Network', 'The Mollweide Alliance route network, drawn on 
 ` + footer() + `
 <script>
   document.getElementById('ftMembers').innerHTML =
-    MEMBERS.slice(0,6).map(m => '<li><a href="members.html#'+m.code+'">'+ (m.short||m.name) +'</a></li>').join('');
+    MEMBERS.slice(0,6).map(m => '<li><a href="'+(memberPage(m)||'members.html#'+m.code)+'">'+ (m.short||m.name) +'</a></li>').join('');
 
   initHubExplorer(document.getElementById('hubx'));
 
@@ -446,7 +453,7 @@ const book = head('Book a flight', 'Search the Mollweide Alliance network and ma
 <script src="assets/js/booking.js"></script>
 <script>
   document.getElementById('ftMembers').innerHTML =
-    MEMBERS.slice(0,6).map(m => '<li><a href="members.html#'+m.code+'">'+ (m.short||m.name) +'</a></li>').join('');
+    MEMBERS.slice(0,6).map(m => '<li><a href="'+(memberPage(m)||'members.html#'+m.code)+'">'+ (m.short||m.name) +'</a></li>').join('');
 </script>
 <style>@media(min-width:680px){.pax-row{grid-template-columns:1fr auto!important}.pax-row .field{max-width:16rem}}</style>
 </body></html>`;
@@ -487,7 +494,7 @@ const bookings = head('My bookings', 'Your saved Mollweide Alliance pretend book
 <script src="assets/js/booking.js"></script>
 <script>
   document.getElementById('ftMembers').innerHTML =
-    MEMBERS.slice(0,6).map(m => '<li><a href="members.html#'+m.code+'">'+ (m.short||m.name) +'</a></li>').join('');
+    MEMBERS.slice(0,6).map(m => '<li><a href="'+(memberPage(m)||'members.html#'+m.code)+'">'+ (m.short||m.name) +'</a></li>').join('');
 </script>
 </body></html>`;
 
@@ -540,7 +547,7 @@ const lounges = head('Lounges', 'Find Mollweide Alliance lounges across the netw
 ` + footer() + `
 <script>
   document.getElementById('ftMembers').innerHTML =
-    MEMBERS.slice(0,6).map(m => '<li><a href="members.html#'+m.code+'">'+ (m.short||m.name) +'</a></li>').join('');
+    MEMBERS.slice(0,6).map(m => '<li><a href="'+(memberPage(m)||'members.html#'+m.code)+'">'+ (m.short||m.name) +'</a></li>').join('');
 
   renderTiers(document.getElementById('tiers'));
 
@@ -590,7 +597,7 @@ const news = head('Newsroom', 'Press releases and announcements from the Mollwei
 <script>
   renderPress(document.getElementById('releases'));
   document.getElementById('ftMembers').innerHTML =
-    MEMBERS.slice(0,6).map(m => '<li><a href="members.html#'+m.code+'">'+ (m.short||m.name) +'</a></li>').join('');
+    MEMBERS.slice(0,6).map(m => '<li><a href="'+(memberPage(m)||'members.html#'+m.code)+'">'+ (m.short||m.name) +'</a></li>').join('');
 </script>
 </body></html>`;
 
@@ -729,7 +736,7 @@ const submit = head('Member submissions', 'What member airlines need to send for
 ` + footer() + `
 <script>
   document.getElementById('ftMembers').innerHTML =
-    MEMBERS.slice(0,6).map(m => '<li><a href="members.html#'+m.code+'">'+ (m.short||m.name) +'</a></li>').join('');
+    MEMBERS.slice(0,6).map(m => '<li><a href="'+(memberPage(m)||'members.html#'+m.code)+'">'+ (m.short||m.name) +'</a></li>').join('');
 
   // Generated from the live data so the guidance can never go stale
   document.getElementById('codesInUse').innerHTML =
@@ -827,14 +834,127 @@ const join = head('Join the alliance', 'How to join the Mollweide Alliance or Mo
   renderJoin(document.getElementById('joinGroups'));
   initCopy();
   document.getElementById('ftMembers').innerHTML =
-    MEMBERS.slice(0,6).map(m => '<li><a href="members.html#'+m.code+'">'+ (m.short||m.name) +'</a></li>').join('');
+    MEMBERS.slice(0,6).map(m => '<li><a href="'+(memberPage(m)||'members.html#'+m.code)+'">'+ (m.short||m.name) +'</a></li>').join('');
 </script>
 </body></html>`;
 
 /* ========================================================================== */
+/*  AIRLINE PAGES — one per member with a `profile`                          */
+/*  Every page has the same four parts in the same order — profile, network, */
+/*  fleet, then the booking band — so members read alike whatever they sent. */
+/* ========================================================================== */
+const esc = t => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const groupBy = (rows, key) => rows.reduce((g, r) => {
+  const k = key(r); (g.get(k) || g.set(k, []).get(k)).push(r); return g;
+}, new Map());
+
+const fleetBlock = rows => `
+    <div class="al-fleet">${[...groupBy(rows, r => r[0])].map(([maker, types]) => `
+      <div class="al-fleet__grp">
+        <p class="al-fleet__mk">${esc(maker)}</p>
+        <ul class="al-fleet__list">${types.map(([, type, note]) => `
+          <li><span class="al-fleet__t">${esc(type)}</span>${note ? `<span class="al-fleet__n">${esc(note)}</span>` : ''}</li>`).join('')}
+        </ul>
+      </div>`).join('')}
+    </div>`;
+
+const airlinePage = m => {
+  const P = m.profile, nm = nameOf(m), hub = airport(m.hubs[0]);
+  const group = m.group === 'connect' ? 'Mollweide Connect' : 'Mollweide Alliance';
+  return head(nm, m.blurb, m.tail) + chrome('members.html') + `
+<main class="al" style="--al:${tintOn(m.color, '#FFFFFF')};--al-ink:${tintOn(m.color, '#071A45')}">
+<section class="phead">
+  <img class="phead__bg" src="assets/img/photos/lineup-four.jpg" alt="" width="1440" height="380">
+  <div class="wrap phead__in">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span>/</span> <a href="members.html">Member airlines</a> <span>/</span> ${esc(nm)}</nav>
+    <h1 class="display"><b>${esc(nm)}</b></h1>${m.short ? `
+    <p class="al-reg">${esc(m.name)}</p>` : ''}
+    <div class="brandrule al-rule"></div>
+    <p class="lede mt-3">${esc(m.blurb)}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap two-col">
+    <div>
+      <p class="eyebrow">Profile</p>
+      <h2 class="display">The airline, <b>in brief.</b></h2>
+      ${P.about.map(t => `<p class="body-copy al-p">${esc(t)}</p>`).join('\n      ')}
+    </div>
+    <aside class="al-card">
+      <img class="al-card__img" src="${m.tail}" alt="${esc(m.name)} aircraft livery" width="380" height="285">
+      <dl class="al-facts">
+        <div><dt>Airline code</dt><dd><span class="code">${m.code}</span></dd></div>
+        <div><dt>Country</dt><dd>${esc(m.country)}</dd></div>
+        <div><dt>Founded</dt><dd>${esc(P.founded)}</dd></div>
+        <div><dt>Primary hub</dt><dd>${esc(hub.city)} ${esc(hub.name)} <span class="code">${hub.code}</span></dd></div>
+        <div><dt>Membership</dt><dd>${group}, since ${m.joined}</dd></div>
+      </dl>
+    </aside>
+  </div>
+</section>
+
+<section class="section on-wash">
+  <div class="wrap">
+    <div class="sec-head"><div><p class="eyebrow">Network</p><h2 class="display">Where it <b>flies.</b></h2></div></div>
+    <div class="two-col">
+      <div>
+        ${P.network.map(t => `<p class="body-copy al-p">${esc(t)}</p>`).join('\n        ')}
+        <h3 class="al-sub">Hubs</h3>
+        <ul class="al-hubs">${m.hubs.map((c, i) => { const a = airport(c); return `
+          <li class="al-hub"><span class="al-hub__code code">${c}</span><span class="al-hub__city">${esc(a.city)}${i === 0 ? ' <em>Primary</em>' : ''}</span><span class="al-hub__apt">${esc(a.name)}, ${esc(a.country)}</span></li>`; }).join('')}
+        </ul>
+      </div>
+      <div>
+        <h3 class="al-sub al-sub--top">Key routes</h3>${[...groupBy(P.routes, r => r[0])].map(([from, rows]) => `
+        <div class="al-rgrp">
+          <p class="al-rgrp__from">From ${esc(airport(from).city)} <span class="code">${from}</span></p>
+          <ul class="al-routes">${rows.map(([, to]) => { const a = airport(to); return `
+            <li><span class="code">${to}</span><span class="al-routes__city">${esc(a.city)}</span><span class="al-routes__ctry">${esc(a.country)}</span></li>`; }).join('')}
+          </ul>
+        </div>`).join('')}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="sec-head"><div><p class="eyebrow">Fleet</p><h2 class="display">What it <b>flies.</b></h2></div></div>
+    <h3 class="al-sub al-sub--top">In service</h3>${fleetBlock(P.fleet.current)}${P.fleet.incoming.length ? `
+    <h3 class="al-sub">Joining the fleet</h3>${fleetBlock(P.fleet.incoming)}` : ''}
+  </div>
+</section>
+</main>
+
+<section class="band section--tight">
+  <div class="wrap band__in">
+    <div><h2 class="display" style="font-size:clamp(1.6rem,3.4vw,2.6rem)">Fly ${esc(nm)}, <b>book with the alliance.</b></h2></div>
+    <div class="flexbtns">
+      <a class="btn btn--lg" style="background:#fff;color:var(--blue)" href="book.html">Search flights <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn btn--lg btn--ghost" href="members.html">All members</a>
+    </div>
+  </div>
+</section>
+` + footer() + `
+<script>
+  document.getElementById('ftMembers').innerHTML =
+    MEMBERS.slice(0,6).map(m => '<li><a href="'+(memberPage(m)||'members.html#'+m.code)+'">'+ (m.short||m.name) +'</a></li>').join('');
+</script>
+</body></html>`;
+};
+
+const airlines = Object.fromEntries(DATA.MEMBERS.filter(m => m.profile)
+  .map(m => [memberPage(m), airlinePage(m)]));
+fs.readdirSync(ROOT).filter(f => /^airline-.+\.html$/.test(f) && !airlines[f]).forEach(f => {
+  fs.unlinkSync(`${ROOT}/${f}`);
+  console.log(`  ${f.padEnd(16)} removed (no profile)`);
+});
+
+/* ========================================================================== */
 const pages = { 'index.html': index, 'members.html': members, 'network.html': network,
                 'lounges.html': lounges, 'news.html': news, 'join.html': join, 'submit.html': submit,
-                'book.html': book, 'bookings.html': bookings };
+                'book.html': book, 'bookings.html': bookings, ...airlines };
 Object.entries(pages).forEach(([f, html]) => {
   fs.writeFileSync(`${ROOT}/${f}`, html);
   console.log(`  ${f.padEnd(16)} ${(html.length/1024).toFixed(1)} KB`);

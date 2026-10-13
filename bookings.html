@@ -127,6 +127,6 @@
 <script src="assets/js/booking.js"></script>
 <script>
   document.getElementById('ftMembers').innerHTML =
-    MEMBERS.slice(0,6).map(m => '<li><a href="members.html#'+m.code+'">'+ (m.short||m.name) +'</a></li>').join('');
+    MEMBERS.slice(0,6).map(m => '<li><a href="'+(memberPage(m)||'members.html#'+m.code)+'">'+ (m.short||m.name) +'</a></li>').join('');
 </script>
 </body></html>

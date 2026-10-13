@@ -16,6 +16,12 @@ const airport   = c => AP[c];
 const memberOf  = c => MB[c];
 const nameOf    = m => m.short || m.name;
 const servesSet = m => [].concat(m.hubs || [], m.focus || []);
+/* A member with a `profile` has a page of its own, named from its trading
+   name. tools/build-pages.js writes those pages using this same function, so
+   the wall's links and the files on disk cannot drift apart. */
+const memberPage = m => m.profile ? 'airline-' + nameOf(m).toLowerCase()
+  .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') + '.html' : null;
 
 /* Deterministic pseudo-randomness: the same route + date always yields the
    same flights, so results never shuffle when you go back and forth. */
@@ -488,15 +494,22 @@ function renderMembers(el, limit) {
      names long enough to wrap, and the caption's height is reserved so that
      revealing it cannot reflow the wall. The registered name stays on the
      figure's title and in the image's alt text. */
+  /* A member with its own page is a link; the rest stay focusable figures, so
+     the name can still be revealed from the keyboard. */
   const rail = el.classList.contains('liveries--rail');
-  el.innerHTML = list.map((m, i) => `
-    <figure class="livery" id="${m.code}" tabindex="0"${
-      m.short ? ` title="${m.name}"` : ''}${rail ? '' : ` data-rv style="transition-delay:${i * 40}ms"`}>
+  el.innerHTML = list.map((m, i) => {
+    const page = memberPage(m);
+    const body = `
       <img class="livery__img" src="${m.tail}" alt="${m.name} aircraft livery"
            loading="lazy" width="380" height="285" decoding="async">
       <figcaption class="livery__name">${m.short || m.name}${
-        m.group === 'connect' ? ' <span class="livery__grp">Connect</span>' : ''}</figcaption>
-    </figure>`).join('');
+        m.group === 'connect' ? ' <span class="livery__grp">Connect</span>' : ''}</figcaption>`;
+    return `
+    <figure class="livery${page ? ' livery--link' : ''}" id="${m.code}"${page ? '' : ' tabindex="0"'}${
+      m.short ? ` title="${m.name}"` : ''}${rail ? '' : ` data-rv style="transition-delay:${i * 40}ms"`}>${
+      page ? `<a class="livery__a" href="${page}">${body}</a>` : body}
+    </figure>`;
+  }).join('');
   if (!rail) observeReveals(el);
 }
 

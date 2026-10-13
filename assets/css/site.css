@@ -360,10 +360,14 @@ header.nav {
 
 /* :focus (not :focus-visible) so the name also appears for keyboard users;
    the focus ring itself stays :focus-visible so clicking does not draw one. */
-.livery:hover, .livery:focus { background: var(--sky-wash); outline: none; }
-.livery:focus-visible { box-shadow: 0 0 0 2px var(--sky); }
-.livery:hover .livery__img, .livery:focus .livery__img { transform: scale(1.045); }
-.livery:hover .livery__name, .livery:focus .livery__name { opacity: 1; transform: none; }
+.livery:hover, .livery:focus, .livery:focus-within { background: var(--sky-wash); outline: none; }
+.livery:focus-visible, .livery:has(.livery__a:focus-visible) { box-shadow: 0 0 0 2px var(--sky); }
+.livery:hover .livery__img, .livery:focus .livery__img, .livery:focus-within .livery__img { transform: scale(1.045); }
+.livery:hover .livery__name, .livery:focus .livery__name, .livery:focus-within .livery__name { opacity: 1; transform: none; }
+/* Members with a page of their own: the whole card is the link. */
+.livery--link { cursor: pointer; }
+.livery__a { display: flex; flex-direction: column; align-items: center; width: 100%;
+  color: inherit; text-decoration: none; outline: none; }
 
 /* No hover on touch screens, so the names simply stay visible there. */
 @media (hover: none) {
@@ -1086,6 +1090,64 @@ footer.ft { background: var(--blue-ink); color: var(--tx-on-ink-soft); }
   .pass { box-shadow: none; border: 1px solid #bbb; }
 }
 
+
+/* ==========================================================================
+   AIRLINE PAGES — airline-<slug>.html, generated from a member's `profile`
+   The member's colour appears only as decoration (rules and card edges),
+   tinted by tintOn() at build time: --al for white, --al-ink for the navy
+   head. Text stays in the brand palette, so no livery can fail contrast.
+   ========================================================================== */
+.al-reg { margin-top: .625rem; font-size: .9375rem; font-weight: 500; color: var(--tx-on-ink-soft); }
+.phead .al-rule { background: var(--al-ink, var(--sky-soft)); }
+.al-p { margin-top: 1rem; }
+.al-p:first-child { margin-top: 0; }
+.al .eyebrow + .display { margin-bottom: .5rem; }
+
+.al-card { border-top: 3px solid var(--al, var(--sky)); background: var(--sky-wash);
+  border-radius: 0 0 var(--r-lg) var(--r-lg); padding: clamp(1rem, 2vw, 1.5rem); }
+.al-card__img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: contain; }
+.al-facts { display: grid; gap: .6875rem; margin: .5rem 0 0; padding-top: 1rem; border-top: 1px solid var(--rule); }
+.al-facts > div { display: grid; grid-template-columns: 7rem 1fr; gap: .875rem; align-items: baseline; }
+.al-facts dt { font-size: .5938rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--tx-faint); }
+.al-facts dd { margin: 0; font-size: .875rem; line-height: 1.5; color: var(--tx); }
+.al-facts .code { color: var(--blue); margin-left: .25rem; }
+.al-facts dd > .code:only-child { margin-left: 0; }
+
+.al-sub { margin: 2.25rem 0 .875rem; font-size: .6875rem; font-weight: 700;
+  letter-spacing: .2em; text-transform: uppercase; color: var(--blue); }
+.al-sub--top { margin-top: 0; }
+
+.al-hubs { list-style: none; padding: 0; margin: 0; display: grid; gap: .5rem; grid-template-columns: 1fr; }
+@media (min-width: 620px) { .al-hubs { grid-template-columns: repeat(2, 1fr); } }
+.al-hub { display: grid; grid-template-columns: 2.75rem 1fr; gap: .125rem .75rem;
+  padding: .625rem .75rem; border-radius: var(--r); background: var(--paper); border: 1px solid var(--rule); }
+.al-hub__code { grid-row: span 2; align-self: center; font-size: .8125rem; color: var(--blue); }
+.al-hub__city { font-size: .875rem; font-weight: 600; color: var(--tx); }
+.al-hub__city em { font-style: normal; font-size: .5625rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--blue); margin-left: .375rem; }
+.al-hub__apt { font-size: .75rem; color: var(--tx-soft); }
+
+.al-rgrp + .al-rgrp { margin-top: 1.5rem; }
+.al-rgrp__from { font-size: .9375rem; font-weight: 700; color: var(--tx); padding-bottom: .5rem;
+  border-bottom: 2px solid var(--al, var(--sky)); }
+.al-rgrp__from .code { color: var(--blue); font-weight: 500; margin-left: .25rem; }
+.al-routes { list-style: none; padding: 0; margin: 0; }
+.al-routes li { display: grid; grid-template-columns: 2.75rem 1fr auto; gap: .75rem; align-items: baseline;
+  padding: .5625rem 0; border-bottom: 1px solid var(--rule); font-size: .875rem; }
+.al-routes .code { color: var(--blue); font-size: .8125rem; }
+.al-routes__city { font-weight: 600; color: var(--tx); }
+.al-routes__ctry { font-size: .75rem; color: var(--tx-soft); text-align: right; }
+
+.al-fleet { display: grid; gap: clamp(.75rem, 1.6vw, 1.25rem); grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); }
+.al-fleet__grp { border-top: 3px solid var(--al, var(--sky)); background: var(--sky-wash);
+  border-radius: 0 0 var(--r) var(--r); padding: 1rem 1.125rem 1.125rem; }
+.al-fleet__mk { font-size: .6875rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--tx-faint); margin-bottom: .5rem; }
+.al-fleet__list { list-style: none; padding: 0; margin: 0; }
+.al-fleet__list li { padding: .4375rem 0; border-bottom: 1px solid var(--rule); }
+.al-fleet__list li:last-child { border-bottom: 0; padding-bottom: 0; }
+.al-fleet__t { display: block; font-size: .9375rem; font-weight: 600; color: var(--tx); }
+.al-fleet__n { display: block; margin-top: .125rem; font-size: .75rem; line-height: 1.45; color: var(--tx-soft); }
 
 /* ==========================================================================
    MONOSPACED DATA

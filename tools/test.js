@@ -8,7 +8,7 @@ vm.createContext(ctx);
 vm.runInContext(fs.readFileSync('assets/js/data.js','utf8'), ctx);
 vm.runInContext(fs.readFileSync('assets/js/site.js','utf8'), ctx);
 // const-declared bindings are not properties of the VM global; surface them.
-vm.runInContext('globalThis._x = {airport, memberOf, distKm, hhmm, durTxt, money, CABINS, AIRCRAFT, MEMBERS, AIRPORTS, ALLIANCE, TIERS, PRESS, HERO_CITIES, PROGRAMME, LOUNGES, JOIN, tintOn, MAP_INK};', ctx);
+vm.runInContext('globalThis._x = {airport, memberOf, distKm, hhmm, durTxt, money, CABINS, AIRCRAFT, MEMBERS, AIRPORTS, ALLIANCE, TIERS, PRESS, HERO_CITIES, PROGRAMME, LOUNGES, JOIN, tintOn, MAP_INK, memberPage};', ctx);
 Object.assign(ctx, ctx._x);
 const S = ctx;
 let fails = 0;
@@ -167,6 +167,30 @@ ok('Every release has a date, title, quote and closing paragraphs',
                       Array.isArray(r.after) && r.after.length));
 ok('Releases are ordered newest first',
    S.PRESS.every((r,i) => i === 0 || r.date <= S.PRESS[i-1].date));
+
+// --- airline pages ---------------------------------------------------------
+const profiled = S.MEMBERS.filter(m => m.profile);
+const isEntry = e => Array.isArray(e) && (e.length === 2 || e.length === 3) &&
+                     e.every(x => typeof x === 'string' && x.trim() === x && x);
+ok('Every profile has the standard parts',
+   profiled.every(({profile:p}) => /^\d{4}$/.test(p.founded) &&
+     Array.isArray(p.about) && p.about.length && Array.isArray(p.network) && p.network.length &&
+     Array.isArray(p.routes) && p.routes.length && p.fleet &&
+     Array.isArray(p.fleet.current) && p.fleet.current.length && Array.isArray(p.fleet.incoming)),
+   profiled.map(m => m.code).join(' '));
+ok('Every fleet entry is [maker, type] or [maker, type, note]',
+   profiled.every(m => m.profile.fleet.current.concat(m.profile.fleet.incoming).every(isEntry)));
+let routesOK = true;
+profiled.forEach(m => m.profile.routes.forEach(([a, b]) => {
+  if (!S.airport(a) || !S.airport(b)) { routesOK = false; console.log('        unknown route airport: '+a+'-'+b+' ('+m.code+')'); }
+  if (!m.hubs.includes(a)) { routesOK = false; console.log('        route does not start at a hub: '+a+'-'+b+' ('+m.code+')'); }
+}));
+ok('Every key route starts at one of the member\'s hubs and resolves', routesOK);
+ok('Profile pages get distinct file names',
+   new Set(profiled.map(S.memberPage)).size === profiled.length);
+const onDisk = fs.readdirSync('.').filter(f => /^airline-.+\.html$/.test(f)).sort();
+ok('Every profile has its page built, and no page is orphaned (node tools/build-pages.js)',
+   JSON.stringify(onDisk) === JSON.stringify(profiled.map(S.memberPage).sort()), onDisk.join(' '));
 
 ok('Lounge access refers to real tier names',
    S.LOUNGES.every(l => l.access.every(a =>
