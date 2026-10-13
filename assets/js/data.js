@@ -70,7 +70,36 @@ const MEMBERS = [
     hubs:['TBS','GYD','EVN'], focus:['BUS'], joined:2024,
     blurb:'A genuinely tri-national carrier, operating coordinated hubs in ' +
           'Tbilisi, Baku and Yerevan, with Batumi as a summer focus city — the ' +
-          'alliance\'s bridge between Europe and Central Asia.'
+          'alliance\'s bridge between Europe and Central Asia.',
+    profile:{
+      founded:'2021',
+      about:[
+        'Caucausair connects the South Caucasus with Europe, Asia, the Middle ' +
+        'East and North America. Headquartered in Tbilisi, it flies from three ' +
+        'hubs at Tbilisi, Baku and Yerevan.',
+        'The airline was formed in 2021 by the merger of Georgia\'s Orbeliani ' +
+        'Airways, which flew from Tbilisi and Batumi, and Azerbaijan\'s Şirvan ' +
+        'Hava Yolları of Baku. The later acquisition of Air Ararat brought ' +
+        'Yerevan in as a third hub and made Caucausair a carrier for the whole ' +
+        'region.',
+        'Since then it has replaced the aircraft it inherited with newer, more ' +
+        'efficient Airbus, Embraer and ATR types.'
+      ],
+      network:[
+        'From Tbilisi, Baku and Yerevan, with Batumi as a summer focus city, ' +
+        'the network links the South Caucasus with Europe, Asia, the Middle East ' +
+        'and North America.'
+      ],
+      fleet:{
+        current:[
+          ['Airbus','A321neo','50 aircraft'],['Airbus','A321XLR','7 aircraft'],
+          ['Airbus','A330-900','17 aircraft'],['Airbus','A350-1000','17 aircraft'],
+          ['Embraer','E195-E2','20 aircraft'],
+          ['ATR','72-600','7 aircraft']
+        ],
+        incoming:[]
+      }
+    }
   },
   {
     name:'Dumont Linhas Aéreas', short:'Dumont', code:'DU', country:'Brazil', 
