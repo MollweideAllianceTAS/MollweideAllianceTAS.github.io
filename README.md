@@ -116,7 +116,8 @@ route list is simply not drawn. Do not fill either in by guessing.
 
 When a member sends material, rewrite it into that shape rather than pasting it.
 Routes must start at one of the member's hubs and use codes that exist in
-`AIRPORTS`; `node tools/test.js` checks both, and checks that every profile has
+`AIRPORTS`; a one-stop service is written `[from, to, via]` and shown as
+*Papeete via Easter Island*; `node tools/test.js` checks both, and checks that every profile has
 a built page and no page is left over from a removed profile. The member's
 colour is used only for decorative rules and card edges, so no livery can make
 text unreadable.

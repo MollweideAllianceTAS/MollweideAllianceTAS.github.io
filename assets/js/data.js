@@ -46,7 +46,8 @@ const ALLIANCE = {
      founded   year, as a string — optional; leave it out rather than guess
      about     paragraphs: who the airline is now, then its history
      network   paragraphs on where it flies
-     routes    [from, to] airport pairs, grouped on the page by `from`;
+     routes    [from, to] airport pairs, or [from, to, via] for a one-stop
+               service, grouped on the page by `from`;
                every code must exist in AIRPORTS — optional; only pairs the
                member actually named, never inferred from a region
      fleet     { current:[...], incoming:[...] }, each entry
@@ -89,7 +90,7 @@ const MEMBERS = [
         'Tbilisi carries the long-haul flying to Europe, East and Southeast Asia ' +
         'and New York. Baku reaches India, western Europe, Istanbul and three ' +
         'points in the United States; Yerevan serves Los Angeles, São Paulo, ' +
-        'Nairobi and Istanbul; and Batumi links Georgia\'s coast with Moscow ' +
+        'Nairobi, Istanbul, Paris, Marseille and Lyon; and Batumi links Georgia\'s coast with Moscow ' +
         'and Istanbul.'
       ],
       routes:[
@@ -98,6 +99,7 @@ const MEMBERS = [
         ['GYD','GOI'],['GYD','DEL'],['GYD','LCY'],['GYD','CDG'],['GYD','IST'],
         ['GYD','JFK'],['GYD','ORD'],['GYD','MIA'],
         ['EVN','LAX'],['EVN','GRU'],['EVN','IST'],['EVN','NBO'],
+        ['EVN','CDG'],['EVN','MRS'],['EVN','LYS'],
         ['BUS','SVO'],['BUS','IST']
       ],
       fleet:{
@@ -117,7 +119,50 @@ const MEMBERS = [
     hubs:['GIG','GRU'], focus:[], joined:2024,
     blurb:'Named for the aviation pioneer, Dumont flies the alliance\'s ' +
           'long-haul South Atlantic network from twin hubs at Rio de ' +
-          'Janeiro–Galeão and São Paulo–Guarulhos.'
+          'Janeiro–Galeão and São Paulo–Guarulhos.',
+    profile:{
+      founded:'1992',
+      about:[
+        'Dumont is a Brazilian full-service carrier headquartered in Rio de ' +
+        'Janeiro. From hubs at Rio de Janeiro–Galeão and São Paulo–Guarulhos it ' +
+        'connects Brazil with the Americas, Europe, Africa, the Middle East and ' +
+        'the Pacific.',
+        'The airline was founded in 1992, as Brazilian aviation was ' +
+        'liberalised, as Táxi Aéreo Fluminense: a small regional carrier at ' +
+        'Galeão flying the business routes to São Paulo–Congonhas and Belo ' +
+        'Horizonte–Confins. As competition opened up it grew its domestic ' +
+        'network and took the name Dumont, after the aviation pioneer Alberto ' +
+        'Santos-Dumont.',
+        'Over the following decades it became a major international carrier, ' +
+        'built Galeão into its principal hub, expanded at Guarulhos, and ' +
+        'replaced its older aircraft with newer, more efficient types.'
+      ],
+      network:[
+        'Galeão carries most of the long-haul flying, to Sydney, New York, Los ' +
+        'Angeles, western Europe, Lagos, Cape Town and Tbilisi, and on to ' +
+        'Papeete by way of Easter Island. Guarulhos adds Sydney, New York, ' +
+        'Miami, London, Madrid, Barcelona, Dubai and Beirut.'
+      ],
+      routes:[
+        ['GIG','SYD'],['GIG','JFK'],['GIG','STN'],['GIG','LIS'],['GIG','FCO'],
+        ['GIG','LOS'],['GIG','PPT','IPC'],['GIG','CPT'],['GIG','LAX'],
+        ['GIG','ORY'],['GIG','TBS'],
+        ['GRU','SYD'],['GRU','JFK'],['GRU','LHR'],['GRU','MIA'],['GRU','DXB'],
+        ['GRU','BEY'],['GRU','MAD'],['GRU','BCN']
+      ],
+      fleet:{
+        current:[
+          ['Airbus','A350-1000','46 aircraft'],['Airbus','A321neo','35 aircraft'],
+          ['Airbus','A330-900','11 aircraft'],['Airbus','A321XLR','6 aircraft'],
+          ['Embraer','E195-E2','7 aircraft']
+        ],
+        incoming:[
+          ['Airbus','A350-1000','9 aircraft'],['Airbus','A321neo','10 aircraft'],
+          ['Airbus','A330-900','9 aircraft'],
+          ['Embraer','E195-E2','13 aircraft']
+        ]
+      }
+    }
   },
   {
     name:'Rogato Linhas Aéreas', short:'Rogato', code:'RG', country:'Brazil', 
@@ -453,9 +498,13 @@ const AIRPORTS = [
   { code:'ZRH', city:'Zurich',        name:'Zurich Airport',           country:'Switzerland',  lat:47.46, lon:  8.55 },
   { code:'LHR', city:'London',        name:'Heathrow',                 country:'United Kingdom',lat:51.47,lon: -0.45 },
   { code:'LCY', city:'London',        name:'London City',              country:'United Kingdom',lat:51.50,lon:  0.05 },
+  { code:'STN', city:'London',        name:'Stansted',                 country:'United Kingdom',lat:51.88,lon:  0.24 },
   { code:'CDG', city:'Paris',         name:'Charles de Gaulle',        country:'France',       lat:49.01, lon:  2.55 },
   { code:'FRA', city:'Frankfurt',     name:'Frankfurt am Main',        country:'Germany',      lat:50.04, lon:  8.56 },
   { code:'AMS', city:'Amsterdam',     name:'Schiphol',                 country:'Netherlands',  lat:52.31, lon:  4.76 },
+  { code:'ORY', city:'Paris',         name:'Orly',                     country:'France',       lat:48.73, lon:  2.37 },
+  { code:'MRS', city:'Marseille',     name:'Provence',                 country:'France',       lat:43.44, lon:  5.22 },
+  { code:'LYS', city:'Lyon',          name:'Saint-Exupéry',            country:'France',       lat:45.73, lon:  5.08 },
   { code:'MAD', city:'Madrid',        name:'Barajas',                  country:'Spain',        lat:40.47, lon: -3.56 },
   { code:'BCN', city:'Barcelona',     name:'El Prat',                  country:'Spain',        lat:41.30, lon:  2.08 },
   { code:'LIS', city:'Lisbon',        name:'Humberto Delgado',         country:'Portugal',     lat:38.77, lon: -9.13 },
@@ -540,6 +589,7 @@ const AIRPORTS = [
   { code:'CNS', city:'Cairns',        name:'Cairns Airport',           country:'Australia',    lat:-16.88,lon:145.76, hub:true },
   { code:'PER', city:'Perth',         name:'Perth Airport',            country:'Australia',    lat:-31.94,lon:115.97, hub:true },
   { code:'MEL', city:'Melbourne',     name:'Tullamarine',              country:'Australia',    lat:-37.67,lon:144.84 },
+  { code:'IPC', city:'Easter Island', name:'Mataveri Intl',            country:'Chile',        lat:-27.16,lon:-109.42 },
   { code:'AKL', city:'Auckland',      name:'Auckland Intl',            country:'New Zealand',  lat:-37.01,lon:174.79 },
   { code:'NAN', city:'Nadi',          name:'Nadi Intl',                country:'Fiji',         lat:-17.76,lon:177.44 },
   { code:'PPT', city:'Papeete',       name:'Faa\'a Intl',              country:'French Polynesia',lat:-17.56,lon:-149.61 },

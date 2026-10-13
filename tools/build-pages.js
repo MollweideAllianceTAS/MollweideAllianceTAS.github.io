@@ -909,8 +909,8 @@ ${P.founded ? `        <div><dt>Founded</dt><dd>${esc(P.founded)}</dd></div>
         <h3 class="al-sub al-sub--top">Key routes</h3>${[...groupBy(P.routes, r => r[0])].map(([from, rows]) => `
         <div class="al-rgrp">
           <p class="al-rgrp__from">From ${esc(airport(from).city)} <span class="code">${from}</span></p>
-          <ul class="al-routes">${rows.map(([, to]) => { const a = airport(to); return `
-            <li><span class="code">${to}</span><span class="al-routes__city">${esc(a.city)}</span><span class="al-routes__ctry">${esc(a.country)}</span></li>`; }).join('')}
+          <ul class="al-routes">${rows.map(([, to, via]) => { const a = airport(to); return `
+            <li><span class="code">${to}</span><span class="al-routes__city">${esc(a.city)}${via ? ` <span class="al-routes__via">via ${esc(airport(via).city)} <span class="code">${via}</span></span>` : ''}</span><span class="al-routes__ctry">${esc(a.country)}</span></li>`; }).join('')}
           </ul>
         </div>`).join('')}
       </div>` : ''}

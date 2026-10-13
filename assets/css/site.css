@@ -1139,6 +1139,8 @@ footer.ft { background: var(--blue-ink); color: var(--tx-on-ink-soft); }
   padding: .5625rem 0; border-bottom: 1px solid var(--rule); font-size: .875rem; }
 .al-routes .code { color: var(--blue); font-size: .8125rem; }
 .al-routes__city { font-weight: 600; color: var(--tx); }
+.al-routes__via { font-weight: 400; font-size: .8125rem; color: var(--tx-soft); }
+.al-routes__via .code { font-size: .75rem; margin-left: .125rem; }
 .al-routes__ctry { font-size: .75rem; color: var(--tx-soft); text-align: right; }
 
 .al-fleet { display: grid; gap: clamp(.75rem, 1.6vw, 1.25rem); grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); }
