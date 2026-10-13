@@ -14,6 +14,7 @@
 const fs = require('fs');
 const path = require('path');
 const vm = require('vm');
+const crypto = require('crypto');
 const ROOT = path.resolve(__dirname, '..');
 
 /* The carrier count is written out in nine places. Typing it by hand went
@@ -955,7 +956,16 @@ fs.readdirSync(ROOT).filter(f => /^airline-.+\.html$/.test(f) && !airlines[f]).f
 const pages = { 'index.html': index, 'members.html': members, 'network.html': network,
                 'lounges.html': lounges, 'news.html': news, 'join.html': join, 'submit.html': submit,
                 'book.html': book, 'bookings.html': bookings, ...airlines };
+/* GitHub Pages lets browsers keep a file for ten minutes, so a returning
+   visitor could get a fresh page running yesterday's data.js. Each script and
+   stylesheet is requested with a hash of its contents, which changes exactly
+   when the file does. Run this generator after editing any of them. */
+const stamp = html => html.replace(/((?:src|href)="(assets\/(?:js|css)\/[\w.-]+\.(?:js|css)))"/g,
+  (_, attr, file) => `${attr}?v=${crypto.createHash('sha1')
+    .update(fs.readFileSync(`${ROOT}/${file}`)).digest('hex').slice(0, 8)}"`);
+
 Object.entries(pages).forEach(([f, html]) => {
+  html = stamp(html);
   fs.writeFileSync(`${ROOT}/${f}`, html);
   console.log(`  ${f.padEnd(16)} ${(html.length/1024).toFixed(1)} KB`);
 });

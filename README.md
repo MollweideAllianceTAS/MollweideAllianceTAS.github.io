@@ -369,6 +369,12 @@ every HTML file from it — handy for adding a nav link or a new page in one
 place — and writes the airline pages from `data.js`, deleting any whose
 member no longer has a profile.
 
+It also stamps every script and stylesheet reference with a hash of the file
+(`data.js?v=1a2b3c4d`). GitHub Pages lets browsers keep files for ten minutes,
+so without this a returning visitor could load a new page with an old
+`data.js`. **Rebuild after editing any `.js` or `.css` file**, not only after
+editing content; `node tools/test.js` fails if a stamp is out of date.
+
 > **It overwrites the HTML files.** If you edit a page by hand and then run the
 > generator, your edit is lost. Either make your changes inside the generator, or
 > just edit the HTML directly and never run it again. Both are fine; pick one.

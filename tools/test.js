@@ -194,6 +194,21 @@ const onDisk = fs.readdirSync('.').filter(f => /^airline-.+\.html$/.test(f)).sor
 ok('Every profile has its page built, and no page is orphaned (node tools/build-pages.js)',
    JSON.stringify(onDisk) === JSON.stringify(profiled.map(S.memberPage).sort()), onDisk.join(' '));
 
+// --- cache-busting -----------------------------------------------------------
+/* Every page asks for its scripts and stylesheet by content hash. A stale
+   hash means data.js, site.js, booking.js or site.css changed without the
+   pages being rebuilt, and returning visitors would get the old file. */
+const crypto = require('crypto');
+let stampsOK = true;
+fs.readdirSync('.').filter(f => f.endsWith('.html')).forEach(f => {
+  const refs = [...fs.readFileSync(f, 'utf8').matchAll(/(?:src|href)="(assets\/(?:js|css)\/[\w.-]+\.(?:js|css))(?:\?v=(\w+))?"/g)];
+  refs.forEach(([, file, v]) => {
+    const want = crypto.createHash('sha1').update(fs.readFileSync(file)).digest('hex').slice(0, 8);
+    if (v !== want) { stampsOK = false; console.log('        '+f+': '+file+' is '+(v ? 'stamped '+v+', now '+want : 'unstamped')); }
+  });
+});
+ok('Every page requests the current version of each script and stylesheet (node tools/build-pages.js)', stampsOK);
+
 ok('Lounge access refers to real tier names',
    S.LOUNGES.every(l => l.access.every(a =>
      !/\b(Horizon|Meridian|Zenith|Apex|Parallel|Tropic|Equator)\b/.test(a))),
