@@ -65,18 +65,18 @@ const MEMBERS = [
           'a growing long-haul programme.'
   },
   {
-    name:'Caucausair', code:'CS', country:'Georgia', 
+    name:'Caucausair', code:'GA', country:'Georgia', 
     color:'#2F7D57', tail:'assets/img/members/caucausair.webp',
-    hubs:['TBS','GYD','EVN'], focus:['BUS'], joined:2024,
+    hubs:['TBS','GYD','EVN','BUS'], focus:[], joined:2024,
     blurb:'A genuinely tri-national carrier, operating coordinated hubs in ' +
-          'Tbilisi, Baku and Yerevan, with Batumi as a summer focus city — the ' +
-          'alliance\'s bridge between Europe and Central Asia.',
+          'Tbilisi, Baku, Yerevan and Batumi — the alliance\'s bridge between ' +
+          'Europe and Central Asia.',
     profile:{
       founded:'2021',
       about:[
         'Caucausair connects the South Caucasus with Europe, Asia, the Middle ' +
-        'East and North America. Headquartered in Tbilisi, it flies from three ' +
-        'hubs at Tbilisi, Baku and Yerevan.',
+        'East and North America. Headquartered in Tbilisi, it flies from four ' +
+        'hubs at Tbilisi, Baku, Yerevan and Batumi.',
         'The airline was formed in 2021 by the merger of Georgia\'s Orbeliani ' +
         'Airways, which flew from Tbilisi and Batumi, and Azerbaijan\'s Şirvan ' +
         'Hava Yolları of Baku. The later acquisition of Air Ararat brought ' +
@@ -86,9 +86,19 @@ const MEMBERS = [
         'efficient Airbus, Embraer and ATR types.'
       ],
       network:[
-        'From Tbilisi, Baku and Yerevan, with Batumi as a summer focus city, ' +
-        'the network links the South Caucasus with Europe, Asia, the Middle East ' +
-        'and North America.'
+        'Tbilisi carries the long-haul flying to Europe, East and Southeast Asia ' +
+        'and New York. Baku reaches India, western Europe, Istanbul and three ' +
+        'points in the United States; Yerevan serves Los Angeles, São Paulo, ' +
+        'Nairobi and Istanbul; and Batumi links Georgia\'s coast with Moscow ' +
+        'and Istanbul.'
+      ],
+      routes:[
+        ['TBS','LHR'],['TBS','PVG'],['TBS','ICN'],['TBS','MNL'],['TBS','SIN'],
+        ['TBS','MUC'],['TBS','FRA'],['TBS','JFK'],
+        ['GYD','GOI'],['GYD','DEL'],['GYD','LCY'],['GYD','CDG'],['GYD','IST'],
+        ['GYD','JFK'],['GYD','ORD'],['GYD','MIA'],
+        ['EVN','LAX'],['EVN','GRU'],['EVN','IST'],['EVN','NBO'],
+        ['BUS','SVO'],['BUS','IST']
       ],
       fleet:{
         current:[
@@ -413,7 +423,7 @@ const AIRPORTS = [
   { code:'TBS', city:'Tbilisi',       name:'Shota Rustaveli Intl',     country:'Georgia',      lat:41.67, lon: 44.95, hub:true },
   { code:'GYD', city:'Baku',          name:'Heydar Aliyev Intl',       country:'Azerbaijan',   lat:40.47, lon: 50.05, hub:true },
   { code:'EVN', city:'Yerevan',       name:'Zvartnots Intl',           country:'Armenia',      lat:40.15, lon: 44.40, hub:true },
-  { code:'BUS', city:'Batumi',        name:'Batumi Intl',              country:'Georgia',      lat:41.61, lon: 41.60, focus:true },
+  { code:'BUS', city:'Batumi',        name:'Batumi Intl',              country:'Georgia',      lat:41.61, lon: 41.60, hub:true },
   { code:'GIG', city:'Rio de Janeiro',name:'Galeão',                   country:'Brazil',       lat:-22.81,lon:-43.25, hub:true },
   { code:'GRU', city:'São Paulo',     name:'Guarulhos',                country:'Brazil',       lat:-23.43,lon:-46.47, hub:true },
   { code:'CGH', city:'São Paulo',     name:'Congonhas',                country:'Brazil',       lat:-23.63,lon:-46.66, hub:true },
@@ -421,6 +431,7 @@ const AIRPORTS = [
   { code:'SSA', city:'Salvador',      name:'Deputado Luís E. Magalhães',country:'Brazil',      lat:-12.91,lon:-38.32, hub:true },
   { code:'BEL', city:'Belém',         name:'Val de Cães',              country:'Brazil',       lat: -1.38,lon:-48.48, hub:true },
   { code:'BOM', city:'Mumbai',        name:'Chhatrapati Shivaji',      country:'India',        lat:19.09, lon: 72.87, hub:true },
+  { code:'GOI', city:'Goa',           name:'Dabolim',                  country:'India',        lat:15.38, lon: 73.83 },
   { code:'DEL', city:'Delhi',         name:'Indira Gandhi Intl',       country:'India',        lat:28.56, lon: 77.10, hub:true },
   { code:'BLR', city:'Bangalore',     name:'Kempegowda Intl',          country:'India',        lat:13.20, lon: 77.71, hub:true },
   { code:'CCU', city:'Kolkata',       name:'Netaji Subhas Chandra Bose',country:'India',       lat:22.65, lon: 88.45, hub:true },
@@ -441,6 +452,7 @@ const AIRPORTS = [
   /* --- Network destinations ---------------------------------------------- */
   { code:'ZRH', city:'Zurich',        name:'Zurich Airport',           country:'Switzerland',  lat:47.46, lon:  8.55 },
   { code:'LHR', city:'London',        name:'Heathrow',                 country:'United Kingdom',lat:51.47,lon: -0.45 },
+  { code:'LCY', city:'London',        name:'London City',              country:'United Kingdom',lat:51.50,lon:  0.05 },
   { code:'CDG', city:'Paris',         name:'Charles de Gaulle',        country:'France',       lat:49.01, lon:  2.55 },
   { code:'FRA', city:'Frankfurt',     name:'Frankfurt am Main',        country:'Germany',      lat:50.04, lon:  8.56 },
   { code:'AMS', city:'Amsterdam',     name:'Schiphol',                 country:'Netherlands',  lat:52.31, lon:  4.76 },
@@ -753,7 +765,7 @@ const LOUNGES = [
     amenities:['Polish kitchen','Barista bar','Apron view','Quiet zone','Wi-Fi']
   },
   {
-    name:'Marani Lounge', operator:'CS', airport:'TBS',
+    name:'Marani Lounge', operator:'GA', airport:'TBS',
     location:'Departures level, opposite gate 4',
     hours:'04:00 – 22:00',
     photo:'assets/img/lounges/caucausair-tbs.jpg',
