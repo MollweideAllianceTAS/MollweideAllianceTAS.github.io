@@ -825,7 +825,10 @@ function renderLounges(el, filter) {
   }
 
   el.innerHTML = list.map((l, i) => {
-    const m  = memberOf(l.operator) || {};
+    /* The alliance runs some lounges itself; those carry its name and blue. */
+    const m  = l.operator === ALLIANCE.code
+      ? { name: ALLIANCE.name, color: 'var(--blue)' }
+      : memberOf(l.operator) || {};
     const ap = airport(l.airport)   || {};
     /* No photograph yet: a panel in the operator's own colour reads as
        deliberate, where a broken image or grey box would not. */

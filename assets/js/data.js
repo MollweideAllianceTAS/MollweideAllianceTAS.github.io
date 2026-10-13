@@ -767,7 +767,9 @@ const HERO_CITIES = [
 /* ============================================================================
    LOUNGES
    ----------------------------------------------------------------------------
-   `operator` is a member airline code from MEMBERS. `photo` may be null — the
+   `operator` is a member airline code from MEMBERS, or ALLIANCE.code for a
+   lounge the alliance runs itself, open to every member's passengers.
+   `photo` may be null — the
    finder then falls back to a panel in the operator's own colour, so a lounge
    without a photograph still looks deliberate.
 
@@ -775,6 +777,14 @@ const HERO_CITIES = [
    ========================================================================== */
 
 const LOUNGES = [
+  {
+    name:'The Mollweide Lounge', operator:'MWA', airport:'LHR',
+    location:'Terminal 2, airside, after central security',
+    hours:'05:00 – 22:00',
+    photo:'assets/img/lounges/mollweide-lhr.jpg',
+    access:['Business and First on any member airline', 'Strata and Aurora members'],
+    amenities:['Bar and buffet','Work benches','Lounge seating','Apron view','Wi-Fi']
+  },
   {
     name:'Atlântico Lounge', operator:'DU', airport:'GIG',
     location:'Terminal 2, international pier, after security',

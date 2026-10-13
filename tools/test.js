@@ -92,7 +92,7 @@ ok('Loyalty programme and tiers are named',
 let loungeRefs = true, loungePhotos = true;
 S.LOUNGES.forEach(l => {
   if (!S.airport(l.airport))  { loungeRefs = false; console.log('        unknown airport: ' + l.airport); }
-  if (!S.memberOf(l.operator)){ loungeRefs = false; console.log('        unknown operator: ' + l.operator); }
+  if (!S.memberOf(l.operator) && l.operator !== S.ALLIANCE.code){ loungeRefs = false; console.log('        unknown operator: ' + l.operator); }
   if (l.photo && !fs.existsSync(l.photo)) { loungePhotos = false; console.log('        missing ' + l.photo); }
 });
 ok('Every lounge resolves to a real airport and operator', loungeRefs, S.LOUNGES.length + ' lounges');

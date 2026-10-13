@@ -279,7 +279,8 @@ leave most of the line blank until it was scrolled to.
 **operating carrier** and the **lounge**, and is tinted with that airline's
 colour. Entries come from `LOUNGES` in `data.js`:
 
-- `operator` is a member code from `MEMBERS`; `airport` is a code from `AIRPORTS`.
+- `operator` is a member code from `MEMBERS`, or the alliance's own code (`MWA`)
+  for a lounge it runs itself; `airport` is a code from `AIRPORTS`.
   Both are checked by `node tools/test.js`, so a typo fails loudly.
 - `photo` may be `null`. The card then shows a panel in the operator's own
   colour rather than a broken image, so a lounge awaiting photography still
