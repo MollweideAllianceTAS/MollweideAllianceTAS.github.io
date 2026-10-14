@@ -259,7 +259,7 @@ empty `<svg>`.
 ### The member rail
 
 On the home page the member liveries run along one horizontal rail rather than
-wrapping into rows — twenty-one tails stacked four deep was more page than the
+wrapping into rows — every member's tail stacked four deep was more page than the
 section warranted. `members.html` still shows the full wall; the difference is
 the `liveries--rail` class on the container.
 

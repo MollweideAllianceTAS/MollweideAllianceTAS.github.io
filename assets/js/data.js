@@ -238,6 +238,45 @@ const MEMBERS = [
     }
   },
   {
+    name:'Air SIAM', code:'AS', country:'Thailand',
+    color:'#0F3870', tail:'assets/img/members/air-siam.webp',   // second brand colour: gold
+    hubs:['BKK'], focus:[], joined:2026,
+    blurb:'Thailand\'s new national flag carrier, flying a premium-focused ' +
+          'network from Bangkok Suvarnabhumi to Europe and across the country.',
+    profile:{
+      founded:'2026',
+      about:[
+        'Air SIAM is Thailand\'s national flag carrier, flying from Bangkok ' +
+        'Suvarnabhumi with a premium-focused product.',
+        'It was founded in September 2026 as the successor to the country\'s ' +
+        'previous flag carrier. Its name recalls Siam, as Thailand was known ' +
+        'until 1939.',
+        'The airline is still in a phase of rapid expansion, building its ' +
+        'network around premium connections through Bangkok.'
+      ],
+      network:[
+        'Two parts of the network are complete. In Europe, Air SIAM serves the ' +
+        'major hubs and many secondary airports; at home, it flies to every ' +
+        'airport in Thailand except DMK, HHP, UTP, CJM and PHS.',
+        'Expansion is now under way across Asia, beginning with Southeast Asia, ' +
+        'with the aim of reaching every hub in the region. Premium long-haul ' +
+        'services to North America and flights to Australia and Oceania are in ' +
+        'planning. Africa and South America are not part of current plans.'
+      ],
+      fleet:{
+        current:[
+          ['Airbus','A320neo','Flagship on domestic routes'],
+          ['Airbus','A330-300','Lower-demand secondary routes'],
+          ['Boeing','777-300ER','Flagship on European routes']
+        ],
+        incoming:[
+          ['Airbus','A330-900'],['Airbus','A350-900'],['Airbus','A350-900ULR'],
+          ['Airbus','A380-800']
+        ]
+      }
+    }
+  },
+  {
     name:'Avni Airlines', code:'AV', country:'India',
     color:'#19A7DE', tail:'assets/img/members/avni.webp',
     hubs:['DEL','BOM','BLR','MAA','HYD','CCU','AMD','PNQ','TRV','COK',
@@ -573,7 +612,7 @@ const AIRPORTS = [
   { code:'MRU', city:'Mauritius',     name:'Sir Seewoosagur Ramgoolam',country:'Mauritius',    lat:-20.43,lon: 57.68, hub:true },
   { code:'KTM', city:'Kathmandu',     name:'Tribhuvan Intl',           country:'Nepal',        lat:27.70, lon: 85.36 },
   { code:'DAC', city:'Dhaka',         name:'Hazrat Shahjalal',         country:'Bangladesh',   lat:23.84, lon: 90.40 },
-  { code:'BKK', city:'Bangkok',       name:'Suvarnabhumi',             country:'Thailand',     lat:13.69, lon:100.75 },
+  { code:'BKK', city:'Bangkok',       name:'Suvarnabhumi',             country:'Thailand',     lat:13.69, lon:100.75, hub:true },
   { code:'SIN', city:'Singapore',     name:'Changi',                   country:'Singapore',    lat: 1.36, lon:103.99 },
   { code:'KUL', city:'Kuala Lumpur',  name:'KLIA',                     country:'Malaysia',     lat: 2.75, lon:101.71, hub:true },
   { code:'HKG', city:'Hong Kong',     name:'Hong Kong Intl',           country:'Hong Kong',    lat:22.31, lon:113.91 },
