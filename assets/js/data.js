@@ -277,6 +277,55 @@ const MEMBERS = [
     }
   },
   {
+    name:'DNX', code:'DX', country:'Romania',
+    color:'#FBCB56', tail:'assets/img/members/dnx.webp',   // second brand colour: #7ED3F8
+    hubs:['CLJ','OTP'], focus:[], joined:2026,
+    blurb:'Romania\'s largest airline, connecting the country with the world ' +
+          'from Cluj-Napoca in Transylvania and Bucharest Henri Coandă.',
+    profile:{
+      founded:'2024',
+      about:[
+        'DNX is Romania\'s largest airline. It connects the country with the ' +
+        'world from its main base at Cluj-Napoca, the unofficial capital of ' +
+        'Transylvania, and a second hub at Bucharest Henri Coandă.',
+        'Founded in 2024, it now serves more than 900 destinations, flying to ' +
+        'leading cities\' main airports as well as secondary ones, with fares ' +
+        'to suit a wide range of budgets.',
+        'Its next aim is a base at every airport in Romania, strengthening ' +
+        'domestic links and opening new routes abroad.'
+      ],
+      network:[
+        'Cluj carries the transatlantic flying to Atlanta, New York, Chicago and ' +
+        'Montreal, along with East and South Asia, the Gulf and western Europe. ' +
+        'Its relatively short runway means most flights there are flown by the ' +
+        'Airbus A321XLR.',
+        'Bucharest reaches further, to Southeast Asia, Japan, Australia, South ' +
+        'America and the US west coast, mostly on the Airbus A350-1000.'
+      ],
+      routes:[
+        ['CLJ','ATL'],['CLJ','JFK'],['CLJ','ORD'],['CLJ','YUL'],['CLJ','BKK'],
+        ['CLJ','DEL'],['CLJ','HKG'],['CLJ','PEK'],['CLJ','PVG'],['CLJ','DOH'],
+        ['CLJ','DXB'],['CLJ','AUH'],['CLJ','AMS'],['CLJ','FRA'],['CLJ','MUC'],
+        ['CLJ','VIE'],['CLJ','CDG'],['CLJ','LHR'],['CLJ','FCO'],['CLJ','IST'],
+        ['CLJ','OTP'],['CLJ','CND'],
+        ['OTP','SIN'],['OTP','KUL'],['OTP','HND'],['OTP','CCU'],['OTP','SYD'],
+        ['OTP','TLV'],['OTP','ADD'],['OTP','IST'],['OTP','ATH'],['OTP','AMS'],
+        ['OTP','WAW'],['OTP','JFK'],['OTP','MIA'],['OTP','SFO'],['OTP','LAX'],
+        ['OTP','LAS'],['OTP','GIG'],['OTP','EZE']
+      ],
+      fleet:{
+        current:[
+          ['Airbus','A321XLR','1,000 aircraft · Most flights from Cluj'],
+          ['Airbus','A350-1000','175 aircraft · Most flights from Bucharest']
+        ],
+        incoming:[
+          ['Airbus','A220-300','25 aircraft'],['Airbus','A321XLR','100 aircraft'],
+          ['Airbus','A350-1000','325 aircraft'],['Airbus','A350-1000ULR','25 aircraft']
+        ]
+      }
+    }
+  },
+  {
     name:'Avni Airlines', code:'AV', country:'India',
     color:'#19A7DE', tail:'assets/img/members/avni.webp',
     hubs:['DEL','BOM','BLR','MAA','HYD','CCU','AMD','PNQ','TRV','COK',
@@ -573,6 +622,9 @@ const AIRPORTS = [
   { code:'LWO', city:'Lviv',          name:'Danylo Halytskyi Intl',    country:'Ukraine',      lat:49.81, lon: 23.96, hub:true },
   { code:'OZH', city:'Zaporizhzhia',  name:'Zaporizhzhia Intl',        country:'Ukraine',      lat:47.87, lon: 35.32, hub:true },
   { code:'HRK', city:'Kharkiv',       name:'Kharkiv Intl',             country:'Ukraine',      lat:49.92, lon: 36.29, hub:true },
+  { code:'CLJ', city:'Cluj-Napoca',   name:'Avram Iancu Intl',         country:'Romania',      lat:46.79, lon: 23.69, hub:true },
+  { code:'OTP', city:'Bucharest',     name:'Henri Coandă Intl',        country:'Romania',      lat:44.57, lon: 26.08, hub:true },
+  { code:'CND', city:'Constanța',     name:'Mihail Kogălniceanu',      country:'Romania',      lat:44.36, lon: 28.49 },
   { code:'WAW', city:'Warsaw',        name:'Chopin',                   country:'Poland',       lat:52.17, lon: 20.97, hub:true },
   { code:'KRK', city:'Krakow',        name:'John Paul II',             country:'Poland',       lat:50.08, lon: 19.80, hub:true },
   { code:'SZY', city:'Olsztyn',       name:'Olsztyn-Mazury',           country:'Poland',       lat:53.48, lon: 20.94, hub:true },
@@ -634,6 +686,9 @@ const AIRPORTS = [
   { code:'NAN', city:'Nadi',          name:'Nadi Intl',                country:'Fiji',         lat:-17.76,lon:177.44 },
   { code:'PPT', city:'Papeete',       name:'Faa\'a Intl',              country:'French Polynesia',lat:-17.56,lon:-149.61 },
   { code:'GUM', city:'Guam',          name:'A.B. Won Pat Intl',        country:'Guam',         lat:13.48, lon:144.80 },
+  { code:'ATL', city:'Atlanta',       name:'Hartsfield-Jackson',       country:'United States',lat:33.64, lon:-84.43 },
+  { code:'YUL', city:'Montréal',      name:'Trudeau Intl',             country:'Canada',       lat:45.47, lon:-73.74 },
+  { code:'LAS', city:'Las Vegas',     name:'Harry Reid Intl',          country:'United States',lat:36.08, lon:-115.15 },
   { code:'JFK', city:'New York',      name:'John F. Kennedy',          country:'United States',lat:40.64, lon:-73.78, hub:true },
   { code:'ORD', city:'Chicago',       name:'O\'Hare',                  country:'United States',lat:41.98, lon:-87.90, hub:true },
   { code:'SEA', city:'Seattle',       name:'Seattle–Tacoma',           country:'United States',lat:47.45, lon:-122.31},
@@ -855,6 +910,14 @@ const LOUNGES = [
     photo:'assets/img/lounges/jet-oceania-bne.jpg',
     access:['Business and First', 'Strata and Aurora members'],
     amenities:['Tended bar','Barista coffee','Hot kitchen','Apron view','Wi-Fi']
+  },
+  {
+    name:'Napoca Lounge', operator:'DX', airport:'CLJ',
+    location:'Schengen area, level 1, next to gate A7',
+    hours:'Open 24 hours',
+    photo:'assets/img/lounges/dnx-clj.jpg',
+    access:['Business and First', 'Strata and Aurora members'],
+    amenities:['Buffet dining','Showers','Bar','Runway view','Wi-Fi']
   },
   {
     name:'Eagle\'s Nest', operator:'PL', airport:'WAW',
