@@ -388,6 +388,48 @@ const MEMBERS = [
           'Rome Fiumicino, Palermo and Naples.'
   },
   {
+    name:'Montigo Airline Corporation', short:'Montigo Air', code:'OI', country:'Italy',
+    color:'#0F4C81', tail:'assets/img/members/montigo-air.webp',   // also #D82E2F, #F9B835, #0A1F44
+    hubs:['MXP'], focus:['LGW','JFK','DOH','DXB','JNB','ALG'], joined:2026,
+    blurb:'An Italian hybrid carrier from Milan Malpensa, pairing fair fares ' +
+          'with Italian hospitality and a stopover programme through Doha and Dubai.',
+    profile:{
+      founded:'2023',
+      about:[
+        'Montigo Air is an Italian hybrid airline based at Milan Malpensa. ' +
+        'Registered as a low-cost carrier, it keeps fares fair while adding ' +
+        'extras that low-cost flying usually leaves out, pairing Italian ' +
+        'hospitality with modern efficiency.',
+        'The airline was founded in Milan on 6 October 2023.',
+        'Its signature stopover programme lets passengers break a journey in ' +
+        'Doha or Dubai with two complimentary nights.'
+      ],
+      network:[
+        'From Malpensa the network spans Europe, North Africa, the Middle East, ' +
+        'Asia and the Americas, with focus cities at London Gatwick, New York ' +
+        'JFK, Doha, Dubai, Johannesburg and Algiers.',
+        'Non-stop long-haul flights are flown by the Boeing 787 Dreamliner. The ' +
+        'Airbus A321XLR flies the one-stop services through Doha and Dubai to ' +
+        'Seoul, Hong Kong, Bangkok and Kuala Lumpur.'
+      ],
+      routes:[
+        ['MXP','FCO'],['MXP','CDG'],['MXP','BCN'],['MXP','MAD'],['MXP','LIS'],
+        ['MXP','BER'],['MXP','LGW'],['MXP','AMS'],['MXP','CAI'],['MXP','RAK'],
+        ['MXP','DXB'],['MXP','DOH'],['MXP','SIN'],['MXP','HKG'],['MXP','NRT'],
+        ['MXP','JFK'],
+        ['MXP','ICN','DOH'],['MXP','HKG','DOH'],['MXP','BKK','DXB'],['MXP','KUL','DXB']
+      ],
+      fleet:{
+        current:[
+          ['Airbus','A320neo','40 aircraft'],['Airbus','A220-300','12 aircraft'],
+          ['Airbus','A321XLR','10 aircraft · Stopover services via Doha and Dubai'],
+          ['Boeing','787-8','10 aircraft · Non-stop long-haul']
+        ],
+        incoming:[]
+      }
+    }
+  },
+  {
     name:'PJSC AkerAir Ukraine International', short:'AkerAir', code:'5K',
     country:'Ukraine', group:'connect',
     color:'#0063D3', tail:'assets/img/members/akerair.webp',  // second brand colour: #FFCC00
@@ -570,6 +612,8 @@ const AIRPORTS = [
   { code:'BLR', city:'Bangalore',     name:'Kempegowda Intl',          country:'India',        lat:13.20, lon: 77.71, hub:true },
   { code:'CCU', city:'Kolkata',       name:'Netaji Subhas Chandra Bose',country:'India',       lat:22.65, lon: 88.45, hub:true },
   { code:'BEY', city:'Beirut',        name:'Rafic Hariri Intl',        country:'Lebanon',      lat:33.82, lon: 35.49, hub:true },
+  { code:'RAK', city:'Marrakech',     name:'Menara',                   country:'Morocco',      lat:31.61, lon: -8.04 },
+  { code:'ALG', city:'Algiers',       name:'Houari Boumediene',        country:'Algeria',      lat:36.69, lon:  3.22, focus:true },
   { code:'CAI', city:'Cairo',         name:'Cairo Intl',               country:'Egypt',        lat:30.11, lon: 31.41, hub:true },
   { code:'MEX', city:'Mexico City',   name:'Benito Juárez Intl',       country:'Mexico',       lat:19.44, lon:-99.07, hub:true },
   { code:'PVG', city:'Shanghai',      name:'Pudong Intl',              country:'China',        lat:31.14, lon:121.81, hub:true },
@@ -595,6 +639,8 @@ const AIRPORTS = [
   { code:'MRS', city:'Marseille',     name:'Provence',                 country:'France',       lat:43.44, lon:  5.22 },
   { code:'LYS', city:'Lyon',          name:'Saint-Exupéry',            country:'France',       lat:45.73, lon:  5.08 },
   { code:'MAD', city:'Madrid',        name:'Barajas',                  country:'Spain',        lat:40.47, lon: -3.56 },
+  { code:'BER', city:'Berlin',        name:'Brandenburg',              country:'Germany',      lat:52.37, lon: 13.50 },
+  { code:'LGW', city:'London',        name:'Gatwick',                  country:'United Kingdom',lat:51.15,lon: -0.19, focus:true },
   { code:'BCN', city:'Barcelona',     name:'El Prat',                  country:'Spain',        lat:41.30, lon:  2.08 },
   { code:'LIS', city:'Lisbon',        name:'Humberto Delgado',         country:'Portugal',     lat:38.77, lon: -9.13 },
   { code:'FCO', city:'Rome',          name:'Fiumicino',                country:'Italy',        lat:41.80, lon: 12.25, hub:true },
@@ -636,7 +682,7 @@ const AIRPORTS = [
   { code:'TAS', city:'Tashkent',      name:'Islam Karimov Intl',       country:'Uzbekistan',   lat:41.26, lon: 69.28 },
   { code:'SKD', city:'Samarkand',     name:'Samarkand Intl',           country:'Uzbekistan',   lat:39.70, lon: 66.98 },
   { code:'DXB', city:'Dubai',         name:'Dubai Intl',               country:'UAE',          lat:25.25, lon: 55.36, hub:true },
-  { code:'DOH', city:'Doha',          name:'Hamad Intl',               country:'Qatar',        lat:25.27, lon: 51.61 },
+  { code:'DOH', city:'Doha',          name:'Hamad Intl',               country:'Qatar',        lat:25.27, lon: 51.61, focus:true },
   { code:'AUH', city:'Abu Dhabi',     name:'Zayed Intl',               country:'UAE',          lat:24.43, lon: 54.65 },
   { code:'RUH', city:'Riyadh',        name:'King Khalid Intl',         country:'Saudi Arabia', lat:24.96, lon: 46.70, hub:true },
   { code:'AMM', city:'Amman',         name:'Queen Alia Intl',          country:'Jordan',       lat:31.72, lon: 35.99 },

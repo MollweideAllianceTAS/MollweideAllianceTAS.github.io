@@ -104,8 +104,8 @@ much or little they sent:
    history, written in the third person. Beside them, the livery and a fact
    list: code, country, founded, primary hub (the first in `hubs`) and
    membership group with the year joined.
-3. **Network** — the `network` paragraphs, every hub, and the key `routes`
-   grouped by the hub they leave from.
+3. **Network** — the `network` paragraphs, every hub, any `focus` cities, and
+   the key `routes` grouped by the hub they leave from.
 
 `founded` and `routes` are optional. If a member did not give a year, or named
 regions rather than airport pairs, leave the field out: the Founded row or the
