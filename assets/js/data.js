@@ -490,16 +490,16 @@ const MEMBERS = [
     name:'PJSC AkerAir Ukraine International', short:'AkerAir', code:'5K',
     country:'Ukraine', group:'connect',
     color:'#0063D3', tail:'assets/img/members/akerair.webp',  // second brand colour: #FFCC00
-    hubs:['KBP','LWO','OZH','HRK'], focus:[], joined:2026,
+    hubs:['KBP','LWO','OZH','HRK','ODS'], focus:[], joined:2026,
     blurb:'Ukraine\'s largest carrier, flying scheduled and charter services ' +
           'from Kyiv Boryspil to Europe, Asia, Africa and North America, with ' +
-          'further bases at Lviv, Zaporizhzhia and Kharkiv.',
+          'further bases at Lviv, Zaporizhzhia, Kharkiv and Odesa.',
     profile:{
       founded:'1952',
       about:[
         'AkerAir is a Ukrainian carrier flying scheduled and charter services ' +
-        'from Kyiv Boryspil and Lviv, with further bases at Zaporizhzhia and ' +
-        'Kharkiv. It joined the alliance through Mollweide Connect.',
+        'from Kyiv Boryspil and Lviv, with further bases at Zaporizhzhia, ' +
+        'Kharkiv and Odesa. It joined the alliance through Mollweide Connect.',
         'The airline traces its history to August 1952, when it was formed as ' +
         'the 86th Aviation Detachment of the Kyiv United Aviation Detachment, ' +
         'flying under the Aeroflot banner within the Ukrainian SSR. When the ' +
@@ -728,6 +728,7 @@ const AIRPORTS = [
   { code:'LED', city:'St Petersburg', name:'Pulkovo',                  country:'Russia',       lat:59.80, lon: 30.26, hub:true },
   { code:'KBP', city:'Kyiv',          name:'Boryspil',                 country:'Ukraine',      lat:50.34, lon: 30.89, hub:true },
   { code:'LWO', city:'Lviv',          name:'Danylo Halytskyi Intl',    country:'Ukraine',      lat:49.81, lon: 23.96, hub:true },
+  { code:'ODS', city:'Odesa',         name:'Odesa Intl',               country:'Ukraine',      lat:46.43, lon: 30.68, hub:true },
   { code:'OZH', city:'Zaporizhzhia',  name:'Zaporizhzhia Intl',        country:'Ukraine',      lat:47.87, lon: 35.32, hub:true },
   { code:'HRK', city:'Kharkiv',       name:'Kharkiv Intl',             country:'Ukraine',      lat:49.92, lon: 36.29, hub:true },
   { code:'CLJ', city:'Cluj-Napoca',   name:'Avram Iancu Intl',         country:'Romania',      lat:46.79, lon: 23.69, hub:true },
