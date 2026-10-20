@@ -546,29 +546,52 @@ const MEMBERS = [
           'network through Warsaw Chopin, with bases at Krakow and ' +
           'Olsztyn-Mazury serving the south and the north-east.',
     profile:{
+      founded:'2020',
       about:[
         'PolAir is a Polish carrier flying short-, medium- and long-haul ' +
         'services from Warsaw Chopin, with further bases at Krakow and ' +
-        'Olsztyn-Mazury. It connects Poland with Europe, Asia, North America, ' +
+        'Olsztyn-Mazury. It connects Poland with Europe, North America, Asia, ' +
         'the Middle East and leisure destinations further afield.',
-        'The airline began as a regional project and has grown quickly into a ' +
-        'major European carrier with a global network.',
+        'Founded in Warsaw in 2020, the airline has grown quickly into a major ' +
+        'European carrier with a global network.',
         'Its aim from the outset has been to pair efficient operations with a ' +
         'high standard of passenger experience, and it takes pride in its ' +
         'Polish heritage.'
       ],
       network:[
-        'More than 140 direct routes reach across Europe, from Portugal to ' +
-        'Romania and Finland. Long-haul services fly to the United States, ' +
-        'Asia, Dubai and Zanzibar.'
+        'Warsaw carries most of the long-haul flying, to New York, Chicago, ' +
+        'Boston, Fort Lauderdale, Montréal, Tokyo, Bangkok, Delhi, Dubai and ' +
+        'Zanzibar, alongside a European network from Reykjavík to Baku.',
+        'Krakow adds Los Angeles, Washington and Zanzibar to its European ' +
+        'routes, and Olsztyn-Mazury links north-east Poland with Germany and ' +
+        'Scandinavia.'
+      ],
+      routes:[
+        ['WAW','JFK'],['WAW','ORD'],['WAW','BOS'],['WAW','FLL'],['WAW','YUL'],
+        ['WAW','NRT'],['WAW','BKK'],['WAW','DEL'],['WAW','DXB'],['WAW','ZNZ'],
+        ['WAW','AMS'],['WAW','LHR'],['WAW','CDG'],['WAW','BCN'],['WAW','OPO'],
+        ['WAW','TFN'],['WAW','KEF'],['WAW','GLA'],['WAW','HEL'],['WAW','ZRH'],
+        ['WAW','CIA'],['WAW','HER'],['WAW','IST'],['WAW','TLV'],['WAW','TBS'],
+        ['WAW','GYD'],
+        ['KRK','LAX'],['KRK','IAD'],['KRK','ZNZ'],
+        ['KRK','ABZ'],['KRK','BIO'],['KRK','LIS'],['KRK','CPH'],['KRK','FRA'],
+        ['KRK','GVA'],['KRK','CIA'],['KRK','HER'],
+        ['SZY','BER'],['SZY','BRE'],['SZY','CPH'],['SZY','GOT'],['SZY','OSL'],
+        ['SZY','BGO'],['SZY','BOO']
       ],
       fleet:{
         current:[
-          ['Boeing','787 Dreamliner','35+ aircraft · Intercontinental services'],
-          ['Boeing','737 MAX','85+ aircraft · The European backbone, and medium-haul flying'],
-          ['Embraer','E-Jets','15+ aircraft · Feeder and short-haul services']
+          ['Boeing','737 MAX 8','62 aircraft · The European backbone, and medium-haul flying'],
+          ['Boeing','737 MAX 8-200','29 aircraft'],
+          ['Boeing','737 MAX 10','6 aircraft'],
+          ['Boeing','787-9 Dreamliner','20 aircraft · Intercontinental services'],
+          ['Boeing','787-10 Dreamliner','21 aircraft · Intercontinental services'],
+          ['Embraer','E195-E2','13 aircraft · Feeder and short-haul services'],
+          ['Embraer','E175LR','7 aircraft · Feeder and short-haul services']
         ],
-        incoming:[]
+        incoming:[
+          ['Boeing','737 MAX 10','4 aircraft']
+        ]
       }
     }
   },
@@ -734,6 +757,22 @@ const AIRPORTS = [
   { code:'CLJ', city:'Cluj-Napoca',   name:'Avram Iancu Intl',         country:'Romania',      lat:46.79, lon: 23.69, hub:true },
   { code:'OTP', city:'Bucharest',     name:'Henri Coandă Intl',        country:'Romania',      lat:44.57, lon: 26.08, hub:true },
   { code:'CND', city:'Constanța',     name:'Mihail Kogălniceanu',      country:'Romania',      lat:44.36, lon: 28.49 },
+  { code:'ZNZ', city:'Zanzibar',      name:'Abeid Amani Karume Intl',  country:'Tanzania',     lat: -6.22, lon:  39.22 },
+  { code:'FLL', city:'Fort Lauderdale', name:'Fort Lauderdale-Hollywood', country:'United States', lat: 26.07, lon: -80.15 },
+  { code:'IAD', city:'Washington',    name:'Dulles Intl',              country:'United States', lat: 38.95, lon: -77.46 },
+  { code:'TFN', city:'Tenerife',      name:'Tenerife North',           country:'Spain',        lat: 28.48, lon: -16.34 },
+  { code:'KEF', city:'Reykjavík',     name:'Keflavík Intl',            country:'Iceland',      lat: 63.99, lon: -22.61 },
+  { code:'GLA', city:'Glasgow',       name:'Glasgow Intl',             country:'United Kingdom', lat: 55.87, lon:  -4.43 },
+  { code:'ABZ', city:'Aberdeen',      name:'Aberdeen Intl',            country:'United Kingdom', lat: 57.20, lon:  -2.20 },
+  { code:'HEL', city:'Helsinki',      name:'Helsinki-Vantaa',          country:'Finland',      lat: 60.32, lon:  24.96 },
+  { code:'HER', city:'Heraklion',     name:'Nikos Kazantzakis',        country:'Greece',       lat: 35.34, lon:  25.18 },
+  { code:'CIA', city:'Rome',          name:'Ciampino',                 country:'Italy',        lat: 41.80, lon:  12.59 },
+  { code:'OPO', city:'Porto',         name:'Francisco Sá Carneiro',    country:'Portugal',     lat: 41.24, lon:  -8.68 },
+  { code:'BIO', city:'Bilbao',        name:'Bilbao',                   country:'Spain',        lat: 43.30, lon:  -2.91 },
+  { code:'BRE', city:'Bremen',        name:'Bremen',                   country:'Germany',      lat: 53.05, lon:   8.79 },
+  { code:'GOT', city:'Gothenburg',    name:'Landvetter',               country:'Sweden',       lat: 57.66, lon:  12.28 },
+  { code:'BGO', city:'Bergen',        name:'Flesland',                 country:'Norway',       lat: 60.29, lon:   5.22 },
+  { code:'BOO', city:'Bodø',          name:'Bodø',                     country:'Norway',       lat: 67.27, lon:  14.37 },
   { code:'WAW', city:'Warsaw',        name:'Chopin',                   country:'Poland',       lat:52.17, lon: 20.97, hub:true },
   { code:'KRK', city:'Krakow',        name:'John Paul II',             country:'Poland',       lat:50.08, lon: 19.80, hub:true },
   { code:'SZY', city:'Olsztyn',       name:'Olsztyn-Mazury',           country:'Poland',       lat:53.48, lon: 20.94, hub:true },
