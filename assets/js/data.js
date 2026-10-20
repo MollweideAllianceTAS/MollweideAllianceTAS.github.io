@@ -1034,7 +1034,7 @@ const LOUNGES = [
     name:'Kosmos Business Lounge', operator:'KA', airport:'SVO',
     location:'Terminal D, international departures, right-hand side',
     hours:'06:00 – 23:00',
-    photo:null,
+    photo:'assets/img/lounges/kosmos-svo.jpg',
     access:['Business (Space) and First (Imperial)', 'Strata and Aurora members'],
     amenities:['Russian restaurant','Sleeping capsules','Lounge seating','Apron view','Wi-Fi']
   },
@@ -1042,7 +1042,7 @@ const LOUNGES = [
     name:'Kosmos Business Lounge', operator:'KA', airport:'LED',
     location:'Terminal D, international departures, left-hand side',
     hours:'06:00 – 23:00',
-    photo:null,
+    photo:'assets/img/lounges/kosmos-led.jpg',
     access:['Business (Space) and First (Imperial)', 'Strata and Aurora members'],
     amenities:['Russian restaurant','Lounge seating','Apron view','Wi-Fi']
   },
