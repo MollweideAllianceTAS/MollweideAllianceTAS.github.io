@@ -284,7 +284,7 @@ colour. Entries come from `LOUNGES` in `data.js`:
   Both are checked by `node tools/test.js`, so a typo fails loudly.
 - `photo` may be `null`. The card then shows a panel in the operator's own
   colour rather than a broken image, so a lounge awaiting photography still
-  looks deliberate. Nothing uses that fallback at the moment.
+  looks deliberate. Lounges whose photographs are still to come use it.
 - Guarulhos deliberately points at the same file as Galeão. Sharing one URL
   means the browser downloads it once and paints it twice; give Guarulhos its
   own file whenever a photograph of that lounge exists.

@@ -326,6 +326,61 @@ const MEMBERS = [
     }
   },
   {
+    name:'Kosmos Airways', short:'Kosmos', code:'KA', country:'Russia',
+    color:'#11053B', tail:'assets/img/members/kosmos.webp',   // also #ADADAD
+    hubs:['SVO','LED','DME','GOJ','OVB'], focus:[], joined:2026,
+    blurb:'A premium Russian carrier flying long-haul from Moscow Sheremetyevo ' +
+          'and St Petersburg, with further hubs at Domodedovo, Nizhny Novgorod ' +
+          'and Novosibirsk.',
+    profile:{
+      founded:'1991',
+      about:[
+        'Kosmos is a premium Russian carrier, flying from Moscow Sheremetyevo ' +
+        'and St Petersburg with further hubs at Moscow Domodedovo, Nizhny ' +
+        'Novgorod and Novosibirsk. It competes at the top end of long-haul ' +
+        'flying, against the leading Gulf and Asian carriers.',
+        'The airline was founded in Moscow in 1991, emerging from what remained ' +
+        'of Aeroflot after its break-up. Its first fleet combined Tupolev ' +
+        'Tu-134s and Tu-154s, Antonov An-24s and Ilyushin Il-62s with Airbus ' +
+        'A310-300s and Boeing 737-400s leased from Aeroflot.',
+        'When Transaero went bankrupt in 2015, Kosmos and Aeroflot divided its ' +
+        'remaining assets. Kosmos took the Airbus A380s, Boeing 747-8Is and ' +
+        'Airbus A350s that Transaero had ordered but never received.'
+      ],
+      network:[
+        'Sheremetyevo is the main hub, with long-haul services to Beijing, ' +
+        'Lagos, Dubai, Paris and Dallas and domestic flights as far as ' +
+        'Khabarovsk. St Petersburg links Russia with Shanghai, Manila, Minsk, ' +
+        'Victoria Falls and Denver.',
+        'Domodedovo is Moscow\'s backup hub. It handles the A380 and 747-8I, ' +
+        'which Sheremetyevo cannot accommodate, and takes every Moscow flight ' +
+        'if Sheremetyevo closes.'
+      ],
+      routes:[
+        ['SVO','PKX'],['SVO','LOS'],['SVO','DXB'],['SVO','ORY'],['SVO','KHV'],
+        ['SVO','DFW'],
+        ['LED','PVG'],['LED','MNL'],['LED','MSQ'],['LED','VFA'],['LED','DEN']
+      ],
+      fleet:{
+        current:[
+          ['Airbus','A320neo'],['Airbus','A321neo'],['Airbus','A321XLR'],
+          ['Airbus','A330-900'],['Airbus','A350-900'],['Airbus','A350-1000'],
+          ['Airbus','A380-800','Operates from Domodedovo'],
+          ['Boeing','737 MAX 8'],['Boeing','737 MAX 9'],
+          ['Boeing','747-8I','Operates from Domodedovo'],
+          ['Boeing','787-8'],['Boeing','787-9'],
+          ['Embraer','E195-E2']
+        ],
+        incoming:[
+          ['Boeing','777-9'],
+          ['UAC','MC-21-210'],['UAC','MC-21-310'],['UAC','MC-21-410'],
+          ['UAC','Tu-214','Enters service when the type reaches the game'],
+          ['UAC','Tu-454']
+        ]
+      }
+    }
+  },
+  {
     name:'Avni Airlines', code:'AV', country:'India',
     color:'#19A7DE', tail:'assets/img/members/avni.webp',
     hubs:['DEL','BOM','BLR','MAA','HYD','CCU','AMD','PNQ','TRV','COK',
@@ -390,13 +445,15 @@ const MEMBERS = [
   {
     name:'Montigo Airline Corporation', short:'Montigo Air', code:'OI', country:'Italy',
     color:'#0F4C81', tail:'assets/img/members/montigo-air.webp',   // also #D82E2F, #F9B835, #0A1F44
-    hubs:['MXP'], focus:['LGW','JFK','DOH','DXB','JNB','ALG'], joined:2026,
-    blurb:'An Italian hybrid carrier from Milan Malpensa, pairing fair fares ' +
-          'with Italian hospitality and a stopover programme through Doha and Dubai.',
+    hubs:['MXP','FCO'], focus:['LGW','JFK','DOH','DXB','JNB','ALG'], joined:2026,
+    blurb:'An Italian hybrid carrier from Milan Malpensa and Rome Fiumicino, ' +
+          'pairing fair fares with Italian hospitality and a stopover programme ' +
+          'through Doha and Dubai.',
     profile:{
       founded:'2023',
       about:[
-        'Montigo Air is an Italian hybrid airline based at Milan Malpensa. ' +
+        'Montigo Air is an Italian hybrid airline based at Milan Malpensa, ' +
+        'with a second hub at Rome Fiumicino. ' +
         'Registered as a low-cost carrier, it keeps fares fair while adding ' +
         'extras that low-cost flying usually leaves out, pairing Italian ' +
         'hospitality with modern efficiency.',
@@ -405,7 +462,7 @@ const MEMBERS = [
         'Doha or Dubai with two complimentary nights.'
       ],
       network:[
-        'From Malpensa the network spans Europe, North Africa, the Middle East, ' +
+        'From Malpensa and Fiumicino the network spans Europe, North Africa, the Middle East, ' +
         'Asia and the Americas, with focus cities at London Gatwick, New York ' +
         'JFK, Doha, Dubai, Johannesburg and Algiers.',
         'Non-stop long-haul flights are flown by the Boeing 787 Dreamliner. The ' +
@@ -662,8 +719,13 @@ const AIRPORTS = [
   { code:'MUC', city:'Munich',        name:'Franz Josef Strauss',      country:'Germany',      lat:48.35, lon: 11.79 },
   { code:'ATH', city:'Athens',        name:'Eleftherios Venizelos',    country:'Greece',       lat:37.94, lon: 23.94 },
   { code:'IST', city:'Istanbul',      name:'Istanbul Airport',         country:'Türkiye',      lat:41.26, lon: 28.74 },
-  { code:'SVO', city:'Moscow',        name:'Sheremetyevo',             country:'Russia',       lat:55.97, lon: 37.41 },
-  { code:'LED', city:'St Petersburg', name:'Pulkovo',                  country:'Russia',       lat:59.80, lon: 30.26 },
+  { code:'SVO', city:'Moscow',        name:'Sheremetyevo',             country:'Russia',       lat:55.97, lon: 37.41, hub:true },
+  { code:'DME', city:'Moscow',        name:'Domodedovo',               country:'Russia',       lat:55.41, lon: 37.91, hub:true },
+  { code:'GOJ', city:'Nizhny Novgorod', name:'Strigino',               country:'Russia',       lat:56.23, lon: 43.78, hub:true },
+  { code:'OVB', city:'Novosibirsk',   name:'Tolmachevo',               country:'Russia',       lat:55.01, lon: 82.65, hub:true },
+  { code:'KHV', city:'Khabarovsk',    name:'Novy',                     country:'Russia',       lat:48.53, lon:135.19 },
+  { code:'MSQ', city:'Minsk',         name:'Minsk National',           country:'Belarus',      lat:53.88, lon: 28.03 },
+  { code:'LED', city:'St Petersburg', name:'Pulkovo',                  country:'Russia',       lat:59.80, lon: 30.26, hub:true },
   { code:'KBP', city:'Kyiv',          name:'Boryspil',                 country:'Ukraine',      lat:50.34, lon: 30.89, hub:true },
   { code:'LWO', city:'Lviv',          name:'Danylo Halytskyi Intl',    country:'Ukraine',      lat:49.81, lon: 23.96, hub:true },
   { code:'OZH', city:'Zaporizhzhia',  name:'Zaporizhzhia Intl',        country:'Ukraine',      lat:47.87, lon: 35.32, hub:true },
@@ -693,6 +755,7 @@ const AIRPORTS = [
   { code:'LOS', city:'Lagos',         name:'Murtala Muhammed',         country:'Nigeria',      lat:  6.58,lon:  3.32 },
   { code:'CMN', city:'Casablanca',    name:'Mohammed V',               country:'Morocco',      lat:33.37, lon: -7.59 },
   { code:'CPT', city:'Cape Town',     name:'Cape Town Intl',           country:'South Africa', lat:-33.97,lon: 18.60 },
+  { code:'VFA', city:'Victoria Falls', name:'Victoria Falls',          country:'Zimbabwe',     lat:-18.10,lon: 25.84 },
   { code:'ADD', city:'Addis Ababa',   name:'Bole Intl',                country:'Ethiopia',     lat: 8.98, lon: 38.80 },
   { code:'MAA', city:'Chennai',       name:'Chennai Intl',             country:'India',        lat:12.99, lon: 80.17, hub:true },
   { code:'HYD', city:'Hyderabad',     name:'Rajiv Gandhi Intl',        country:'India',        lat:17.24, lon: 78.43, hub:true },
@@ -715,6 +778,7 @@ const AIRPORTS = [
   { code:'KUL', city:'Kuala Lumpur',  name:'KLIA',                     country:'Malaysia',     lat: 2.75, lon:101.71, hub:true },
   { code:'HKG', city:'Hong Kong',     name:'Hong Kong Intl',           country:'Hong Kong',    lat:22.31, lon:113.91 },
   { code:'PEK', city:'Beijing',       name:'Capital Intl',             country:'China',        lat:40.08, lon:116.58, hub:true },
+  { code:'PKX', city:'Beijing',       name:'Daxing Intl',              country:'China',        lat:39.51, lon:116.41 },
   { code:'CAN', city:'Guangzhou',     name:'Baiyun Intl',              country:'China',        lat:23.39, lon:113.31 },
   { code:'CTU', city:'Chengdu',       name:'Tianfu Intl',              country:'China',        lat:30.31, lon:104.44 },
   { code:'NRT', city:'Tokyo',         name:'Narita Intl',              country:'Japan',        lat:35.77, lon:140.39 },
@@ -964,6 +1028,22 @@ const LOUNGES = [
     photo:'assets/img/lounges/dnx-clj.jpg',
     access:['Business and First', 'Strata and Aurora members'],
     amenities:['Buffet dining','Showers','Bar','Runway view','Wi-Fi']
+  },
+  {
+    name:'Kosmos Business Lounge', operator:'KA', airport:'SVO',
+    location:'Terminal D, international departures, right-hand side',
+    hours:'06:00 – 23:00',
+    photo:null,
+    access:['Business (Space) and First (Imperial)', 'Strata and Aurora members'],
+    amenities:['Russian restaurant','Sleeping capsules','Lounge seating','Apron view','Wi-Fi']
+  },
+  {
+    name:'Kosmos Business Lounge', operator:'KA', airport:'LED',
+    location:'Terminal D, international departures, left-hand side',
+    hours:'06:00 – 23:00',
+    photo:null,
+    access:['Business (Space) and First (Imperial)', 'Strata and Aurora members'],
+    amenities:['Russian restaurant','Lounge seating','Apron view','Wi-Fi']
   },
   {
     name:'Eagle\'s Nest', operator:'PL', airport:'WAW',
