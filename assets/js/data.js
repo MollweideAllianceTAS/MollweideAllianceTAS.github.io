@@ -207,8 +207,8 @@ const MEMBERS = [
         'on 22 June 2015 as Shanghai Express, linking Shanghai with the rest of ' +
         'China on a small fleet of Boeing 717s, 737s and 757s.',
         'A reorganisation in 2017 turned it towards international flying. The ' +
-        'older aircraft were retired in favour of new types, including ' +
-        'Chinese-built ones, and most of today\'s fleet is of Chinese design.'
+        'older aircraft were retired in favour of new types, and Chinese-built ' +
+        'aircraft now make up a large part of the fleet.'
       ],
       network:[
         'Long-haul flying is split between the two primary hubs. Beijing Capital ' +
@@ -224,14 +224,20 @@ const MEMBERS = [
       ],
       fleet:{
         current:[
-          ['Airbus','A319neo'],['Airbus','A320neo'],['Airbus','A321neo'],
-          ['Airbus','A321XLR'],['Airbus','A350-900'],['Airbus','A380-800'],
-          ['Boeing','737 MAX 8'],['Boeing','737 MAX 9'],['Boeing','747-400'],
-          ['Boeing','747-8I'],['Boeing','777-200'],['Boeing','777-200LR'],
-          ['Boeing','777-300'],['Boeing','777-300ER'],['Boeing','787-8'],
-          ['Boeing','787-9'],
-          ['COMAC','C909 (ARJ21-700)'],['COMAC','C919-100ER'],
-          ['UAC','Superjet 100-95LR']
+          ['Airbus','A319neo','30 aircraft'],['Airbus','A320neo','30 aircraft'],
+          ['Airbus','A321neo','30 aircraft'],['Airbus','A321XLR','30 aircraft'],
+          ['Airbus','A350-900','20 aircraft'],['Airbus','A380-800','30 aircraft'],
+          ['Boeing','737 MAX 7','30 aircraft'],['Boeing','737 MAX 8','30 aircraft'],
+          ['Boeing','737 MAX 9','30 aircraft'],
+          ['Boeing','747-400','20 aircraft · Leased from GECAS'],
+          ['Boeing','747-8I','10 aircraft'],
+          ['Boeing','777-200','10 aircraft · Leased from GECAS'],
+          ['Boeing','777-200LR','10 aircraft'],
+          ['Boeing','777-300','10 aircraft · Leased from GECAS'],
+          ['Boeing','777-300ER','10 aircraft'],
+          ['Boeing','787-8','20 aircraft'],['Boeing','787-9','20 aircraft'],
+          ['COMAC','C909 (ARJ21-700)','100 aircraft'],['COMAC','C919-100ER','300 aircraft'],
+          ['UAC','Superjet 100-95LR','100 aircraft · 25 of them leased from Gazprom Avia']
         ],
         incoming:[]
       }
@@ -363,20 +369,63 @@ const MEMBERS = [
       ],
       fleet:{
         current:[
-          ['Airbus','A320neo'],['Airbus','A321neo'],['Airbus','A321XLR'],
-          ['Airbus','A330-900'],['Airbus','A350-900'],['Airbus','A350-1000'],
-          ['Airbus','A380-800','Operates from Domodedovo'],
-          ['Boeing','737 MAX 8'],['Boeing','737 MAX 9'],
-          ['Boeing','747-8I','Operates from Domodedovo'],
-          ['Boeing','787-8'],['Boeing','787-9'],
-          ['Embraer','E195-E2']
+          ['Airbus','A320neo','18 aircraft'],['Airbus','A321neo','18 aircraft'],
+          ['Airbus','A321XLR','18 aircraft'],['Airbus','A330-900','18 aircraft'],
+          ['Airbus','A350-900','18 aircraft'],['Airbus','A350-1000','12 aircraft'],
+          ['Airbus','A380-800','24 aircraft · Operates from Domodedovo'],
+          ['Boeing','737 MAX 8','18 aircraft'],['Boeing','737 MAX 9','18 aircraft'],
+          ['Boeing','747-8I','18 aircraft · Operates from Domodedovo'],
+          ['Boeing','787-8','18 aircraft'],['Boeing','787-9','18 aircraft'],
+          ['Embraer','E195-E2','18 aircraft']
         ],
         incoming:[
-          ['Boeing','777-9'],
-          ['UAC','MC-21-210'],['UAC','MC-21-310'],['UAC','MC-21-410'],
-          ['UAC','Tu-214','Enters service when the type reaches the game'],
-          ['UAC','Tu-454']
+          ['Boeing','777-9','24 aircraft'],
+          ['UAC','MC-21-210','18 aircraft'],['UAC','MC-21-310','18 aircraft'],
+          ['UAC','MC-21-410','18 aircraft'],
+          ['UAC','Tu-214','12 aircraft · Enters service when the type reaches the game'],
+          ['UAC','Tu-454','12 aircraft']
         ]
+      }
+    }
+  },
+  {
+    name:'Altai-Sibir Airlines', short:'Altasib', code:'NS', country:'Russia',
+    color:'#586673', tail:'assets/img/members/altasib.webp',
+    hubs:['OVB','BAX'], focus:[], joined:2026,
+    blurb:'A Siberian low-cost carrier flying across Russia and to neighbouring ' +
+          'countries from Novosibirsk and Barnaul.',
+    profile:{
+      founded:'1992',
+      about:[
+        'Altasib is a Russian low-cost carrier flying from Novosibirsk, with its ' +
+        'original base at Barnaul. It serves destinations across Russia, with ' +
+        'international flights to China, Kazakhstan, Uzbekistan, Belarus, ' +
+        'Türkiye and Egypt.',
+        'The airline was founded in Barnaul in 1992 with a fleet of Tupolev ' +
+        'Tu-154s and Tu-134s, and later moved most of its flying to ' +
+        'Novosibirsk. Over the years it replaced its Soviet aircraft with Boeing ' +
+        '737-800s and Airbus A320s and A321s.'
+      ],
+      network:[
+        'Novosibirsk is the main hub, linking Siberia with Moscow and Saratov, ' +
+        'with Anadyr in the far north-east, and with Ankara abroad.'
+      ],
+      routes:[
+        ['OVB','SVO'],['OVB','DYR'],['OVB','GSV'],['OVB','ESB']
+      ],
+      fleet:{
+        current:[
+          ['Airbus','A220-100','10 aircraft · Leased from Airbus'],
+          ['Airbus','A320-200','10 aircraft · Leased from AerCap'],
+          ['Airbus','A320neo','10 aircraft · Leased from S7'],
+          ['Airbus','A321-200','10 aircraft · Leased from AerCap'],
+          ['Airbus','A321neo','10 aircraft · 8 leased from S7, 2 from Turkish Airlines'],
+          ['ATR','72'],
+          ['Boeing','737-800','10 aircraft · Leased from GECAS'],
+          ['UAC','Superjet 100-95B'],
+          ['UAC','Tu-204-100','15 aircraft · 5 leased from Red Wings, 10 from Aviastar-TU']
+        ],
+        incoming:[]
       }
     }
   },
@@ -525,15 +574,20 @@ const MEMBERS = [
       ],
       fleet:{
         current:[
-          ['Airbus','A320neo'],['Airbus','A321neo'],
-          ['Boeing','737-700','Leased'],['Boeing','737-800','Leased'],
-          ['Boeing','737-900','Leased'],['Boeing','757-200','Leased'],
-          ['Boeing','767-300ER','Leased'],['Boeing','777-200'],
-          ['Boeing','777-300'],['Boeing','787-8'],
-          ['Embraer','E170','Leased'],['Embraer','E195-E2']
+          ['Airbus','A320neo','5 aircraft · Leased from AerCap'],
+          ['Airbus','A321neo','10 aircraft · Leased from AerCap'],
+          ['Boeing','737-700','20 aircraft · Leased from GECAS'],
+          ['Boeing','737-800','20 aircraft · Leased from GECAS'],
+          ['Boeing','737-900','20 aircraft · Leased from GECAS'],
+          ['Boeing','757-200','30 aircraft · Leased from GECAS'],
+          ['Boeing','767-300ER','30 aircraft · Leased from GECAS'],
+          ['Boeing','777-200','5 aircraft · Leased from United Airlines'],
+          ['Boeing','777-300','5 aircraft · Leased from United Airlines'],
+          ['Boeing','787-8','10 aircraft · Leased from All Nippon Airways'],
+          ['Embraer','E170','5 aircraft'],['Embraer','E195-E2','5 aircraft']
         ],
         incoming:[
-          ['Boeing','767-200ER','Leased; enters service when the type reaches the game']
+          ['Boeing','767-200ER','30 aircraft · Leased from GECAS; enters service when the type reaches the game']
         ]
       }
     }
@@ -741,11 +795,15 @@ const AIRPORTS = [
   { code:'VIE', city:'Vienna',        name:'Vienna Intl',              country:'Austria',      lat:48.11, lon: 16.57 },
   { code:'MUC', city:'Munich',        name:'Franz Josef Strauss',      country:'Germany',      lat:48.35, lon: 11.79 },
   { code:'ATH', city:'Athens',        name:'Eleftherios Venizelos',    country:'Greece',       lat:37.94, lon: 23.94 },
+  { code:'ESB', city:'Ankara',        name:'Esenboğa',                 country:'Türkiye',      lat:40.13, lon: 32.99 },
   { code:'IST', city:'Istanbul',      name:'Istanbul Airport',         country:'Türkiye',      lat:41.26, lon: 28.74 },
   { code:'SVO', city:'Moscow',        name:'Sheremetyevo',             country:'Russia',       lat:55.97, lon: 37.41, hub:true },
   { code:'DME', city:'Moscow',        name:'Domodedovo',               country:'Russia',       lat:55.41, lon: 37.91, hub:true },
   { code:'GOJ', city:'Nizhny Novgorod', name:'Strigino',               country:'Russia',       lat:56.23, lon: 43.78, hub:true },
   { code:'OVB', city:'Novosibirsk',   name:'Tolmachevo',               country:'Russia',       lat:55.01, lon: 82.65, hub:true },
+  { code:'BAX', city:'Barnaul',       name:'Titov Intl',               country:'Russia',       lat:53.36, lon: 83.54, hub:true },
+  { code:'DYR', city:'Anadyr',        name:'Ugolny',                   country:'Russia',       lat:64.73, lon:177.74 },
+  { code:'GSV', city:'Saratov',       name:'Gagarin',                  country:'Russia',       lat:51.71, lon: 46.17 },
   { code:'KHV', city:'Khabarovsk',    name:'Novy',                     country:'Russia',       lat:48.53, lon:135.19 },
   { code:'MSQ', city:'Minsk',         name:'Minsk National',           country:'Belarus',      lat:53.88, lon: 28.03 },
   { code:'LED', city:'St Petersburg', name:'Pulkovo',                  country:'Russia',       lat:59.80, lon: 30.26, hub:true },
