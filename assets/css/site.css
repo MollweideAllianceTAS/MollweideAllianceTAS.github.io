@@ -934,7 +934,8 @@ select.field__in { appearance: none; cursor: pointer; padding-right: 2.25rem;
 .brand--xl .brand__sub  { font-size: .5625rem; letter-spacing: .46em; margin-top: .5rem; }
 
 .joins { display: grid; gap: clamp(1rem, 2.2vw, 1.75rem); grid-template-columns: 1fr; }
-@media (min-width: 860px) { .joins { grid-template-columns: repeat(2, 1fr); } }
+/* One row of cards on wide screens, however many groups there are. */
+@media (min-width: 960px) { .joins { grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); } }
 
 .joinc {
   position: relative; display: flex; flex-direction: column;

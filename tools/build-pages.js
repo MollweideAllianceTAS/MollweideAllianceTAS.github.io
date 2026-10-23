@@ -27,10 +27,13 @@ const DATA = (() => {
     document:{ addEventListener(){}, querySelector:()=>null, querySelectorAll:()=>[] } });
   vm.runInContext(fs.readFileSync(`${ROOT}/assets/js/data.js`, 'utf8'), ctx);
   vm.runInContext(fs.readFileSync(`${ROOT}/assets/js/site.js`, 'utf8'), ctx);
-  vm.runInContext('globalThis._x = { MEMBERS, airport, nameOf, memberPage, tintOn };', ctx);
+  vm.runInContext('globalThis._x = { MEMBERS, JOIN, airport, nameOf, groupOf, memberPage, tintOn };', ctx);
   return ctx._x;
 })();
-const { airport, nameOf, memberPage, tintOn } = DATA;
+const { airport, nameOf, groupOf, memberPage, tintOn } = DATA;
+/* The join page names and counts the groups from JOIN in data.js. */
+const GROUPS = DATA.JOIN.map(j => j.name);
+const groupList = GROUPS.slice(0, -1).join(', ') + ' or ' + GROUPS[GROUPS.length - 1];
 const WORDS = ['zero','one','two','three','four','five','six','seven','eight',
   'nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen',
   'seventeen','eighteen','nineteen','twenty'];
@@ -752,13 +755,13 @@ const submit = head('Member submissions', 'What member airlines need to send for
 /* ========================================================================== */
 /*  JOIN                                                                      */
 /* ========================================================================== */
-const join = head('Join the alliance', 'How to join the Mollweide Alliance or Mollweide Connect from inside The Airline Simulator.')
+const join = head('Join the alliance', `How to join the ${groupList} from inside The Airline Simulator.`)
 + chrome('join.html') + `
 <section class="phead">
   <img class="phead__bg" src="assets/img/photos/lineup-six.jpg" alt="" width="1440" height="296">
   <div class="wrap phead__in">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span>/</span> Join the alliance</nav>
-    <h1 class="display">Two ways in, <b>both starting in the game.</b></h1>
+    <h1 class="display">${words(GROUPS.length)[0].toUpperCase() + words(GROUPS.length).slice(1)} ways in, <b>all starting in the game.</b></h1>
     <div class="brandrule"></div>
     <p class="lede mt-3">New carriers are always welcome. Find us in the alliance search in <span data-slot="game">The Airline Simulator</span>, then come and say hello on Discord — the rest is a conversation rather than a form.</p>
   </div>
@@ -767,8 +770,8 @@ const join = head('Join the alliance', 'How to join the Mollweide Alliance or Mo
 <section class="section">
   <div class="wrap">
     <div class="sec-head">
-      <div><p class="eyebrow" data-rv>The two groups</p>
-      <h2 class="display" data-rv>Mollweide Alliance, <b>and Mollweide Connect.</b></h2>
+      <div><p class="eyebrow" data-rv>The ${words(GROUPS.length)} groups</p>
+      <h2 class="display" data-rv>${GROUPS[0]}, <b>${GROUPS.slice(1, -1).join(', ')}${GROUPS.length > 2 ? ' and ' : 'and '}${GROUPS[GROUPS.length - 1]}.</b></h2>
       <p class="lede mt-2" data-rv>Each is listed separately in game. The names below are what the game matches on, so it is worth copying them across rather than typing them out.</p></div>
     </div>
     <div class="joins" id="joinGroups"></div>
@@ -786,7 +789,7 @@ const join = head('Join the alliance', 'How to join the Mollweide Alliance or Mo
     <ol class="spec">
       <li class="spec__item"><span class="spec__n">01</span><div>
         <h3 class="spec__t">Find us in the game</h3>
-        <p class="spec__b">Open the alliance search and look up whichever of the two groups you are interested in. Both names are above, and both can be copied straight from this page.</p>
+        <p class="spec__b">Open the alliance search and look up whichever of the ${words(GROUPS.length)} groups you are interested in. Every name is above, and each can be copied straight from this page.</p>
       </div></li>
 
       <li class="spec__item"><span class="spec__n">02</span><div>
@@ -813,7 +816,7 @@ const join = head('Join the alliance', 'How to join the Mollweide Alliance or Mo
     <div class="two-col">
       <ul class="reqs">
         <li><b>The invite links are given in game.</b> We do not publish them here, so the in-game listing is the place to look.</li>
-        <li><b>Both groups share the same channel</b>, so you will find everyone in one place whichever you join through.</li>
+        <li><b>All ${words(GROUPS.length)} groups share the same channel</b>, so you will find everyone in one place whichever you join through.</li>
         <li><b>Anything you would like shown on this site is sent there</b> — airline details, livery artwork, lounges and news.</li>
       </ul>
       <div>
@@ -861,7 +864,7 @@ const fleetBlock = rows => `
 
 const airlinePage = m => {
   const P = m.profile, nm = nameOf(m), hub = airport(m.hubs[0]);
-  const group = m.group === 'connect' ? 'Mollweide Connect' : 'Mollweide Alliance';
+  const group = groupOf(m).name;
   return head(nm, m.blurb, m.tail) + chrome('members.html') + `
 <main class="al" style="--al:${tintOn(m.color, '#FFFFFF')};--al-ink:${tintOn(m.color, '#071A45')}">
 <section class="phead">

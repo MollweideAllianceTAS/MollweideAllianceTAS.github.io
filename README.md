@@ -51,7 +51,7 @@ airports or its fares.
 |---|---|
 | Alliance name, tagline, HQ, statement | `ALLIANCE` at the top of `data.js` |
 | Member airlines, hubs, colours, blurbs | `MEMBERS` |
-| Whether a carrier joined via Connect | `group:'connect'` on that member |
+| Which group a carrier joined through | `group` on that member (`'connect'`, `'meridian'`) |
 | A member's own page | `profile` on that member (see *Airline pages*) |
 | Airports the search and map know about | `AIRPORTS` |
 | Cabins, fare multipliers, seat layouts | `CABINS` |
@@ -169,36 +169,41 @@ hub, and worth putting in a sensible order.
 ### Joining
 
 `join.html` is the page the "Join the Alliance" button in the header points at.
-It carries the two groups listed in game, each with the exact string to search
-for, and the three steps around them.
+It carries the groups listed in game — the alliance itself, Mollweide Connect
+and Mollweide Meridian — each with the exact string to search for, and the
+three steps around them. The page counts and names the groups from `JOIN`, so
+adding a fourth is a data change only.
 
 **There is no application form** — not on the site and not in the game. The
 page says so plainly: find the alliance in the in-game search, then arrange it
 on Discord. Do not reintroduce an "apply in game" step.
 
-Both entries live in `JOIN` in `data.js`. `search` is reproduced on the page
+The entries live in `JOIN` in `data.js`; the alliance itself comes first. `search` is reproduced on the page
 character for character and is typed straight back into the game, so a stray
 space or a capital letter would send someone looking for a listing that is not
 there — `node tools/test.js` holds it to lower-case hyphenated words and checks
-the two do not collide.
+that no two collide.
 
-The two lockups are the real mark and wordmark, differing only in the sub-label
+The lockups are the real mark and wordmark, differing only in the sub-label
 beneath, which is the same `.brand` component the header uses at a larger size.
-There is no separate Connect artwork; if one exists, drop it in and replace the
-lockup in `renderJoin()`.
+There is no separate Connect or Meridian artwork; if one exists, drop it in and
+replace the lockup in `renderJoin()`. On wide screens the cards sit in a single
+row however many there are.
 
 The Discord invite is deliberately **not** on the site. It is given in game, and
 the page says so.
 
-### The two groups
+### The groups
 
-A member that joined through **Mollweide Connect** rather than the alliance
-itself carries `group:'connect'`. Full members leave the field out — absence is
-what the site assumes. It is a membership label only: a Connect carrier still
-appears on the member wall, on the map and in flight search, and is marked with
-a small badge on the wall and in the hub explorer. Nothing claims what Connect
-membership does or does not include, because that has not been established —
-the Elara copy says "every member" rather than counting them.
+A member that joined through **Mollweide Connect** or **Mollweide Meridian**
+rather than the alliance itself carries `group`, set to that entry's `key` in
+`JOIN` (`'connect'` or `'meridian'`). Full members leave the field out — absence
+is what the site assumes. It is a membership label only: such a carrier still
+appears on the member wall, on the map and in flight search, is marked with a
+small badge (the group's `sub`) on the wall and in the hub explorer, and its
+page names the group. Nothing claims what Connect or Meridian membership does
+or does not include, because that has not been established — the Elara copy
+says "every member" rather than counting them.
 
 ### Counts in the copy
 

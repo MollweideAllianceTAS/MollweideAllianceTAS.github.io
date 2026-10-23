@@ -125,14 +125,14 @@ ok('tintOn returns a usable hex for a near-black brand colour',
    /^#[0-9a-f]{6}$/.test(S.tintOn('#2A2F38', S.MAP_INK)), S.tintOn('#2A2F38', S.MAP_INK));
 
 // --- membership groups -----------------------------------------------------
-const GROUPS = ['connect'];   // anything else is a full alliance member
+const GROUPS = S.JOIN.map(j => j.key).filter(k => k !== 'alliance');   // no group = full member
 ok('Every member group is one the site knows about',
    S.MEMBERS.every(m => !m.group || GROUPS.indexOf(m.group) > -1),
    S.MEMBERS.filter(m => m.group).map(m => m.code + ':' + m.group).join(' ') || 'all full members');
-/* A Connect carrier is a membership tier, not a separate network: it still has
-   to resolve everywhere a full member does. */
-S.MEMBERS.filter(m => m.group === 'connect').forEach(m => {
-  ok('Connect carrier ' + m.code + ' resolves like any other member',
+/* A group is a membership tier, not a separate network: its carriers still
+   have to resolve everywhere a full member does. */
+S.MEMBERS.filter(m => m.group).forEach(m => {
+  ok(m.group + ' carrier ' + m.code + ' resolves like any other member',
      !!m.tail && !!m.color && (m.hubs || []).length > 0 &&
      (m.hubs || []).every(h => S.airport(h)));
 });
@@ -143,7 +143,8 @@ ok('Every code is two characters, letters or digits',
    S.MEMBERS.map(m => m.code).sort().join(' '));
 
 // --- joining ---------------------------------------------------------------
-ok('Both joinable groups are configured', S.JOIN.length === 2,
+ok('The alliance itself is the first joinable group, with others after it',
+   S.JOIN.length >= 2 && S.JOIN[0].key === 'alliance',
    S.JOIN.map(j => j.name).join(' / '));
 ok('Every group carries an in-game search string',
    S.JOIN.every(j => typeof j.search === 'string' && j.search.length > 2));
@@ -153,7 +154,7 @@ ok('Every group carries an in-game search string',
 ok('Search strings are exact — lower case, hyphenated, no stray spaces',
    S.JOIN.every(j => /^[a-z]+(-[a-z]+)*$/.test(j.search)),
    S.JOIN.map(j => j.search).join('  '));
-ok('The two groups do not share a search string',
+ok('No two groups share a search string',
    new Set(S.JOIN.map(j => j.search)).size === S.JOIN.length);
 ok('Every group has a name, sub-label, accent and description',
    S.JOIN.every(j => j.name && j.sub && /^#[0-9A-Fa-f]{6}$/.test(j.accent) && j.blurb));

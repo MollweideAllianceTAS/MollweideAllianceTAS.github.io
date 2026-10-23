@@ -15,6 +15,8 @@ const MB = {};  MEMBERS.forEach(m => MB[m.code] = m);
 const airport   = c => AP[c];
 const memberOf  = c => MB[c];
 const nameOf    = m => m.short || m.name;
+/* The JOIN entry a member came in through; full members have no `group`. */
+const groupOf   = m => JOIN.find(j => j.key === (m.group || 'alliance')) || JOIN[0];
 const servesSet = m => [].concat(m.hubs || [], m.focus || []);
 /* A member with a `profile` has a page of its own, named from its trading
    name. tools/build-pages.js writes those pages using this same function, so
@@ -503,7 +505,7 @@ function renderMembers(el, limit) {
       <img class="livery__img" src="${m.tail}" alt="${m.name} aircraft livery"
            loading="lazy" width="380" height="285" decoding="async">
       <figcaption class="livery__name">${m.short || m.name}${
-        m.group === 'connect' ? ' <span class="livery__grp">Connect</span>' : ''}</figcaption>`;
+        m.group ? ` <span class="livery__grp">${groupOf(m).sub}</span>` : ''}</figcaption>`;
     return `
     <figure class="livery${page ? ' livery--link' : ''}" id="${m.code}"${page ? '' : ' tabindex="0"'}${
       m.short ? ` title="${m.name}"` : ''}${rail ? '' : ` data-rv style="transition-delay:${i * 40}ms"`}>${
@@ -629,7 +631,7 @@ function initHubExplorer(root) {
       <button class="hx__opt" type="button" data-code="${m.code}" aria-pressed="false">
         <i class="hx__dot" style="background:${tintOn(m.color, '#FFFFFF')}"></i>
         <span class="hx__name">${m.short || m.name}${
-          m.group === 'connect' ? ' <em class="hx__grp">Connect</em>' : ''}</span>
+          m.group ? ` <em class="hx__grp">${groupOf(m).sub}</em>` : ''}</span>
         <span class="hx__n">${(m.hubs || []).length}</span>
       </button>`).join('');
 
@@ -718,7 +720,7 @@ function initHubExplorer(root) {
   draw('');
 }
 
-/* The two in-game groups, each with the string to search for. */
+/* The in-game groups, each with the string to search for. */
 function renderJoin(el) {
   if (!el) return;
   el.innerHTML = JOIN.map(j => `

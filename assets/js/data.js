@@ -33,10 +33,10 @@ const ALLIANCE = {
    MEMBER AIRLINES
    `tail` is the livery photograph used on member cards.
    `color` tints that airline throughout the UI (result rows, chips, seat maps).
-   `group` is 'connect' for carriers that joined through Mollweide Connect
-   rather than the alliance itself; leave it out for full members, which is
-   what the site assumes. Both groups fly the same network, so a Connect
-   carrier still appears on the wall, on the map and in flight search — it is
+   `group` is the `key` of the JOIN entry a carrier came in through — 'connect'
+   or 'meridian' — and is left out for full members of the alliance itself,
+   which is what the site assumes. Every group flies the same network, so such
+   a carrier still appears on the wall, on the map and in flight search; it is
    only labelled differently.
 
    `profile` is optional. A member that has one gets its own page,
@@ -1164,12 +1164,13 @@ const LOUNGES = [
 /* ==========================================================================
    JOINING
    ----------------------------------------------------------------------------
-   The two groups a player can apply to from inside the game. `search` is the
+   The groups a player can join from inside the game. `search` is the
    exact string to type into the game's alliance search — it is reproduced
    character for character on join.html and must not be reworded.
 
-   `accent` only tints the rule along the top of each card; both groups use
-   the same mark and wordmark, because they are the same brand.
+   `accent` only tints the rule along the top of each card; every group uses
+   the same mark and wordmark, because they are the same brand. The join page
+   counts and names the groups from this list, so adding one here is enough.
    ========================================================================== */
 
 const JOIN = [
@@ -1189,5 +1190,14 @@ const JOIN = [
     blurb:'The alliance\'s second group, listed separately in game. Apply here ' +
           'if you have been directed to Connect rather than to the alliance ' +
           'itself.'
+  },
+  {
+    key:'meridian', name:'Mollweide Meridian', sub:'Meridian',
+    accent:'#C2761B',
+    search:'tree-guide-yellow',
+    // TODO: say here how Meridian differs from the other two groups in game.
+    blurb:'The alliance\'s third group, listed separately in game. Use this one ' +
+          'if you have been directed to Meridian rather than to the alliance ' +
+          'itself or to Connect.'
   }
 ];
