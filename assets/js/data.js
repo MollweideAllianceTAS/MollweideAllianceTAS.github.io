@@ -485,6 +485,36 @@ const MEMBERS = [
           'Miami, and a long-haul base at Dubai.'
   },
   {
+    name:'QuintAir', code:'QA', country:'United States', group:'connect',
+    color:'#FFB6C1', tail:'assets/img/members/quintair.webp',   // stand-in until the livery arrives; also #FFFFFF
+    hubs:['LAX','MIA','JFK','DFW'], focus:[], joined:2026,
+    blurb:'A US international carrier in character liveries, flying from Los ' +
+          'Angeles, Miami, New York JFK and Dallas/Fort Worth.',
+    profile:{
+      about:[
+        'QuintAir is a United States international carrier flying from hubs at ' +
+        'Los Angeles, Miami, New York JFK and Dallas/Fort Worth. It joined the ' +
+        'alliance through Mollweide Connect.',
+        'Its aircraft wear character liveries inspired by the anime The ' +
+        'Quintessential Quintuplets, giving the airline a style passengers ' +
+        'recognise wherever it flies.',
+        'A dedicated domestic fleet is planned, to expand its regional flying.'
+      ],
+      network:[
+        'QuintAir flies global routes from its four hubs, with a long-haul ' +
+        'fleet led by the Airbus A350-1000, A380-800 and Boeing 777-300ER.'
+      ],
+      fleet:{
+        current:[
+          ['Airbus','A321neo','15 aircraft'],['Airbus','A350-1000','31 aircraft'],
+          ['Airbus','A380-800','9 aircraft'],
+          ['Boeing','777-300','4 aircraft'],['Boeing','777-300ER','24 aircraft']
+        ],
+        incoming:[]
+      }
+    }
+  },
+  {
     name:'Volare', code:'VO', country:'Italy',
     color:'#1E7A3E', tail:'assets/img/members/volare.webp',
     hubs:['LIN','MXP','FCO','PMO','NAP'], focus:[], joined:2026,
@@ -530,6 +560,46 @@ const MEMBERS = [
           ['Airbus','A320neo','40 aircraft'],['Airbus','A220-300','12 aircraft'],
           ['Airbus','A321XLR','10 aircraft · Stopover services via Doha and Dubai'],
           ['Boeing','787-8','10 aircraft · Non-stop long-haul']
+        ],
+        incoming:[]
+      }
+    }
+  },
+  {
+    name:'Hop on Airline', short:'Hop on!', code:'HO', country:'Italy',
+    color:'#FFB80A', tail:'assets/img/members/hop-on.webp',   // stand-in until the livery arrives
+    hubs:['LIN'], focus:[], joined:2026,
+    blurb:'Montigo Air\'s low-cost sister, flying short, simple hops across ' +
+          'Italy and nearby Europe from Milan Linate.',
+    profile:{
+      founded:'2025',
+      about:[
+        'Hop on! is an Italian low-cost airline flying from Milan Linate, close ' +
+        'to the city centre, to destinations across Italy and nearby Europe. It ' +
+        'is the sister airline of Montigo Air within the Montigo Aviation Group.',
+        'Founded on 1 April 2025, it keeps short flights simple and honest: a ' +
+        'small personal item travels free, cabin bags can be booked online in ' +
+        'advance, and there are no costs hidden in the fine print.',
+        'Its Embraer E195-E2s are laid out two by two, so no seat is a middle ' +
+        'seat.'
+      ],
+      network:[
+        'Linate links Milan with Italy\'s main cities, from Venice and Trieste ' +
+        'to Naples, Bari and Sicily, and with nearby European cities from ' +
+        'Barcelona and Madrid to Vienna, Zagreb and Malta.',
+        'Passengers continuing further afield can connect with Montigo Air ' +
+        'through Milan Malpensa.'
+      ],
+      routes:[
+        ['LIN','FCO'],['LIN','NAP'],['LIN','BRI'],['LIN','PMO'],['LIN','CTA'],
+        ['LIN','FLR'],['LIN','VCE'],['LIN','TRS'],
+        ['LIN','ORY'],['LIN','LYS'],['LIN','NCE'],['LIN','BCN'],['LIN','MAD'],
+        ['LIN','VIE'],['LIN','MUC'],['LIN','ZRH'],['LIN','BRU'],['LIN','LJU'],
+        ['LIN','ZAG'],['LIN','MLA']
+      ],
+      fleet:{
+        current:[
+          ['Embraer','E195-E2','Two-by-two seating, with no middle seats']
         ],
         incoming:[]
       }
@@ -778,6 +848,16 @@ const AIRPORTS = [
   { code:'BCN', city:'Barcelona',     name:'El Prat',                  country:'Spain',        lat:41.30, lon:  2.08 },
   { code:'LIS', city:'Lisbon',        name:'Humberto Delgado',         country:'Portugal',     lat:38.77, lon: -9.13 },
   { code:'FCO', city:'Rome',          name:'Fiumicino',                country:'Italy',        lat:41.80, lon: 12.25, hub:true },
+  { code:'BRI', city:'Bari',          name:'Karol Wojtyła',            country:'Italy',        lat: 41.14, lon:  16.76 },
+  { code:'CTA', city:'Catania',       name:'Fontanarossa',             country:'Italy',        lat: 37.47, lon:  15.07 },
+  { code:'FLR', city:'Florence',      name:'Peretola',                 country:'Italy',        lat: 43.81, lon:  11.20 },
+  { code:'VCE', city:'Venice',        name:'Marco Polo',               country:'Italy',        lat: 45.51, lon:  12.35 },
+  { code:'TRS', city:'Trieste',       name:'Friuli Venezia Giulia',    country:'Italy',        lat: 45.83, lon:  13.47 },
+  { code:'NCE', city:'Nice',          name:'Côte d\'Azur',             country:'France',       lat: 43.66, lon:   7.22 },
+  { code:'BRU', city:'Brussels',      name:'Brussels Airport',         country:'Belgium',      lat: 50.90, lon:   4.48 },
+  { code:'LJU', city:'Ljubljana',     name:'Jože Pučnik',              country:'Slovenia',     lat: 46.22, lon:  14.46 },
+  { code:'ZAG', city:'Zagreb',        name:'Franjo Tuđman',            country:'Croatia',      lat: 45.74, lon:  16.07 },
+  { code:'MLA', city:'Malta',         name:'Malta Intl',               country:'Malta',        lat: 35.86, lon:  14.48 },
   { code:'LIN', city:'Milan',         name:'Linate',                   country:'Italy',        lat:45.45, lon:  9.28, hub:true },
   { code:'NAP', city:'Naples',        name:'Capodichino',              country:'Italy',        lat:40.89, lon: 14.29, hub:true },
   { code:'PMO', city:'Palermo',       name:'Falcone Borsellino',       country:'Italy',        lat:38.18, lon: 13.10, hub:true },
@@ -900,7 +980,7 @@ const AIRPORTS = [
   { code:'JFK', city:'New York',      name:'John F. Kennedy',          country:'United States',lat:40.64, lon:-73.78, hub:true },
   { code:'ORD', city:'Chicago',       name:'O\'Hare',                  country:'United States',lat:41.98, lon:-87.90, hub:true },
   { code:'SEA', city:'Seattle',       name:'Seattle–Tacoma',           country:'United States',lat:47.45, lon:-122.31},
-  { code:'DFW', city:'Dallas',        name:'Dallas/Fort Worth',        country:'United States',lat:32.90, lon:-97.04 },
+  { code:'DFW', city:'Dallas',        name:'Dallas/Fort Worth',        country:'United States',lat:32.90, lon:-97.04, hub:true },
   { code:'MIA', city:'Miami',         name:'Miami Intl',               country:'United States',lat:25.80, lon:-80.29, hub:true },
   { code:'BOS', city:'Boston',        name:'Logan Intl',               country:'United States',lat:42.36, lon:-71.01, hub:true },
   { code:'DEN', city:'Denver',        name:'Denver Intl',              country:'United States',lat:39.86, lon:-104.67,hub:true },
