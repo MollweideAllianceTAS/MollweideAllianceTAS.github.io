@@ -567,7 +567,7 @@ const MEMBERS = [
   },
   {
     name:'Hop on Airline', short:'Hop on!', code:'HO', country:'Italy',
-    color:'#FFB80A', tail:'assets/img/members/hop-on.webp',   // stand-in until the livery arrives
+    color:'#FFB80A', tail:'assets/img/members/hop-on.webp',
     hubs:['LIN'], focus:[], joined:2026,
     blurb:'Montigo Air\'s low-cost sister, flying short, simple hops across ' +
           'Italy and nearby Europe from Milan Linate.',
