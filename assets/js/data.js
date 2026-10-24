@@ -515,6 +515,38 @@ const MEMBERS = [
     }
   },
   {
+    name:'Clear Sky Airlines', short:'Clear Sky', code:'CS', country:'United States',
+    color:'#52D6FC', tail:'assets/img/members/clear-sky.webp',
+    hubs:['SEA','MIA','JFK','LAX'], focus:['LGA','HPN'], joined:2026,
+    blurb:'A premium-first US carrier with major hubs at Seattle, Miami, New ' +
+          'York JFK and Los Angeles.',
+    profile:{
+      about:[
+        'Clear Sky Airlines is a United States carrier built around premium ' +
+        'service, with major hubs at Seattle, Miami, New York JFK and Los ' +
+        'Angeles, and minor hubs at New York LaGuardia and White Plains.',
+        'Comfort comes first on board. The airline flies more than 100 premium ' +
+        'aircraft on over 120 routes, from the all-premium A318 to its ' +
+        'long-haul 747-8 and A380 flagships.'
+      ],
+      network:[
+        'Its hubs reach every corner of the United States, from Seattle in the ' +
+        'north-west and Los Angeles on the Pacific coast to Miami and New York ' +
+        'in the east, connecting the country with the world.'
+      ],
+      fleet:{
+        current:[
+          ['Airbus','A220'],
+          ['Airbus','A318','LUX configuration, the most premium experience on board'],
+          ['Airbus','A380-800','Long-haul flagship'],
+          ['Boeing','747-8','Long-haul flagship'],
+          ['Boeing','757','ECO configuration, designed for savings on every trip']
+        ],
+        incoming:[]
+      }
+    }
+  },
+  {
     name:'Volare', code:'VO', country:'Italy',
     color:'#1E7A3E', tail:'assets/img/members/volare.webp',
     hubs:['LIN','MXP','FCO','PMO','NAP'], focus:[], joined:2026,
@@ -977,9 +1009,11 @@ const AIRPORTS = [
   { code:'ATL', city:'Atlanta',       name:'Hartsfield-Jackson',       country:'United States',lat:33.64, lon:-84.43 },
   { code:'YUL', city:'Montréal',      name:'Trudeau Intl',             country:'Canada',       lat:45.47, lon:-73.74 },
   { code:'LAS', city:'Las Vegas',     name:'Harry Reid Intl',          country:'United States',lat:36.08, lon:-115.15 },
+  { code:'LGA', city:'New York',      name:'LaGuardia',                country:'United States',lat:40.78, lon:-73.87, focus:true },
+  { code:'HPN', city:'White Plains',  name:'Westchester County',       country:'United States',lat:41.07, lon:-73.71, focus:true },
   { code:'JFK', city:'New York',      name:'John F. Kennedy',          country:'United States',lat:40.64, lon:-73.78, hub:true },
   { code:'ORD', city:'Chicago',       name:'O\'Hare',                  country:'United States',lat:41.98, lon:-87.90, hub:true },
-  { code:'SEA', city:'Seattle',       name:'Seattle–Tacoma',           country:'United States',lat:47.45, lon:-122.31},
+  { code:'SEA', city:'Seattle',       name:'Seattle–Tacoma',           country:'United States',lat:47.45, lon:-122.31, hub:true },
   { code:'DFW', city:'Dallas',        name:'Dallas/Fort Worth',        country:'United States',lat:32.90, lon:-97.04, hub:true },
   { code:'MIA', city:'Miami',         name:'Miami Intl',               country:'United States',lat:25.80, lon:-80.29, hub:true },
   { code:'BOS', city:'Boston',        name:'Logan Intl',               country:'United States',lat:42.36, lon:-71.01, hub:true },
