@@ -486,7 +486,7 @@ const MEMBERS = [
   },
   {
     name:'QuintAir', code:'QA', country:'United States', group:'connect',
-    color:'#FFB6C1', tail:'assets/img/members/quintair.webp',   // stand-in until the livery arrives; also #FFFFFF
+    color:'#FFB6C1', tail:'assets/img/members/quintair.webp',   // also #FFFFFF
     hubs:['LAX','MIA','JFK','DFW'], focus:[], joined:2026,
     blurb:'A US international carrier in character liveries, flying from Los ' +
           'Angeles, Miami, New York JFK and Dallas/Fort Worth.',
