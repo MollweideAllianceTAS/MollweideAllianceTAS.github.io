@@ -901,6 +901,48 @@ const MEMBERS = [
     }
   },
   {
+    name:'Virgin Caribbean', code:'VC', country:'Bahamas',
+    color:'#E01F27', tail:'assets/img/members/virgin-caribbean.webp',   // stand-in until the livery arrives
+    hubs:['SJU','MIA','NAS'], focus:[], joined:2026,
+    blurb:'A Bahamian medium-cost carrier flying from San Juan, Miami and ' +
+          'Nassau, known for its Oceanliner premium flights.',
+    profile:{
+      about:[
+        'Virgin Caribbean is a medium-cost airline registered in the Bahamas, ' +
+        'flying from hubs at San Juan, Miami and Nassau. It is best known for ' +
+        'its Oceanliner premium flights, and its A321XLRs and A350-1000s all ' +
+        'wear the Oceanliner livery.',
+        'It is part of the Pacific Sunset Group.'
+      ],
+      network:[
+        'From the Caribbean and Florida the airline serves Europe, the United ' +
+        'States and South America, with routes as far as Australia and Africa.'
+      ],
+      fleet:{
+        current:[
+          ['Airbus','A220-300','2 aircraft'],['Airbus','A319-100','2 aircraft'],
+          ['Airbus','A320neo','2 aircraft'],['Airbus','A321neo','8 aircraft'],
+          ['Airbus','A321XLR','6 aircraft · Oceanliner livery'],
+          ['Airbus','A330-200','6 aircraft'],['Airbus','A330-300','8 aircraft'],
+          ['Airbus','A330-900','2 aircraft'],['Airbus','A340-600','2 aircraft'],
+          ['Airbus','A350-1000','2 aircraft · Oceanliner livery'],
+          ['Airbus','A380-800','2 aircraft'],
+          ['ATR','72-600','2 aircraft'],
+          ['Boeing','717-200','2 aircraft'],['Boeing','737-900ER','2 aircraft'],
+          ['Boeing','737 MAX 8','6 aircraft'],['Boeing','737 MAX 9','4 aircraft'],
+          ['Boeing','737 MAX 10','16 aircraft'],['Boeing','747-400','2 aircraft'],
+          ['Boeing','747-8','4 aircraft'],['Boeing','757-200','2 aircraft'],
+          ['Boeing','767-300ER','4 aircraft'],['Boeing','777-200LR','2 aircraft'],
+          ['Boeing','777-300','6 aircraft'],['Boeing','777-300ER','14 aircraft'],
+          ['Boeing','787-9 Dreamliner','4 aircraft'],
+          ['Bombardier','CRJ-100','2 aircraft'],
+          ['Embraer','E195-E2','2 aircraft']
+        ],
+        incoming:[]
+      }
+    }
+  },
+  {
     name:'MaraJet', code:'MJ', country:'Kenya',
     color:'#1550A0', tail:'assets/img/members/marajet.webp',
     hubs:['NBO','DSS'], focus:[], joined:2026,
@@ -959,6 +1001,7 @@ const AIRPORTS = [
   { code:'CKG', city:'Chongqing',     name:'Jiangbei Intl',            country:'China',        lat:29.72, lon:106.64 },
   { code:'LGB', city:'Long Beach',    name:'Long Beach',               country:'United States',lat:33.82, lon:-118.15, hub:true },
   { code:'ANC', city:'Anchorage',     name:'Ted Stevens Intl',         country:'United States',lat:61.17, lon:-149.99, hub:true },
+  { code:'NAS', city:'Nassau',        name:'Lynden Pindling Intl',     country:'Bahamas',      lat:25.04, lon:-77.47, hub:true },
   { code:'SJU', city:'San Juan',      name:'Luis Muñoz Marín Intl',    country:'Puerto Rico',  lat:18.44, lon:-66.00, hub:true },
   { code:'LAX', city:'Los Angeles',   name:'Los Angeles Intl',         country:'United States',lat:33.94, lon:-118.41,hub:true },
   { code:'SFO', city:'San Francisco', name:'San Francisco Intl',       country:'United States',lat:37.62, lon:-122.38,hub:true },
