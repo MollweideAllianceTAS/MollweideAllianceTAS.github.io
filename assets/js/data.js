@@ -943,6 +943,107 @@ const MEMBERS = [
     }
   },
   {
+    name:'Japan International Airways', short:'JIA', code:'JN', country:'Japan',
+    color:'#032A60', tail:'assets/img/members/jia.webp',   // stand-in until the livery arrives
+    hubs:['HND','NRT'], focus:[], joined:2026,
+    blurb:'A Tokyo carrier flying from Haneda and Narita, with international ' +
+          'routes first and domestic flying second.',
+    profile:{
+      about:[
+        'Japan International Airways, known as JIA, is a low- to medium-cost ' +
+        'airline based at Tokyo Haneda and Tokyo Narita. It puts international ' +
+        'routes first and domestic flying second.',
+        'It is part of the Pacific Sunset Group.'
+      ],
+      network:[
+        'From Tokyo\'s two airports, JIA concentrates on international ' +
+        'services, with a domestic network alongside.'
+      ],
+      fleet:{
+        current:[
+          ['Airbus','A380-800','4 aircraft'],
+          ['Boeing','737 MAX 10','15 aircraft'],['Boeing','747-400D','2 aircraft'],
+          ['Boeing','747-8','6 aircraft'],['Boeing','767-300ER','2 aircraft'],
+          ['Boeing','777-300ER','2 aircraft'],['Boeing','787-8 Dreamliner','2 aircraft'],
+          ['Boeing','787-9 Dreamliner','2 aircraft'],['Boeing','787-10 Dreamliner','5 aircraft'],
+          ['De Havilland Canada','Dash 8 Q400','1 aircraft']
+        ],
+        incoming:[]
+      }
+    }
+  },
+  {
+    name:'London Airways', code:'LA', country:'United Kingdom',
+    color:'#012169', tail:'assets/img/members/london-airways.webp',   // stand-in until the livery arrives
+    hubs:['LHR'], focus:[], joined:2026,
+    blurb:'A Heathrow-based carrier flying across Europe and, increasingly, ' +
+          'to the United States.',
+    profile:{
+      about:[
+        'London Airways is a low- to medium-cost airline flying solely from ' +
+        'London Heathrow. It serves many destinations across Europe and is ' +
+        'growing in the United States.',
+        'It is part of the Pacific Sunset Group.'
+      ],
+      network:[
+        'Heathrow is its only hub, with a broad European network and a ' +
+        'growing list of routes to the United States.'
+      ],
+      fleet:{
+        current:[
+          ['Airbus','A320neo','2 aircraft'],['Airbus','A321neo','4 aircraft'],
+          ['Airbus','A330-300','2 aircraft'],['Airbus','A330-900','5 aircraft'],
+          ['Airbus','A340-600','2 aircraft'],['Airbus','A380-800','4 aircraft'],
+          ['Boeing','737-900ER','10 aircraft'],['Boeing','737 MAX 7','2 aircraft'],
+          ['Boeing','737 MAX 10','7 aircraft'],['Boeing','747-400D','2 aircraft'],
+          ['Boeing','747-8','4 aircraft'],['Boeing','767-300ER','1 aircraft'],
+          ['Boeing','777-300ER','5 aircraft'],['Boeing','787-9 Dreamliner','1 aircraft'],
+          ['Boeing','787-10 Dreamliner','1 aircraft']
+        ],
+        incoming:[]
+      }
+    }
+  },
+  {
+    name:'EuroStar', code:'EU', country:'Belgium',
+    color:'#2F5F9E', tail:'assets/img/members/eurostar.webp',   // stand-in until the livery arrives
+    hubs:['BGI','WAW','ATH','LHR'], focus:[], joined:2026,
+    blurb:'A full-service carrier headquartered in Brussels, flying from ' +
+          'Bridgetown, Warsaw, Athens and London Heathrow since 1987.',
+    profile:{
+      founded:'1987',
+      about:[
+        'EuroStar is a full-service international airline headquartered in ' +
+        'Brussels, flying regional, short-haul and long-haul services across ' +
+        'Europe, North America, the Caribbean and the Middle East from hubs at ' +
+        'Bridgetown, Warsaw, Athens and London Heathrow.',
+        'Founded in 1987, it operated independently for decades until the 2020 ' +
+        'downturn grounded much of its fleet and brought it close to ' +
+        'bankruptcy. TAA Group then acquired the airline, providing the support ' +
+        'it needed to survive and rebuild its network.',
+        'Under TAA Group ownership it still operates as its own airline, with a ' +
+        'distinct brand, fleet, staff and passenger experience.'
+      ],
+      network:[
+        'Heathrow carries its strongest long-haul markets, Dubai and New York ' +
+        'JFK. Bridgetown to Warsaw, one of its most distinctive routes, links ' +
+        'the Caribbean directly with Central Europe.'
+      ],
+      routes:[
+        ['BGI','WAW'],['LHR','DXB'],['LHR','JFK']
+      ],
+      fleet:{
+        current:[
+          ['Airbus','A320neo','10 aircraft · The core narrowbody, on major European and medium-haul routes'],
+          ['Airbus','A340-600','3 aircraft · Long-haul; one leased from Lufthansa'],
+          ['Boeing','777-9','3 aircraft · Leased from TAA Group, on its flagship international routes'],
+          ['Embraer','E195-E2','26 aircraft · Regional and lower-demand European routes']
+        ],
+        incoming:[]
+      }
+    }
+  },
+  {
     name:'MaraJet', code:'MJ', country:'Kenya',
     color:'#1550A0', tail:'assets/img/members/marajet.webp',
     hubs:['NBO','DSS'], focus:[], joined:2026,
@@ -1002,6 +1103,7 @@ const AIRPORTS = [
   { code:'LGB', city:'Long Beach',    name:'Long Beach',               country:'United States',lat:33.82, lon:-118.15, hub:true },
   { code:'ANC', city:'Anchorage',     name:'Ted Stevens Intl',         country:'United States',lat:61.17, lon:-149.99, hub:true },
   { code:'NAS', city:'Nassau',        name:'Lynden Pindling Intl',     country:'Bahamas',      lat:25.04, lon:-77.47, hub:true },
+  { code:'BGI', city:'Bridgetown',    name:'Grantley Adams Intl',      country:'Barbados',     lat:13.07, lon:-59.49, hub:true },
   { code:'SJU', city:'San Juan',      name:'Luis Muñoz Marín Intl',    country:'Puerto Rico',  lat:18.44, lon:-66.00, hub:true },
   { code:'LAX', city:'Los Angeles',   name:'Los Angeles Intl',         country:'United States',lat:33.94, lon:-118.41,hub:true },
   { code:'SFO', city:'San Francisco', name:'San Francisco Intl',       country:'United States',lat:37.62, lon:-122.38,hub:true },
@@ -1052,7 +1154,7 @@ const AIRPORTS = [
   { code:'MXP', city:'Milan',         name:'Malpensa',                 country:'Italy',        lat:45.63, lon:  8.72, hub:true },
   { code:'VIE', city:'Vienna',        name:'Vienna Intl',              country:'Austria',      lat:48.11, lon: 16.57 },
   { code:'MUC', city:'Munich',        name:'Franz Josef Strauss',      country:'Germany',      lat:48.35, lon: 11.79 },
-  { code:'ATH', city:'Athens',        name:'Eleftherios Venizelos',    country:'Greece',       lat:37.94, lon: 23.94 },
+  { code:'ATH', city:'Athens',        name:'Eleftherios Venizelos',    country:'Greece',       lat:37.94, lon: 23.94, hub:true },
   { code:'ESB', city:'Ankara',        name:'Esenboğa',                 country:'Türkiye',      lat:40.13, lon: 32.99 },
   { code:'IST', city:'Istanbul',      name:'Istanbul Airport',         country:'Türkiye',      lat:41.26, lon: 28.74 },
   { code:'SVO', city:'Moscow',        name:'Sheremetyevo',             country:'Russia',       lat:55.97, lon: 37.41, hub:true },
