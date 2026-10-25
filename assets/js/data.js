@@ -501,14 +501,20 @@ const MEMBERS = [
         'A dedicated domestic fleet is planned, to expand its regional flying.'
       ],
       network:[
-        'QuintAir flies global routes from its four hubs, with a long-haul ' +
-        'fleet led by the Airbus A350-1000, A380-800 and Boeing 777-300ER.'
+        'QuintAir flies long-haul from all four hubs: across the Pacific to ' +
+        'Tokyo, Seoul and Sydney, across the Atlantic to London, and south to ' +
+        'São Paulo. Its fleet is led by the Boeing 777-300ER, 787-9 and Airbus ' +
+        'A350-1000.'
+      ],
+      routes:[
+        ['LAX','NRT'],['LAX','SYD'],['MIA','GRU'],['JFK','LHR'],['DFW','ICN']
       ],
       fleet:{
         current:[
           ['Airbus','A321neo','15 aircraft'],['Airbus','A350-1000','31 aircraft'],
           ['Airbus','A380-800','9 aircraft'],
-          ['Boeing','777-300','4 aircraft'],['Boeing','777-300ER','24 aircraft']
+          ['Boeing','777-300','4 aircraft'],['Boeing','777-300ER','39 aircraft'],
+          ['Boeing','787-9 Dreamliner','35 aircraft']
         ],
         incoming:[]
       }
@@ -517,14 +523,15 @@ const MEMBERS = [
   {
     name:'Clear Sky Airlines', short:'Clear Sky', code:'CS', country:'United States',
     color:'#52D6FC', tail:'assets/img/members/clear-sky.webp',
-    hubs:['SEA','MIA','JFK','LAX'], focus:['LGA','HPN'], joined:2026,
-    blurb:'A premium-first US carrier with major hubs at Seattle, Miami, New ' +
-          'York JFK and Los Angeles.',
+    hubs:['JFK','SEA','MIA','LAX'], focus:['LGA','HPN'], joined:2026,
+    blurb:'A premium-first US carrier based at New York JFK, with further ' +
+          'major hubs at Seattle, Miami and Los Angeles.',
     profile:{
       about:[
         'Clear Sky Airlines is a United States carrier built around premium ' +
-        'service, with major hubs at Seattle, Miami, New York JFK and Los ' +
-        'Angeles, and minor hubs at New York LaGuardia and White Plains.',
+        'service. Its primary hub is New York JFK, with further major hubs at ' +
+        'Seattle, Miami and Los Angeles, and minor hubs at New York LaGuardia ' +
+        'and White Plains.',
         'Comfort comes first on board. The airline flies more than 100 premium ' +
         'aircraft on over 120 routes, from the all-premium A318 to its ' +
         'long-haul 747-8 and A380 flagships.'
@@ -532,15 +539,19 @@ const MEMBERS = [
       network:[
         'Its hubs reach every corner of the United States, from Seattle in the ' +
         'north-west and Los Angeles on the Pacific coast to Miami and New York ' +
-        'in the east, connecting the country with the world.'
+        'in the east. The network combines international routes with regional ' +
+        'flying across America.'
       ],
       fleet:{
         current:[
           ['Airbus','A220'],
           ['Airbus','A318','LUX configuration, the most premium experience on board'],
+          ['Airbus','A320'],['Airbus','A340'],['Airbus','A350'],
           ['Airbus','A380-800','Long-haul flagship'],
+          ['Boeing','737'],
           ['Boeing','747-8','Long-haul flagship'],
-          ['Boeing','757','ECO configuration, designed for savings on every trip']
+          ['Boeing','757','ECO configuration, designed for savings on every trip'],
+          ['Boeing','787']
         ],
         incoming:[]
       }
