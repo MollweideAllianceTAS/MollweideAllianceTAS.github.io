@@ -849,6 +849,58 @@ const MEMBERS = [
     }
   },
   {
+    name:'Pacific Sunset Airlines', short:'Pacific Sunset', code:'PS', country:'United States',
+    color:'#011D57', tail:'assets/img/members/pacific-sunset.webp',   // stand-in until the livery arrives
+    hubs:['LAX','LHR','GRU','SYD','LGB','HND','SFO','HNL','ANC','CPT','SJU','SEA',
+          'OGG','LPA','NRT','PER'], focus:[], joined:2026,
+    blurb:'The founder of the Pacific Sunset Group, grown from a Long Beach ' +
+          'regional carrier into a worldwide airline with hubs on every ' +
+          'inhabited continent.',
+    profile:{
+      about:[
+        'Pacific Sunset is a United States carrier and the founding airline of ' +
+        'the Pacific Sunset Group, which includes six other airlines. Despite ' +
+        'its name it flies worldwide, with hubs on every inhabited continent.',
+        'The airline began as a regional carrier at Long Beach, California, ' +
+        'then expanded to Los Angeles, Honolulu, Maui, Atlanta and Seattle on ' +
+        'its way to becoming a major international airline.',
+        'Together with its subsidiary Sunset Express, it serves every airport ' +
+        'in California, with a fleet that runs from the Airbus A380 down to the ' +
+        'Dash 8 Q400.'
+      ],
+      network:[
+        'Its hubs are listed by passengers carried. Los Angeles is the largest, ' +
+        'followed by London Heathrow, São Paulo and Sydney; Long Beach, where ' +
+        'the airline began, is still among the busiest.',
+        'Further hubs at Tokyo, San Francisco, Honolulu, Anchorage, Cape Town, ' +
+        'San Juan, Seattle, Maui, Gran Canaria and Perth spread the network ' +
+        'across the Pacific, the Atlantic and the Indian Ocean.'
+      ],
+      fleet:{
+        current:[
+          ['Airbus','A319-100','2 aircraft'],['Airbus','A320-200','19 aircraft'],
+          ['Airbus','A320neo','4 aircraft'],['Airbus','A321-200','9 aircraft'],
+          ['Airbus','A321neo','5 aircraft'],['Airbus','A321XLR','18 aircraft'],
+          ['Airbus','A330-300','4 aircraft'],['Airbus','A330-900','3 aircraft'],
+          ['Airbus','A340-600','1 aircraft'],['Airbus','A350-1000','13 aircraft'],
+          ['Airbus','A350-1000ULR','10 aircraft'],['Airbus','A380-800','12 aircraft'],
+          ['Boeing','717-200','3 aircraft'],['Boeing','737-700','1 aircraft'],
+          ['Boeing','737-900ER','28 aircraft'],['Boeing','737 MAX 8','2 aircraft'],
+          ['Boeing','737 MAX 9','13 aircraft'],['Boeing','737 MAX 10','23 aircraft'],
+          ['Boeing','747-400','1 aircraft'],['Boeing','747-400D','8 aircraft'],
+          ['Boeing','747-8','6 aircraft'],['Boeing','757-300','6 aircraft'],
+          ['Boeing','777-200ER','1 aircraft'],['Boeing','777-200LR','3 aircraft'],
+          ['Boeing','777-300','10 aircraft'],['Boeing','777-300ER','3 aircraft'],
+          ['Boeing','787-9 Dreamliner','2 aircraft'],['Boeing','787-10 Dreamliner','7 aircraft'],
+          ['Bombardier','CRJ-1000','2 aircraft'],
+          ['De Havilland Canada','Dash 8 Q400','2 aircraft'],
+          ['Embraer','E170','4 aircraft']
+        ],
+        incoming:[]
+      }
+    }
+  },
+  {
     name:'MaraJet', code:'MJ', country:'Kenya',
     color:'#1550A0', tail:'assets/img/members/marajet.webp',
     hubs:['NBO','DSS'], focus:[], joined:2026,
@@ -905,6 +957,9 @@ const AIRPORTS = [
   { code:'YNT', city:'Yantai',        name:'Penglai Intl',             country:'China',        lat:37.66, lon:120.98, hub:true },
   { code:'SZX', city:'Shenzhen',      name:'Bao\'an Intl',             country:'China',        lat:22.64, lon:113.81, hub:true },
   { code:'CKG', city:'Chongqing',     name:'Jiangbei Intl',            country:'China',        lat:29.72, lon:106.64 },
+  { code:'LGB', city:'Long Beach',    name:'Long Beach',               country:'United States',lat:33.82, lon:-118.15, hub:true },
+  { code:'ANC', city:'Anchorage',     name:'Ted Stevens Intl',         country:'United States',lat:61.17, lon:-149.99, hub:true },
+  { code:'SJU', city:'San Juan',      name:'Luis Muñoz Marín Intl',    country:'Puerto Rico',  lat:18.44, lon:-66.00, hub:true },
   { code:'LAX', city:'Los Angeles',   name:'Los Angeles Intl',         country:'United States',lat:33.94, lon:-118.41,hub:true },
   { code:'SFO', city:'San Francisco', name:'San Francisco Intl',       country:'United States',lat:37.62, lon:-122.38,hub:true },
   { code:'OGG', city:'Kahului',       name:'Kahului Airport',          country:'United States',lat:20.90, lon:-156.43,hub:true },
@@ -912,7 +967,7 @@ const AIRPORTS = [
 
   /* --- Network destinations ---------------------------------------------- */
   { code:'ZRH', city:'Zurich',        name:'Zurich Airport',           country:'Switzerland',  lat:47.46, lon:  8.55 },
-  { code:'LHR', city:'London',        name:'Heathrow',                 country:'United Kingdom',lat:51.47,lon: -0.45 },
+  { code:'LHR', city:'London',        name:'Heathrow',                 country:'United Kingdom',lat:51.47,lon: -0.45, hub:true },
   { code:'LCY', city:'London',        name:'London City',              country:'United Kingdom',lat:51.50,lon:  0.05 },
   { code:'STN', city:'London',        name:'Stansted',                 country:'United Kingdom',lat:51.88,lon:  0.24 },
   { code:'CDG', city:'Paris',         name:'Charles de Gaulle',        country:'France',       lat:49.01, lon:  2.55 },
@@ -924,6 +979,7 @@ const AIRPORTS = [
   { code:'MAD', city:'Madrid',        name:'Barajas',                  country:'Spain',        lat:40.47, lon: -3.56 },
   { code:'BER', city:'Berlin',        name:'Brandenburg',              country:'Germany',      lat:52.37, lon: 13.50 },
   { code:'LGW', city:'London',        name:'Gatwick',                  country:'United Kingdom',lat:51.15,lon: -0.19, focus:true },
+  { code:'LPA', city:'Gran Canaria',  name:'Gran Canaria',             country:'Spain',        lat:27.93, lon:-15.39, hub:true },
   { code:'BCN', city:'Barcelona',     name:'El Prat',                  country:'Spain',        lat:41.30, lon:  2.08 },
   { code:'LIS', city:'Lisbon',        name:'Humberto Delgado',         country:'Portugal',     lat:38.77, lon: -9.13 },
   { code:'FCO', city:'Rome',          name:'Fiumicino',                country:'Italy',        lat:41.80, lon: 12.25, hub:true },
@@ -1011,7 +1067,7 @@ const AIRPORTS = [
   { code:'DSS', city:'Dakar',         name:'Blaise Diagne Intl',       country:'Senegal',      lat:14.67, lon:-17.07, hub:true },
   { code:'LOS', city:'Lagos',         name:'Murtala Muhammed',         country:'Nigeria',      lat:  6.58,lon:  3.32 },
   { code:'CMN', city:'Casablanca',    name:'Mohammed V',               country:'Morocco',      lat:33.37, lon: -7.59 },
-  { code:'CPT', city:'Cape Town',     name:'Cape Town Intl',           country:'South Africa', lat:-33.97,lon: 18.60 },
+  { code:'CPT', city:'Cape Town',     name:'Cape Town Intl',           country:'South Africa', lat:-33.97,lon: 18.60, hub:true },
   { code:'VFA', city:'Victoria Falls', name:'Victoria Falls',          country:'Zimbabwe',     lat:-18.10,lon: 25.84 },
   { code:'ADD', city:'Addis Ababa',   name:'Bole Intl',                country:'Ethiopia',     lat: 8.98, lon: 38.80 },
   { code:'MAA', city:'Chennai',       name:'Chennai Intl',             country:'India',        lat:12.99, lon: 80.17, hub:true },
@@ -1038,7 +1094,7 @@ const AIRPORTS = [
   { code:'PKX', city:'Beijing',       name:'Daxing Intl',              country:'China',        lat:39.51, lon:116.41 },
   { code:'CAN', city:'Guangzhou',     name:'Baiyun Intl',              country:'China',        lat:23.39, lon:113.31 },
   { code:'CTU', city:'Chengdu',       name:'Tianfu Intl',              country:'China',        lat:30.31, lon:104.44 },
-  { code:'NRT', city:'Tokyo',         name:'Narita Intl',              country:'Japan',        lat:35.77, lon:140.39 },
+  { code:'NRT', city:'Tokyo',         name:'Narita Intl',              country:'Japan',        lat:35.77, lon:140.39, hub:true },
   { code:'KIX', city:'Osaka',         name:'Kansai Intl',              country:'Japan',        lat:34.43, lon:135.24 },
   { code:'ICN', city:'Seoul',         name:'Incheon Intl',             country:'South Korea',  lat:37.46, lon:126.44 },
   { code:'TPE', city:'Taipei',        name:'Taoyuan Intl',             country:'Taiwan',       lat:25.08, lon:121.23 },
