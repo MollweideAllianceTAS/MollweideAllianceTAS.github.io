@@ -902,7 +902,7 @@ const MEMBERS = [
   },
   {
     name:'Virgin Caribbean', code:'VC', country:'Bahamas',
-    color:'#E01F27', tail:'assets/img/members/virgin-caribbean.webp',   // stand-in until the livery arrives
+    color:'#E01F27', tail:'assets/img/members/virgin-caribbean.webp',
     hubs:['SJU','MIA','NAS'], focus:[], joined:2026,
     blurb:'A Bahamian medium-cost carrier flying from San Juan, Miami and ' +
           'Nassau, known for its Oceanliner premium flights.',
@@ -944,7 +944,7 @@ const MEMBERS = [
   },
   {
     name:'Japan International Airways', short:'JIA', code:'JN', country:'Japan',
-    color:'#032A60', tail:'assets/img/members/jia.webp',   // stand-in until the livery arrives
+    color:'#032A60', tail:'assets/img/members/jia.webp',
     hubs:['HND','NRT'], focus:[], joined:2026,
     blurb:'A Tokyo carrier flying from Haneda and Narita, with international ' +
           'routes first and domestic flying second.',
@@ -974,7 +974,7 @@ const MEMBERS = [
   },
   {
     name:'London Airways', code:'LA', country:'United Kingdom',
-    color:'#012169', tail:'assets/img/members/london-airways.webp',   // stand-in until the livery arrives
+    color:'#012169', tail:'assets/img/members/london-airways.webp',
     hubs:['LHR'], focus:[], joined:2026,
     blurb:'A Heathrow-based carrier flying across Europe and, increasingly, ' +
           'to the United States.',
