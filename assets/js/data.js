@@ -1049,6 +1049,44 @@ const MEMBERS = [
     }
   },
   {
+    name:'Union Airlines', code:'UN', country:'United States',
+    color:'#2C0977', tail:'assets/img/members/union-airlines.webp',
+    hubs:['BNA','BOS'], focus:[], joined:2026,
+    blurb:'A mainline US carrier linking the American South with the rest of ' +
+          'the country and abroad, from Nashville and Boston.',
+    profile:{
+      about:[
+        'Union Airlines is a mainline United States carrier connecting the ' +
+        'southern United States with the rest of the country and abroad, from ' +
+        'hubs at Nashville and Boston.',
+        'It puts comfort, safety and reliability first.'
+      ],
+      network:[
+        'Nashville is the larger hub, with long-haul flights to London Heathrow, ' +
+        'Paris, Frankfurt, Madrid and Honolulu alongside a domestic network ' +
+        'reaching Los Angeles, Denver, Miami, Atlanta and across the South. ' +
+        'Boston links New England with Chicago, Minneapolis, Seattle, Salt Lake ' +
+        'City and the Midwest.'
+      ],
+      routes:[
+        ['BNA','LHR'],['BNA','CDG'],['BNA','FRA'],['BNA','MAD'],['BNA','HNL'],
+        ['BNA','LAX'],['BNA','DEN'],['BNA','MIA'],['BNA','ATL'],['BNA','MSY'],
+        ['BNA','RDU'],['BNA','AUS'],['BNA','HOU'],
+        ['BOS','ORD'],['BOS','MSP'],['BOS','SEA'],['BOS','SLC'],['BOS','CMH'],
+        ['BOS','PIT']
+      ],
+      fleet:{
+        current:[
+          ['Airbus','A220-300','5 aircraft'],['Airbus','A320-200','8 aircraft'],
+          ['Boeing','737-800','20 aircraft'],['Boeing','737 MAX 8','13 aircraft'],
+          ['Boeing','757-300','12 aircraft'],['Boeing','777-200','10 aircraft'],
+          ['Embraer','E190-E2','6 aircraft'],['Embraer','E195-E2','5 aircraft']
+        ],
+        incoming:[]
+      }
+    }
+  },
+  {
     name:'MaraJet', code:'MJ', country:'Kenya',
     color:'#1550A0', tail:'assets/img/members/marajet.webp',
     hubs:['NBO','DSS'], focus:[], joined:2026,
@@ -1269,9 +1307,18 @@ const AIRPORTS = [
   { code:'SEA', city:'Seattle',       name:'Seattle–Tacoma',           country:'United States',lat:47.45, lon:-122.31, hub:true },
   { code:'DFW', city:'Dallas',        name:'Dallas/Fort Worth',        country:'United States',lat:32.90, lon:-97.04, hub:true },
   { code:'MIA', city:'Miami',         name:'Miami Intl',               country:'United States',lat:25.80, lon:-80.29, hub:true },
+  { code:'BNA', city:'Nashville',     name:'Nashville Intl',           country:'United States',lat:36.12, lon:-86.68, hub:true },
   { code:'BOS', city:'Boston',        name:'Logan Intl',               country:'United States',lat:42.36, lon:-71.01, hub:true },
   { code:'DEN', city:'Denver',        name:'Denver Intl',              country:'United States',lat:39.86, lon:-104.67,hub:true },
   { code:'IAH', city:'Houston',       name:'George Bush Intl',         country:'United States',lat:29.98, lon:-95.34, hub:true },
+  { code:'HOU', city:'Houston',       name:'William P. Hobby',         country:'United States',lat:29.65, lon:-95.28 },
+  { code:'MSY', city:'New Orleans',   name:'Louis Armstrong Intl',     country:'United States',lat:29.99, lon:-90.26 },
+  { code:'AUS', city:'Austin',        name:'Austin–Bergstrom',         country:'United States',lat:30.19, lon:-97.67 },
+  { code:'RDU', city:'Raleigh–Durham',name:'Raleigh–Durham Intl',      country:'United States',lat:35.88, lon:-78.79 },
+  { code:'MSP', city:'Minneapolis',   name:'Minneapolis–St Paul',      country:'United States',lat:44.88, lon:-93.22 },
+  { code:'SLC', city:'Salt Lake City',name:'Salt Lake City Intl',      country:'United States',lat:40.79, lon:-111.98},
+  { code:'CMH', city:'Columbus',      name:'John Glenn Columbus',      country:'United States',lat:40.00, lon:-82.89 },
+  { code:'PIT', city:'Pittsburgh',    name:'Pittsburgh Intl',          country:'United States',lat:40.49, lon:-80.23 },
   { code:'YYZ', city:'Toronto',       name:'Pearson',                  country:'Canada',       lat:43.68, lon:-79.63 },
   { code:'YVR', city:'Vancouver',     name:'Vancouver Intl',           country:'Canada',       lat:49.19, lon:-123.18},
   { code:'CUN', city:'Cancún',        name:'Cancún Intl',              country:'Mexico',       lat:21.04, lon:-86.87 },
