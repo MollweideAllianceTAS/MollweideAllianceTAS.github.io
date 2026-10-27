@@ -1353,21 +1353,96 @@ const CABINS = [
 ];
 
 /* ============================================================================
-   FLEET — equipment is assigned by sector length.
+   AIRCRAFT — every type a member lists, with its practical range and its
+   economy seat layout (seats either side of each aisle, window to window).
+   ----------------------------------------------------------------------------
+   A flight is only ever given a type its operator actually flies (its
+   profile's current fleet) with the range for the sector, so a turboprop is
+   never offered across an ocean. `match` is tested against the member's
+   "Manufacturer Type" text, lower-cased; the first entry that matches wins,
+   so more specific variants come before their family. A test fails if any
+   member lists a type that matches nothing here — add it rather than let it
+   go unflown.
+
+   Layouts: widebodies 3-3-3, except the 777, 747 and A380 at 3-4-3; the
+   A220 2-3; the 737, 757 and A319/A320/A321 3-3; Embraers 2-2.
    ========================================================================== */
 
 const AIRCRAFT = [
-  { type:'ATR 72-600',        code:'AT76', maxKm: 1500, wide:false },
-  { type:'Embraer E195-E2',   code:'E295', maxKm: 4800, wide:false },
-  { type:'Airbus A220-300',   code:'A223', maxKm: 6300, wide:false },
-  { type:'Airbus A320neo',    code:'A20N', maxKm: 6500, wide:false },
-  { type:'Boeing 737 MAX 8',  code:'B38M', maxKm: 6600, wide:false },
-  { type:'Airbus A321XLR',    code:'A21X', maxKm: 8700, wide:false },
-  { type:'Boeing 787-9',      code:'B789', maxKm:14100, wide:true  },
-  { type:'Airbus A350-900',   code:'A359', maxKm:15000, wide:true  },
-  { type:'Boeing 777-300ER',  code:'B77W', maxKm:13600, wide:true  },
-  { type:'Airbus A350-1000',  code:'A35K', maxKm:16100, wide:true  }
+  /* --- turboprops and regional jets ---------------------------------- */
+  { type:'ATR 72',              match:/\batr ?72/,                 maxKm: 1500, layout:[2,2] },
+  { type:'Dash 8 Q400',         match:/dash ?8|q400/,              maxKm: 2000, layout:[2,2] },
+  { type:'CRJ-1000',            match:/crj-?1000/,                 maxKm: 3000, layout:[2,2] },
+  { type:'CRJ-100',             match:/crj-?100\b/,                maxKm: 3000, layout:[2,2] },
+  { type:'Embraer E170',        match:/\be-?170/,                  maxKm: 3700, layout:[2,2] },
+  { type:'Embraer E175',        match:/\be-?175/,                  maxKm: 3900, layout:[2,2] },
+  { type:'Embraer E190-E2',     match:/\be-?190-?e2/,              maxKm: 5300, layout:[2,2] },
+  { type:'Embraer E190',        match:/\be-?190/,                  maxKm: 4500, layout:[2,2] },
+  { type:'Embraer E195-E2',     match:/\be-?195-?e2|\be-?295/,     maxKm: 4800, layout:[2,2] },
+  { type:'Embraer E195',        match:/\be-?195/,                  maxKm: 4200, layout:[2,2] },
+  { type:'Superjet 100',        match:/superjet/,                  maxKm: 4500, layout:[2,3] },
+  { type:'COMAC C909',          match:/c909|arj21/,                maxKm: 3700, layout:[2,3] },
+  { type:'Boeing 717-200',      match:/\b717/,                     maxKm: 3800, layout:[2,3] },
+  { type:'Airbus A220-100',     match:/a220-100/,                  maxKm: 6300, layout:[2,3] },
+  { type:'Airbus A220-300',     match:/a220/,                      maxKm: 6200, layout:[2,3] },
+
+  /* --- single-aisle ---------------------------------------------------- */
+  { type:'Airbus A318',         match:/a318/,                      maxKm: 5700, layout:[3,3] },
+  { type:'Airbus A319neo',      match:/a319 ?neo/,                 maxKm: 6900, layout:[3,3] },
+  { type:'Airbus A319',         match:/a319/,                      maxKm: 6800, layout:[3,3] },
+  { type:'Airbus A320neo',      match:/a320 ?neo/,                 maxKm: 6300, layout:[3,3] },
+  { type:'Airbus A320',         match:/a320/,                      maxKm: 6100, layout:[3,3] },
+  { type:'Airbus A321XLR',      match:/a321 ?xlr/,                 maxKm: 8700, layout:[3,3] },
+  { type:'Airbus A321LR',       match:/a321 ?lr/,                  maxKm: 7400, layout:[3,3] },
+  { type:'Airbus A321neo',      match:/a321 ?neo/,                 maxKm: 7400, layout:[3,3] },
+  { type:'Airbus A321',         match:/a321/,                      maxKm: 5900, layout:[3,3] },
+  { type:'Boeing 737 MAX 10',   match:/737 ?max ?10/,              maxKm: 5700, layout:[3,3] },
+  { type:'Boeing 737 MAX 9',    match:/737 ?max ?9/,               maxKm: 6500, layout:[3,3] },
+  { type:'Boeing 737 MAX 7',    match:/737 ?max ?7/,               maxKm: 7100, layout:[3,3] },
+  { type:'Boeing 737 MAX 8',    match:/737 ?max/,                  maxKm: 6500, layout:[3,3] },
+  { type:'Boeing 737-900ER',    match:/737-900/,                   maxKm: 5900, layout:[3,3] },
+  { type:'Boeing 737-700',      match:/737-700/,                   maxKm: 6000, layout:[3,3] },
+  { type:'Boeing 737-800',      match:/737/,                       maxKm: 5400, layout:[3,3] },
+  { type:'Boeing 757-300',      match:/757-300/,                   maxKm: 6200, layout:[3,3] },
+  { type:'Boeing 757-200',      match:/757/,                       maxKm: 7200, layout:[3,3] },
+  { type:'COMAC C919',          match:/c919/,                      maxKm: 5500, layout:[3,3] },
+  { type:'Irkut MC-21',         match:/mc-?21/,                    maxKm: 6000, layout:[3,3] },
+  { type:'Tupolev Tu-204',      match:/tu-?204/,                   maxKm: 5800, layout:[3,3] },
+  { type:'Tupolev Tu-214',      match:/tu-?214/,                   maxKm: 6500, layout:[3,3] },
+  { type:'Tupolev Tu-454',      match:/tu-?454/,                   maxKm: 6500, layout:[3,3] },
+
+  /* --- twin-aisle ------------------------------------------------------ */
+  { type:'Boeing 767-200ER',    match:/767-200/,                   maxKm:12200, layout:[3,3,3], wide:true },
+  { type:'Boeing 767-300ER',    match:/767/,                       maxKm:11000, layout:[3,3,3], wide:true },
+  { type:'Boeing 787-10',       match:/787-10/,                    maxKm:11900, layout:[3,3,3], wide:true },
+  { type:'Boeing 787-8',        match:/787-8/,                     maxKm:13600, layout:[3,3,3], wide:true },
+  { type:'Boeing 787-9',        match:/787/,                       maxKm:14000, layout:[3,3,3], wide:true },
+  { type:'Airbus A330-200',     match:/a330-200/,                  maxKm:13400, layout:[3,3,3], wide:true },
+  { type:'Airbus A330-800',     match:/a330-800/,                  maxKm:15000, layout:[3,3,3], wide:true },
+  { type:'Airbus A330-900',     match:/a330-900|a330 ?neo/,        maxKm:13300, layout:[3,3,3], wide:true },
+  { type:'Airbus A330-300',     match:/a330/,                      maxKm:11700, layout:[3,3,3], wide:true },
+  { type:'Airbus A340-600',     match:/a340-600/,                  maxKm:14400, layout:[3,3,3], wide:true },
+  { type:'Airbus A340-300',     match:/a340/,                      maxKm:13500, layout:[3,3,3], wide:true },
+  { type:'Airbus A350-1000ULR', match:/a350-1000 ?ulr/,            maxKm:17500, layout:[3,3,3], wide:true },
+  { type:'Airbus A350-1000',    match:/a350-1000/,                 maxKm:16100, layout:[3,3,3], wide:true },
+  { type:'Airbus A350-900ULR',  match:/a350-900 ?ulr/,             maxKm:18000, layout:[3,3,3], wide:true },
+  { type:'Airbus A350-900',     match:/a350/,                      maxKm:15000, layout:[3,3,3], wide:true },
+  { type:'Boeing 777-200LR',    match:/777-200 ?lr/,               maxKm:15800, layout:[3,4,3], wide:true },
+  { type:'Boeing 777-200ER',    match:/777-200 ?er/,               maxKm:13000, layout:[3,4,3], wide:true },
+  { type:'Boeing 777-200',      match:/777-200/,                   maxKm: 9700, layout:[3,4,3], wide:true },
+  { type:'Boeing 777-300ER',    match:/777-300 ?er/,               maxKm:13600, layout:[3,4,3], wide:true },
+  { type:'Boeing 777-300',      match:/777-300/,                   maxKm:11100, layout:[3,4,3], wide:true },
+  { type:'Boeing 777-8',        match:/777-8/,                     maxKm:16100, layout:[3,4,3], wide:true },
+  { type:'Boeing 777-9',        match:/777-9|777x/,                maxKm:13500, layout:[3,4,3], wide:true },
+  { type:'Boeing 747-8',        match:/747-8/,                     maxKm:14300, layout:[3,4,3], wide:true },
+  { type:'Boeing 747-400',      match:/747/,                       maxKm:13400, layout:[3,4,3], wide:true },
+  { type:'Airbus A380-800',     match:/a380/,                      maxKm:15000, layout:[3,4,3], wide:true }
 ];
+
+/* Members that have not sent a fleet fly a general mix, still assigned by
+   range: regional, single-aisle and long-haul types. */
+const DEFAULT_FLEET = ['Embraer E195-E2', 'Airbus A220-300', 'Airbus A320neo',
+  'Airbus A321neo', 'Airbus A321XLR', 'Boeing 787-9', 'Airbus A350-900', 'Airbus A350-1000'];
 
 /* ============================================================================
    LOYALTY — Elara

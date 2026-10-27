@@ -62,22 +62,61 @@ const todayISO = () => new Date().toISOString().slice(0, 10);
    FLIGHT ENGINE
    ========================================================================== */
 
-/* Which members could operate a given sector? At least one endpoint must be
-   an alliance hub or focus city. */
-function operatorsFor(fromC, toC) {
-  return MEMBERS.filter(m => {
-    const s = servesSet(m);
-    return s.includes(fromC) || s.includes(toC);
-  });
+/* --- Aircraft ------------------------------------------------------------ */
+/* The catalogue entry for a member's "Manufacturer, Type" fleet line. */
+function aircraftFor(maker, model) {
+  const t = (maker + ' ' + model).toLowerCase();
+  return AIRCRAFT.find(a => a.match.test(t)) || null;
+}
+const AC_BY_TYPE = {};
+AIRCRAFT.forEach(a => AC_BY_TYPE[a.type] = a);
+
+/* What a member actually flies today: its profile's current fleet, or the
+   general mix for members that have not sent one. Ordered by range. */
+const _fleets = {};
+function fleetOf(m) {
+  if (_fleets[m.code]) return _fleets[m.code];
+  const listed = (m.profile && m.profile.fleet && m.profile.fleet.current) || [];
+  let types = listed.map(f => aircraftFor(f[0], f[1])).filter(Boolean);
+  if (!types.length) types = DEFAULT_FLEET.map(t => AC_BY_TYPE[t]).filter(Boolean);
+  return (_fleets[m.code] = Array.from(new Set(types)).sort((x, y) => x.maxKm - y.maxKm));
 }
 
-function equipmentFor(km, r) {
-  const ok = AIRCRAFT.filter(a => a.maxKm >= km * 1.12);
-  if (!ok.length) return AIRCRAFT[AIRCRAFT.length - 1];
-  // Prefer the smallest aircraft that comfortably covers the sector, with
-  // a little variety on top.
-  const band = ok.slice(0, Math.min(3, ok.length));
-  return pick(r, band);
+/* The aircraft a member would put on a sector: a type from its own fleet
+   with the range for it, and among those one of the two smallest, so a short
+   hop is flown by a regional or single-aisle aircraft and a long-haul one by
+   a widebody. Null when nothing in the fleet can make the trip — that member
+   then does not fly the sector at all. */
+function equipmentFor(m, km, r) {
+  const ok = fleetOf(m).filter(a => a.maxKm >= km * 1.08);
+  if (!ok.length) return null;
+  /* Prefer types with range to spare — airlines don't plan to the limit —
+     falling back to whatever can just make it. */
+  const easy = ok.filter(a => a.maxKm >= km * 1.3);
+  const pool = easy.length ? easy : ok;
+  return pick(r, pool.slice(0, Math.min(2, pool.length)));
+}
+
+/* Seat layout for a cabin on a type: economy is the type's own; premium
+   cabins are wider seats in the same fuselage. */
+function seatLayout(eq, cabinId) {
+  const y = (eq && eq.layout) || [3, 3];
+  const wide = y.length === 3, big = wide && y[1] === 4;
+  if (cabinId === 'economy') return y;
+  if (cabinId === 'premium')  return wide ? (big ? [2, 4, 2] : [2, 3, 2]) : [2, 2];
+  if (cabinId === 'business') return wide ? [1, 2, 1] : (y[0] + y[1] <= 5 ? [1, 2] : [2, 2]);
+  return wide ? [1, 1, 1] : (y[0] + y[1] <= 5 ? [1, 1] : [2, 2]);   // first
+}
+
+/* Which members could operate a given sector? At least one endpoint must be
+   an alliance hub or focus city, and the member needs an aircraft with the
+   range. */
+function operatorsFor(fromC, toC) {
+  const km = distKm(airport(fromC), airport(toC));
+  return MEMBERS.filter(m => {
+    const s = servesSet(m);
+    return (s.includes(fromC) || s.includes(toC)) && fleetOf(m).some(a => a.maxKm >= km * 1.08);
+  });
 }
 
 function fareFor(km, cabinId, r) {
@@ -111,7 +150,7 @@ function directFlights(fromC, toC, dateISO, cabinId) {
     const op = ops.length === 1 ? ops[0] : pick(r, ops);
     const depMin = Math.round((5.5 + i * (16 / n) + r() * 1.4) * 60);
     const arrMin = depMin + blockMin;
-    const eq = equipmentFor(km, r);
+    const eq = equipmentFor(op, km, r);
     out.push({
       kind:    'direct',
       op:      op.code,
@@ -170,7 +209,7 @@ function connectingFlights(fromC, toC, dateISO, cabinId, want) {
         dayGain: Math.floor(b.arr / 1440),
         dur:   b.arr - a.dep,
         km:    a.km + b.km,
-        eq:    a.eq,
+        eq:    a.km >= b.km ? a.eq : b.eq,   // the type on the longer leg
         stops: 1,
         layover: b.dep - a.arr,
         legs:  [a, b],

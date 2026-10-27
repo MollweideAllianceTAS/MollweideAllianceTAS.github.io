@@ -866,12 +866,13 @@ select.field__in { appearance: none; cursor: pointer; padding-right: 2.25rem;
 @media (min-width: 1000px) { .seat-layout { grid-template-columns: 1fr 21rem; } }
 .cabin { background: var(--paper); border: 1px solid var(--rule); border-radius: var(--r-lg);
   padding: clamp(1.25rem,3vw,2rem); overflow-x: auto; }
-.cabin__nose { width: min(300px,100%); height: 48px; margin: 0 auto 1.5rem;
+.cabin__nose { width: min(300px,100%); min-height: 48px; margin: 0 auto 1.5rem;
   border-radius: 150px 150px 0 0; border: 1px solid var(--rule); border-bottom: 0;
   background: linear-gradient(to bottom, var(--sky-pale), transparent);
   display: grid; place-items: end center; padding-bottom: .375rem;
   font-family: var(--f-label); font-size: .75rem; letter-spacing: 0;
-  text-transform: none; color: var(--tx-faint); }
+  text-transform: none; color: var(--tx-faint); text-align: center; }
+.cabin__nose small { display: block; font-size: .6875rem; color: var(--tx-faint); opacity: .8; }
 .cabin__zone { margin-bottom: 1.75rem; }
 .cabin__zonehd { display: flex; align-items: center; gap: .875rem; margin-bottom: .875rem;
   font-family: var(--f-label); font-size: .75rem; letter-spacing: 0;
@@ -919,32 +920,44 @@ select.field__in { appearance: none; cursor: pointer; padding-right: 2.25rem;
 /* ==========================================================================
    BOARDING PASS
    ========================================================================== */
-.pass { --notch: 13px; display: grid; grid-template-columns: 1fr; max-width: 62rem; margin-inline: auto;
+/* The pass carries both brands: Mollweide's mark, blue and globe on the
+   main part, and the operating airline's colour (--al, already darkened
+   where needed to read on white) on the rule along the top, the route, the
+   seat, the fin and the whole stub. */
+.pass { --notch: 13px; --al: var(--blue); display: grid; grid-template-columns: 1fr; max-width: 62rem; margin-inline: auto;
   background: var(--paper); border-radius: var(--r-lg); box-shadow: 0 40px 90px -40px rgba(7,26,69,.55);
-  overflow: hidden; position: relative; }
+  overflow: hidden; position: relative; border-top: 6px solid var(--al); }
 @media (min-width: 840px) { .pass { grid-template-columns: 1fr 17rem; } }
-.pass__main { padding: clamp(1.5rem,3.5vw,2.5rem); }
+.pass__main { padding: clamp(1.5rem,3.5vw,2.5rem); position: relative; isolation: isolate; overflow: hidden;
+  background: linear-gradient(160deg, var(--paper) 55%, var(--sky-wash)); }
+.pass__globe { position: absolute; z-index: -1; right: -6%; bottom: -18%; width: 62%; color: var(--blue); opacity: .07; }
 .pass__hd { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
   gap: 1rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--rule); margin-bottom: 1.75rem; }
-.pass__kind { font-family: var(--f-label); font-size: .75rem; letter-spacing: 0;
-  text-transform: none; color: var(--tx-faint); text-align: right; }
+.pass__alliance { display: grid; gap: .35rem; }
+.pass__alliance > span { font-size: .75rem; font-weight: 600; color: var(--blue); }
+.pass__op { display: flex; align-items: center; gap: .75rem; text-align: right; }
+.pass__op span { display: block; font-size: .75rem; color: var(--tx-faint); }
+.pass__op b { display: block; font-size: 1rem; font-weight: 700; color: var(--al); line-height: 1.25; }
+.pass__fin { width: 60px; height: 60px; flex-shrink: 0; }
 .pass__route { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; margin-bottom: 1.75rem; }
 .pass__ap { text-align: center; }
 .pass__ap:first-child { text-align: left; } .pass__ap:last-child { text-align: right; }
 .pass__code { font-size: clamp(2.25rem,7vw,3.75rem); font-weight: 300; line-height: .92; letter-spacing: -.03em; color: var(--blue); }
-.pass__city { font-family: var(--f-label); font-size: .75rem; letter-spacing: 0;
-  text-transform: none; color: var(--tx-soft); margin-top: .4375rem; }
-.pass__arc { color: var(--sky); flex-shrink: 0; }
+.pass__city { font-family: var(--f-label); font-size: .8125rem; color: var(--tx-soft); margin-top: .4375rem; }
+.pass__arc { color: var(--al); flex-shrink: 0; display: grid; justify-items: center; gap: .2rem; }
+.pass__arc span { font-family: var(--f-data); font-size: .75rem; color: var(--tx-soft); }
 .pass__grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.25rem 1rem; }
 @media (min-width: 560px) { .pass__grid { grid-template-columns: repeat(4,1fr); } }
-.pass__cell dt { font-family: var(--f-label); font-size: .75rem; letter-spacing: 0;
-  text-transform: none; color: var(--tx-faint); margin-bottom: .3125rem; }
+.pass__cell dt { font-family: var(--f-label); font-size: .75rem; color: var(--tx-faint); margin-bottom: .3125rem; }
 .pass__cell dd { font-family: var(--f-label); font-size: 1rem; font-weight: 500; }
-.pass__cell dd small { font-size: .6875rem; color: var(--tx-soft); display: block; font-weight: 400; letter-spacing: 0; }
+.pass__cell dd sup { font-size: .625rem; color: var(--warn); margin-left: .1rem; }
+.pass__cell dd small { font-size: .6875rem; color: var(--tx-soft); display: block; font-weight: 400; }
+.pass__cell--seat dd { color: var(--al); font-size: 1.5rem; font-weight: 700; line-height: 1.1; }
 
-.pass__stub { background: var(--blue-ink); color: var(--tx-on-ink);
-  padding: clamp(1.5rem,3.5vw,2rem); position: relative;
+.pass__stub { background: var(--al); color: #fff; overflow: hidden;
+  padding: clamp(1.5rem,3.5vw,2rem); position: relative; isolation: isolate;
   display: flex; flex-direction: column; gap: 1.25rem; justify-content: space-between; }
+.pass__stubfin { position: absolute; z-index: -1; right: -18%; top: 8%; width: 78%; height: auto; }
 .pass__stub::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px;
   background-image: linear-gradient(var(--paper) 50%, transparent 0); background-size: 1px 11px; }
 .pass__stub::after { content: ''; position: absolute; left: calc(var(--notch)*-1); top: calc(var(--notch)*-1);
@@ -956,18 +969,17 @@ select.field__in { appearance: none; cursor: pointer; padding-right: 2.25rem;
     background-image: linear-gradient(90deg, var(--paper) 50%, transparent 0); background-size: 11px 1px; }
   .pass__notch { left: auto; right: calc(var(--notch)*-1); top: calc(var(--notch)*-1); bottom: auto; }
 }
-.pass__pnrlbl { font-family: var(--f-label); font-size: .75rem; letter-spacing: 0;
-  text-transform: none; color: var(--sky-soft); }
-.pass__pnr { font-family: var(--f-label); font-size: clamp(1.5rem,4vw,1.875rem); font-weight: 600;
+.pass__pnrlbl { font-family: var(--f-label); font-size: .75rem; color: rgba(255,255,255,.8); }
+.pass__pnr { font-family: var(--f-label); font-size: clamp(1.5rem,4vw,1.875rem); font-weight: 700;
   letter-spacing: .14em; color: #fff; margin-top: .375rem; }
-.pass__stubgrid { display: grid; gap: .875rem; }
+.pass__stubgrid { display: grid; gap: .75rem; }
 .pass__stubrow { display: flex; justify-content: space-between; gap: 1rem; align-items: center;
-  font-family: var(--f-label); font-size: .75rem; }
-.pass__stubrow span:first-child { font-size: .75rem; letter-spacing: 0;
-  text-transform: none; color: var(--tx-on-ink-soft); }
-.barcode { height: 52px; width: 100%; }
-.pass__note { font-family: var(--f-label); font-size: .75rem; letter-spacing: 0;
-  text-transform: none; color: var(--tx-on-ink-soft); text-align: center; line-height: 1.7; }
+  font-family: var(--f-label); font-size: .8125rem; font-weight: 600; }
+.pass__stubrow span:first-child { font-size: .75rem; font-weight: 400; color: rgba(255,255,255,.75); }
+.barcode { height: 52px; width: 100%; background-color: #fff; border-radius: 3px; color: #071A45;
+  box-shadow: 0 0 0 6px #fff; }
+.pass__note { font-family: var(--f-label); font-size: .75rem; color: rgba(255,255,255,.85);
+  text-align: center; line-height: 1.7; margin-top: 1rem; display: flex; align-items: center; justify-content: center; gap: .4rem; }
 
 /* ==========================================================================
    MY BOOKINGS

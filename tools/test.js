@@ -8,13 +8,45 @@ vm.createContext(ctx);
 vm.runInContext(fs.readFileSync('assets/js/data.js','utf8'), ctx);
 vm.runInContext(fs.readFileSync('assets/js/site.js','utf8'), ctx);
 // const-declared bindings are not properties of the VM global; surface them.
-vm.runInContext('globalThis._x = {airport, memberOf, distKm, hhmm, durTxt, money, CABINS, AIRCRAFT, MEMBERS, AIRPORTS, ALLIANCE, TIERS, PRESS, HERO_CITIES, HERO_COORDS, PROGRAMME, LOUNGES, JOIN, tintOn, MAP_INK, memberPage};', ctx);
+vm.runInContext('globalThis._x = {airport, memberOf, distKm, hhmm, durTxt, money, CABINS, AIRCRAFT, DEFAULT_FLEET, aircraftFor, fleetOf, equipmentFor, operatorsFor, seatLayout, searchFlights, MEMBERS, AIRPORTS, ALLIANCE, TIERS, PRESS, HERO_CITIES, HERO_COORDS, PROGRAMME, LOUNGES, JOIN, tintOn, MAP_INK, memberPage};', ctx);
 Object.assign(ctx, ctx._x);
 const S = ctx;
 let fails = 0;
 const ok = (name, cond, extra='') => { console.log((cond?'  PASS  ':'  FAIL  ')+name+(extra?'  '+extra:'')); if(!cond) fails++; };
 
 // --- hero city rotation ----------------------------------------------------
+
+/* --- Aircraft: what flies where ------------------------------------------ */
+{
+  const unknown = [];
+  S.MEMBERS.forEach(m => ((m.profile && m.profile.fleet) ? [].concat(m.profile.fleet.current, m.profile.fleet.incoming || []) : [])
+    .forEach(f => { if (!S.aircraftFor(f[0], f[1])) unknown.push(m.code + ' ' + f[0] + ' ' + f[1]); }));
+  ok('Every fleet type a member lists is in the aircraft catalogue', !unknown.length, unknown.join('; '));
+  ok('The default fleet names real catalogue types',
+     S.DEFAULT_FLEET.every(t => S.AIRCRAFT.some(a => a.type === t)));
+
+  const L = (mk, md) => S.aircraftFor(mk, md).layout.join('-');
+  ok('Seat layouts follow the families',
+     L('Airbus','A350-900') === '3-3-3' && L('Boeing','787-9') === '3-3-3' && L('Airbus','A330-900') === '3-3-3' &&
+     L('Boeing','777-300ER') === '3-4-3' && L('Boeing','747-8') === '3-4-3' && L('Airbus','A380-800') === '3-4-3' &&
+     L('Airbus','A220-300') === '2-3' && L('Boeing','737 MAX 8') === '3-3' && L('Boeing','757-300') === '3-3' &&
+     L('Airbus','A321neo') === '3-3' && L('Airbus','A319-100') === '3-3' && L('Airbus','A320-200') === '3-3' &&
+     L('Embraer','E195-E2') === '2-2' && L('Embraer','E175LR') === '2-2');
+
+  /* Every flight offered on a spread of sectors has an aircraft from its
+     operator's own fleet with the range for its leg. */
+  const bad = [];
+  const codes = ['TLV','GIG','GVA','LHR','JFK','SYD','BEY','NRT','LAX','DXB','BNA','HNL','SIN','EZE'];
+  codes.forEach(a => codes.forEach(b => {
+    if (a === b) return;
+    S.searchFlights(a, b, '2026-11-03', 'economy', 1).forEach(f => (f.legs || [f]).forEach(g => {
+      const m = S.memberOf(g.op);
+      if (!g.eq || g.eq.maxKm < g.km * 1.08 || !S.fleetOf(m).includes(g.eq)) bad.push(g.no + ' ' + g.from + '-' + g.to + ' ' + (g.eq && g.eq.type));
+    }));
+  }));
+  ok('Every flight offered is flown by its own fleet, within range', !bad.length, bad.slice(0, 5).join('; '));
+}
+
 ok('Every hero city can be placed on the globe',
    S.HERO_CITIES.every(c => S.AIRPORTS.some(a => a.city === c) || S.HERO_COORDS[c]),
    S.HERO_CITIES.filter(c => !S.AIRPORTS.some(a => a.city === c) && !S.HERO_COORDS[c]).join(', '));

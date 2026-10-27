@@ -15,8 +15,8 @@ const state = {
   cabin: 'economy', pax: 1,
   sort: 'dep',
   chosen: { out: null, ret: null },
-  seats:  { out: null, ret: null },
-  leg: 'out',
+  seats:  {},            // seat per flight, keyed by segment ('out0', 'out1', 'ret0' …)
+  leg: 'out0',
   pname: ''
 };
 
@@ -140,7 +140,8 @@ function legHTML(f, dir) {
   return `<article class="flight" style="--m-color:${f.color}">
     <div class="flight__op">
       <div class="flight__chip">${f.op}</div>
-      <div><div class="flight__opname">${f.opName}</div><div class="flight__no">${f.no} · ${f.eq.type}</div></div>
+      <div><div class="flight__opname">${f.opName}</div><div class="flight__no">${f.no} · ${
+        (f.legs ? f.legs.map(l => l.eq.type) : [f.eq.type]).filter((t, i, a) => a.indexOf(t) === i).join(' + ')}</div></div>
     </div>
     <div class="flight__route">
       <div class="rt__end">
@@ -230,18 +231,33 @@ function seatLetters(layout) {
 
 function isExtraLegroom(row, cab) { return row === cab.rows[0] || row === 16 || row === 25; }
 
-function renderSeatMap() {
-  const dir = state.leg;
-  const f = state.chosen[dir];
-  if (!f) return;
-  const cab = CABINS.find(c => c.id === state.cabin);
-  const blocks = seatLetters(cab.layout);
-  const r = rng(hash(f.no + state.out + dir));
+/* Every flight in the trip, in order. A connection is two flights, each
+   with its own aircraft, seat and boarding pass. */
+function segments() {
+  const out = [];
+  ['out', 'ret'].forEach(d => {
+    const f = state.chosen[d];
+    if (!f || (d === 'ret' && state.trip !== 'return')) return;
+    (f.legs || [f]).forEach((g, i) => out.push({ key: d + i, dir: d, i, f: g, n: (f.legs || [f]).length }));
+  });
+  return out;
+}
 
-  const legSwitch = state.trip === 'return' ? `
-    <div class="search-card__hd" style="border-radius:0;margin:-1px -1px 1.5rem;background:transparent;border-bottom:1px solid var(--rule)">
-      <button class="tab" data-leg="out" aria-selected="${dir === 'out'}">Outbound ${state.from}→${state.to} ${state.seats.out ? '· ' + state.seats.out : ''}</button>
-      <button class="tab" data-leg="ret" aria-selected="${dir === 'ret'}">Return ${state.to}→${state.from} ${state.seats.ret ? '· ' + state.seats.ret : ''}</button>
+function renderSeatMap() {
+  const segs = segments();
+  const seg = segs.find(x => x.key === state.leg) || segs[0];
+  if (!seg) return;
+  state.leg = seg.key;
+  const f = seg.f;
+  const cab = CABINS.find(c => c.id === state.cabin);
+  const blocks = seatLetters(seatLayout(f.eq, state.cabin));
+  const r = rng(hash(f.no + (seg.dir === 'out' ? state.out : state.ret) + seg.key));
+
+  const legSwitch = segs.length > 1 ? `
+    <div class="search-card__hd seg-tabs" style="border-radius:0;margin:-1px -1px 1.5rem;background:transparent;border-bottom:1px solid var(--rule)">
+      ${segs.map(x => `<button class="tab" data-leg="${x.key}" aria-selected="${x.key === seg.key}">${
+        x.dir === 'out' ? 'Outbound' : 'Return'}${x.n > 1 ? ` ${x.i + 1}/${x.n}` : ''} ${x.f.from}→${x.f.to}${
+        state.seats[x.key] ? ' · ' + state.seats[x.key] : ''}</button>`).join('')}
     </div>` : '';
 
   let rowsHTML = '';
@@ -254,7 +270,7 @@ function renderSeatMap() {
         const taken = r() < (extra ? 0.22 : 0.42);
         cells += `<button class="seat" data-seat="${id}" data-taken="${taken}" data-extra="${extra}"
                     ${taken ? 'disabled aria-disabled="true"' : ''}
-                    aria-pressed="${state.seats[dir] === id}"
+                    aria-pressed="${state.seats[seg.key] === id}"
                     aria-label="Seat ${id}${extra ? ', extra legroom' : ''}${taken ? ', occupied' : ''}">${L}</button>`;
       });
       if (bi < blocks.length - 1) cells += '<div class="aisle"></div>';
@@ -263,7 +279,7 @@ function renderSeatMap() {
   }
 
   $('#seatPane').innerHTML = `${legSwitch}
-    <div class="cabin__nose">${f.eq.type}</div>
+    <div class="cabin__nose">${f.eq.type}<small>${blocks.map(b => b.length).join('-')} · ${f.opName}</small></div>
     <div class="cabin__zone">
       <div class="cabin__zonehd"><b>${cab.name}</b> · rows ${cab.rows[0]}–${cab.rows[1]} · ${f.opName} ${f.no}</div>
       <div class="seat-rows">${rowsHTML}</div>
@@ -275,8 +291,8 @@ function renderSeatMap() {
   renderRail();
 }
 
-function seatFee(dir) {
-  const s = state.seats[dir]; if (!s) return 0;
+function seatFee(key) {
+  const s = state.seats[key]; if (!s) return 0;
   const cab = CABINS.find(c => c.id === state.cabin);
   const row = parseInt(s, 10);
   if (isExtraLegroom(row, cab)) return FEE_LEGROOM * state.pax;
@@ -286,7 +302,8 @@ function seatFee(dir) {
 function priceBreakdown() {
   const legs = ['out'].concat(state.trip === 'return' ? ['ret'] : []);
   let fare = 0, seats = 0;
-  legs.forEach(d => { if (state.chosen[d]) fare += state.chosen[d].total; if (state.seats[d]) seats += seatFee(d); });
+  legs.forEach(d => { if (state.chosen[d]) fare += state.chosen[d].total; });
+  segments().forEach(x => { seats += seatFee(x.key); });
   const taxes = Math.round(fare * 0.14 + 22 * state.pax * legs.length);
   return { fare, seats, taxes, total: fare + seats + taxes, legs };
 }
@@ -296,11 +313,12 @@ function renderRail() {
   const cab = CABINS.find(c => c.id === state.cabin);
   const rows = p.legs.map(d => {
     const f = state.chosen[d];
-    return `<div class="rail__row"><dt>${d === 'out' ? 'Outbound' : 'Return'} ${f.from}→${f.to}</dt><dd>${money(f.total)}</dd></div>
-            <div class="rail__row"><dt style="font-size:.75rem;opacity:.75">${f.opName} ${f.no}${state.seats[d] ? ' · seat ' + state.seats[d] : ''}</dt><dd style="font-size:.75rem;opacity:.75">${hhmm(f.dep)}–${hhmm(f.arr)}</dd></div>`;
+    return `<div class="rail__row"><dt>${d === 'out' ? 'Outbound' : 'Return'} ${f.from}→${f.to}</dt><dd>${money(f.total)}</dd></div>` +
+      segments().filter(x => x.dir === d).map(x =>
+        `<div class="rail__row"><dt style="font-size:.75rem;opacity:.75">${x.f.opName} ${x.f.no} · ${x.f.from}→${x.f.to}${state.seats[x.key] ? ' · seat ' + state.seats[x.key] : ''}</dt><dd style="font-size:.75rem;opacity:.75">${hhmm(x.f.dep)}–${hhmm(x.f.arr)}</dd></div>`).join('');
   }).join('');
 
-  const ready = p.legs.every(d => state.seats[d]);
+  const ready = segments().every(x => state.seats[x.key]);
   $('#rail').innerHTML = `
     <div class="rail__hd"><h3>Your itinerary</h3></div>
     <div class="rail__bd">
@@ -317,7 +335,7 @@ function renderRail() {
         <input class="field__in" id="pname" placeholder="As shown on ID" value="${state.pname}" autocomplete="name">
       </label>
       <button class="btn btn--primary btn--block" id="confirmBtn" ${ready ? '' : 'disabled'}>
-        ${ready ? 'Confirm booking' : 'Select a seat on each flight'}
+        ${ready ? 'Confirm booking' : `Select a seat on each flight (${segments().filter(x => state.seats[x.key]).length}/${segments().length})`}
       </button>
       <p class="lbl center" style="margin-top:.875rem;line-height:1.6">Simulated booking · no payment is taken</p>
     </div>`;
@@ -338,29 +356,65 @@ function barcodeCSS(pnr) {
   return `linear-gradient(90deg, ${css.slice(0, -2)})`;
 }
 
+/* A simplified fin in the operator's colour, carrying its code — the
+   airline's mark on a pass without needing its artwork. */
+function finSVG(color, code, cls) {
+  return `<svg class="${cls}" viewBox="0 0 64 64" aria-hidden="true">
+    <path d="M4 60 L28 9 Q31 3 37 3 L60 3 L50 54 Q48.5 60 42 60 Z" fill="${color}"/>
+    <path d="M28 9 Q31 3 37 3 L43 3 L19 60 L4 60 Z" fill="#fff" opacity=".18"/>
+    <text x="39" y="37" text-anchor="middle" fill="#fff" font-family="Figtree, sans-serif" font-weight="800"
+          font-size="${code.length > 2 ? 11 : 14}" transform="rotate(-11 39 33)">${code}</text>
+  </svg>`;
+}
+
+/* The Mollweide ellipse with its graticule, drawn faintly behind the pass. */
+const PASS_GLOBE = (() => {
+  const W = 200, H = 100, p = [];
+  for (let k = -150; k <= 150; k += 30) {
+    const rx = Math.abs(k) / 180 * W / 2;
+    p.push(`<ellipse cx="${W/2}" cy="${H/2}" rx="${rx.toFixed(1)}" ry="${H/2}"/>`);
+  }
+  [-60, -30, 0, 30, 60].forEach(lat => {
+    const y = H / 2 - Math.sin(lat * Math.PI / 180) * H / 2, hw = Math.cos(Math.asin((y - H/2) / (H/2))) * W / 2;
+    p.push(`<line x1="${(W/2 - hw).toFixed(1)}" y1="${y.toFixed(1)}" x2="${(W/2 + hw).toFixed(1)}" y2="${y.toFixed(1)}"/>`);
+  });
+  return `<svg class="pass__globe" viewBox="-2 -2 ${W + 4} ${H + 4}" aria-hidden="true" fill="none" stroke="currentColor" stroke-width=".6">
+    <ellipse cx="${W/2}" cy="${H/2}" rx="${W/2}" ry="${H/2}" stroke-width="1"/>${p.join('')}</svg>`;
+})();
+
 function passHTML(bk, leg) {
   const f = leg;
   const A = airport(f.from), B = airport(f.to);
   const cab = CABINS.find(c => c.id === bk.cabin);
+  const m = memberOf(f.op) || {};
+  const ink = tintOn(f.color || m.color || '#13398C', '#FFFFFF');   // readable on white, and white on it
   const d = new Date(f.date + 'T00:00:00')
     .toLocaleDateString('en-GB', { weekday: 'short', day: '2-digit', month: 'short' }).toUpperCase();
-  return `<div class="pass">
+  return `<div class="pass" style="--al:${ink}">
     <div class="pass__main">
+      ${PASS_GLOBE}
       <div class="pass__hd">
-        <div class="brand">
-          <img class="brand__mark" src="assets/img/mark-blue.png" alt="" width="38" height="33">
-          <img class="brand__word" src="assets/img/wordmark-blue.png" alt="Mollweide" style="height:15px">
+        <div class="pass__alliance">
+          <div class="brand">
+            <img class="brand__mark" src="assets/img/mark-blue.png" alt="" width="38" height="33">
+            <img class="brand__word" src="assets/img/wordmark-blue.png" alt="Mollweide" style="height:17px">
+          </div>
+          <span>Alliance boarding pass</span>
         </div>
-        <div class="pass__kind">Boarding pass<br>${f.opName}</div>
+        <div class="pass__op">
+          <div><span>Operated by</span><b>${m.name || f.opName}</b></div>
+          ${finSVG(ink, f.op || '', 'pass__fin')}
+        </div>
       </div>
       <div class="pass__route">
         <div class="pass__ap"><div class="pass__code">${f.from}</div><div class="pass__city">${A.city}</div></div>
         <div class="pass__arc">
-          <svg width="56" height="26" viewBox="0 0 56 26" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
-            <path d="M2 21C12 6 44 6 54 21" stroke-dasharray="3 3"/>
-            <circle cx="2" cy="21" r="2.4" fill="currentColor" stroke="none"/><circle cx="54" cy="21" r="2.4" fill="currentColor" stroke="none"/>
-            <path d="M28 4l4 4-4 4-4-4z" fill="currentColor" stroke="none"/>
+          <svg width="96" height="34" viewBox="0 0 96 34" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <path d="M3 29C22 4 74 4 93 29" stroke-dasharray="4 4"/>
+            <circle cx="3" cy="29" r="3" fill="currentColor" stroke="none"/><circle cx="93" cy="29" r="3" fill="currentColor" stroke="none"/>
+            <path d="M48 3.5l9 4.5-9 4.5 2-4.5z" fill="currentColor" stroke="none"/>
           </svg>
+          <span>${durTxt(f.dur)}</span>
         </div>
         <div class="pass__ap"><div class="pass__code">${f.to}</div><div class="pass__city">${B.city}</div></div>
       </div>
@@ -370,26 +424,28 @@ function passHTML(bk, leg) {
         <div class="pass__cell"><dt>Date</dt><dd>${d}</dd></div>
         <div class="pass__cell"><dt>Cabin</dt><dd>${cab.abbr}<small>${cab.name}</small></dd></div>
         <div class="pass__cell"><dt>Departs</dt><dd>${hhmm(f.dep)}<small>${A.name}</small></dd></div>
-        <div class="pass__cell"><dt>Arrives</dt><dd>${hhmm(f.arr)}<small>${B.name}</small></dd></div>
+        <div class="pass__cell"><dt>Arrives</dt><dd>${hhmm(f.arr)}${f.arr >= 1440 ? '<sup>+1</sup>' : ''}<small>${B.name}</small></dd></div>
         <div class="pass__cell"><dt>Gate</dt><dd>${f.gate}</dd></div>
-        <div class="pass__cell"><dt>Seat</dt><dd style="color:var(--blue);font-size:1.25rem">${f.seat}</dd></div>
+        <div class="pass__cell pass__cell--seat"><dt>Seat</dt><dd>${f.seat}</dd></div>
       </dl>
     </div>
     <div class="pass__stub">
       <span class="pass__notch"></span>
+      ${finSVG('rgba(255,255,255,.12)', '', 'pass__stubfin')}
       <div>
         <div class="pass__pnrlbl">Booking reference</div>
         <div class="pass__pnr">${bk.pnr}</div>
       </div>
       <div class="pass__stubgrid">
         <div class="pass__stubrow"><span>Flight</span><span>${f.no}</span></div>
+        <div class="pass__stubrow"><span>Route</span><span>${f.from} → ${f.to}</span></div>
         <div class="pass__stubrow"><span>Seat</span><span>${f.seat}</span></div>
         <div class="pass__stubrow"><span>Departs</span><span>${hhmm(f.dep)}</span></div>
         <div class="pass__stubrow"><span>Class</span><span>${cab.name}</span></div>
       </div>
       <div>
         <div class="barcode" style="background-image:${barcodeCSS(bk.pnr + f.no)}"></div>
-        <p class="pass__note" style="margin-top:.75rem">${bk.pnr} · ${f.from}${f.to} · Simulated</p>
+        <p class="pass__note"><img src="assets/img/mark-white.png" alt="" width="18" height="16"> Mollweide Alliance · ${bk.pnr} · Simulated</p>
       </div>
     </div>
   </div>`;
@@ -402,13 +458,16 @@ function confirmBooking() {
   const p = priceBreakdown();
   const r = rng(hash(name + Date.now()));
 
-  const legs = p.legs.map(d => {
-    const f = state.chosen[d];
+  /* One entry, and so one boarding pass, per flight. */
+  const legs = segments().map(x => {
+    const g = x.f;
+    const date = x.dir === 'out' ? state.out : state.ret;
+    const d = new Date(date + 'T00:00:00'); d.setDate(d.getDate() + Math.floor(g.dep / 1440));
     return {
-      dir: d, from: f.from, to: f.to, no: f.no, opName: f.opName, op: f.op, color: f.color,
-      dep: f.dep, arr: f.arr, dur: f.dur, eq: f.eq, stops: f.stops, via: f.via || null,
-      date: d === 'out' ? state.out : state.ret,
-      seat: state.seats[d],
+      dir: x.dir, from: g.from, to: g.to, no: g.no, opName: g.opName, op: g.op, color: g.color,
+      dep: g.dep % 1440, arr: g.arr - (g.dep - g.dep % 1440), dur: g.dur, eq: g.eq, stops: 0, via: null,
+      date: d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()),
+      seat: state.seats[x.key],
       gate: String.fromCharCode(65 + Math.floor(r() * 5)) + (1 + Math.floor(r() * 24))
     };
   });
@@ -478,7 +537,7 @@ function initBooking() {
       from, to,
       out: $('#dateOut').value, ret: $('#dateRet').value,
       cabin: $('#cabin').value, pax: Number($('#pax').value),
-      chosen: { out: null, ret: null }, seats: { out: null, ret: null }, leg: 'out'
+      chosen: { out: null, ret: null }, seats: {}, leg: 'out0'
     });
     if (state.trip === 'return' && state.ret < state.out) { toast('The return date is before the outbound date.'); return; }
     renderResults();
@@ -494,7 +553,7 @@ function initBooking() {
     const dir = btn.dataset.select;
     state.chosen[dir] = cache[dir].find(f => f.no === btn.dataset.id);
     if (dir === 'out' && state.trip === 'return') { renderResults(); }
-    else { state.leg = 'out'; renderSeatMap(); setStep(3); }
+    else { state.leg = 'out0'; renderSeatMap(); setStep(3); }
   });
 
   /* Sorting */
@@ -512,6 +571,9 @@ function initBooking() {
     const s = e.target.closest('.seat');
     if (!s || s.disabled) return;
     state.seats[state.leg] = state.seats[state.leg] === s.dataset.seat ? null : s.dataset.seat;
+    /* Once a seat is picked, move on to the next flight still without one. */
+    const next = state.seats[state.leg] && segments().find(x => !state.seats[x.key]);
+    if (next) state.leg = next.key;
     renderSeatMap();
   });
 
@@ -532,7 +594,7 @@ function initBooking() {
 
   $('#printBtn') && $('#printBtn').addEventListener('click', () => window.print());
   $('#againBtn') && $('#againBtn').addEventListener('click', () => {
-    state.chosen = { out: null, ret: null }; state.seats = { out: null, ret: null };
+    state.chosen = { out: null, ret: null }; state.seats = {};
     setStep(1);
   });
 

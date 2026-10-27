@@ -55,7 +55,7 @@ airports or its fares.
 | A member's own page | `profile` on that member (see *Airline pages*) |
 | Airports the search and map know about | `AIRPORTS` |
 | Cabins, fare multipliers, seat layouts | `CABINS` |
-| Aircraft types by range | `AIRCRAFT` |
+| Aircraft types: range and seat layout | `AIRCRAFT`, `DEFAULT_FLEET` |
 | Loyalty tiers (Member / Select / Strata / Aurora) | `TIERS` and `PROGRAMME` (the programme is called **Elara**) |
 | Cities in the rotating homepage headline | `HERO_CITIES` |
 | Lounges, their operator, access rules and photos | `LOUNGES` |
