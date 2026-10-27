@@ -675,110 +675,281 @@ function tintOn(hex, bg) {
 
 /* ============================================================================
    HUB EXPLORER
-   A list of carriers beside the projection. Picking one lifts that airline's
-   bases out of the map and dims the rest, which answers "where does this
-   airline actually fly from" far quicker than sixty cards in a grid did.
+   A list of airlines beside a globe that can be turned by dragging. Picking
+   an airline lifts its bases out and draws its listed routes; picking a hub,
+   on the globe or in the list under it, turns the globe to it and draws
+   every listed route through it in the colour of the airline that flies it,
+   with the destinations set out by airline beside the globe.
    ========================================================================== */
 function initHubExplorer(root) {
   if (!root) return;
-  const svg  = root.querySelector('[data-hx="map"]');
-  const side = root.querySelector('[data-hx="side"]');
-  const list = root.querySelector('[data-hx="list"]');
-  const note = root.querySelector('[data-hx="note"]');
-  if (!svg || !side) return;
+  const canvas = root.querySelector('[data-hx="globe"]');
+  const side   = root.querySelector('[data-hx="side"]');
+  const list   = root.querySelector('[data-hx="list"]');
+  const note   = root.querySelector('[data-hx="note"]');
+  const detail = root.querySelector('[data-hx="detail"]');
+  if (!canvas || !side || typeof LAND_DOTS === 'undefined') return;
 
   const AP = {};
   AIRPORTS.forEach(a => AP[a.code] = a);
   const allHubs = AIRPORTS.filter(a => a.hub);
   const hubsOf  = m => (m.hubs || []).map(c => AP[c]).filter(Boolean);
+  const V = {};                                   // airport code -> vector
+  AIRPORTS.forEach(a => V[a.code] = gvec(a.lat, a.lon));
+  const ink = m => tintOn(m.color, MAP_INK);      // drawn on the globe
+  const onPage = m => tintOn(m.color, '#FFFFFF'); // set on the white section
+  const nm = m => m.short || m.name;
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Every route a member listed, as legs. A one-stop service [from, to, via]
+     flies from→via→to. Routes are only those the members named — nothing is
+     inferred — so a hub can have none yet. */
+  const legsOf = m => ((m.profile && m.profile.routes) || [])
+    .flatMap(r => r[2] ? [[r[0], r[2]], [r[2], r[1]]] : [[r[0], r[1]]])
+    .filter(([x, y]) => AP[x] && AP[y]);
+
+  /* Who connects a hub to where: one entry per member that bases there or
+     lists a route through it. */
+  function connections(code) {
+    return MEMBERS.map(m => {
+      const dests = [];
+      ((m.profile && m.profile.routes) || []).forEach(r => {
+        const [f, t, via] = r;
+        if (f === code) dests.push({ to: t, via });
+        else if (t === code) dests.push({ to: f, via });
+        else if (via === code) { dests.push({ to: f }); dests.push({ to: t }); }
+      });
+      const seen = new Set(), uniq = dests.filter(d => AP[d.to] && !seen.has(d.to) && seen.add(d.to));
+      const bases = (m.hubs || []).concat(m.focus || []);
+      const based = bases.includes(code);
+      if (!uniq.length && !based) return null;
+      return { m, dests: uniq, based, others: based ? bases.filter(c => c !== code && AP[c]) : [] };
+    }).filter(Boolean)
+      .sort((x, y) => y.dests.length - x.dests.length || nm(x.m).localeCompare(nm(y.m)));
+  }
 
   /* --- the carrier list ---------------------------------------------- */
   side.innerHTML =
     `<button class="hx__opt" type="button" data-code="" aria-pressed="true">
        <i class="hx__dot hx__dot--all"></i>
-       <span class="hx__name">All members</span>
+       <span class="hx__name">All airlines</span>
        <span class="hx__n">${allHubs.length}</span>
      </button>` +
-    MEMBERS.slice().sort((a, b) => (a.short || a.name).localeCompare(b.short || b.name))
+    MEMBERS.slice().sort((a, b) => nm(a).localeCompare(nm(b)))
       .map(m => `
       <button class="hx__opt" type="button" data-code="${m.code}" aria-pressed="false">
-        <i class="hx__dot" style="background:${tintOn(m.color, '#FFFFFF')}"></i>
-        <span class="hx__name">${m.short || m.name}${
+        <i class="hx__dot" style="background:${onPage(m)}"></i>
+        <span class="hx__name">${nm(m)}${
           m.group ? ` <em class="hx__grp">${groupOf(m).sub}</em>` : ''}</span>
         <span class="hx__n">${(m.hubs || []).length}</span>
       </button>`).join('');
 
-  /* --- the map -------------------------------------------------------- */
-  const W = 400, H = 200, lon0 = 10;
-  const proj = projector(W, H, lon0);
-  svg.setAttribute('viewBox', `-6 -6 ${W + 12} ${H + 12}`);
+  /* --- the globe ------------------------------------------------------ */
+  const g = globeCore(canvas);
+  let carrier = null, hub = null, lines = [], drawT = 1, spin = !still, hover = null, drag = null;
+  let shown = [];                                  // hub dots on screen, for picking
 
-  function draw(code) {
-    const m    = code ? MEMBERS.find(x => x.code === code) : null;
-    const onMap  = m ? tintOn(m.color, MAP_INK)  : null;   // drawn on the dark panel
-    const onPage = m ? tintOn(m.color, '#FFFFFF') : null;   // set on the white section
-    const mine = m ? hubsOf(m) : allHubs;
-    const set  = new Set(mine.map(a => a.code));
-    const parts = mapBase(proj, W, H, lon0);
-
-    /* A selected carrier's bases are tied back to its primary, so the shape
-       of the operation reads at a glance rather than as scattered dots. */
-    if (m && mine.length > 1) {
-      mine.slice(1).forEach((h, i) => {
-        const d = gcPath(mine[0], h, proj, lon0);
-        if (d) parts.push(`<path class="hx__arc" style="stroke:${onMap};animation-delay:${i * 45}ms" d="${d}"/>`);
-      });
+  const fitTo = (centre, codes) => {
+    /* Face `centre`, near enough that the farthest of `codes` still fits. */
+    const S = Math.min(g.W, g.H);
+    const far = codes.reduce((d, c) => Math.max(d, gang(centre, V[c])), 0);
+    const R = far > 1.2 ? .44 * S : Math.min(1.5 * S, Math.max(.44 * S, .4 * S / Math.sin(Math.max(far, .2))));
+    return { view: centre, R, cx: g.W / 2, cy: g.H / 2, roll: 0 };
+  };
+  g.onSize = () => { g.cam = Object.assign({}, g.cam, { R: g.cam.R ? g.cam.R : .44 * Math.min(g.W, g.H), cx: g.W / 2, cy: g.H / 2 }); };
+  g.cam = { view: gvec(25, 15), R: 0, cx: 0, cy: 0, roll: 0 };
+  g.tick = dt => {
+    if (spin && !hub && !g.moving() && !drag) {
+      const [la, lo] = gll(g.cam.view);
+      g.cam = Object.assign({}, g.cam, { view: gvec(la, lo + dt * 4) });
     }
+    if (!g.moving() && drawT < 1) drawT = Math.min(1, drawT + dt / 1.1);
+  };
 
-    /* Everything not belonging to the selection stays on the map, faint, so
-       the airline is still seen in the context of the whole network. */
-    allHubs.filter(a => !set.has(a.code)).forEach(a => {
-      const [x, y] = proj(a.lat, a.lon);
-      parts.push(`<circle class="hx__off" cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="1.5"><title>${a.city} (${a.code})</title></circle>`);
+  g.layers.push((ctx, now) => {
+    const e = gease(drawT);
+    ctx.lineCap = 'round';
+    lines.forEach(L => {
+      ctx.lineWidth = L.main ? 2 : 1.4;
+      ctx.strokeStyle = L.color; ctx.globalAlpha = L.main ? .9 : .5;
+      if (L.dash) ctx.setLineDash([4, 5]);
+      g.arc(V[L.a], V[L.b], Math.round(64 * e), 64, .1);
+      ctx.setLineDash([]);
+    });
+    ctx.globalAlpha = 1;
+
+    /* destinations of the selected hub */
+    const dest = new Set(lines.filter(L => L.main).map(L => L.b));
+    if (drawT > .95) dest.forEach(c => {
+      const p = g.proj(V[c]); if (p.depth <= 0) return;
+      ctx.beginPath(); ctx.arc(p.x, p.y, 3, 0, Math.PI*2); ctx.fillStyle = '#fff'; ctx.fill();
+      if (dest.size <= 28) { ctx.font = '500 11px "DM Mono", monospace'; ctx.fillStyle = 'rgba(255,255,255,.85)'; ctx.fillText(c, p.x + 6, p.y - 5); }
     });
 
-    const placed = [];
-    const fits = (x, y, w, h) => !placed.some(p =>
-      x < p.x + p.w + 1 && x + w + 1 > p.x && y < p.y + p.h + 1 && y + h + 1 > p.y);
-
-    mine.forEach((a, i) => {
-      const [x, y] = proj(a.lat, a.lon);
-      const primary = !!m && i === 0;
-      const fill = onMap || '#FFFFFF';
-      parts.push(`<circle class="hx__halo" cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="${primary ? 6.2 : 4.6}" style="stroke:${onMap || 'var(--sky-soft)'}"/>`);
-      parts.push(`<circle class="hx__on" cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="${primary ? 3.4 : 2.5}" style="fill:${fill}"><title>${a.city} (${a.code}) \u2014 ${a.name}</title></circle>`);
-
-      const Wl = 11, Hl = 5;
-      const spots = [[x + 4, y - 4], [x - 4 - Wl, y - 4], [x + 4, y + 7], [x - 4 - Wl, y + 7]];
-      for (const [lx, ly] of spots) {
-        if (fits(lx, ly - Hl, Wl, Hl)) {
-          placed.push({ x: lx, y: ly - Hl, w: Wl, h: Hl });
-          parts.push(`<text class="map__label" x="${lx.toFixed(2)}" y="${ly.toFixed(2)}">${a.code}</text>`);
-          break;
-        }
+    /* hubs */
+    shown = [];
+    const mine = carrier ? new Set(carrier.hubs) : null;
+    allHubs.forEach(a => {
+      const p = g.proj(V[a.code]); if (p.depth <= 0) return;
+      shown.push({ a, p });
+      /* With a hub chosen, hubs off its routes step back so the routes read. */
+      const on = (mine ? mine.has(a.code) : true) && (!hub || hub.code === a.code || dest.has(a.code)),
+            sel = hub && hub.code === a.code;
+      const col = mine && on ? ink(carrier) : '#fff';
+      ctx.globalAlpha = on ? .95 : .35;
+      ctx.beginPath(); ctx.arc(p.x, p.y, sel ? 5.5 : on ? 3.6 : 2.4, 0, Math.PI*2);
+      ctx.fillStyle = col; ctx.fill();
+      if (on) { ctx.strokeStyle = 'rgba(7,26,69,.9)'; ctx.lineWidth = 1; ctx.stroke(); }
+      ctx.globalAlpha = 1;
+      if (sel) {
+        const pulse = (now / 1600) % 1;
+        ctx.beginPath(); ctx.arc(p.x, p.y, 6 + pulse * 16, 0, Math.PI*2);
+        ctx.strokeStyle = `rgba(143,196,232,${(1 - pulse) * .8})`; ctx.lineWidth = 1.5; ctx.stroke();
       }
     });
+    if (hub) { const p = g.proj(V[hub.code]); if (p.depth > 0) globeLabel(g, p, null, `${hub.city} · ${hub.code}`); }
+    if (hover && (!hub || hover.code !== hub.code)) {
+      const p = g.proj(V[hover.code]); if (p.depth > 0) globeLabel(g, p, null, `${hover.city} · ${hover.code}`, .85);
+    }
+  });
+  g.size();
+  g.cam = Object.assign({}, g.cam, { R: .44 * Math.min(g.W, g.H), cx: g.W / 2, cy: g.H / 2 });
+  g.start();
 
-    svg.innerHTML = parts.join('');
-    svg.setAttribute('aria-label', m
-      ? `${m.name} bases, on an equal-area world projection`
-      : 'Every alliance hub, on an equal-area world projection');
+  /* --- picking and dragging ---------------------------------------------- */
+  const at = e => { const r = canvas.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  const pick = (x, y) => {
+    let best = null, bd = 14 * 14;
+    shown.forEach(({ a, p }) => { const d = (p.x - x) ** 2 + (p.y - y) ** 2; if (d < bd) { bd = d; best = a; } });
+    return best;
+  };
+  canvas.addEventListener('pointerdown', e => {
+    const [x, y] = at(e);
+    drag = { x, y, x0: x, y0: y, moved: false };
+    canvas.setPointerCapture(e.pointerId);
+  });
+  canvas.addEventListener('pointermove', e => {
+    const [x, y] = at(e);
+    if (!drag) {
+      const h = pick(x, y);
+      if (h !== hover) { hover = h; canvas.style.cursor = h ? 'pointer' : ''; }
+      return;
+    }
+    const dx = x - drag.x, dy = y - drag.y;
+    drag.x = x; drag.y = y;
+    if (Math.abs(x - drag.x0) + Math.abs(y - drag.y0) > 4) drag.moved = true;
+    if (!drag.moved) return;
+    spin = false; g.stop();
+    const [la, lo] = gll(g.cam.view), k = 1 / g.cam.R / GD;
+    g.cam = Object.assign({}, g.cam, { view: gvec(Math.max(-80, Math.min(80, la + dy * k)), lo - dx * k) });
+  });
+  const up = e => {
+    if (!drag) return;
+    const moved = drag.moved; drag = null;
+    if (moved) return;
+    const [x, y] = at(e), h = pick(x, y);
+    if (h) selectHub(h.code); else if (hub) selectHub(null);
+  };
+  canvas.addEventListener('pointerup', up);
+  canvas.addEventListener('pointercancel', () => { drag = null; });
+  canvas.addEventListener('pointerleave', () => { if (!drag) hover = null; });
 
-    /* --- the list under the map --------------------------------------- */
+  root.querySelectorAll('[data-hx-zoom]').forEach(b => b.addEventListener('click', () => {
+    const S = Math.min(g.W, g.H), f = b.dataset.hxZoom === 'in' ? 1.35 : 1 / 1.35;
+    spin = false;
+    g.moveTo(Object.assign({}, g.cam, { R: Math.max(.3 * S, Math.min(3 * S, g.cam.R * f)) }), still ? 0 : .35);
+  }));
+
+  /* --- what is drawn ------------------------------------------------------ */
+  function selectHub(code) {
+    hub = code ? AP[code] : null;
+    lines = []; drawT = still ? 1 : 0;
+    if (!hub) { renderCarrier(); return; }
+    spin = false;
+    const conns = connections(hub.code)
+      .sort((x, y) => (carrier && x.m === carrier ? -1 : carrier && y.m === carrier ? 1 : 0));
+    conns.forEach(c => {
+      c.dests.forEach(d => lines.push({ a: hub.code, b: d.to, color: ink(c.m), main: true }));
+      if (!c.dests.length) c.others.forEach(o => lines.push({ a: hub.code, b: o, color: ink(c.m), dash: true }));
+    });
+    const targets = lines.map(L => L.b);
+    g.moveTo(fitTo(V[hub.code], targets.length ? targets : [hub.code]), still ? 0 : 1.2);
+    renderDetail(conns);
+  }
+
+  function renderDetail(conns) {
+    if (!detail) return;
+    const routes = conns.reduce((n, c) => n + c.dests.length, 0);
+    detail.hidden = false;
+    detail.innerHTML = `
+      <div class="hxd__head">
+        <span class="hxd__code">${hub.code}</span>
+        <div><p class="hxd__city">${hub.city}</p><p class="hxd__apt">${hub.name}, ${hub.country}</p></div>
+        <button class="hxd__x" type="button" aria-label="Close">&times;</button>
+      </div>
+      <p class="hxd__sum">${routes
+        ? `${routes} listed ${routes === 1 ? 'route' : 'routes'} by ${conns.filter(c => c.dests.length).length} ${conns.filter(c => c.dests.length).length === 1 ? 'airline' : 'airlines'}.`
+        : 'No routes from here have been listed yet.'}</p>
+      ${conns.map(c => `
+        <div class="hxd__al" style="--al:${onPage(c.m)}">
+          <p class="hxd__name"><i class="hx__dot" style="background:${onPage(c.m)}"></i>${
+            memberPage(c.m) ? `<a href="${memberPage(c.m)}">${c.m.name}</a>` : c.m.name}${
+            c.based ? ' <em>hub</em>' : ''}</p>
+          ${c.dests.length
+            ? `<ul class="hxd__dests">${c.dests.map(d => `<li><button type="button" data-go="${d.to}"><b>${d.to}</b> ${AP[d.to].city}${d.via ? ` <small>via ${d.via}</small>` : ''}</button></li>`).join('')}</ul>`
+            : `<p class="hxd__none">Routes not listed yet${c.others.length ? ` · also based at ${c.others.join(', ')}` : ''}.</p>`}
+        </div>`).join('')}`;
+  }
+
+  if (detail) detail.addEventListener('click', e => {
+    if (e.target.closest('.hxd__x')) { selectHub(null); return; }
+    const go = e.target.closest('[data-go]');
+    if (!go) return;
+    const c = go.dataset.go;
+    if (AP[c].hub) selectHub(c);
+    else { spin = false; g.moveTo(fitTo(V[c], [hub.code]), still ? 0 : 1); }
+  });
+
+  /* A carrier chosen in the list: its bases stand out, and its listed
+     routes (or, without any, the links between its bases) are drawn. */
+  function renderCarrier() {
+    const m = carrier, mine = m ? hubsOf(m) : allHubs;
+    if (detail) { detail.hidden = true; detail.innerHTML = ''; }
+    if (m) {
+      const legs = legsOf(m);
+      lines = legs.length
+        ? legs.map(([x, y]) => ({ a: x, b: y, color: ink(m), main: false }))
+        : mine.slice(1).map(h => ({ a: mine[0].code, b: h.code, color: ink(m), dash: true }));
+      drawT = still ? 1 : 0; spin = false;
+      const codes = mine.map(a => a.code);
+      const c = codes.map(k => V[k]).reduce((s, v) => [s[0]+v[0], s[1]+v[1], s[2]+v[2]], [0, 0, 0]);
+      const centre = Math.hypot(...c) > .2 ? c.map(x => x / Math.hypot(...c)) : V[codes[0]];
+      g.moveTo(fitTo(centre, codes.concat(lines.map(L => L.b))), still ? 0 : 1.2);
+    } else lines = [];
+
     if (list) {
       list.innerHTML = mine.map((a, i) => `
-        <li class="hx__hub">
-          <span class="hx__code" style="color:${onPage || 'var(--blue)'}">${a.code}</span>
+        <li><button class="hx__hub" type="button" data-hub="${a.code}">
+          <span class="hx__code" style="color:${m ? onPage(m) : 'var(--blue)'}">${a.code}</span>
           <span class="hx__city">${a.city}${m && i === 0 ? ' <em>primary</em>' : ''}</span>
           <span class="hx__apt">${a.name}, ${a.country}</span>
-        </li>`).join('');
+        </button></li>`).join('');
     }
     if (note) {
+      const legs = m ? legsOf(m).length : 0;
       note.textContent = m
-        ? `${m.short || m.name} operates from ${mine.length} ${mine.length === 1 ? 'base' : 'bases'}, led by ${mine[0] ? mine[0].city : ''}.`
-        : `${allHubs.length} hub airports across ${MEMBERS.length} featured airlines. Choose an airline to see its own bases.`;
+        ? `${nm(m)} operates from ${mine.length} ${mine.length === 1 ? 'base' : 'bases'}, led by ${mine[0] ? mine[0].city : ''}${
+            legs ? `, with ${legs} listed ${legs === 1 ? 'leg' : 'legs'}` : ''}. Choose a hub to see who flies where from it.`
+        : `${allHubs.length} hub airports across ${MEMBERS.length} featured airlines. Drag the globe to turn it, and choose a hub to see where it connects, and by which airline.`;
     }
   }
+
+  if (list) list.addEventListener('click', e => {
+    const b = e.target.closest('[data-hub]');
+    if (!b) return;
+    selectHub(b.dataset.hub);
+    canvas.scrollIntoView({ block: 'nearest', behavior: still ? 'auto' : 'smooth' });
+  });
 
   side.addEventListener('click', e => {
     const btn = e.target.closest('.hx__opt');
@@ -787,10 +958,12 @@ function initHubExplorer(root) {
     /* On a phone the list is a horizontal row, so the chosen carrier can sit
        off-screen the moment it is chosen. */
     if (btn.scrollIntoView) btn.scrollIntoView({ block: 'nearest', inline: 'nearest' });
-    draw(btn.dataset.code);
+    carrier = btn.dataset.code ? MEMBERS.find(x => x.code === btn.dataset.code) : null;
+    hub = null;
+    renderCarrier();
   });
 
-  draw('');
+  renderCarrier();
 }
 
 /* The in-game groups, each with the string to search for. */
@@ -1037,192 +1210,219 @@ function heroPlace(name) {
   return c ? { lat: c[0], lon: c[1] } : null;
 }
 
-/* The homepage globe. Land is a field of dots (LAND_DOTS, from land.js) on
-   an orthographic projection. Each time the headline names a new pair, the
-   globe turns to face that journey and draws the great-circle line between
-   the two, lifted a little off the surface like a flight path.
-   The framing follows the journey: a long one is shown on the whole globe,
-   a shorter one closer in, where only half or a quarter of the globe fits in
-   the frame and its horizon curves across the hero. It paints only while it
-   is on screen. */
-function heroGlobe(canvas) {
-  if (!canvas || typeof LAND_DOTS === 'undefined') return () => {};
-  const ctx = canvas.getContext('2d');
-  const D = Math.PI / 180;
-  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const vec = (lat, lon) => [Math.cos(lat*D)*Math.cos(lon*D), Math.cos(lat*D)*Math.sin(lon*D), Math.sin(lat*D)];
-  const ll  = v => { const n = Math.hypot(...v); return [Math.asin(v[2]/n)/D, Math.atan2(v[1], v[0])/D]; };
-  const ang = (a, b) => Math.acos(Math.max(-1, Math.min(1, a[0]*b[0]+a[1]*b[1]+a[2]*b[2])));
-  const slerp = (a, b, t) => {
-    const w = ang(a, b);
-    if (w < 1e-6) return a.slice();
-    const s1 = Math.sin((1-t)*w)/Math.sin(w), s2 = Math.sin(t*w)/Math.sin(w);
-    return [s1*a[0]+s2*b[0], s1*a[1]+s2*b[1], s1*a[2]+s2*b[2]];
-  };
-  const dots = [];
-  for (let i = 0; i < LAND_DOTS.length; i += 2) dots.push(vec(LAND_DOTS[i]/10, LAND_DOTS[i+1]/10));
+/* ==========================================================================
+   GLOBE
+   An orthographic globe on a <canvas>, with land as a field of dots
+   (LAND_DOTS, from land.js). globeCore() owns the canvas, the camera and the
+   sphere; the homepage hero and the network page each add their own layers
+   on top. It paints only while it is on screen and the tab is visible.
+   ========================================================================== */
+const GD = Math.PI / 180;
+const gvec   = (lat, lon) => [Math.cos(lat*GD)*Math.cos(lon*GD), Math.cos(lat*GD)*Math.sin(lon*GD), Math.sin(lat*GD)];
+const gll    = v => { const n = Math.hypot(...v); return [Math.asin(v[2]/n)/GD, Math.atan2(v[1], v[0])/GD]; };
+const gang   = (a, b) => Math.acos(Math.max(-1, Math.min(1, a[0]*b[0]+a[1]*b[1]+a[2]*b[2])));
+const gslerp = (a, b, t) => {
+  const w = gang(a, b);
+  if (w < 1e-6) return a.slice();
+  const s1 = Math.sin((1-t)*w)/Math.sin(w), s2 = Math.sin(t*w)/Math.sin(w);
+  return [s1*a[0]+s2*b[0], s1*a[1]+s2*b[1], s1*a[2]+s2*b[2]];
+};
+const gease = t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+const gmix  = (p, q, t) => p + (q - p) * t;
 
-  let W = 0, H = 0, dpr = 1;
+function globeCore(canvas) {
+  const ctx = canvas.getContext('2d');
+  const dots = [];
+  for (let i = 0; i < LAND_DOTS.length; i += 2) dots.push(gvec(LAND_DOTS[i]/10, LAND_DOTS[i+1]/10));
+
   /* The camera: which point faces us, how big the globe is, where its
      centre sits in the frame, and how far the picture is turned. */
-  let cam = { view: vec(20, 10), R: 0, cx: 0, cy: 0, roll: 0 }, from = cam, to = cam;
-  let A = null, B = null, names = ['', ''], turnT = 1, drawT = 1, fade = 1, last = performance.now();
-  const trail = [];           // earlier legs of the trip, newest last
+  const g = { ctx, W: 0, H: 0, layers: [], onSize: null, tick: null,
+              cam: { view: gvec(20, 10), R: 0, cx: 0, cy: 0, roll: 0 } };
+  let from = g.cam, to = g.cam, t = 1, dur = 1.6, dpr = 1, last = performance.now();
 
-  const frameFor = (a, b) => {
-    const S = Math.min(W, H), w = ang(a, b);
-    let mid = [a[0]+b[0], a[1]+b[1], a[2]+b[2]];
-    if (Math.hypot(...mid) < .2) mid = slerp(a, b, .5);
-    const [mla, mlo] = ll(mid);
-    /* Size the globe so the line spans about half the frame. */
-    const fit = .5 * S / (2 * Math.sin(w / 2));
-    if (fit <= .5 * S) {
-      /* Whole globe, centred; the view sits a touch south of the journey
-         because the line bows north. */
-      return { view: vec(Math.max(-50, Math.min(50, mla - 6)), mlo),
-               R: .47 * S, cx: W * .56, cy: H / 2, roll: 0 };
-    }
-    /* Closer in. The middle of the journey is set off-centre on the sphere,
-       far enough out that the horizon still curves through the frame beyond
-       it, and the whole picture is turned so that the globe's centre falls
-       below the frame (half a globe) or below and to the left (a quarter), so the horizon curves across the top or the top right. */
-    const R = Math.min(fit, 1.05 * S);
-    const f = Math.max(.3, Math.min(.7, 1 - .36 * S / R));
-    const tilt = (Math.round((a[0] + b[1]) * 1e3) % 2 ? -90 : -58) * D;
-    const tx = W * .56, ty = H * .48;
-    return { view: vec(mla - Math.asin(f) / D, mlo), R,
-             cx: tx - Math.cos(tilt) * R * f, cy: ty - Math.sin(tilt) * R * f,
-             roll: tilt + Math.PI / 2 };
-  };
-
-  const proj = (v, lift = 0, c = cam) => {
-    const [la, lo] = ll(c.view);
-    const ca = Math.cos(la*D), sa = Math.sin(la*D), co = Math.cos(lo*D), so = Math.sin(lo*D);
+  g.proj = (v, lift = 0, c = g.cam) => {
+    const [la, lo] = gll(c.view);
+    const ca = Math.cos(la*GD), sa = Math.sin(la*GD), co = Math.cos(lo*GD), so = Math.sin(lo*GD);
     const x1 =  co*v[0] + so*v[1], y1 = -so*v[0] + co*v[1], z1 = v[2];
     const x2 =  ca*x1 + sa*z1,     z2 = -sa*x1 + ca*z1;
     const k = c.R * (1 + lift), sx = y1 * k, sy = -z2 * k;
     const cr = Math.cos(c.roll), sr = Math.sin(c.roll);
     return { x: c.cx + sx*cr - sy*sr, y: c.cy + sx*sr + sy*cr, depth: x2 };
   };
-
-  const size = () => {
-    dpr = Math.min(devicePixelRatio || 1, 2);
-    W = canvas.clientWidth; H = canvas.clientHeight;
-    canvas.width = W * dpr; canvas.height = H * dpr;
-    if (A) cam = from = to = frameFor(A, B);
-    else cam = from = to = { view: vec(20, 10), R: .47 * Math.min(W, H), cx: W / 2, cy: H / 2, roll: 0 };
+  g.moving = () => t < 1;
+  /* Glide the camera to `target` over `secs`; 0 jumps straight there. */
+  g.moveTo = (target, secs) => {
+    from = Object.assign({}, g.cam); to = target;
+    while (to.roll - from.roll > Math.PI) to.roll -= 2 * Math.PI;
+    while (from.roll - to.roll > Math.PI) to.roll += 2 * Math.PI;
+    if (!secs) { g.cam = to; t = 1; paint(performance.now()); return; }
+    t = 0; dur = secs; g.start();
   };
-  size(); addEventListener('resize', size);
+  g.stop = () => { t = 1; };
+  /* Draw the great-circle line P→Q, lifted off the surface, up to `upto`
+     of `n` steps. Parts behind the globe are skipped. */
+  g.arc = (P, Q, upto, n, lift = .12) => {
+    const w = gang(P, Q);
+    ctx.beginPath();
+    let pen = false;
+    for (let i = 0; i <= upto; i++) {
+      const s = i / n, p = g.proj(gslerp(P, Q, s), Math.sin(Math.PI * s) * w * lift);
+      if (p.depth < -.05) { pen = false; continue; }
+      pen ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y); pen = true;
+    }
+    ctx.stroke();
+  };
+  g.size = () => {
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    g.W = canvas.clientWidth; g.H = canvas.clientHeight;
+    canvas.width = g.W * dpr; canvas.height = g.H * dpr;
+    g.onSize && g.onSize();
+    paint(performance.now());
+  };
 
-  const ease = t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
-  const mix = (p, q, t) => p + (q - p) * t;
-
-  function frame(now) {
+  function paint(now) {
     const dt = Math.min(64, now - last) / 1000; last = now;
-    if (turnT < 1) {
-      turnT = Math.min(1, turnT + dt / 1.6);
-      const e = ease(turnT);
-      cam = { view: slerp(from.view, to.view, e), R: mix(from.R, to.R, e),
-              cx: mix(from.cx, to.cx, e), cy: mix(from.cy, to.cy, e), roll: mix(from.roll, to.roll, e) };
-    } else if (drawT < 1) drawT = Math.min(1, drawT + dt / 1.3);
-    if (fade < 1) fade = Math.min(1, fade + dt / .5);
-
-    const { R, cx, cy } = cam;
+    if (t < 1) {
+      t = Math.min(1, t + dt / dur);
+      const e = gease(t);
+      g.cam = { view: gslerp(from.view, to.view, e), R: gmix(from.R, to.R, e),
+                cx: gmix(from.cx, to.cx, e), cy: gmix(from.cy, to.cy, e), roll: gmix(from.roll, to.roll, e) };
+    }
+    g.tick && g.tick(dt);
+    const { R, cx, cy } = g.cam, W = g.W, H = g.H;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, W, H);
 
-    /* the sphere and its glow */
     const halo = ctx.createRadialGradient(cx, cy, R, cx, cy, R * 1.16);
     halo.addColorStop(0, 'rgba(78,155,212,.22)'); halo.addColorStop(1, 'rgba(78,155,212,0)');
     ctx.beginPath(); ctx.arc(cx, cy, R * 1.16, 0, Math.PI*2); ctx.fillStyle = halo; ctx.fill();
-    const g = ctx.createRadialGradient(cx - R*.35, cy - R*.4, R*.1, cx, cy, R);
-    g.addColorStop(0, '#1B4A8F'); g.addColorStop(1, '#0C2560');
-    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI*2); ctx.fillStyle = g; ctx.fill();
+    const grad = ctx.createRadialGradient(cx - R*.35, cy - R*.4, R*.1, cx, cy, R);
+    grad.addColorStop(0, '#1B4A8F'); grad.addColorStop(1, '#0C2560');
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI*2); ctx.fillStyle = grad; ctx.fill();
     ctx.strokeStyle = 'rgba(143,196,232,.3)'; ctx.lineWidth = 1; ctx.stroke();
 
-    /* land */
     const r = Math.min(2.8, Math.max(1.3, R / 115));
     ctx.fillStyle = '#A9D2F0';
     for (const v of dots) {
-      const p = proj(v);
+      const p = g.proj(v);
       if (p.depth <= 0 || p.x < -4 || p.y < -4 || p.x > W + 4 || p.y > H + 4) continue;
       ctx.globalAlpha = .22 + .7 * p.depth;
       ctx.beginPath(); ctx.arc(p.x, p.y, r/2, 0, Math.PI*2); ctx.fill();
     }
     ctx.globalAlpha = 1;
+    g.layers.forEach(fn => fn(ctx, now));
+  }
 
-    /* earlier legs, fading with age */
-    const arc = (P, Q, upto, n) => {
-      const w = ang(P, Q);
-      ctx.beginPath();
-      let pen = false;
-      for (let i = 0; i <= upto; i++) {
-        const t = i / n, p = proj(slerp(P, Q, t), Math.sin(Math.PI * t) * w * .12);
-        if (p.depth < -.05) { pen = false; continue; }
-        pen ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y); pen = true;
-      }
-      ctx.stroke();
-    };
+  let raf, running = false, onScreen = true;
+  const loop = now => { paint(now); if (running) raf = requestAnimationFrame(loop); };
+  g.start = () => { if (!running && onScreen && !document.hidden) { running = true; last = performance.now(); raf = requestAnimationFrame(loop); } };
+  const pause = () => { running = false; cancelAnimationFrame(raf); };
+  new IntersectionObserver(e => { onScreen = e[0].isIntersecting; onScreen ? g.start() : pause(); }).observe(canvas);
+  document.addEventListener('visibilitychange', () => document.hidden ? pause() : g.start());
+  addEventListener('resize', g.size);
+  return g;
+}
+
+/* A city's name beside its dot, on the far side from `o` (the other end of
+   its line, if any) so that two close cities never print over each other. */
+function globeLabel(g, p, o, text, alpha) {
+  const ctx = g.ctx;
+  ctx.font = '600 14px Figtree, sans-serif';
+  const tw = ctx.measureText(text).width;
+  let tx = !o || p.x >= o.x ? p.x + 12 : p.x - 12 - tw;
+  tx = Math.max(4, Math.min(g.W - tw - 4, tx));
+  ctx.globalAlpha = alpha == null ? 1 : alpha;
+  ctx.fillStyle = '#fff';
+  ctx.fillText(text, tx, !o || p.y <= o.y ? p.y - 10 : p.y + 21);
+  ctx.globalAlpha = 1;
+}
+
+/* The homepage globe. Each time the headline names a new leg of its trip,
+   the globe turns to face that leg and draws the great-circle line between
+   the two cities, leaving the last few legs as a fading trail. A long leg is
+   framed on the whole globe, a shorter one closer in, where only half or a
+   quarter of the globe fits in the frame and its horizon curves across the
+   hero. */
+function heroGlobe(canvas) {
+  if (!canvas || typeof LAND_DOTS === 'undefined') return () => {};
+  const g = globeCore(canvas);
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let A = null, B = null, names = ['', ''], drawT = 1, fade = 1;
+  const trail = [];           // earlier legs of the trip, newest last
+
+  const frameFor = (a, b) => {
+    const W = g.W, H = g.H, S = Math.min(W, H), w = gang(a, b);
+    let mid = [a[0]+b[0], a[1]+b[1], a[2]+b[2]];
+    if (Math.hypot(...mid) < .2) mid = gslerp(a, b, .5);
+    const [mla, mlo] = gll(mid);
+    /* Size the globe so the line spans about half the frame. */
+    const fit = .5 * S / (2 * Math.sin(w / 2));
+    if (fit <= .5 * S) {
+      /* Whole globe; the view sits a touch south of the journey because
+         the line bows north. */
+      return { view: gvec(Math.max(-50, Math.min(50, mla - 6)), mlo),
+               R: .47 * S, cx: W * .56, cy: H / 2, roll: 0 };
+    }
+    /* Closer in. The middle of the journey is set off-centre on the sphere,
+       far enough out that the horizon still curves through the frame beyond
+       it, and the whole picture is turned so that the globe's centre falls
+       below the frame (half a globe) or below and to the left (a quarter),
+       so the horizon curves across the top or the top right. */
+    const R = Math.min(fit, 1.05 * S);
+    const f = Math.max(.3, Math.min(.7, 1 - .36 * S / R));
+    const tilt = (Math.round((a[0] + b[1]) * 1e3) % 2 ? -90 : -58) * GD;
+    const tx = W * .56, ty = H * .48;
+    return { view: gvec(mla - Math.asin(f) / GD, mlo), R,
+             cx: tx - Math.cos(tilt) * R * f, cy: ty - Math.sin(tilt) * R * f,
+             roll: tilt + Math.PI / 2 };
+  };
+
+  g.onSize = () => {
+    g.cam = A ? frameFor(A, B)
+              : { view: gvec(20, 10), R: .47 * Math.min(g.W, g.H), cx: g.W / 2, cy: g.H / 2, roll: 0 };
+  };
+  g.tick = dt => {
+    if (!g.moving() && drawT < 1) drawT = Math.min(1, drawT + dt / 1.3);
+    if (fade < 1) fade = Math.min(1, fade + dt / .5);
+  };
+  g.layers.push((ctx, now) => {
     ctx.lineCap = 'round'; ctx.lineWidth = 1.6;
     trail.forEach(([P, Q], i) => {
       const al = .14 + .32 * (i + 1) / trail.length;
       ctx.strokeStyle = `rgba(169,210,240,${al})`;
-      arc(P, Q, 96, 96);
-      const p = proj(P);
+      g.arc(P, Q, 96, 96);
+      const p = g.proj(P);
       if (p.depth > 0) { ctx.fillStyle = `rgba(255,255,255,${al + .1})`; ctx.beginPath(); ctx.arc(p.x, p.y, 3, 0, Math.PI*2); ctx.fill(); }
     });
+    if (!A || !B) return;
+    ctx.lineWidth = 2.4;
+    ctx.strokeStyle = `rgba(255,255,255,${.95 * fade})`;
+    ctx.shadowColor = 'rgba(143,196,232,.9)'; ctx.shadowBlur = 12;
+    g.arc(A, B, Math.round(96 * gease(drawT)), 96);
+    ctx.shadowBlur = 0;
+    const pa = g.proj(A), pb = g.proj(B);
+    [[pa, pb, names[0], 0], [pb, pa, names[1], 1]].forEach(([p, o, name, end]) => {
+      if ((end && drawT < 1) || p.depth <= 0) return;
+      const pulse = (now / 1600 + end * .5) % 1;
+      ctx.beginPath(); ctx.arc(p.x, p.y, 4 + pulse * 14, 0, Math.PI*2);
+      ctx.strokeStyle = `rgba(143,196,232,${(1 - pulse) * .7 * fade})`; ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.beginPath(); ctx.arc(p.x, p.y, 5, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(255,255,255,${fade})`; ctx.fill();
+      globeLabel(g, p, o, name, fade);
+    });
+  });
+  g.size();
 
-    /* the journey */
-    if (A && B) {
-      const n = 96, upto = Math.round(n * ease(drawT));
-      ctx.lineWidth = 2.4;
-      ctx.strokeStyle = `rgba(255,255,255,${.95 * fade})`;
-      ctx.shadowColor = 'rgba(143,196,232,.9)'; ctx.shadowBlur = 12;
-      arc(A, B, upto, n);
-      ctx.shadowBlur = 0;
-
-      const pa = proj(A), pb = proj(B);
-      [[pa, pb, names[0], 0], [pb, pa, names[1], 1]].forEach(([p, o, name, end]) => {
-        if (end && drawT < 1) return;
-        if (p.depth <= 0) return;
-        const pulse = (now / 1600 + end * .5) % 1;
-        ctx.beginPath(); ctx.arc(p.x, p.y, 4 + pulse * 14, 0, Math.PI*2);
-        ctx.strokeStyle = `rgba(143,196,232,${(1 - pulse) * .7 * fade})`; ctx.lineWidth = 1.5; ctx.stroke();
-        ctx.beginPath(); ctx.arc(p.x, p.y, 5, 0, Math.PI*2);
-        ctx.fillStyle = '#fff'; ctx.globalAlpha = fade; ctx.fill();
-        ctx.font = '600 14px Figtree, sans-serif';
-        const tw = ctx.measureText(name).width;
-        /* Each name sits on the far side of its dot from the other end of
-           the line, so two close cities never print over each other. */
-        let tx = p.x >= o.x ? p.x + 12 : p.x - 12 - tw;
-        tx = Math.max(4, Math.min(W - tw - 4, tx));
-        ctx.fillText(name, tx, p.y <= o.y ? p.y - 10 : p.y + 21);
-        ctx.globalAlpha = 1;
-      });
-    }
-    if (running) raf = requestAnimationFrame(frame);
-  }
-
-  let raf, running = false;
-  const start = () => { if (!running && !document.hidden) { running = true; last = performance.now(); raf = requestAnimationFrame(frame); } };
-  const pause = () => { running = false; cancelAnimationFrame(raf); };
-  let onScreen = true;
-  new IntersectionObserver(e => { onScreen = e[0].isIntersecting; onScreen ? start() : pause(); }).observe(canvas);
-  document.addEventListener('visibilitychange', () => document.hidden ? pause() : onScreen && start());
-
-  /* Tell the globe about a new pair of cities. */
+  /* Tell the globe about the next leg. */
   return (a, b) => {
     const p = heroPlace(a), q = heroPlace(b);
     if (!p || !q) return;
     if (A && B) { trail.push([A, B]); if (trail.length > 3) trail.shift(); }
-    A = vec(p.lat, p.lon); B = vec(q.lat, q.lon); names = [a, b];
-    from = cam; to = frameFor(A, B);
-    /* Turn the shorter way round. */
-    while (to.roll - from.roll > Math.PI) to.roll -= 2 * Math.PI;
-    while (from.roll - to.roll > Math.PI) to.roll += 2 * Math.PI;
-    if (still) { cam = to; turnT = drawT = fade = 1; frame(performance.now()); return; }
-    turnT = 0; drawT = 0; fade = 0;
-    start();
+    A = gvec(p.lat, p.lon); B = gvec(q.lat, q.lon); names = [a, b];
+    if (still) { drawT = fade = 1; g.moveTo(frameFor(A, B), 0); return; }
+    drawT = 0; fade = 0;
+    g.moveTo(frameFor(A, B), 1.6);
   };
 }
 

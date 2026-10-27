@@ -277,7 +277,7 @@ const members = head('Featured airlines', `The featured airlines of the Mollweid
 /* ========================================================================== */
 /*  NETWORK                                                                   */
 /* ========================================================================== */
-const network = head('Network', 'The Mollweide Alliance route network, drawn on a true equal-area Mollweide projection.')
+const network = head('Network', 'The Mollweide Alliance route network on an interactive globe: every hub, and where it connects, by airline.')
 + chrome('network.html') + `
 <section class="phead">
   <img class="phead__bg" src="assets/img/photos/aranya-aloha.jpg" alt="" width="1440" height="424">
@@ -285,7 +285,7 @@ const network = head('Network', 'The Mollweide Alliance route network, drawn on 
     <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span>/</span> Network</nav>
     <h1 class="display">The network, <b>at true size.</b></h1>
     <div class="brandrule"></div>
-    <p class="lede mt-3">Plotted on the Mollweide equal-area projection. Every arc is a real great circle — the shortest path an aircraft would actually fly — so the shape of the network is honest about distance and area alike.</p>
+    <p class="lede mt-3">Every hub, and every route our airlines have listed, on a globe you can turn. Each line is a real great circle — the shortest path an aircraft would actually fly.</p>
   </div>
 </section>
 
@@ -293,13 +293,19 @@ const network = head('Network', 'The Mollweide Alliance route network, drawn on 
   <div class="wrap">
     <div class="sec-head">
       <div><h2 class="display">Principal <b>connecting points.</b></h2>
-      <p class="lede mt-2">Choose a carrier to lift its own bases out of the network. The rest of the alliance stays on the map, so you can see where each airline sits within it — plotted on the Mollweide equal-area projection the alliance is named for, central meridian 10&deg;E.</p></div>
+      <p class="lede mt-2">Choose an airline to lift its own bases and routes out of the network, or choose a hub to see where it connects, and with which airline. Drag the globe to turn it.</p></div>
     </div>
 
     <div class="hubx" id="hubx">
       <div class="hubx__side" data-hx="side" role="group" aria-label="Choose a carrier"></div>
       <div>
-        <div class="map-frame"><svg data-hx="map" role="img" aria-label="Alliance hub airports"></svg></div>
+        <div class="hxg">
+          <div class="map-frame hxg__frame">
+            <canvas class="hx__globe" data-hx="globe" aria-label="Globe of the alliance's hub airports. Choose a hub from the list below the globe to see its routes."></canvas>
+            <div class="hx__zoom"><button type="button" data-hx-zoom="in" aria-label="Zoom in">+</button><button type="button" data-hx-zoom="out" aria-label="Zoom out">&minus;</button></div>
+          </div>
+          <aside class="hxd" data-hx="detail" hidden aria-live="polite"></aside>
+        </div>
         <p class="hx__note" data-hx="note"></p>
         <ul class="hx__hubs" data-hx="list"></ul>
       </div>
@@ -314,6 +320,7 @@ const network = head('Network', 'The Mollweide Alliance route network, drawn on 
   </div>
 </section>
 ` + footer() + `
+<script src="assets/js/land.js"></script>
 <script>
   document.getElementById('ftMembers').innerHTML =
     MEMBERS.slice(0,6).map(m => '<li><a href="'+(memberPage(m)||'members.html#'+m.code)+'">'+ (m.short||m.name) +'</a></li>').join('');

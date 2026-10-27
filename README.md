@@ -246,15 +246,27 @@ sent — it currently reads "the alliance Discord" as a placeholder.
 
 ### The hub explorer
 
-`network.html` is a carrier picker beside the projection. It replaced a grid of
-sixty hub cards, and then the full route map that used to sit above it. Choosing an airline lifts its bases
-out of the map in its own colour, draws arcs from the primary to the rest, and
-dims every other hub so the carrier is still seen in context. `initHubExplorer()`
-drives it; the base layer — ellipse, graticule and coastlines — comes from
-`mapBase()`, shared with the route map.
+`network.html` is a carrier picker beside a globe, built on the same
+`globeCore()` as the homepage hero (`assets/js/site.js`, land from
+`assets/js/land.js`). The globe turns slowly until someone touches it, and can
+be dragged round and zoomed with its + and − buttons.
+
+- **Choosing an airline** lifts its bases out in its own colour, dims every
+  other hub, and draws the routes it has listed (or, without any, dashed links
+  from its primary to its other bases).
+- **Choosing a hub** — clicking it on the globe, or its card in the list under
+  the globe — turns the globe to it and draws every listed route through it,
+  each in the colour of the airline that flies it. A panel beside the globe
+  sets the destinations out by airline; a destination that is itself a hub can
+  be clicked to move on to it. An airline based at the hub that has not listed
+  routes is shown as such, with its other bases.
+
+Only routes members have listed are drawn — `profile.routes`, with one-stop
+services as two legs through the `via` airport. Nothing is inferred, so a hub
+can honestly show no routes yet. `initHubExplorer()` drives all of it.
 
 The section runs light and only the map panel inside `.map-frame` is dark, so
-the explorer paints on two surfaces. `tintOn(hex, bg)` walks a colour's
+the explorer paints on two surfaces: the globe and the white panel beside it. `tintOn(hex, bg)` walks a colour's
 lightness away from whichever ground it is on until it clears 3.6:1, keeping
 hue and saturation so the airline still reads as itself — up against the map's
 navy, down against the white section. Brand colours are chosen for white, so
@@ -335,7 +347,10 @@ The livery renders are stored at 760px wide, which is twice their display size.
 
 ## Notes on how it works
 
-- **The network map is a real Mollweide projection.** The alliance is named after
+- **The globes are orthographic and the routes great circles.** The homepage
+  hero and the network page draw each route along its true great circle, lifted
+  a little off the surface like a flight path.
+- **The (unused) route map is a real Mollweide projection.** The alliance is named after
   an equal-area map projection, so the map is drawn in one — the auxiliary angle
   is solved by Newton iteration, and every route is a true great circle sampled
   and projected, splitting cleanly where it crosses the antimeridian. See
