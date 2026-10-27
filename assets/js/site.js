@@ -947,7 +947,7 @@ function loungeAirports() {
    Cycles pairs drawn from HERO_CITIES. The two halves change on an offset so
    the line never swaps both names at once.
    ========================================================================== */
-function startCityRotator(aEl, bEl) {
+function startCityRotator(aEl, bEl, onPair) {
   if (!aEl || !bEl || typeof HERO_CITIES === 'undefined' || HERO_CITIES.length < 2) return;
   const h1 = aEl.closest('h1') || aEl.parentElement;
 
@@ -967,11 +967,23 @@ function startCityRotator(aEl, bEl) {
     h1.style.minHeight = Math.ceil(tallest) + 'px';
   }
 
+  /* Both ends change together, so the globe beside the headline can draw
+     the one journey the sentence describes. Pairs closer than ~1,500 km make
+     a stub of a line on the globe, so they are skipped. */
   const pick = () => HERO_CITIES[Math.floor(Math.random() * HERO_CITIES.length)];
-  let a = pick(), b = pick();
-  while (b === a) b = pick();
+  const far = (x, y) => {
+    const p = heroPlace(x), q = heroPlace(y);
+    return !p || !q || distKm(p, q) > 1500;
+  };
+  const pair = () => {
+    let x = pick(), y = pick(), guard = 0;
+    while ((y === x || x === aEl.textContent || !far(x, y)) && guard++ < 40) { x = pick(); y = pick(); }
+    return [x, y];
+  };
+  let [a, b] = pair();
   aEl.textContent = a;
   bEl.textContent = b;
+  onPair && onPair(a, b);
 
   lockHeight();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(lockHeight);
@@ -981,25 +993,167 @@ function startCityRotator(aEl, bEl) {
   const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
   if (reduced && reduced.matches) return;      // one static pair, no cycling
 
-  const swap = (el, avoid, assign) => {
-    let next = pick(), guard = 0;
-    while ((next === el.textContent || next === avoid()) && guard++ < 20) next = pick();
-    el.dataset.out = 'true';
-    setTimeout(() => { el.textContent = next; assign(next); el.dataset.out = 'false'; }, 190);
+  const swap = () => {
+    [a, b] = pair();
+    aEl.dataset.out = bEl.dataset.out = 'true';
+    setTimeout(() => {
+      aEl.textContent = a; bEl.textContent = b;
+      aEl.dataset.out = bEl.dataset.out = 'false';
+      onPair && onPair(a, b);
+    }, 190);
   };
 
-  let timerA, timerB, startB;
-  const run = () => {
-    timerA = setInterval(() => swap(aEl, () => b, v => a = v), 3400);
-    startB = setTimeout(() => {
-      timerB = setInterval(() => swap(bEl, () => a, v => b = v), 3400);
-    }, 1700);
-  };
-  const stop = () => { clearInterval(timerA); clearInterval(timerB); clearTimeout(startB); };
+  let timer;
+  const run = () => { timer = setInterval(swap, 5200); };
+  const stop = () => clearInterval(timer);
   run();
 
   /* Don't cycle in a background tab. */
   document.addEventListener('visibilitychange', () => { stop(); if (!document.hidden) run(); });
+}
+
+/* Where a hero city is: an airport serving it, or HERO_COORDS. */
+function heroPlace(name) {
+  const ap = AIRPORTS.find(x => x.city === name);
+  if (ap) return { lat: ap.lat, lon: ap.lon };
+  const c = typeof HERO_COORDS !== 'undefined' && HERO_COORDS[name];
+  return c ? { lat: c[0], lon: c[1] } : null;
+}
+
+/* The homepage globe. Land is a field of dots (LAND_DOTS, from land.js) on
+   an orthographic projection. Each time the headline names a new pair, the
+   globe turns to face the middle of that journey and draws the great-circle
+   line between the two, lifted a little off the surface like a flight path.
+   It paints only while it is on screen. */
+function heroGlobe(canvas) {
+  if (!canvas || typeof LAND_DOTS === 'undefined') return () => {};
+  const ctx = canvas.getContext('2d');
+  const D = Math.PI / 180;
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const vec = (lat, lon) => [Math.cos(lat*D)*Math.cos(lon*D), Math.cos(lat*D)*Math.sin(lon*D), Math.sin(lat*D)];
+  const ll  = v => { const n = Math.hypot(...v); return [Math.asin(v[2]/n)/D, Math.atan2(v[1], v[0])/D]; };
+  const slerp = (a, b, t) => {
+    const w = Math.acos(Math.max(-1, Math.min(1, a[0]*b[0]+a[1]*b[1]+a[2]*b[2])));
+    if (w < 1e-6) return a.slice();
+    const s1 = Math.sin((1-t)*w)/Math.sin(w), s2 = Math.sin(t*w)/Math.sin(w);
+    return [s1*a[0]+s2*b[0], s1*a[1]+s2*b[1], s1*a[2]+s2*b[2]];
+  };
+  const dots = [];
+  for (let i = 0; i < LAND_DOTS.length; i += 2) dots.push(vec(LAND_DOTS[i]/10, LAND_DOTS[i+1]/10));
+
+  let W = 0, R = 0, dpr = 1;
+  const size = () => {
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    W = canvas.clientWidth; R = W * .4;
+    canvas.width = W * dpr; canvas.height = W * dpr;
+  };
+  size(); addEventListener('resize', size);
+
+  /* view: the point on the globe facing the reader */
+  let view = vec(20, 10), from = view, to = view, turnT = 1;
+  let A = null, B = null, names = ['', ''], drawT = 1, fade = 1, last = performance.now();
+
+  const proj = (v, lift = 0) => {
+    const [la, lo] = ll(view);
+    const ca = Math.cos(la*D), sa = Math.sin(la*D), co = Math.cos(lo*D), so = Math.sin(lo*D);
+    /* rotate so that `view` lands on +x (towards the reader) */
+    const x1 =  co*v[0] + so*v[1], y1 = -so*v[0] + co*v[1], z1 = v[2];
+    const x2 =  ca*x1 + sa*z1,     z2 = -sa*x1 + ca*z1;
+    const k = R * (1 + lift);
+    return { x: W/2 + y1*k, y: W/2 - z2*k, depth: x2 };
+  };
+
+  const ease = t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+
+  function frame(now) {
+    const dt = Math.min(64, now - last) / 1000; last = now;
+    if (turnT < 1) { turnT = Math.min(1, turnT + dt / 1.5); view = slerp(from, to, ease(turnT)); }
+    else if (drawT < 1) drawT = Math.min(1, drawT + dt / 1.3);
+    if (fade < 1) fade = Math.min(1, fade + dt / .5);
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, W);
+
+    /* the sphere */
+    const g = ctx.createRadialGradient(W/2 - R*.35, W/2 - R*.4, R*.1, W/2, W/2, R);
+    g.addColorStop(0, '#1B4A8F'); g.addColorStop(1, '#0C2560');
+    ctx.beginPath(); ctx.arc(W/2, W/2, R, 0, Math.PI*2); ctx.fillStyle = g; ctx.fill();
+    ctx.strokeStyle = 'rgba(143,196,232,.28)'; ctx.lineWidth = 1; ctx.stroke();
+    const halo = ctx.createRadialGradient(W/2, W/2, R, W/2, W/2, R*1.18);
+    halo.addColorStop(0, 'rgba(78,155,212,.22)'); halo.addColorStop(1, 'rgba(78,155,212,0)');
+    ctx.beginPath(); ctx.arc(W/2, W/2, R*1.18, 0, Math.PI*2); ctx.fillStyle = halo; ctx.fill();
+
+    /* land */
+    const r = Math.max(1.3, R / 115);
+    ctx.fillStyle = '#A9D2F0';
+    for (const v of dots) {
+      const p = proj(v);
+      if (p.depth <= 0) continue;
+      ctx.globalAlpha = .22 + .7 * p.depth;
+      ctx.beginPath(); ctx.arc(p.x, p.y, r/2, 0, Math.PI*2); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+
+    /* the journey */
+    if (A && B) {
+      const w = Math.acos(Math.max(-1, Math.min(1, A[0]*B[0]+A[1]*B[1]+A[2]*B[2])));
+      const n = 72, upto = Math.round(n * ease(drawT));
+      ctx.lineWidth = 2.2; ctx.lineCap = 'round';
+      ctx.strokeStyle = `rgba(255,255,255,${.95 * fade})`;
+      ctx.shadowColor = 'rgba(143,196,232,.9)'; ctx.shadowBlur = 10;
+      ctx.beginPath();
+      let pen = false;
+      for (let i = 0; i <= upto; i++) {
+        const t = i / n, p = proj(slerp(A, B, t), Math.sin(Math.PI * t) * w * .12);
+        if (p.depth < -.05) { pen = false; continue; }
+        pen ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y); pen = true;
+      }
+      ctx.stroke(); ctx.shadowBlur = 0;
+
+      const pa = proj(A), pb = proj(B);
+      [[pa, pb, names[0], 0], [pb, pa, names[1], 1]].forEach(([p, o, name, end]) => {
+        if (end && drawT < 1) return;
+        if (p.depth <= 0) return;
+        const pulse = (now / 1600 + end * .5) % 1;
+        ctx.beginPath(); ctx.arc(p.x, p.y, 4 + pulse * 12, 0, Math.PI*2);
+        ctx.strokeStyle = `rgba(143,196,232,${(1 - pulse) * .7 * fade})`; ctx.lineWidth = 1.5; ctx.stroke();
+        ctx.beginPath(); ctx.arc(p.x, p.y, 4.5, 0, Math.PI*2);
+        ctx.fillStyle = '#fff'; ctx.globalAlpha = fade; ctx.fill();
+        ctx.font = '600 13px Figtree, sans-serif';
+        const tw = ctx.measureText(name).width;
+        /* Each name sits on the far side of its dot from the other end of
+           the line, so two close cities never print over each other. */
+        let tx = p.x >= o.x ? p.x + 10 : p.x - 10 - tw;
+        tx = Math.max(4, Math.min(W - tw - 4, tx));
+        ctx.fillText(name, tx, p.y <= o.y ? p.y - 9 : p.y + 19);
+        ctx.globalAlpha = 1;
+      });
+    }
+    if (running) raf = requestAnimationFrame(frame);
+  }
+
+  let raf, running = false;
+  const start = () => { if (!running && !document.hidden) { running = true; last = performance.now(); raf = requestAnimationFrame(frame); } };
+  const pause = () => { running = false; cancelAnimationFrame(raf); };
+  let onScreen = true;
+  new IntersectionObserver(e => { onScreen = e[0].isIntersecting; onScreen ? start() : pause(); }).observe(canvas);
+  document.addEventListener('visibilitychange', () => document.hidden ? pause() : onScreen && start());
+
+  /* Tell the globe about a new pair of cities. */
+  return (a, b) => {
+    const p = heroPlace(a), q = heroPlace(b);
+    if (!p || !q) return;
+    A = vec(p.lat, p.lon); B = vec(q.lat, q.lon); names = [a, b];
+    let mid = [A[0]+B[0], A[1]+B[1], A[2]+B[2]];
+    if (Math.hypot(...mid) < .2) mid = slerp(A, B, .5);
+    /* Face the middle of the journey, a touch south of it so the arc,
+       which bows north, sits in the middle of the disc. */
+    const [mla, mlo] = ll(mid);
+    from = view; to = vec(Math.max(-50, Math.min(50, mla - 6)), mlo);
+    if (still) { view = to; turnT = drawT = fade = 1; frame(performance.now()); return; }
+    turnT = 0; drawT = 0; fade = 0;
+    start();
+  };
 }
 
 document.addEventListener('DOMContentLoaded', initChrome);

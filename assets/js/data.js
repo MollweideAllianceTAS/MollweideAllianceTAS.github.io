@@ -1427,6 +1427,23 @@ const HERO_CITIES = [
   'Cancún', 'Guatemala City', 'Guadalajara', 'Miami', 'Dallas'
 ];
 
+/* Where a hero city is not one of the AIRPORTS, the globe in the homepage hero
+   needs to know where to draw it. [lat, lon]. A test checks that every city
+   above resolves, either here or by an airport's `city`. */
+const HERO_COORDS = {
+  'Quito':[-0.18,-78.47], 'Galápagos Islands':[-0.74,-90.31], 'Fernando de Noronha':[-3.85,-32.42],
+  'Erbil':[36.19,44.01], 'Sochi':[43.6,39.73], 'Cleveland':[41.5,-81.69], 'Washington DC':[38.9,-77.04],
+  'Astrakhan':[46.35,48.04], 'Kigali':[-1.95,30.06], 'São Tomé':[0.34,6.73], 'Maputo':[-25.97,32.57],
+  'Córdoba':[-31.42,-64.18], 'Florianópolis':[-27.6,-48.55], 'Luanda':[-8.84,13.23], 'Maceió':[-9.65,-35.73],
+  'Medellín':[6.24,-75.58], 'Punta Cana':[18.58,-68.4], 'Panama City':[8.98,-79.52], 'Sal':[16.74,-22.94],
+  'Uberlândia':[-18.92,-48.28], 'Vitória':[-20.32,-40.34], 'Asunción':[-25.26,-57.58], 'Jeddah':[21.49,39.19],
+  'Kutaisi':[42.27,42.7], 'Dushanbe':[38.56,68.79], 'Bishkek':[42.87,74.59], 'Shymkent':[42.34,69.59],
+  'Kashi':[39.47,75.99], 'Lahore':[31.55,74.34], 'Faisalabad':[31.42,73.08], 'Bhopal':[23.26,77.41],
+  'Udaipur':[24.59,73.71], 'Nagpur':[21.15,79.09], 'Koh Samui':[9.51,100.01], 'Monterrey':[25.69,-100.32],
+  'Guatemala City':[14.63,-90.51]
+};
+
+
 
 /* ============================================================================
    LOUNGES

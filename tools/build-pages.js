@@ -110,7 +110,6 @@ const footer = () => `
         </span>
       </a>
       <p class="ft__about">${Carriers} carriers. One network. Named for the equal-area projection that shows every part of the world at its true size.</p>
-      <p class="tracked" style="margin-top:1.5rem;font-size:.625rem">Further together · A wider world</p>
     </div>
     <div>
       <h4>Alliance</h4>
@@ -156,12 +155,10 @@ const footer = () => `
 const index = head('Mollweide Alliance', `${Carriers} airlines, one network. Explore the Mollweide Alliance route map, member carriers and book a simulated flight.`)
 + chrome('index.html') + `
 <section class="hero">
-  <img class="hero__bg" src="assets/img/photos/hero-departures.jpg" alt="" width="1800" height="667" fetchpriority="high">
   <div class="wrap hero__in">
     <div class="hero__grid">
       <div>
-        <p class="tracked" data-rv>Further together · A wider world</p>
-        <h1 class="display mt-2" data-rv style="transition-delay:80ms">
+        <h1 class="display" data-rv style="transition-delay:80ms">
           <span class="hero__line">We take you from <b class="hero__city" id="cityA">Tbilisi</b></span>
           <span class="hero__line">to <b class="hero__city" id="cityB">Rio de Janeiro</b></span>
         </h1>
@@ -172,6 +169,7 @@ const index = head('Mollweide Alliance', `${Carriers} airlines, one network. Exp
           <a class="btn btn--ghost btn--lg" href="network.html">Explore the network</a>
         </div>
       </div>
+      <canvas class="hero__globe" id="globe" aria-hidden="true"></canvas>
     </div>
   </div>
 </section>
@@ -180,7 +178,6 @@ const index = head('Mollweide Alliance', `${Carriers} airlines, one network. Exp
   <div class="wrap">
     <div class="sec-head">
       <div>
-        <p class="eyebrow" data-rv>The alliance</p>
         <h2 class="display" data-rv>Named for a projection that <b>shows the world at true size.</b></h2>
       </div>
       <a class="btn btn--line" href="network.html" data-rv>The route network</a>
@@ -198,8 +195,7 @@ const index = head('Mollweide Alliance', `${Carriers} airlines, one network. Exp
 <section class="section on-wash">
   <div class="wrap">
     <div class="sec-head">
-      <div><p class="eyebrow" data-rv>Member airlines</p>
-      <h2 class="display" data-rv>${Carriers} carriers, <b>each strongest at home.</b></h2></div>
+      <div><h2 class="display" data-rv>${Carriers} carriers, <b>each strongest at home.</b></h2></div>
       <a class="btn btn--line" href="members.html" data-rv>View all members</a>
     </div>
     <div class="rail rail--tails" data-rv data-at="start">
@@ -224,10 +220,12 @@ const index = head('Mollweide Alliance', `${Carriers} airlines, one network. Exp
   </div>
 </section>
 ` + footer() + `
+<script src="assets/js/land.js"></script>
 <script>
   renderTails(document.getElementById('membersHome'));
   initRail(document.querySelector('.rail'));
-  startCityRotator(document.getElementById('cityA'), document.getElementById('cityB'));
+  startCityRotator(document.getElementById('cityA'), document.getElementById('cityB'),
+                   heroGlobe(document.getElementById('globe')));
   document.getElementById('ftMembers').innerHTML =
     MEMBERS.slice(0,6).map(m => '<li><a href="'+(memberPage(m)||'members.html#'+m.code)+'">'+ (m.short||m.name) +'</a></li>').join('');
 </script>
@@ -251,7 +249,7 @@ const members = head('Member airlines', `The ${CARRIERS} carriers of the Mollwei
 <section class="section">
   <div class="wrap">
     <div class="sec-head">
-      <div><p class="eyebrow">The members</p><h2 class="display">The <b>member airlines.</b></h2></div>
+      <div><h2 class="display">The <b>member airlines.</b></h2></div>
       <p class="lbl" style="line-height:1.8;white-space:nowrap">Hover to identify each carrier</p>
     </div>
     <div class="liveries" id="membersAll"></div>
@@ -291,8 +289,7 @@ const network = head('Network', 'The Mollweide Alliance route network, drawn on 
 <section class="section" id="hubs">
   <div class="wrap">
     <div class="sec-head">
-      <div><p class="eyebrow">Hub airports</p>
-      <h2 class="display">Principal <b>connecting points.</b></h2>
+      <div><h2 class="display">Principal <b>connecting points.</b></h2>
       <p class="lede mt-2">Choose a carrier to lift its own bases out of the network. The rest of the alliance stays on the map, so you can see where each airline sits within it — plotted on the Mollweide equal-area projection the alliance is named for, central meridian 10&deg;E.</p></div>
     </div>
 
@@ -440,7 +437,6 @@ const book = head('Book a flight', 'Search the Mollweide Alliance network and ma
   <section class="section hide" data-step="4" style="padding-top:clamp(2rem,4vw,3rem);background:var(--paper-2)">
     <div class="wrap">
       <div class="center" style="max-width:48rem;margin-inline:auto">
-        <p class="eyebrow" style="justify-content:center">Booking confirmed</p>
         <div id="confirmMsg"></div>
         <p class="lede mt-2" id="confirmSub" style="margin-inline:auto"></p>
       </div>
@@ -489,7 +485,7 @@ const bookings = head('My bookings', 'Your saved Mollweide Alliance pretend book
     <div class="bk-list" id="bkList"></div>
 
     <div class="hide mt-6" id="bkPassWrap">
-      <div class="sec-head"><div><p class="eyebrow">Boarding pass</p></div></div>
+      <div class="sec-head"><div></div></div>
       <div id="bkPass"></div>
     </div>
   </div>
@@ -534,8 +530,7 @@ const lounges = head('Lounges', 'Find Mollweide Alliance lounges across the netw
 <section class="section on-ink" id="loyalty" style="background:#0A2050">
   <div class="wrap">
     <div class="sec-head">
-      <div><p class="eyebrow">Loyalty</p>
-      <h2 class="display"><b data-slot="programme">Elara</b></h2>
+      <div><h2 class="display"><b data-slot="programme">Elara</b></h2>
       <p class="lede mt-2">The alliance loyalty programme, and how lounge access is earned. Four tiers, recognised identically by every member: miles accrued on any carrier count towards status on every other.</p></div>
     </div>
     <div class="tiers" id="tiers"></div>
@@ -624,8 +619,7 @@ const submit = head('Member submissions', 'What member airlines need to send for
 <section class="section">
   <div class="wrap">
     <div class="sec-head">
-      <div><p class="eyebrow">The basics</p>
-      <h2 class="display">Six things that <b>get you on the page.</b></h2>
+      <div><h2 class="display">Six things that <b>get you on the page.</b></h2>
       <p class="lede mt-2">Each one drives something the site renders, so having all six to hand saves a round of questions. If one is still undecided, send the rest anyway.</p></div>
     </div>
 
@@ -672,8 +666,7 @@ const submit = head('Member submissions', 'What member airlines need to send for
 <section class="section on-ink" style="background:var(--blue-ink)">
   <div class="wrap">
     <div class="sec-head">
-      <div><p class="eyebrow">Artwork</p>
-      <h2 class="display">One livery image, <b>and how it sits.</b></h2>
+      <div><h2 class="display">One livery image, <b>and how it sits.</b></h2>
       <p class="lede mt-2">This is the part that most often needs a second go, so it is worth a closer look. Every member appears as a cutout on a white page beside the rest of the fleet, which means an image framed differently from the others tends to show.</p></div>
     </div>
     <div class="two-col">
@@ -695,8 +688,7 @@ const submit = head('Member submissions', 'What member airlines need to send for
 <section class="section on-wash">
   <div class="wrap">
     <div class="sec-head">
-      <div><p class="eyebrow">Optional</p>
-      <h2 class="display">Lounges and <b>press releases.</b></h2>
+      <div><h2 class="display">Lounges and <b>press releases.</b></h2>
       <p class="lede mt-2">Neither is needed to join, and neither is expected. Send them whenever you have them.</p></div>
     </div>
     <div class="feats" style="grid-template-columns:repeat(auto-fit,minmax(18rem,1fr))">
@@ -717,8 +709,7 @@ const submit = head('Member submissions', 'What member airlines need to send for
 <section class="section">
   <div class="wrap">
     <div class="sec-head">
-      <div><p class="eyebrow">Sending it</p>
-      <h2 class="display">Where it goes, <b>and what happens next.</b></h2>
+      <div><h2 class="display">Where it goes, <b>and what happens next.</b></h2>
       <p class="lede mt-2">Nothing here is set in stone. If you are unsure about any of it, send what you have and ask.</p></div>
     </div>
     <div class="two-col">
@@ -770,8 +761,7 @@ const join = head('Join the alliance', `How to join the ${groupList} from inside
 <section class="section">
   <div class="wrap">
     <div class="sec-head">
-      <div><p class="eyebrow" data-rv>The ${words(GROUPS.length)} groups</p>
-      <h2 class="display" data-rv>${GROUPS[0]}, <b>${GROUPS.slice(1, -1).join(', ')}${GROUPS.length > 2 ? ' and ' : 'and '}${GROUPS[GROUPS.length - 1]}.</b></h2>
+      <div><h2 class="display" data-rv>${GROUPS[0]}, <b>${GROUPS.slice(1, -1).join(', ')}${GROUPS.length > 2 ? ' and ' : 'and '}${GROUPS[GROUPS.length - 1]}.</b></h2>
       <p class="lede mt-2" data-rv>Each is listed separately in game. The names below are what the game matches on, so it is worth copying them across rather than typing them out.</p></div>
     </div>
     <div class="joins" id="joinGroups"></div>
@@ -781,8 +771,7 @@ const join = head('Join the alliance', `How to join the ${groupList} from inside
 <section class="section on-wash">
   <div class="wrap">
     <div class="sec-head">
-      <div><p class="eyebrow">How it works</p>
-      <h2 class="display">Three steps, <b>and none of them here.</b></h2>
+      <div><h2 class="display">Three steps, <b>and none of them here.</b></h2>
       <p class="lede mt-2">There is no application form — not on this site and not in the game. Finding us and getting in touch is the whole of it.</p></div>
     </div>
 
@@ -809,8 +798,7 @@ const join = head('Join the alliance', `How to join the ${groupList} from inside
 <section class="section on-ink" style="background:var(--blue-ink)">
   <div class="wrap">
     <div class="sec-head">
-      <div><p class="eyebrow">Discord</p>
-      <h2 class="display">Where the alliance <b>actually happens.</b></h2>
+      <div><h2 class="display">Where the alliance <b>actually happens.</b></h2>
       <p class="lede mt-2">We ask every member airline to be in the channel. It is how the alliance keeps in touch, and it is the only way we have of reaching you.</p></div>
     </div>
     <div class="two-col">
@@ -881,7 +869,6 @@ const airlinePage = m => {
 <section class="section">
   <div class="wrap two-col">
     <div>
-      <p class="eyebrow">Profile</p>
       <h2 class="display">The airline, <b>in brief.</b></h2>
       ${P.about.map(t => `<p class="body-copy al-p">${esc(t)}</p>`).join('\n      ')}
     </div>
@@ -900,7 +887,7 @@ ${P.founded ? `        <div><dt>Founded</dt><dd>${esc(P.founded)}</dd></div>
 
 <section class="section on-wash">
   <div class="wrap">
-    <div class="sec-head"><div><p class="eyebrow">Network</p><h2 class="display">Where it <b>flies.</b></h2></div></div>
+    <div class="sec-head"><div><h2 class="display">Where it <b>flies.</b></h2></div></div>
     <div class="${(P.routes || []).length ? 'two-col' : 'al-solo'}">
       <div>
         ${P.network.map(t => `<p class="body-copy al-p">${esc(t)}</p>`).join('\n        ')}
@@ -928,7 +915,7 @@ ${P.founded ? `        <div><dt>Founded</dt><dd>${esc(P.founded)}</dd></div>
 
 <section class="section">
   <div class="wrap">
-    <div class="sec-head"><div><p class="eyebrow">Fleet</p><h2 class="display">What it <b>flies.</b></h2></div></div>
+    <div class="sec-head"><div><h2 class="display">What it <b>flies.</b></h2></div></div>
     <h3 class="al-sub al-sub--top">In service</h3>${fleetBlock(P.fleet.current)}${P.fleet.incoming.length ? `
     <h3 class="al-sub">Joining the fleet</h3>${fleetBlock(P.fleet.incoming)}` : ''}
   </div>

@@ -125,10 +125,18 @@ text unreadable.
 ### The rotating headline
 
 The homepage headline reads *"We take you from A to B"*, cycling pairs drawn at
-random from `HERO_CITIES` in `data.js`. Each half changes on an offset so the
-line never swaps both names at once, the same city never appears twice in a
-pair, and rotation pauses while the browser tab is hidden. Readers who ask for
-reduced motion get a single random pair with no animation.
+random from `HERO_CITIES` in `data.js`. Both names change together, the same
+city never appears twice in a pair, pairs closer than about 1,500 km are
+skipped, and rotation pauses while the browser tab is hidden. Readers who ask
+for reduced motion get a single random pair with no animation.
+
+Beside it, a globe (`heroGlobe()` in `site.js`) turns to face each journey and
+draws the great-circle line between the two cities. Land is a field of dots
+from `assets/js/land.js`, generated from Natural Earth's public-domain 1:110m
+land; regenerate it rather than editing it. The globe places a city by the
+`city` of an airport in `AIRPORTS`, or failing that by `HERO_COORDS` in
+`data.js` — **a city added to `HERO_CITIES` that is not an airport city needs
+an entry there**, and the tests fail until it has one.
 
 The headline reserves its own height: on load, and again after web fonts settle
 and on resize, `startCityRotator()` measures the tallest possible city pairing
@@ -341,11 +349,13 @@ The livery renders are stored at 760px wide, which is twice their display size.
 - **The site is light-only**, in the manner of SkyTeam and oneworld — there is
   no dark theme and no theme switch. Reduced-motion preferences are respected.
 - The ribbon above the masthead carries a standing disclaimer on every page.
-- The homepage hero is a departures-hall photograph. The simulated departure
-  boards (the hero ticker and the one on the network page) have both been
-  removed, along with their renderers and styles.
-- Section labels are plain small-caps text. The thin rule that used to trail
-  each one was removed.
+- The homepage hero is a plain navy ground with the globe; the departures-hall
+  photograph is no longer used there. The simulated departure boards (the hero
+  ticker and the one on the network page) have both been removed, along with
+  their renderers and styles.
+- There are no section labels above headlines, and no wide-spaced capitals
+  anywhere except the "Alliance" line of the logo lockup. Small labels are set
+  in sentence case at normal spacing.
 
 ---
 

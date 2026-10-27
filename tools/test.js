@@ -8,13 +8,16 @@ vm.createContext(ctx);
 vm.runInContext(fs.readFileSync('assets/js/data.js','utf8'), ctx);
 vm.runInContext(fs.readFileSync('assets/js/site.js','utf8'), ctx);
 // const-declared bindings are not properties of the VM global; surface them.
-vm.runInContext('globalThis._x = {airport, memberOf, distKm, hhmm, durTxt, money, CABINS, AIRCRAFT, MEMBERS, AIRPORTS, ALLIANCE, TIERS, PRESS, HERO_CITIES, PROGRAMME, LOUNGES, JOIN, tintOn, MAP_INK, memberPage};', ctx);
+vm.runInContext('globalThis._x = {airport, memberOf, distKm, hhmm, durTxt, money, CABINS, AIRCRAFT, MEMBERS, AIRPORTS, ALLIANCE, TIERS, PRESS, HERO_CITIES, HERO_COORDS, PROGRAMME, LOUNGES, JOIN, tintOn, MAP_INK, memberPage};', ctx);
 Object.assign(ctx, ctx._x);
 const S = ctx;
 let fails = 0;
 const ok = (name, cond, extra='') => { console.log((cond?'  PASS  ':'  FAIL  ')+name+(extra?'  '+extra:'')); if(!cond) fails++; };
 
 // --- hero city rotation ----------------------------------------------------
+ok('Every hero city can be placed on the globe',
+   S.HERO_CITIES.every(c => S.AIRPORTS.some(a => a.city === c) || S.HERO_COORDS[c]),
+   S.HERO_CITIES.filter(c => !S.AIRPORTS.some(a => a.city === c) && !S.HERO_COORDS[c]).join(', '));
 ok('Hero city list is populated', S.HERO_CITIES.length > 50, S.HERO_CITIES.length + ' cities');
 ok('Hero city list has no duplicates',
    new Set(S.HERO_CITIES).size === S.HERO_CITIES.length);

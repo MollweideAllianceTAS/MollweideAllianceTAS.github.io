@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/site.css?v=98c6359a">
+<link rel="stylesheet" href="assets/css/site.css?v=7abc27b0">
 </head>
 <body>
 <div class="topbar">
@@ -47,12 +47,10 @@
   </div>
 </header>
 <section class="hero">
-  <img class="hero__bg" src="assets/img/photos/hero-departures.jpg" alt="" width="1800" height="667" fetchpriority="high">
   <div class="wrap hero__in">
     <div class="hero__grid">
       <div>
-        <p class="tracked" data-rv>Further together · A wider world</p>
-        <h1 class="display mt-2" data-rv style="transition-delay:80ms">
+        <h1 class="display" data-rv style="transition-delay:80ms">
           <span class="hero__line">We take you from <b class="hero__city" id="cityA">Tbilisi</b></span>
           <span class="hero__line">to <b class="hero__city" id="cityB">Rio de Janeiro</b></span>
         </h1>
@@ -63,6 +61,7 @@
           <a class="btn btn--ghost btn--lg" href="network.html">Explore the network</a>
         </div>
       </div>
+      <canvas class="hero__globe" id="globe" aria-hidden="true"></canvas>
     </div>
   </div>
 </section>
@@ -71,7 +70,6 @@
   <div class="wrap">
     <div class="sec-head">
       <div>
-        <p class="eyebrow" data-rv>The alliance</p>
         <h2 class="display" data-rv>Named for a projection that <b>shows the world at true size.</b></h2>
       </div>
       <a class="btn btn--line" href="network.html" data-rv>The route network</a>
@@ -89,8 +87,7 @@
 <section class="section on-wash">
   <div class="wrap">
     <div class="sec-head">
-      <div><p class="eyebrow" data-rv>Member airlines</p>
-      <h2 class="display" data-rv>Thirty-six carriers, <b>each strongest at home.</b></h2></div>
+      <div><h2 class="display" data-rv>Thirty-six carriers, <b>each strongest at home.</b></h2></div>
       <a class="btn btn--line" href="members.html" data-rv>View all members</a>
     </div>
     <div class="rail rail--tails" data-rv data-at="start">
@@ -126,7 +123,6 @@
         </span>
       </a>
       <p class="ft__about">Thirty-six carriers. One network. Named for the equal-area projection that shows every part of the world at its true size.</p>
-      <p class="tracked" style="margin-top:1.5rem;font-size:.625rem">Further together · A wider world</p>
     </div>
     <div>
       <h4>Alliance</h4>
@@ -163,12 +159,14 @@
     </div>
   </div>
 </footer>
-<script src="assets/js/data.js?v=1f437f90"></script>
-<script src="assets/js/site.js?v=21bb24ad"></script>
+<script src="assets/js/data.js?v=0323f168"></script>
+<script src="assets/js/site.js?v=2c3f6af3"></script>
+<script src="assets/js/land.js?v=83d47664"></script>
 <script>
   renderTails(document.getElementById('membersHome'));
   initRail(document.querySelector('.rail'));
-  startCityRotator(document.getElementById('cityA'), document.getElementById('cityB'));
+  startCityRotator(document.getElementById('cityA'), document.getElementById('cityB'),
+                   heroGlobe(document.getElementById('globe')));
   document.getElementById('ftMembers').innerHTML =
     MEMBERS.slice(0,6).map(m => '<li><a href="'+(memberPage(m)||'members.html#'+m.code)+'">'+ (m.short||m.name) +'</a></li>').join('');
 </script>
