@@ -411,6 +411,79 @@ header.nav {
   .liveries--rail { scroll-behavior: smooth; }
 }
 
+/* --- The line-up -----------------------------------------------------------
+   Tails parked in a row, each fuselage tucked behind the fin before it. The
+   step between tails is what shows of each one; the rest is overlap.
+   -------------------------------------------------------------------------- */
+.tails {
+  --tl-w: clamp(220px, 27vw, 370px);
+  --tl-step: calc(var(--tl-w) * .46);
+  display: flex; overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity; scrollbar-width: none;
+  padding: 1.5rem 0 .5rem;
+  --rail-fade: 2.75rem;
+  -webkit-mask-image: var(--rail-mask, none);
+          mask-image: var(--rail-mask, none);
+}
+.tails::-webkit-scrollbar { display: none; }
+.rail[data-at="start"]  .tails { --rail-mask: linear-gradient(to right, #000 calc(100% - var(--rail-fade)), transparent 100%); }
+.rail[data-at="middle"] .tails { --rail-mask: linear-gradient(to right, transparent 0, #000 var(--rail-fade), #000 calc(100% - var(--rail-fade)), transparent 100%); }
+.rail[data-at="end"]    .tails { --rail-mask: linear-gradient(to right, transparent 0, #000 var(--rail-fade)); }
+@media (prefers-reduced-motion: no-preference) { .tails { scroll-behavior: smooth; } }
+
+/* The line-up sits straight on the section, with no panel round it, and lets
+   its card rise above the rail. (.rail is also the booking sidebar, which is
+   boxed and clipped; this undoes that here.) */
+.rail.rail--tails { background: none; border: 0; border-radius: 0; overflow: visible;
+  position: relative; top: auto; }
+
+.tail {
+  position: relative; flex: 0 0 var(--tl-w); margin: 0;
+  scroll-snap-align: start;
+}
+.tail + .tail { margin-left: calc(var(--tl-step) - var(--tl-w)); }
+.tail__a { display: block; outline: none; color: inherit; }
+.tail__img {
+  width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: contain;
+  transform-origin: 70% 90%;
+  transition: transform .35s var(--ease-out), opacity .25s var(--ease), filter .25s var(--ease);
+}
+/* The pointed-at tail comes to the front and lifts; the rest of the line
+   steps back so it stands out. */
+.tail.is-on { z-index: 999 !important; }
+.tail.is-on .tail__img { transform: translateY(-.75rem) scale(1.06); }
+.rail.has-on .tail:not(.is-on) .tail__img { filter: saturate(.25) brightness(1.06) contrast(.82); }
+.tail__a:focus-visible .tail__img { outline: 2px solid var(--sky); outline-offset: -4px; border-radius: var(--r-lg); }
+
+.tailcard {
+  position: absolute; top: .25rem; left: 0; z-index: 1000;
+  width: 16.5rem; padding: 1rem 1.1rem 1.05rem;
+  background: var(--paper); border: 1px solid var(--rule);
+  border-top: 3px solid var(--al, var(--blue));
+  border-radius: var(--r-lg);
+  box-shadow: 0 22px 44px -22px rgba(7,26,69,.5);
+  pointer-events: none;
+  opacity: 0; transform: translateY(6px);
+  transition: opacity .2s var(--ease), transform .25s var(--ease-out), left .25s var(--ease-out);
+}
+.tailcard[data-show="true"] { opacity: 1; transform: none; }
+.tailcard__top { display: flex; align-items: center; gap: .5rem;
+  font-family: var(--f-data); font-size: .8125rem; color: var(--al, var(--blue)); }
+.tailcard__grp { font-family: var(--f-label); font-size: .5625rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--sky);
+  border: 1px solid currentColor; border-radius: 2px; padding: .0625rem .25rem; }
+.tailcard__name { margin-top: .2rem; font-size: 1.125rem; font-weight: 700;
+  letter-spacing: -.015em; line-height: 1.25; color: var(--tx); }
+.tailcard__facts { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: .7rem; }
+.tailcard__facts dt, .tailcard__lbl { font-size: .625rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--tx-faint); }
+.tailcard__facts dd { margin: 0; font-size: .875rem; color: var(--tx-soft); }
+.tailcard__hubs { display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem .55rem;
+  margin-top: .7rem; padding-top: .7rem; border-top: 1px solid var(--rule);
+  font-family: var(--f-data); font-size: .8125rem; color: var(--blue); }
+.tailcard__lbl { font-family: var(--f-label); margin-right: .15rem; }
+.tailcard__go { margin-top: .7rem; font-size: .8125rem; font-weight: 700; color: var(--al, var(--blue)); }
+
 /* Arrows sit over the artwork rather than the caption, so they clear the
    airline name when it appears on hover. */
 .rail__nav {

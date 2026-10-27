@@ -202,11 +202,11 @@ const index = head('Mollweide Alliance', `${Carriers} airlines, one network. Exp
       <h2 class="display" data-rv>${Carriers} carriers, <b>each strongest at home.</b></h2></div>
       <a class="btn btn--line" href="members.html" data-rv>View all members</a>
     </div>
-    <div class="rail" data-rv data-at="start">
+    <div class="rail rail--tails" data-rv data-at="start">
       <button class="rail__nav rail__nav--prev" type="button" data-rail="prev" aria-label="Previous airlines">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
       </button>
-      <div class="liveries liveries--rail" id="membersHome"></div>
+      <div class="tails" id="membersHome"></div>
       <button class="rail__nav rail__nav--next" type="button" data-rail="next" aria-label="Next airlines">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
       </button>
@@ -225,7 +225,7 @@ const index = head('Mollweide Alliance', `${Carriers} airlines, one network. Exp
 </section>
 ` + footer() + `
 <script>
-  renderMembers(document.getElementById('membersHome'));
+  renderTails(document.getElementById('membersHome'));
   initRail(document.querySelector('.rail'));
   startCityRotator(document.getElementById('cityA'), document.getElementById('cityB'));
   document.getElementById('ftMembers').innerHTML =

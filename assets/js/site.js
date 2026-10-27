@@ -515,12 +515,83 @@ function renderMembers(el, limit) {
   if (!rail) observeReveals(el);
 }
 
+/* The home page line-up: tails parked nose-to-tail, each one tucked behind
+   the fin of the one before it, so the whole membership reads as a single
+   apron that scrolls. Pointing at a tail (or focusing it) lifts it out of the
+   line and shows a card with the airline's key facts. One card is shared by
+   the whole line and lives outside the scroller, so it is never clipped. */
+function renderTails(el) {
+  if (!el) return;
+  const rail = el.closest('.rail');
+  el.innerHTML = MEMBERS.map((m, i) => {
+    const page = memberPage(m);
+    const tag  = page ? `a href="${page}"` : 'div tabindex="0"';
+    return `
+    <figure class="tail" id="${m.code}" data-i="${i}" style="z-index:${MEMBERS.length - i}">
+      <${tag} class="tail__a" aria-label="${m.name}">
+        <img class="tail__img" src="${m.tail}" alt="${m.name} aircraft livery"
+             loading="lazy" width="380" height="285" decoding="async">
+      </${page ? 'a' : 'div'}>
+    </figure>`;
+  }).join('');
+
+  const card = document.createElement('div');
+  card.className = 'tailcard'; card.setAttribute('aria-hidden', 'true');
+  rail.appendChild(card);
+
+  const fill = m => {
+    const grp  = groupOf(m);
+    const hubs = m.hubs.map(c => `<span title="${(airport(c) || {}).city || c}">${c}</span>`).join('');
+    const page = memberPage(m);
+    card.style.setProperty('--al', tintOn(m.color, '#FFFFFF'));
+    card.innerHTML = `
+      <p class="tailcard__top"><b>${m.code}</b><span class="tailcard__grp">${grp.sub}</span></p>
+      <p class="tailcard__name">${m.name}</p>
+      <dl class="tailcard__facts">
+        <div><dt>Home</dt><dd>${m.country}</dd></div>
+        ${m.profile && m.profile.founded ? `<div><dt>Founded</dt><dd>${m.profile.founded}</dd></div>` : ''}
+        ${m.joined ? `<div><dt>Member since</dt><dd>${m.joined}</dd></div>` : ''}
+      </dl>
+      <p class="tailcard__hubs"><span class="tailcard__lbl">${m.hubs.length > 1 ? 'Hubs' : 'Hub'}</span>${hubs}</p>
+      ${page ? '<p class="tailcard__go">View the airline →</p>' : ''}`;
+  };
+
+  let on = null;
+  const show = fig => {
+    if (on === fig) return;
+    if (on) on.classList.remove('is-on');
+    on = fig; fig.classList.add('is-on'); rail.classList.add('has-on');
+    fill(MEMBERS[+fig.dataset.i]);
+    /* The card sits beside the fin, in the sky over the neighbouring tails
+       (which have stepped back), and flips to the other side of the
+       aircraft when there is no room on the right. */
+    const r = rail.getBoundingClientRect(), t = fig.getBoundingClientRect();
+    const w = card.offsetWidth, gap = 8;
+    let x = t.right - r.left + gap;
+    if (x + w > r.width) x = t.left - r.left - w - gap;
+    x = Math.min(Math.max(x, 0), r.width - w);
+    card.style.left = x + 'px';
+    card.dataset.show = 'true';
+  };
+  const hide = () => {
+    if (on) on.classList.remove('is-on');
+    on = null; rail.classList.remove('has-on'); card.dataset.show = 'false';
+  };
+  el.addEventListener('pointerover', e => {
+    const f = e.target.closest('.tail'); if (f && e.pointerType !== 'touch') show(f);
+  });
+  el.addEventListener('pointerleave', hide);
+  el.addEventListener('focusin', e => { const f = e.target.closest('.tail'); f && show(f); });
+  el.addEventListener('focusout', e => { if (!el.contains(e.relatedTarget)) hide(); });
+  el.addEventListener('scroll', hide, { passive: true });
+}
+
 /* Horizontal rail: arrows, and the edge fades that say which way there is
    more to see. Scrolling itself is the browser's — this only drives the
    chrome around it, so the rail still works if this never runs. */
 function initRail(rail) {
   if (!rail) return;
-  const track = rail.querySelector('.liveries--rail');
+  const track = rail.querySelector('.liveries--rail, .tails');
   if (!track) return;
   const prev = rail.querySelector('[data-rail="prev"]');
   const next = rail.querySelector('[data-rail="next"]');
@@ -529,10 +600,12 @@ function initRail(rail) {
   /* Scroll by as many whole cards as are on screen, so the rail always comes
      to rest on a card edge rather than halfway through one. */
   const step = () => {
-    const card = track.querySelector('.livery');
+    const [card, next] = track.querySelectorAll('.livery, .tail');
     if (!card) return track.clientWidth;
-    const gap  = parseFloat(getComputedStyle(track).columnGap) || 0;
-    const unit = card.getBoundingClientRect().width + gap;
+    /* Measured between neighbours, so overlapping tails step by the part of
+       each one that shows rather than by their full width. */
+    const unit = next ? next.getBoundingClientRect().left - card.getBoundingClientRect().left
+                      : card.getBoundingClientRect().width;
     return Math.max(unit, Math.floor(track.clientWidth / unit) * unit);
   };
 
