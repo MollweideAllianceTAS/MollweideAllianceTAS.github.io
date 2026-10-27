@@ -688,6 +688,9 @@ function initHubExplorer(root) {
   const list   = root.querySelector('[data-hx="list"]');
   const note   = root.querySelector('[data-hx="note"]');
   const detail = root.querySelector('[data-hx="detail"]');
+  const browse = root.querySelector('[data-hx="browse"]');
+  const qIn    = root.querySelector('[data-hx="q"]');
+  const ctry   = root.querySelector('[data-hx="country"]');
   if (!canvas || !side || typeof LAND_DOTS === 'undefined') return;
 
   const AP = {};
@@ -696,6 +699,8 @@ function initHubExplorer(root) {
   const hubsOf  = m => (m.hubs || []).map(c => AP[c]).filter(Boolean);
   const V = {};                                   // airport code -> vector
   AIRPORTS.forEach(a => V[a.code] = gvec(a.lat, a.lon));
+  const basedAt = {};                             // hub code -> members based there
+  MEMBERS.forEach(m => (m.hubs || []).forEach(c => (basedAt[c] = basedAt[c] || []).push(m)));
   const ink = m => tintOn(m.color, MAP_INK);      // drawn on the globe
   const onPage = m => tintOn(m.color, '#FFFFFF'); // set on the white section
   const nm = m => m.short || m.name;
@@ -756,7 +761,14 @@ function initHubExplorer(root) {
     const R = far > 1.2 ? .44 * S : Math.min(1.5 * S, Math.max(.44 * S, .4 * S / Math.sin(Math.max(far, .2))));
     return { view: centre, R, cx: g.W / 2, cy: g.H / 2, roll: 0 };
   };
-  g.onSize = () => { g.cam = Object.assign({}, g.cam, { R: g.cam.R ? g.cam.R : .44 * Math.min(g.W, g.H), cx: g.W / 2, cy: g.H / 2 }); };
+  let lastS = 0;
+  g.onSize = () => {
+    /* Keep the same framing at the new size: centred, and scaled with it. */
+    const S = Math.min(g.W, g.H), R = g.cam.R && lastS ? g.cam.R * S / lastS : .44 * S;
+    lastS = S;
+    g.stop();
+    g.cam = Object.assign({}, g.cam, { R, cx: g.W / 2, cy: g.H / 2 });
+  };
   g.cam = { view: gvec(25, 15), R: 0, cx: 0, cy: 0, roll: 0 };
   g.tick = dt => {
     if (spin && !hub && !g.moving() && !drag) {
@@ -813,7 +825,6 @@ function initHubExplorer(root) {
     }
   });
   g.size();
-  g.cam = Object.assign({}, g.cam, { R: .44 * Math.min(g.W, g.H), cx: g.W / 2, cy: g.H / 2 });
   g.start();
 
   /* --- picking and dragging ---------------------------------------------- */
@@ -881,11 +892,12 @@ function initHubExplorer(root) {
     if (!detail) return;
     const routes = conns.reduce((n, c) => n + c.dests.length, 0);
     detail.hidden = false;
+    if (browse) browse.hidden = true;
     detail.innerHTML = `
+      <button class="hxd__back" type="button">&larr; All hubs</button>
       <div class="hxd__head">
         <span class="hxd__code">${hub.code}</span>
         <div><p class="hxd__city">${hub.city}</p><p class="hxd__apt">${hub.name}, ${hub.country}</p></div>
-        <button class="hxd__x" type="button" aria-label="Close">&times;</button>
       </div>
       <p class="hxd__sum">${routes
         ? `${routes} listed ${routes === 1 ? 'route' : 'routes'} by ${conns.filter(c => c.dests.length).length} ${conns.filter(c => c.dests.length).length === 1 ? 'airline' : 'airlines'}.`
@@ -902,7 +914,7 @@ function initHubExplorer(root) {
   }
 
   if (detail) detail.addEventListener('click', e => {
-    if (e.target.closest('.hxd__x')) { selectHub(null); return; }
+    if (e.target.closest('.hxd__back')) { selectHub(null); return; }
     const go = e.target.closest('[data-go]');
     if (!go) return;
     const c = go.dataset.go;
@@ -915,6 +927,7 @@ function initHubExplorer(root) {
   function renderCarrier() {
     const m = carrier, mine = m ? hubsOf(m) : allHubs;
     if (detail) { detail.hidden = true; detail.innerHTML = ''; }
+    if (browse) browse.hidden = false;
     if (m) {
       const legs = legsOf(m);
       lines = legs.length
@@ -927,28 +940,67 @@ function initHubExplorer(root) {
       g.moveTo(fitTo(centre, codes.concat(lines.map(L => L.b))), still ? 0 : 1.2);
     } else lines = [];
 
+    /* Countries in the current selection, for the filter. */
+    if (ctry) {
+      const keep = ctry.value, counts = {};
+      mine.forEach(a => counts[a.country] = (counts[a.country] || 0) + 1);
+      const names = Object.keys(counts).sort((x, y) => x.localeCompare(y));
+      ctry.innerHTML = `<option value="">All countries (${names.length})</option>` +
+        names.map(n => `<option value="${n}">${n} (${counts[n]})</option>`).join('');
+      ctry.value = names.includes(keep) ? keep : '';
+    }
+    renderList();
+  }
+
+  /* The hub list beside the globe: the selection, narrowed by the search
+     box and the country filter. Searching matches a hub's code, city,
+     airport, country, or the name of an airline based there. */
+  function renderList() {
+    const m = carrier, mine = m ? hubsOf(m) : allHubs;
+    const q = (qIn && qIn.value || '').trim().toLowerCase(), c = ctry ? ctry.value : '';
+    const fold = x => x.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    const shownHubs = mine.filter(a => (!c || a.country === c) && (!q || fold([a.code, a.city, a.name, a.country,
+      ...(basedAt[a.code] || []).map(x => x.name + ' ' + (x.short || ''))].join(' ')).includes(fold(q))));
     if (list) {
-      list.innerHTML = mine.map((a, i) => `
+      list.innerHTML = shownHubs.length ? shownHubs.map(a => `
         <li><button class="hx__hub" type="button" data-hub="${a.code}">
           <span class="hx__code" style="color:${m ? onPage(m) : 'var(--blue)'}">${a.code}</span>
-          <span class="hx__city">${a.city}${m && i === 0 ? ' <em>primary</em>' : ''}</span>
+          <span class="hx__city">${a.city}${m && m.hubs[0] === a.code ? ' <em>primary</em>' : ''}</span>
           <span class="hx__apt">${a.name}, ${a.country}</span>
-        </button></li>`).join('');
+          <span class="hx__by">${(basedAt[a.code] || []).map(x => `<i class="hx__dot" title="${x.name}" style="background:${onPage(x)}"></i>`).join('')}</span>
+        </button></li>`).join('')
+        : '<li class="hx__empty">No hub matches that search.</li>';
     }
     if (note) {
       const legs = m ? legsOf(m).length : 0;
       note.textContent = m
-        ? `${nm(m)} operates from ${mine.length} ${mine.length === 1 ? 'base' : 'bases'}, led by ${mine[0] ? mine[0].city : ''}${
-            legs ? `, with ${legs} listed ${legs === 1 ? 'leg' : 'legs'}` : ''}. Choose a hub to see who flies where from it.`
-        : `${allHubs.length} hub airports across ${MEMBERS.length} featured airlines. Drag the globe to turn it, and choose a hub to see where it connects, and by which airline.`;
+        ? `${nm(m)}: ${mine.length} ${mine.length === 1 ? 'base' : 'bases'}${legs ? `, ${legs} listed ${legs === 1 ? 'leg' : 'legs'}` : ''}.`
+        : (q || c) ? `${shownHubs.length} of ${mine.length} hubs.` : `${mine.length} hubs across ${MEMBERS.length} featured airlines.`;
     }
+  }
+
+  if (qIn) qIn.addEventListener('input', renderList);
+  if (ctry) ctry.addEventListener('change', () => {
+    renderList();
+    /* Turn the globe to the chosen country's hubs. */
+    const hs = (carrier ? hubsOf(carrier) : allHubs).filter(a => !ctry.value || a.country === ctry.value);
+    if (!ctry.value || !hs.length || hub) return;
+    const v = hs.map(a => V[a.code]).reduce((s, x) => [s[0]+x[0], s[1]+x[1], s[2]+x[2]], [0, 0, 0]), n = Math.hypot(...v);
+    spin = false;
+    g.moveTo(fitTo(n > .2 ? v.map(x => x / n) : V[hs[0].code], hs.map(a => a.code)), still ? 0 : 1.2);
+  });
+  if (list) {
+    list.addEventListener('mouseover', e => { const b = e.target.closest('[data-hub]'); hover = b ? AP[b.dataset.hub] : null; });
+    list.addEventListener('mouseleave', () => { hover = null; });
   }
 
   if (list) list.addEventListener('click', e => {
     const b = e.target.closest('[data-hub]');
     if (!b) return;
     selectHub(b.dataset.hub);
-    canvas.scrollIntoView({ block: 'nearest', behavior: still ? 'auto' : 'smooth' });
+    /* Side by side the globe is already in view; stacked, bring it up. */
+    if (canvas.getBoundingClientRect().bottom < 0 || canvas.getBoundingClientRect().top > innerHeight)
+      canvas.scrollIntoView({ block: 'nearest', behavior: still ? 'auto' : 'smooth' });
   });
 
   side.addEventListener('click', e => {
@@ -964,6 +1016,14 @@ function initHubExplorer(root) {
   });
 
   renderCarrier();
+
+  /* network.html#hub-TBS opens straight onto a hub, so one can be shared. */
+  const fromHash = () => {
+    const h = /^#hub-([A-Z]{3})$/.exec(location.hash);
+    if (h && AP[h[1]] && AP[h[1]].hub) selectHub(h[1]);
+  };
+  fromHash();
+  addEventListener('hashchange', fromHash);
 }
 
 /* The in-game groups, each with the string to search for. */
@@ -1320,7 +1380,18 @@ function globeCore(canvas) {
   const pause = () => { running = false; cancelAnimationFrame(raf); };
   new IntersectionObserver(e => { onScreen = e[0].isIntersecting; onScreen ? g.start() : pause(); }).observe(canvas);
   document.addEventListener('visibilitychange', () => document.hidden ? pause() : g.start());
-  addEventListener('resize', g.size);
+  /* Re-measure whenever the canvas's own box changes, not only when the
+     window does: a panel opening beside it can make it taller or narrower,
+     and a stale bitmap would leave the globe painted into part of it. */
+  let rz;
+  if (typeof ResizeObserver !== 'undefined') {
+    let seen = '';
+    new ResizeObserver(() => {
+      const k = canvas.clientWidth + 'x' + canvas.clientHeight;
+      if (k === seen) return; seen = k;
+      cancelAnimationFrame(rz); rz = requestAnimationFrame(g.size);
+    }).observe(canvas);
+  } else addEventListener('resize', g.size);
   return g;
 }
 

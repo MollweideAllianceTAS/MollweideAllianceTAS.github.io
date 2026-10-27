@@ -261,6 +261,17 @@ be dragged round and zoomed with its + and − buttons.
   be clicked to move on to it. An airline based at the hub that has not listed
   routes is shown as such, with its other bases.
 
+- **Finding a hub:** the column beside the globe lists the hubs in a box that
+  scrolls on its own, with a search (code, city, airport, country, or an
+  airline based there; accents optional) and a country filter that also turns
+  the globe to that country. Each hub shows a dot per airline based there.
+- **Linking to a hub:** `network.html#hub-TBS` opens straight onto Tbilisi.
+
+On a wide screen the airlines, the globe and the hub column sit side by side
+at one height, each scrolling inside itself; narrower, they stack. The globe
+re-measures itself whenever its box changes size (a `ResizeObserver` in
+`globeCore()`), not only when the window does.
+
 Only routes members have listed are drawn — `profile.routes`, with one-stop
 services as two legs through the `via` airport. Nothing is inferred, so a hub
 can honestly show no routes yet. `initHubExplorer()` drives all of it.

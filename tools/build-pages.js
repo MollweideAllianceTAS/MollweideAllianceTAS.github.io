@@ -292,23 +292,28 @@ const network = head('Network', 'The Mollweide Alliance route network on an inte
 <section class="section" id="hubs">
   <div class="wrap">
     <div class="sec-head">
-      <div><h2 class="display">Principal <b>connecting points.</b></h2>
-      <p class="lede mt-2">Choose an airline to lift its own bases and routes out of the network, or choose a hub to see where it connects, and with which airline. Drag the globe to turn it.</p></div>
+      <h2 class="display">Principal <b>connecting points.</b></h2>
+      <p class="lede hx__intro">Choose an airline to lift its bases and routes out of the network, or a hub to see where it connects, and with which airline. Drag the globe to turn it.</p>
     </div>
 
     <div class="hubx" id="hubx">
-      <div class="hubx__side" data-hx="side" role="group" aria-label="Choose a carrier"></div>
-      <div>
-        <div class="hxg">
-          <div class="map-frame hxg__frame">
-            <canvas class="hx__globe" data-hx="globe" aria-label="Globe of the alliance's hub airports. Choose a hub from the list below the globe to see its routes."></canvas>
-            <div class="hx__zoom"><button type="button" data-hx-zoom="in" aria-label="Zoom in">+</button><button type="button" data-hx-zoom="out" aria-label="Zoom out">&minus;</button></div>
-          </div>
-          <aside class="hxd" data-hx="detail" hidden aria-live="polite"></aside>
-        </div>
-        <p class="hx__note" data-hx="note"></p>
-        <ul class="hx__hubs" data-hx="list"></ul>
+      <div class="hubx__side" data-hx="side" role="group" aria-label="Choose an airline"></div>
+      <div class="map-frame hxg__frame">
+        <canvas class="hx__globe" data-hx="globe" aria-label="Globe of the alliance's hub airports. Choose a hub from the list beside the globe to see its routes."></canvas>
+        <div class="hx__zoom"><button type="button" data-hx-zoom="in" aria-label="Zoom in">+</button><button type="button" data-hx-zoom="out" aria-label="Zoom out">&minus;</button></div>
       </div>
+      <aside class="hxp">
+        <div class="hxp__browse" data-hx="browse">
+          <div class="hxp__tools">
+            <label class="hxp__search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+              <input type="search" data-hx="q" placeholder="Search a city, code or airline" aria-label="Search hubs" autocomplete="off"></label>
+            <select class="hxp__country" data-hx="country" aria-label="Filter hubs by country"></select>
+          </div>
+          <p class="hx__note" data-hx="note"></p>
+          <ul class="hx__hubs" data-hx="list"></ul>
+        </div>
+        <div class="hxd" data-hx="detail" hidden aria-live="polite"></div>
+      </aside>
     </div>
   </div>
 </section>
