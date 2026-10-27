@@ -967,20 +967,37 @@ function startCityRotator(aEl, bEl, onPair) {
     h1.style.minHeight = Math.ceil(tallest) + 'px';
   }
 
-  /* Both ends change together, so the globe beside the headline can draw
-     the one journey the sentence describes. Pairs closer than ~1,500 km make
-     a stub of a line on the globe, so they are skipped. */
+  /* The headline is one continuing trip: each leg starts where the last one
+     ended, so the globe beside it can draw the journey as a chain. Legs
+     shorter than ~1,500 km make a stub of a line, so they are skipped, as
+     are cities visited in the last few legs. */
   const pick = () => HERO_CITIES[Math.floor(Math.random() * HERO_CITIES.length)];
   const far = (x, y) => {
     const p = heroPlace(x), q = heroPlace(y);
     return !p || !q || distKm(p, q) > 1500;
   };
-  const pair = () => {
-    let x = pick(), y = pick(), guard = 0;
-    while ((y === x || x === aEl.textContent || !far(x, y)) && guard++ < 40) { x = pick(); y = pick(); }
-    return [x, y];
+  const recent = [];
+  /* Drawn at random, most destinations are a long haul away, which would
+     keep the globe zoomed out. Every other leg therefore takes the nearest
+     of a handful of candidates, so the trip also hops regionally and the
+     globe comes in close. */
+  let hops = 0;
+  const leg = from => {
+    const ok = to => to !== from && !recent.includes(to) && far(from, to);
+    const cands = [];
+    for (let guard = 0; cands.length < 8 && guard < 200; guard++) { const to = pick(); if (ok(to) && !cands.includes(to)) cands.push(to); }
+    const p = heroPlace(from);
+    let to = cands[0] || pick();
+    if (hops++ % 2 && p) to = cands.reduce((m, c) => {
+      const q = heroPlace(c), qm = heroPlace(m);
+      return q && qm && distKm(p, q) < distKm(p, qm) ? c : m;
+    }, to);
+    recent.push(to); if (recent.length > 6) recent.shift();
+    return to;
   };
-  let [a, b] = pair();
+  const pair = () => { const x = b || pick(); recent.push(x); return [x, leg(x)]; };
+  let a, b;
+  [a, b] = pair();
   aEl.textContent = a;
   bEl.textContent = b;
   onPair && onPair(a, b);
@@ -1022,9 +1039,12 @@ function heroPlace(name) {
 
 /* The homepage globe. Land is a field of dots (LAND_DOTS, from land.js) on
    an orthographic projection. Each time the headline names a new pair, the
-   globe turns to face the middle of that journey and draws the great-circle
-   line between the two, lifted a little off the surface like a flight path.
-   It paints only while it is on screen. */
+   globe turns to face that journey and draws the great-circle line between
+   the two, lifted a little off the surface like a flight path.
+   The framing follows the journey: a long one is shown on the whole globe,
+   a shorter one closer in, where only half or a quarter of the globe fits in
+   the frame and its horizon curves across the hero. It paints only while it
+   is on screen. */
 function heroGlobe(canvas) {
   if (!canvas || typeof LAND_DOTS === 'undefined') return () => {};
   const ctx = canvas.getContext('2d');
@@ -1032,8 +1052,9 @@ function heroGlobe(canvas) {
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const vec = (lat, lon) => [Math.cos(lat*D)*Math.cos(lon*D), Math.cos(lat*D)*Math.sin(lon*D), Math.sin(lat*D)];
   const ll  = v => { const n = Math.hypot(...v); return [Math.asin(v[2]/n)/D, Math.atan2(v[1], v[0])/D]; };
+  const ang = (a, b) => Math.acos(Math.max(-1, Math.min(1, a[0]*b[0]+a[1]*b[1]+a[2]*b[2])));
   const slerp = (a, b, t) => {
-    const w = Math.acos(Math.max(-1, Math.min(1, a[0]*b[0]+a[1]*b[1]+a[2]*b[2])));
+    const w = ang(a, b);
     if (w < 1e-6) return a.slice();
     const s1 = Math.sin((1-t)*w)/Math.sin(w), s2 = Math.sin(t*w)/Math.sin(w);
     return [s1*a[0]+s2*b[0], s1*a[1]+s2*b[1], s1*a[2]+s2*b[2]];
@@ -1041,91 +1062,141 @@ function heroGlobe(canvas) {
   const dots = [];
   for (let i = 0; i < LAND_DOTS.length; i += 2) dots.push(vec(LAND_DOTS[i]/10, LAND_DOTS[i+1]/10));
 
-  let W = 0, R = 0, dpr = 1;
+  let W = 0, H = 0, dpr = 1;
+  /* The camera: which point faces us, how big the globe is, where its
+     centre sits in the frame, and how far the picture is turned. */
+  let cam = { view: vec(20, 10), R: 0, cx: 0, cy: 0, roll: 0 }, from = cam, to = cam;
+  let A = null, B = null, names = ['', ''], turnT = 1, drawT = 1, fade = 1, last = performance.now();
+  const trail = [];           // earlier legs of the trip, newest last
+
+  const frameFor = (a, b) => {
+    const S = Math.min(W, H), w = ang(a, b);
+    let mid = [a[0]+b[0], a[1]+b[1], a[2]+b[2]];
+    if (Math.hypot(...mid) < .2) mid = slerp(a, b, .5);
+    const [mla, mlo] = ll(mid);
+    /* Size the globe so the line spans about half the frame. */
+    const fit = .5 * S / (2 * Math.sin(w / 2));
+    if (fit <= .5 * S) {
+      /* Whole globe, centred; the view sits a touch south of the journey
+         because the line bows north. */
+      return { view: vec(Math.max(-50, Math.min(50, mla - 6)), mlo),
+               R: .47 * S, cx: W * .56, cy: H / 2, roll: 0 };
+    }
+    /* Closer in. The middle of the journey is set off-centre on the sphere,
+       far enough out that the horizon still curves through the frame beyond
+       it, and the whole picture is turned so that the globe's centre falls
+       below the frame (half a globe) or below and to the left (a quarter), so the horizon curves across the top or the top right. */
+    const R = Math.min(fit, 1.05 * S);
+    const f = Math.max(.3, Math.min(.7, 1 - .36 * S / R));
+    const tilt = (Math.round((a[0] + b[1]) * 1e3) % 2 ? -90 : -58) * D;
+    const tx = W * .56, ty = H * .48;
+    return { view: vec(mla - Math.asin(f) / D, mlo), R,
+             cx: tx - Math.cos(tilt) * R * f, cy: ty - Math.sin(tilt) * R * f,
+             roll: tilt + Math.PI / 2 };
+  };
+
+  const proj = (v, lift = 0, c = cam) => {
+    const [la, lo] = ll(c.view);
+    const ca = Math.cos(la*D), sa = Math.sin(la*D), co = Math.cos(lo*D), so = Math.sin(lo*D);
+    const x1 =  co*v[0] + so*v[1], y1 = -so*v[0] + co*v[1], z1 = v[2];
+    const x2 =  ca*x1 + sa*z1,     z2 = -sa*x1 + ca*z1;
+    const k = c.R * (1 + lift), sx = y1 * k, sy = -z2 * k;
+    const cr = Math.cos(c.roll), sr = Math.sin(c.roll);
+    return { x: c.cx + sx*cr - sy*sr, y: c.cy + sx*sr + sy*cr, depth: x2 };
+  };
+
   const size = () => {
     dpr = Math.min(devicePixelRatio || 1, 2);
-    W = canvas.clientWidth; R = W * .4;
-    canvas.width = W * dpr; canvas.height = W * dpr;
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    if (A) cam = from = to = frameFor(A, B);
+    else cam = from = to = { view: vec(20, 10), R: .47 * Math.min(W, H), cx: W / 2, cy: H / 2, roll: 0 };
   };
   size(); addEventListener('resize', size);
 
-  /* view: the point on the globe facing the reader */
-  let view = vec(20, 10), from = view, to = view, turnT = 1;
-  let A = null, B = null, names = ['', ''], drawT = 1, fade = 1, last = performance.now();
-
-  const proj = (v, lift = 0) => {
-    const [la, lo] = ll(view);
-    const ca = Math.cos(la*D), sa = Math.sin(la*D), co = Math.cos(lo*D), so = Math.sin(lo*D);
-    /* rotate so that `view` lands on +x (towards the reader) */
-    const x1 =  co*v[0] + so*v[1], y1 = -so*v[0] + co*v[1], z1 = v[2];
-    const x2 =  ca*x1 + sa*z1,     z2 = -sa*x1 + ca*z1;
-    const k = R * (1 + lift);
-    return { x: W/2 + y1*k, y: W/2 - z2*k, depth: x2 };
-  };
-
   const ease = t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+  const mix = (p, q, t) => p + (q - p) * t;
 
   function frame(now) {
     const dt = Math.min(64, now - last) / 1000; last = now;
-    if (turnT < 1) { turnT = Math.min(1, turnT + dt / 1.5); view = slerp(from, to, ease(turnT)); }
-    else if (drawT < 1) drawT = Math.min(1, drawT + dt / 1.3);
+    if (turnT < 1) {
+      turnT = Math.min(1, turnT + dt / 1.6);
+      const e = ease(turnT);
+      cam = { view: slerp(from.view, to.view, e), R: mix(from.R, to.R, e),
+              cx: mix(from.cx, to.cx, e), cy: mix(from.cy, to.cy, e), roll: mix(from.roll, to.roll, e) };
+    } else if (drawT < 1) drawT = Math.min(1, drawT + dt / 1.3);
     if (fade < 1) fade = Math.min(1, fade + dt / .5);
 
+    const { R, cx, cy } = cam;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.clearRect(0, 0, W, W);
+    ctx.clearRect(0, 0, W, H);
 
-    /* the sphere */
-    const g = ctx.createRadialGradient(W/2 - R*.35, W/2 - R*.4, R*.1, W/2, W/2, R);
-    g.addColorStop(0, '#1B4A8F'); g.addColorStop(1, '#0C2560');
-    ctx.beginPath(); ctx.arc(W/2, W/2, R, 0, Math.PI*2); ctx.fillStyle = g; ctx.fill();
-    ctx.strokeStyle = 'rgba(143,196,232,.28)'; ctx.lineWidth = 1; ctx.stroke();
-    const halo = ctx.createRadialGradient(W/2, W/2, R, W/2, W/2, R*1.18);
+    /* the sphere and its glow */
+    const halo = ctx.createRadialGradient(cx, cy, R, cx, cy, R * 1.16);
     halo.addColorStop(0, 'rgba(78,155,212,.22)'); halo.addColorStop(1, 'rgba(78,155,212,0)');
-    ctx.beginPath(); ctx.arc(W/2, W/2, R*1.18, 0, Math.PI*2); ctx.fillStyle = halo; ctx.fill();
+    ctx.beginPath(); ctx.arc(cx, cy, R * 1.16, 0, Math.PI*2); ctx.fillStyle = halo; ctx.fill();
+    const g = ctx.createRadialGradient(cx - R*.35, cy - R*.4, R*.1, cx, cy, R);
+    g.addColorStop(0, '#1B4A8F'); g.addColorStop(1, '#0C2560');
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI*2); ctx.fillStyle = g; ctx.fill();
+    ctx.strokeStyle = 'rgba(143,196,232,.3)'; ctx.lineWidth = 1; ctx.stroke();
 
     /* land */
-    const r = Math.max(1.3, R / 115);
+    const r = Math.min(2.8, Math.max(1.3, R / 115));
     ctx.fillStyle = '#A9D2F0';
     for (const v of dots) {
       const p = proj(v);
-      if (p.depth <= 0) continue;
+      if (p.depth <= 0 || p.x < -4 || p.y < -4 || p.x > W + 4 || p.y > H + 4) continue;
       ctx.globalAlpha = .22 + .7 * p.depth;
       ctx.beginPath(); ctx.arc(p.x, p.y, r/2, 0, Math.PI*2); ctx.fill();
     }
     ctx.globalAlpha = 1;
 
-    /* the journey */
-    if (A && B) {
-      const w = Math.acos(Math.max(-1, Math.min(1, A[0]*B[0]+A[1]*B[1]+A[2]*B[2])));
-      const n = 72, upto = Math.round(n * ease(drawT));
-      ctx.lineWidth = 2.2; ctx.lineCap = 'round';
-      ctx.strokeStyle = `rgba(255,255,255,${.95 * fade})`;
-      ctx.shadowColor = 'rgba(143,196,232,.9)'; ctx.shadowBlur = 10;
+    /* earlier legs, fading with age */
+    const arc = (P, Q, upto, n) => {
+      const w = ang(P, Q);
       ctx.beginPath();
       let pen = false;
       for (let i = 0; i <= upto; i++) {
-        const t = i / n, p = proj(slerp(A, B, t), Math.sin(Math.PI * t) * w * .12);
+        const t = i / n, p = proj(slerp(P, Q, t), Math.sin(Math.PI * t) * w * .12);
         if (p.depth < -.05) { pen = false; continue; }
         pen ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y); pen = true;
       }
-      ctx.stroke(); ctx.shadowBlur = 0;
+      ctx.stroke();
+    };
+    ctx.lineCap = 'round'; ctx.lineWidth = 1.6;
+    trail.forEach(([P, Q], i) => {
+      const al = .14 + .32 * (i + 1) / trail.length;
+      ctx.strokeStyle = `rgba(169,210,240,${al})`;
+      arc(P, Q, 96, 96);
+      const p = proj(P);
+      if (p.depth > 0) { ctx.fillStyle = `rgba(255,255,255,${al + .1})`; ctx.beginPath(); ctx.arc(p.x, p.y, 3, 0, Math.PI*2); ctx.fill(); }
+    });
+
+    /* the journey */
+    if (A && B) {
+      const n = 96, upto = Math.round(n * ease(drawT));
+      ctx.lineWidth = 2.4;
+      ctx.strokeStyle = `rgba(255,255,255,${.95 * fade})`;
+      ctx.shadowColor = 'rgba(143,196,232,.9)'; ctx.shadowBlur = 12;
+      arc(A, B, upto, n);
+      ctx.shadowBlur = 0;
 
       const pa = proj(A), pb = proj(B);
       [[pa, pb, names[0], 0], [pb, pa, names[1], 1]].forEach(([p, o, name, end]) => {
         if (end && drawT < 1) return;
         if (p.depth <= 0) return;
         const pulse = (now / 1600 + end * .5) % 1;
-        ctx.beginPath(); ctx.arc(p.x, p.y, 4 + pulse * 12, 0, Math.PI*2);
+        ctx.beginPath(); ctx.arc(p.x, p.y, 4 + pulse * 14, 0, Math.PI*2);
         ctx.strokeStyle = `rgba(143,196,232,${(1 - pulse) * .7 * fade})`; ctx.lineWidth = 1.5; ctx.stroke();
-        ctx.beginPath(); ctx.arc(p.x, p.y, 4.5, 0, Math.PI*2);
+        ctx.beginPath(); ctx.arc(p.x, p.y, 5, 0, Math.PI*2);
         ctx.fillStyle = '#fff'; ctx.globalAlpha = fade; ctx.fill();
-        ctx.font = '600 13px Figtree, sans-serif';
+        ctx.font = '600 14px Figtree, sans-serif';
         const tw = ctx.measureText(name).width;
         /* Each name sits on the far side of its dot from the other end of
            the line, so two close cities never print over each other. */
-        let tx = p.x >= o.x ? p.x + 10 : p.x - 10 - tw;
+        let tx = p.x >= o.x ? p.x + 12 : p.x - 12 - tw;
         tx = Math.max(4, Math.min(W - tw - 4, tx));
-        ctx.fillText(name, tx, p.y <= o.y ? p.y - 9 : p.y + 19);
+        ctx.fillText(name, tx, p.y <= o.y ? p.y - 10 : p.y + 21);
         ctx.globalAlpha = 1;
       });
     }
@@ -1143,14 +1214,13 @@ function heroGlobe(canvas) {
   return (a, b) => {
     const p = heroPlace(a), q = heroPlace(b);
     if (!p || !q) return;
+    if (A && B) { trail.push([A, B]); if (trail.length > 3) trail.shift(); }
     A = vec(p.lat, p.lon); B = vec(q.lat, q.lon); names = [a, b];
-    let mid = [A[0]+B[0], A[1]+B[1], A[2]+B[2]];
-    if (Math.hypot(...mid) < .2) mid = slerp(A, B, .5);
-    /* Face the middle of the journey, a touch south of it so the arc,
-       which bows north, sits in the middle of the disc. */
-    const [mla, mlo] = ll(mid);
-    from = view; to = vec(Math.max(-50, Math.min(50, mla - 6)), mlo);
-    if (still) { view = to; turnT = drawT = fade = 1; frame(performance.now()); return; }
+    from = cam; to = frameFor(A, B);
+    /* Turn the shorter way round. */
+    while (to.roll - from.roll > Math.PI) to.roll -= 2 * Math.PI;
+    while (from.roll - to.roll > Math.PI) to.roll += 2 * Math.PI;
+    if (still) { cam = to; turnT = drawT = fade = 1; frame(performance.now()); return; }
     turnT = 0; drawT = 0; fade = 0;
     start();
   };

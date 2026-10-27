@@ -246,13 +246,21 @@ header.nav {
     linear-gradient(160deg, var(--blue-deep) 0%, var(--blue-ink) 70%);
 }
 .hero__in { position: relative; padding-block: clamp(2.5rem, 6vw, 4.5rem); }
-.hero__grid { display: grid; gap: clamp(1rem, 3vw, 2rem); grid-template-columns: 1fr; align-items: center; }
+.hero__grid { display: grid; grid-template-columns: 1fr; align-items: center; }
 .hero__grid > div { max-width: 62ch; }
-@media (min-width: 960px) { .hero__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); } }
-/* The globe is a square canvas sized by its column; the script reads the
-   width and paints at the device's pixel ratio. */
-.hero__globe { display: block; width: 100%; max-width: 640px; aspect-ratio: 1; justify-self: center; }
-@media (max-width: 959px) { .hero__globe { max-width: 420px; margin-top: -.5rem; } }
+/* The globe fills the right of the hero on a wide screen and is cropped by
+   it, so a close-up shows only part of the sphere. Its left edge fades out
+   under the headline. On a narrow screen it sits under the text instead. */
+.hero__globe { display: block; width: calc(100% + 2 * var(--gut)); height: 380px;
+  margin: 1rem calc(-1 * var(--gut)) calc(-1 * clamp(2.5rem, 6vw, 4.5rem)); }
+@media (min-width: 960px) {
+  .hero { min-height: clamp(560px, 74vh, 780px); display: flex; align-items: center; }
+  .hero__in { width: 100%; position: static; }
+  .hero__grid > div { max-width: min(36rem, 46%); position: relative; z-index: 1; }
+  .hero__globe { position: absolute; top: 0; right: 0; bottom: 0; width: 62%; height: 100%; margin: 0; z-index: 0;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 22%);
+            mask-image: linear-gradient(to right, transparent 0, #000 22%); }
+}
 .hero .display { color: rgba(255,255,255,.74); }
 .hero .display b { color: #fff; }
 .hero .lede { color: rgba(255,255,255,.84); max-width: 54ch;

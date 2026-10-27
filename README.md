@@ -124,14 +124,17 @@ text unreadable.
 
 ### The rotating headline
 
-The homepage headline reads *"We take you from A to B"*, cycling pairs drawn at
-random from `HERO_CITIES` in `data.js`. Both names change together, the same
-city never appears twice in a pair, pairs closer than about 1,500 km are
-skipped, and rotation pauses while the browser tab is hidden. Readers who ask
+The homepage headline reads *"Mollweide can take you from A to B"*, cycling pairs drawn at
+random from `HERO_CITIES` in `data.js` as one continuing trip: each leg starts
+where the last ended. Legs under about 1,500 km and recently visited cities are
+skipped, every other leg takes the nearest of a few candidates so the trip also
+hops regionally, and rotation pauses while the browser tab is hidden. Readers who ask
 for reduced motion get a single random pair with no animation.
 
-Beside it, a globe (`heroGlobe()` in `site.js`) turns to face each journey and
-draws the great-circle line between the two cities. Land is a field of dots
+Beside it, a globe (`heroGlobe()` in `site.js`) turns to face each leg and
+draws the great-circle line between the two cities, leaving the last few legs
+as a fading trail. Long legs are framed on the whole globe; shorter ones come
+in close, where only half or a quarter of the sphere fits in the hero. Land is a field of dots
 from `assets/js/land.js`, generated from Natural Earth's public-domain 1:110m
 land; regenerate it rather than editing it. The globe places a city by the
 `city` of an airport in `AIRPORTS`, or failing that by `HERO_COORDS` in

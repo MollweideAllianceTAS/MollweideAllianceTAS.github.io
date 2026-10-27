@@ -159,11 +159,12 @@ const index = head('Mollweide Alliance', `${Carriers} airlines, one network. Exp
     <div class="hero__grid">
       <div>
         <h1 class="display" data-rv style="transition-delay:80ms">
-          <span class="hero__line">We take you from <b class="hero__city" id="cityA">Tbilisi</b></span>
+          <span class="hero__line">Mollweide can take you</span>
+          <span class="hero__line">from <b class="hero__city" id="cityA">Tbilisi</b></span>
           <span class="hero__line">to <b class="hero__city" id="cityB">Rio de Janeiro</b></span>
         </h1>
         <div class="brandrule" data-rv style="transition-delay:140ms"></div>
-        <p class="lede mt-3" data-rv style="transition-delay:200ms">${Carriers} independently operated carriers under one standard of service, one loyalty programme and one coordinated network.</p>
+        <p class="lede mt-3" data-rv style="transition-delay:200ms">The fastest-growing alliance in The Airline Simulator: more than 160 carriers on every inhabited continent, and no end of room to codeshare and work together.</p>
         <div class="hero__actions" data-rv style="transition-delay:260ms">
           <a class="btn btn--sky btn--lg" href="book.html">Book a flight <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <a class="btn btn--ghost btn--lg" href="network.html">Explore the network</a>
