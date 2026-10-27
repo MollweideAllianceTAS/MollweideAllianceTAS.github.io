@@ -27,7 +27,7 @@ const DATA = (() => {
     document:{ addEventListener(){}, querySelector:()=>null, querySelectorAll:()=>[] } });
   vm.runInContext(fs.readFileSync(`${ROOT}/assets/js/data.js`, 'utf8'), ctx);
   vm.runInContext(fs.readFileSync(`${ROOT}/assets/js/site.js`, 'utf8'), ctx);
-  vm.runInContext('globalThis._x = { MEMBERS, JOIN, airport, nameOf, groupOf, memberPage, tintOn };', ctx);
+  vm.runInContext('globalThis._x = { ALLIANCE, MEMBERS, JOIN, airport, nameOf, groupOf, memberPage, tintOn };', ctx);
   return ctx._x;
 })();
 const { airport, nameOf, groupOf, memberPage, tintOn } = DATA;
@@ -40,8 +40,10 @@ const WORDS = ['zero','one','two','three','four','five','six','seven','eight',
 const TENS = { 20:'twenty', 30:'thirty', 40:'forty', 50:'fifty' };
 const words = n => n <= 20 ? WORDS[n]
   : (TENS[Math.floor(n / 10) * 10] || String(n)) + (n % 10 ? '-' + WORDS[n % 10] : '');
-const CARRIERS = words(DATA.MEMBERS.length);
-const Carriers = CARRIERS[0].toUpperCase() + CARRIERS.slice(1);
+/* The alliance's stated size in game. The site itself lists only the
+   featured airlines, which are counted from MEMBERS wherever a page needs it. */
+const SIZE = DATA.ALLIANCE.size;
+const Size = SIZE[0].toUpperCase() + SIZE.slice(1);
 
 const NAV = [
   ['index.html',    'Home'],
@@ -109,12 +111,12 @@ const footer = () => `
           <span class="brand__sub">Alliance</span>
         </span>
       </a>
-      <p class="ft__about">${Carriers} carriers. One network. Named for the equal-area projection that shows every part of the world at its true size.</p>
+      <p class="ft__about">${Size} carriers. One network. Named for the equal-area projection that shows every part of the world at its true size.</p>
     </div>
     <div>
       <h4>Alliance</h4>
       <ul>
-        <li><a href="members.html">Member airlines</a></li>
+        <li><a href="members.html">Featured airlines</a></li>
         <li><a href="network.html">Route network</a></li>
         <li><a href="lounges.html#loyalty">Elara programme</a></li>
         <li><a href="news.html">Newsroom</a></li>
@@ -152,7 +154,7 @@ const footer = () => `
 /* ========================================================================== */
 /*  INDEX                                                                     */
 /* ========================================================================== */
-const index = head('Mollweide Alliance', `${Carriers} airlines, one network. Explore the Mollweide Alliance route map, member carriers and book a simulated flight.`)
+const index = head('Mollweide Alliance', `${Size} airlines, one network. Explore the Mollweide Alliance route map, its featured airlines, and book a simulated flight.`)
 + chrome('index.html') + `
 <section class="hero">
   <div class="wrap hero__in">
@@ -164,7 +166,7 @@ const index = head('Mollweide Alliance', `${Carriers} airlines, one network. Exp
           <span class="hero__line">to <b class="hero__city" id="cityB">Rio de Janeiro</b></span>
         </h1>
         <div class="brandrule" data-rv style="transition-delay:140ms"></div>
-        <p class="lede mt-3" data-rv style="transition-delay:200ms">The fastest-growing alliance in The Airline Simulator: more than 160 carriers on every inhabited continent, and no end of room to codeshare and work together.</p>
+        <p class="lede mt-3" data-rv style="transition-delay:200ms">The fastest-growing alliance in The Airline Simulator: ${SIZE} carriers on every inhabited continent, and no end of room to codeshare and work together.</p>
         <div class="hero__actions" data-rv style="transition-delay:260ms">
           <a class="btn btn--sky btn--lg" href="book.html">Book a flight <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <a class="btn btn--ghost btn--lg" href="network.html">Explore the network</a>
@@ -184,7 +186,7 @@ const index = head('Mollweide Alliance', `${Carriers} airlines, one network. Exp
       <a class="btn btn--line" href="network.html" data-rv>The route network</a>
     </div>
     <div class="two-col">
-      <p class="lede" data-rv>Mollweide Alliance brings ${CARRIERS} independently operated airlines together under one standard of service, one loyalty programme and one coordinated schedule. The name comes from the equal-area projection that shows every part of the world at its true size — a fair description of how the network is put together, region by region, around the carriers that know each one best.</p>
+      <p class="lede" data-rv>Mollweide Alliance brings ${SIZE} independently operated airlines together under one standard of service, one loyalty programme and one coordinated schedule. The name comes from the equal-area projection that shows every part of the world at its true size — a fair description of how the network is put together, region by region, around the carriers that know each one best.</p>
       <div data-rv style="transition-delay:80ms">
         <p class="body-copy">What that means for your journey is simple. Travel across several members and it is still <strong style="color:var(--blue)">one booking, on one reference</strong>, with your bags checked through to where you are going. Our airlines carry one another's flight numbers, so a route no single carrier operates still sells as a single through service.</p>
         <p class="body-copy mt-2">Miles you earn on any member count towards status on every other, and from <strong style="color:var(--blue)">Strata</strong> upwards that status opens alliance lounges across the network. Schedules are timed into connecting waves at each hub, so the onward flight is there when you land — and if a connection slips, it is the alliance that looks after you, not a hand-off between airlines.</p>
@@ -196,8 +198,8 @@ const index = head('Mollweide Alliance', `${Carriers} airlines, one network. Exp
 <section class="section on-wash">
   <div class="wrap">
     <div class="sec-head">
-      <div><h2 class="display" data-rv>${Carriers} carriers, <b>each strongest at home.</b></h2></div>
-      <a class="btn btn--line" href="members.html" data-rv>View all members</a>
+      <div><h2 class="display" data-rv>Featured <b>airlines</b></h2></div>
+      <a class="btn btn--line" href="members.html" data-rv>View all featured airlines</a>
     </div>
     <div class="rail rail--tails" data-rv data-at="start">
       <button class="rail__nav rail__nav--prev" type="button" data-rail="prev" aria-label="Previous airlines">
@@ -235,13 +237,13 @@ const index = head('Mollweide Alliance', `${Carriers} airlines, one network. Exp
 /* ========================================================================== */
 /*  MEMBERS                                                                   */
 /* ========================================================================== */
-const members = head('Member airlines', `The ${CARRIERS} carriers of the Mollweide Alliance, their hubs and home markets.`)
+const members = head('Featured airlines', `The featured airlines of the Mollweide Alliance, their hubs and home markets.`)
 + chrome('members.html') + `
 <section class="phead">
   <img class="phead__bg" src="assets/img/photos/lineup-four.jpg" alt="" width="1440" height="380">
   <div class="wrap phead__in">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span>/</span> Member airlines</nav>
-    <h1 class="display">${Carriers} carriers, <b>one standard.</b></h1>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span>/</span> Featured airlines</nav>
+    <h1 class="display">Featured <b>airlines</b></h1>
     <div class="brandrule"></div>
     <p class="lede mt-3">Each member keeps its own livery, its own cabin and its own home market. What they share is a schedule, a loyalty programme and a promise that a connection onto another member's aircraft feels like the same journey.</p>
   </div>
@@ -250,7 +252,7 @@ const members = head('Member airlines', `The ${CARRIERS} carriers of the Mollwei
 <section class="section">
   <div class="wrap">
     <div class="sec-head">
-      <div><h2 class="display">The <b>member airlines.</b></h2></div>
+      <div><h2 class="display">The <b>full line-up.</b></h2></div>
       <p class="lbl" style="line-height:1.8;white-space:nowrap">Hover to identify each carrier</p>
     </div>
     <div class="liveries" id="membersAll"></div>
@@ -259,7 +261,7 @@ const members = head('Member airlines', `The ${CARRIERS} carriers of the Mollwei
 
 <section class="band section--tight">
   <div class="wrap band__in">
-    <div><h2 class="display" style="font-size:clamp(1.6rem,3.4vw,2.6rem)">${Carriers} carriers, <b>one booking.</b></h2></div>
+    <div><h2 class="display" style="font-size:clamp(1.6rem,3.4vw,2.6rem)">Every featured airline, <b>one booking.</b></h2></div>
     <a class="btn btn--lg" style="background:#fff;color:var(--blue)" href="book.html">Search flights <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
   </div>
 </section>
@@ -589,7 +591,7 @@ const news = head('Newsroom', 'Press releases and announcements from the Mollwei
 
 <section class="band section--tight">
   <div class="wrap band__in">
-    <div><h2 class="display" style="font-size:clamp(1.6rem,3.4vw,2.6rem)">${Carriers} carriers, <b>one network.</b></h2></div>
+    <div><h2 class="display" style="font-size:clamp(1.6rem,3.4vw,2.6rem)">${Size} carriers, <b>one network.</b></h2></div>
     <a class="btn btn--lg" style="background:#fff;color:var(--blue)" href="members.html">Meet the members <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
   </div>
 </section>
@@ -726,7 +728,7 @@ const submit = head('Member submissions', 'What member airlines need to send for
 <section class="band section--tight">
   <div class="wrap band__in">
     <div><h2 class="display" style="font-size:clamp(1.6rem,3.4vw,2.6rem)">See how it <b>ends up looking.</b></h2></div>
-    <a class="btn btn--lg" style="background:#fff;color:var(--blue)" href="members.html">The member airlines <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <a class="btn btn--lg" style="background:#fff;color:var(--blue)" href="members.html">The featured airlines <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
   </div>
 </section>
 ` + footer() + `
@@ -859,7 +861,7 @@ const airlinePage = m => {
 <section class="phead">
   <img class="phead__bg" src="assets/img/photos/lineup-four.jpg" alt="" width="1440" height="380">
   <div class="wrap phead__in">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span>/</span> <a href="members.html">Member airlines</a> <span>/</span> ${esc(nm)}</nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span>/</span> <a href="members.html">Featured airlines</a> <span>/</span> ${esc(nm)}</nav>
     <h1 class="display"><b>${esc(nm)}</b></h1>${m.short ? `
     <p class="al-reg">${esc(m.name)}</p>` : ''}
     <div class="brandrule al-rule"></div>

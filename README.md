@@ -218,12 +218,13 @@ says "every member" rather than counting them.
 
 ### Counts in the copy
 
-The carrier count appears in nine strings. It used to be typed by hand, which
-went wrong twice — once silently, and once when a find-and-replace for the
-count also rewrote a member's base count. `tools/build-pages.js` now loads
-`data.js` and spells `MEMBERS.length` out itself, so adding a carrier updates
-every page. Nothing else in the copy should carry a number you would have to
-remember to change.
+The site lists only the carriers that have sent in their details, and calls
+them **featured airlines** — the alliance in game is larger. Its stated size
+lives in one place, `ALLIANCE.size` in `data.js` ("more than 160"), and
+`tools/build-pages.js` uses it for the hero, the introduction, the footer and
+page descriptions. Where a page counts the featured airlines themselves, it
+counts `MEMBERS` at run time. Nothing else in the copy should carry a number
+you would have to remember to change.
 
 ### Tone
 

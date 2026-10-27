@@ -776,7 +776,7 @@ function initHubExplorer(root) {
     if (note) {
       note.textContent = m
         ? `${m.short || m.name} operates from ${mine.length} ${mine.length === 1 ? 'base' : 'bases'}, led by ${mine[0] ? mine[0].city : ''}.`
-        : `${allHubs.length} hub airports across ${MEMBERS.length} member carriers. Choose a carrier to see its own bases.`;
+        : `${allHubs.length} hub airports across ${MEMBERS.length} featured airlines. Choose an airline to see its own bases.`;
     }
   }
 

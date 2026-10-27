@@ -16,6 +16,11 @@ const ALLIANCE = {
   founded:   2024,                        // TODO confirm founding year
   hq:        'Geneva, Switzerland',       // TODO confirm
   game:      'The Airline Simulator',
+  /* The alliance's size in game, as the alliance states it. The site lists
+     only the carriers that have sent their details in ("featured airlines"),
+     so this is not MEMBERS.length. Used in the hero, the introduction, the
+     footer and page descriptions. */
+  size:      'more than 160',
   discord:   null,                        // add a URL to show the Discord link
 
   // Where member airlines send material for the site. Shown on submit.html.
