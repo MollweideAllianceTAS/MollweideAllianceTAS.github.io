@@ -855,7 +855,7 @@ const MEMBERS = [
   },
   {
     name:'Pacific Sunset Airlines', short:'Pacific Sunset', code:'PS', country:'United States',
-    color:'#011D57', tail:'assets/img/members/pacific-sunset.webp',   // stand-in until the livery arrives
+    color:'#011D57', tail:'assets/img/members/pacific-sunset.webp',
     hubs:['LAX','LHR','GRU','SYD','LGB','HND','SFO','HNL','ANC','CPT','SJU','SEA',
           'OGG','LPA','NRT','PER'], focus:[], joined:2026,
     blurb:'The founder of the Pacific Sunset Group, grown from a Long Beach ' +
@@ -1011,7 +1011,7 @@ const MEMBERS = [
   },
   {
     name:'EuroStar', code:'EU', country:'Belgium',
-    color:'#2F5F9E', tail:'assets/img/members/eurostar.webp',   // stand-in until the livery arrives
+    color:'#2F5F9E', tail:'assets/img/members/eurostar.webp',
     hubs:['BGI','WAW','ATH','LHR'], focus:[], joined:2026,
     blurb:'A full-service carrier headquartered in Brussels, flying from ' +
           'Bridgetown, Warsaw, Athens and London Heathrow since 1987.',
