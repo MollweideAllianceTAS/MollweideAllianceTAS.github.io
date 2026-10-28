@@ -435,13 +435,78 @@ const MEMBERS = [
     }
   },
   {
-    name:'Avni Airlines', code:'AV', country:'India',
+    name:'Avni Airlines', code:'AA', country:'India',
     color:'#19A7DE', tail:'assets/img/members/avni.webp',
-    hubs:['DEL','BOM','BLR','MAA','HYD','CCU','AMD','PNQ','TRV','COK',
-          'GAU','LKO','JAI','ATQ','CMB','DPS','MRU','GEO','PBM'], focus:[], joined:2026,
-    blurb:'The alliance\'s broadest Indian network, built on nineteen bases ' +
-          'from Amritsar to Thiruvananthapuram, with international points at ' +
-          'Colombo, Denpasar, Mauritius, Georgetown and Paramaribo.'
+    hubs:['DEL','BLR','BOM','MAA','HYD','CCU','AMD','PNQ','TRV','COK','GAU',
+          'LKO','JAI','ATQ','GOI','CMB','DPS','MRU','GEO','PBM','MCT'], focus:[], joined:2026,
+    blurb:'India\'s international flag carrier in the alliance, flying a ' +
+          'multi-hub network led by New Delhi and Bengaluru, with overseas bases ' +
+          'from Colombo and Bali to Georgetown, Paramaribo and Muscat.',
+    profile:{
+      founded:'2005',
+      about:[
+        'Avni Airlines is an Indian international flag carrier, headquartered in ' +
+        'Bengaluru, flying a multi-hub global network led by New Delhi and ' +
+        'Bengaluru.',
+        'It was founded in Bengaluru on 11 May 2005 as Deva Air, backed by ' +
+        'non-resident Indians who wanted lower fares and direct connections, and ' +
+        'flew its first service, New Delhi to Bengaluru, that June. In 2009 ' +
+        'shareholders voted to rename it Avni, the Sanskrit word for Mother Earth, ' +
+        'for strength, stability and reliability. Avni Travels has owned and run ' +
+        'the airline since 2010.',
+        'New Delhi became its international transfer hub, built to compete with ' +
+        'the great hubs of the Middle East and Southeast Asia, while a dense ' +
+        'domestic network grew around bases in Mumbai, Chennai, Hyderabad and ' +
+        'Bengaluru. From 2015 it opened bases abroad, in Colombo, Mauritius, ' +
+        'Bali, Georgetown, Paramaribo and Muscat.'
+      ],
+      network:[
+        'Daily long- and short-haul flights link India, Sri Lanka, Mauritius, ' +
+        'Bali, Guyana, Suriname and Oman with the Middle East, Europe, South ' +
+        'America, Southeast Asia and Oceania, with a focus on diaspora and ' +
+        'tourism routes. The fleet stands at 2,481 aircraft as of 2026.'
+      ],
+      routes:[
+        ['DEL','JFK'],['DEL','LHR'],['DEL','CDG'],['DEL','SIN'],
+        ['BOM','LHR'],['BOM','JFK'],['CCU','SCL'],['LKO','JFK'],
+        ['DPS','DXB'],['DPS','DOH']
+      ],
+      fleet:{
+        current:[
+          ['Airbus','A220-300','6 aircraft'],['Airbus','A319neo','2 aircraft'],
+          ['Airbus','A320-200','19 aircraft'],['Airbus','A320neo','5 aircraft'],
+          ['Airbus','A321-100','29 aircraft'],['Airbus','A321-200','132 aircraft'],
+          ['Airbus','A321neo','861 aircraft'],['Airbus','A321LR','186 aircraft'],
+          ['Airbus','A321XLR','241 aircraft'],
+          ['Airbus','A330-200','15 aircraft'],['Airbus','A330-300','97 aircraft'],
+          ['Airbus','A330-900','31 aircraft'],
+          ['Airbus','A340-300','2 aircraft'],['Airbus','A340-600','11 aircraft'],
+          ['Airbus','A350-900','15 aircraft'],['Airbus','A350-900ULR','5 aircraft'],
+          ['Airbus','A350-1000','42 aircraft'],['Airbus','A350-1000ULR','34 aircraft'],
+          ['Airbus','A380-800','31 aircraft'],
+          ['Boeing','737-700','1 aircraft'],['Boeing','737-800','10 aircraft'],
+          ['Boeing','737-900','5 aircraft'],['Boeing','737-900ER','27 aircraft'],
+          ['Boeing','737 MAX 7','3 aircraft'],['Boeing','737 MAX 8','9 aircraft'],
+          ['Boeing','737 MAX 9','30 aircraft'],['Boeing','737 MAX 10','208 aircraft'],
+          ['Boeing','757-300','27 aircraft'],
+          ['Boeing','767-300ER','9 aircraft'],['Boeing','767-400ER','10 aircraft'],
+          ['Boeing','777-200','122 aircraft'],['Boeing','777-200ER','39 aircraft'],
+          ['Boeing','777-200LR','48 aircraft'],['Boeing','777-300','21 aircraft'],
+          ['Boeing','777-300ER','27 aircraft'],['Boeing','777-9','3 aircraft'],
+          ['Boeing','787-8 Dreamliner','1 aircraft'],['Boeing','787-9 Dreamliner','10 aircraft'],
+          ['Boeing','787-10 Dreamliner','17 aircraft'],
+          ['Bombardier','CRJ-200','1 aircraft'],['Bombardier','CRJ-1000','5 aircraft'],
+          ['COMAC','C919-100ER','2 aircraft'],
+          ['De Havilland Canada','Dash 8 Q100','1 aircraft'],['De Havilland Canada','Dash 8 Q300','1 aircraft'],
+          ['De Havilland Canada','Dash 8 Q400','60 aircraft'],
+          ['Embraer','ERJ-145','1 aircraft'],['Embraer','E190-E2','7 aircraft'],
+          ['Embraer','E195-E2','9 aircraft'],
+          ['ATR','72-600','1 aircraft'],
+          ['UAC','Superjet 100-95B','1 aircraft'],['UAC','Superjet 100-95LR','1 aircraft']
+        ],
+        incoming:[]
+      }
+    }
   },
   {
     name:'AirLiban', code:'AL', country:'Lebanon', 
@@ -1087,6 +1152,36 @@ const MEMBERS = [
     }
   },
   {
+    name:'Magyair Hungarian Airlines', short:'Magyair', code:'MG', country:'Hungary',
+    color:'#AA061F', tail:'assets/img/members/magyair.webp',   // stand-in until the livery arrives
+    hubs:['BUD'], focus:[], joined:2026,
+    blurb:'A Hungarian airline from Budapest, connecting Central Europe with ' +
+          'Western Europe and the Red Sea. "Unlock your vacation."',
+    profile:{
+      about:[
+        'Magyair Hungarian Airlines is headquartered in Budapest, with the goal of ' +
+        'connecting Central Europe. Its promise to passengers: "Unlock your ' +
+        'vacation."'
+      ],
+      network:[
+        'From Budapest it flies to London Heathrow, Paris, Frankfurt, Munich and ' +
+        'Zurich, and south to Egypt: Cairo, Alexandria, and the Red Sea and Nile ' +
+        'resorts of Hurghada, Sharm el-Sheikh and Luxor.'
+      ],
+      routes:[
+        ['BUD','LHR'],['BUD','CDG'],['BUD','FRA'],['BUD','MUC'],['BUD','ZRH'],
+        ['BUD','CAI'],['BUD','HBE'],['BUD','LXR'],['BUD','HRG'],['BUD','SSH']
+      ],
+      fleet:{
+        current:[
+          ['Airbus','A330-200','2 aircraft'],['Boeing','737 MAX 8','21 aircraft'],
+          ['Embraer','E190-E2','5 aircraft']
+        ],
+        incoming:[]
+      }
+    }
+  },
+  {
     name:'MaraJet', code:'MJ', country:'Kenya',
     color:'#1550A0', tail:'assets/img/members/marajet.webp',
     hubs:['NBO','DSS'], focus:[], joined:2026,
@@ -1128,7 +1223,7 @@ const AIRPORTS = [
   { code:'SSA', city:'Salvador',      name:'Deputado Luís E. Magalhães',country:'Brazil',      lat:-12.91,lon:-38.32, hub:true },
   { code:'BEL', city:'Belém',         name:'Val de Cães',              country:'Brazil',       lat: -1.38,lon:-48.48, hub:true },
   { code:'BOM', city:'Mumbai',        name:'Chhatrapati Shivaji',      country:'India',        lat:19.09, lon: 72.87, hub:true },
-  { code:'GOI', city:'Goa',           name:'Dabolim',                  country:'India',        lat:15.38, lon: 73.83 },
+  { code:'GOI', city:'Goa',           name:'Dabolim',                  country:'India',        lat:15.38, lon: 73.83, hub:true },
   { code:'DEL', city:'Delhi',         name:'Indira Gandhi Intl',       country:'India',        lat:28.56, lon: 77.10, hub:true },
   { code:'BLR', city:'Bangalore',     name:'Kempegowda Intl',          country:'India',        lat:13.20, lon: 77.71, hub:true },
   { code:'CCU', city:'Kolkata',       name:'Netaji Subhas Chandra Bose',country:'India',       lat:22.65, lon: 88.45, hub:true },
@@ -1234,6 +1329,7 @@ const AIRPORTS = [
   { code:'GOT', city:'Gothenburg',    name:'Landvetter',               country:'Sweden',       lat: 57.66, lon:  12.28 },
   { code:'BGO', city:'Bergen',        name:'Flesland',                 country:'Norway',       lat: 60.29, lon:   5.22 },
   { code:'BOO', city:'Bodø',          name:'Bodø',                     country:'Norway',       lat: 67.27, lon:  14.37 },
+  { code:'BUD', city:'Budapest',      name:'Ferenc Liszt Intl',        country:'Hungary',      lat:47.44, lon: 19.26, hub:true },
   { code:'WAW', city:'Warsaw',        name:'Chopin',                   country:'Poland',       lat:52.17, lon: 20.97, hub:true },
   { code:'KRK', city:'Krakow',        name:'John Paul II',             country:'Poland',       lat:50.08, lon: 19.80, hub:true },
   { code:'SZY', city:'Olsztyn',       name:'Olsztyn-Mazury',           country:'Poland',       lat:53.48, lon: 20.94, hub:true },
@@ -1319,6 +1415,10 @@ const AIRPORTS = [
   { code:'SLC', city:'Salt Lake City',name:'Salt Lake City Intl',      country:'United States',lat:40.79, lon:-111.98},
   { code:'CMH', city:'Columbus',      name:'John Glenn Columbus',      country:'United States',lat:40.00, lon:-82.89 },
   { code:'PIT', city:'Pittsburgh',    name:'Pittsburgh Intl',          country:'United States',lat:40.49, lon:-80.23 },
+  { code:'HBE', city:'Alexandria',    name:'Borg El Arab',             country:'Egypt',        lat:30.92, lon: 29.70 },
+  { code:'LXR', city:'Luxor',         name:'Luxor Intl',               country:'Egypt',        lat:25.67, lon: 32.71 },
+  { code:'HRG', city:'Hurghada',      name:'Hurghada Intl',            country:'Egypt',        lat:27.18, lon: 33.80 },
+  { code:'SSH', city:'Sharm el-Sheikh',name:'Sharm El Sheikh Intl',    country:'Egypt',        lat:27.98, lon: 34.39 },
   { code:'YYZ', city:'Toronto',       name:'Pearson',                  country:'Canada',       lat:43.68, lon:-79.63 },
   { code:'YVR', city:'Vancouver',     name:'Vancouver Intl',           country:'Canada',       lat:49.19, lon:-123.18},
   { code:'CUN', city:'Cancún',        name:'Cancún Intl',              country:'Mexico',       lat:21.04, lon:-86.87 },
@@ -1374,6 +1474,8 @@ const AIRCRAFT = [
   { type:'Dash 8 Q400',         match:/dash ?8|q400/,              maxKm: 2000, layout:[2,2] },
   { type:'CRJ-1000',            match:/crj-?1000/,                 maxKm: 3000, layout:[2,2] },
   { type:'CRJ-100',             match:/crj-?100\b/,                maxKm: 3000, layout:[2,2] },
+  { type:'CRJ-200',             match:/crj-?200/,                  maxKm: 3000, layout:[2,2] },
+  { type:'Embraer ERJ-145',     match:/erj-?145/,                  maxKm: 2800, layout:[1,2] },
   { type:'Embraer E170',        match:/\be-?170/,                  maxKm: 3700, layout:[2,2] },
   { type:'Embraer E175',        match:/\be-?175/,                  maxKm: 3900, layout:[2,2] },
   { type:'Embraer E190-E2',     match:/\be-?190-?e2/,              maxKm: 5300, layout:[2,2] },
@@ -1413,6 +1515,7 @@ const AIRCRAFT = [
 
   /* --- twin-aisle ------------------------------------------------------ */
   { type:'Boeing 767-200ER',    match:/767-200/,                   maxKm:12200, layout:[3,3,3], wide:true },
+  { type:'Boeing 767-400ER',    match:/767-400/,                   maxKm:10400, layout:[3,3,3], wide:true },
   { type:'Boeing 767-300ER',    match:/767/,                       maxKm:11000, layout:[3,3,3], wide:true },
   { type:'Boeing 787-10',       match:/787-10/,                    maxKm:11900, layout:[3,3,3], wide:true },
   { type:'Boeing 787-8',        match:/787-8/,                     maxKm:13600, layout:[3,3,3], wide:true },
