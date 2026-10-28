@@ -1182,6 +1182,40 @@ const MEMBERS = [
     }
   },
   {
+    name:'Romanian Airways', code:'RO', country:'Romania',
+    color:'#0050A4', tail:'assets/img/members/romanian-airways.webp',
+    hubs:['OTP','CRA','CND','TSR','GHV'], focus:[], joined:2026,
+    blurb:'Romania\'s full-service international carrier, flying from Bucharest ' +
+          'and four regional hubs to Europe, North America and beyond.',
+    profile:{
+      founded:'1954',
+      about:[
+        'Romanian Airways is a full-service international airline, founded in ' +
+        '1954 and headquartered in Bucharest, owned by Romanian Airways Group.',
+        'It connects Romania with Europe, North America and beyond, pairing ' +
+        'Romanian hospitality with a modern fleet. "Romania to the world."'
+      ],
+      network:[
+        'Bucharest is the main hub, with Craiova, Constanța, Timișoara and Brașov ' +
+        'alongside it. Its 47 aircraft fly domestic, European and long-haul ' +
+        'services, led by London Heathrow, Paris and New York JFK.'
+      ],
+      routes:[
+        ['OTP','LHR'],['OTP','CDG'],['OTP','JFK']
+      ],
+      fleet:{
+        current:[
+          ['Airbus','A220-300'],['Airbus','A319neo'],['Airbus','A320neo'],
+          ['Airbus','A321neo'],['Airbus','A321LR'],['Airbus','A321XLR'],
+          ['Airbus','A330-900'],
+          ['Boeing','777-300ER'],['Boeing','787-8'],['Boeing','787-9'],
+          ['ATR','72-600']
+        ],
+        incoming:[]
+      }
+    }
+  },
+  {
     name:'MaraJet', code:'MJ', country:'Kenya',
     color:'#1550A0', tail:'assets/img/members/marajet.webp',
     hubs:['NBO','DSS'], focus:[], joined:2026,
@@ -1312,7 +1346,10 @@ const AIRPORTS = [
   { code:'HRK', city:'Kharkiv',       name:'Kharkiv Intl',             country:'Ukraine',      lat:49.92, lon: 36.29, hub:true },
   { code:'CLJ', city:'Cluj-Napoca',   name:'Avram Iancu Intl',         country:'Romania',      lat:46.79, lon: 23.69, hub:true },
   { code:'OTP', city:'Bucharest',     name:'Henri Coandă Intl',        country:'Romania',      lat:44.57, lon: 26.08, hub:true },
-  { code:'CND', city:'Constanța',     name:'Mihail Kogălniceanu',      country:'Romania',      lat:44.36, lon: 28.49 },
+  { code:'CRA', city:'Craiova',       name:'Craiova Intl',             country:'Romania',      lat:44.32, lon: 23.89, hub:true },
+  { code:'TSR', city:'Timișoara',     name:'Traian Vuia Intl',         country:'Romania',      lat:45.81, lon: 21.34, hub:true },
+  { code:'GHV', city:'Brașov',        name:'Brașov-Ghimbav Intl',      country:'Romania',      lat:45.70, lon: 25.53, hub:true },
+  { code:'CND', city:'Constanța',     name:'Mihail Kogălniceanu',      country:'Romania',      lat:44.36, lon: 28.49, hub:true },
   { code:'ZNZ', city:'Zanzibar',      name:'Abeid Amani Karume Intl',  country:'Tanzania',     lat: -6.22, lon:  39.22 },
   { code:'FLL', city:'Fort Lauderdale', name:'Fort Lauderdale-Hollywood', country:'United States', lat: 26.07, lon: -80.15 },
   { code:'IAD', city:'Washington',    name:'Dulles Intl',              country:'United States', lat: 38.95, lon: -77.46 },
