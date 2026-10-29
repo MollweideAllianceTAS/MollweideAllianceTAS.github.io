@@ -1156,7 +1156,7 @@ const MEMBERS = typeof MWA_MEMBERS !== 'undefined' ? MWA_MEMBERS : [
   },
   {
     name:'Magyair Hungarian Airlines', short:'Magyair', code:'MG', country:'Hungary',
-    color:'#AA061F', tail:'assets/img/members/magyair.webp',   // stand-in until the livery arrives
+    color:'#AA061F', tail:'assets/img/members/magyair.webp',
     hubs:['BUD'], focus:[], joined:2026,
     blurb:'A Hungarian airline from Budapest, connecting Central Europe with ' +
           'Western Europe and the Red Sea. "Unlock your vacation."',
