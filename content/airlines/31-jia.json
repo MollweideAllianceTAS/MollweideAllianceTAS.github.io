@@ -1,0 +1,80 @@
+{
+  "name": "Japan International Airways",
+  "short": "JIA",
+  "code": "JN",
+  "country": "Japan",
+  "color": "#032A60",
+  "tail": "assets/img/members/jia.webp",
+  "hubs": [
+    "HND",
+    "NRT"
+  ],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "A Tokyo carrier flying from Haneda and Narita, with international routes first and domestic flying second.",
+  "profile": {
+    "about": [
+      "Japan International Airways, known as JIA, is a low- to medium-cost airline based at Tokyo Haneda and Tokyo Narita. It puts international routes first and domestic flying second.",
+      "It is part of the Pacific Sunset Group."
+    ],
+    "network": [
+      "From Tokyo's two airports, JIA concentrates on international services, with a domestic network alongside."
+    ],
+    "fleet": {
+      "current": [
+        [
+          "Airbus",
+          "A380-800",
+          "4 aircraft"
+        ],
+        [
+          "Boeing",
+          "737 MAX 10",
+          "15 aircraft"
+        ],
+        [
+          "Boeing",
+          "747-400D",
+          "2 aircraft"
+        ],
+        [
+          "Boeing",
+          "747-8",
+          "6 aircraft"
+        ],
+        [
+          "Boeing",
+          "767-300ER",
+          "2 aircraft"
+        ],
+        [
+          "Boeing",
+          "777-300ER",
+          "2 aircraft"
+        ],
+        [
+          "Boeing",
+          "787-8 Dreamliner",
+          "2 aircraft"
+        ],
+        [
+          "Boeing",
+          "787-9 Dreamliner",
+          "2 aircraft"
+        ],
+        [
+          "Boeing",
+          "787-10 Dreamliner",
+          "5 aircraft"
+        ],
+        [
+          "De Havilland Canada",
+          "Dash 8 Q400",
+          "1 aircraft"
+        ]
+      ],
+      "incoming": []
+    }
+  },
+  "order": 31
+}

@@ -16,8 +16,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site.css?v=752a6947">
+<link rel="stylesheet" href="assets/css/network-join.css?v=81193b03">
 </head>
-<body>
+<body class="network-page">
 <div class="topbar">
   <div class="wrap topbar__in">
     <p>The Mollweide Alliance is a fictitious alliance created for The Airline Simulator</p>
@@ -46,21 +47,24 @@
     </nav>
   </div>
 </header>
-<section class="phead">
-  <img class="phead__bg" src="assets/img/photos/aranya-aloha.jpg" alt="" width="1440" height="424">
-  <div class="wrap phead__in">
+<main>
+<section class="n-hero">
+  <img class="n-hero__image" src="assets/img/photos/hero-departures.jpg" alt="Alliance departures displayed across an airport terminal board" width="1800" height="667">
+  <div class="n-hero__veil" aria-hidden="true"></div>
+  <div class="wrap n-hero__inner">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span>/</span> Network</nav>
-    <h1 class="display">The network, <b>at true size.</b></h1>
-    <div class="brandrule"></div>
-    <p class="lede mt-3">Every hub, and every route our airlines have listed, on a globe you can turn. Each line is a real great circle — the shortest path an aircraft would actually fly.</p>
+    <p class="n-kicker">Alliance network · Live directory</p>
+    <h1>112 hubs.<br><strong>39 airlines.</strong></h1>
+    <p class="n-hero__lede">Every listed base and member route, drawn on one globe. The lines follow real great circles rather than a flattened map.</p>
+    <a class="n-hero__jump" href="#hubs">Explore the network <span aria-hidden="true">↓</span></a>
   </div>
 </section>
 
-<section class="section" id="hubs">
+<section class="n-explorer" id="hubs">
   <div class="wrap">
-    <div class="sec-head">
-      <h2 class="display">Principal <b>connecting points.</b></h2>
-      <p class="lede hx__intro">Choose an airline to lift its bases and routes out of the network, or a hub to see where it connects, and with which airline. Drag the globe to turn it.</p>
+    <div class="n-sectionhead">
+      <div><p class="n-index">01 · Interactive network</p><h2>Turn the globe.<br><strong>Read the routes.</strong></h2></div>
+      <p>Choose an airline to isolate its bases and routes. Choose a hub to see the airlines and destinations connected through it.</p>
     </div>
 
     <div class="hubx" id="hubx">
@@ -85,12 +89,13 @@
   </div>
 </section>
 
-<section class="band section--tight">
-  <div class="wrap band__in">
-    <div><h2 class="display" style="font-size:clamp(1.6rem,3.4vw,2.6rem)">Search <b>the network.</b></h2></div>
-    <a class="btn btn--lg" style="background:#fff;color:var(--blue)" href="book.html">Search flights <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+<section class="n-next">
+  <div class="wrap n-next__inner">
+    <div><p class="n-index">02 · Use the network</p><h2>Turn a route into<br><strong>an itinerary.</strong></h2></div>
+    <div class="n-next__action"><p>Flight search uses these same members and hubs to build direct and connecting journeys.</p><a class="btn btn--sky btn--lg" href="book.html">Search alliance flights <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
   </div>
 </section>
+</main>
 
 <footer class="ft">
   <div class="wrap ft__top">
@@ -139,8 +144,9 @@
     </div>
   </div>
 </footer>
-<script src="assets/js/data.js?v=b90c8f09"></script>
-<script src="assets/js/site.js?v=e8c4f308"></script>
+<script src="assets/js/members.generated.js?v=012b97ee"></script>
+<script src="assets/js/data.js?v=b6d66bcb"></script>
+<script src="assets/js/site.js?v=8db25271"></script>
 <script src="assets/js/land.js?v=6a275796"></script>
 <script>
   document.getElementById('ftMembers').innerHTML =

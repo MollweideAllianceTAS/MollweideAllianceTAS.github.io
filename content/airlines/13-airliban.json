@@ -1,0 +1,15 @@
+{
+  "name": "AirLiban",
+  "code": "AL",
+  "country": "Lebanon",
+  "color": "#C62B33",
+  "tail": "assets/img/members/airliban.webp",
+  "hubs": [
+    "BEY",
+    "CAI"
+  ],
+  "focus": [],
+  "joined": 2025,
+  "blurb": "Operating twin Levantine hubs at Beirut and Cairo, AirLiban connects the eastern Mediterranean and North Africa into the wider alliance network.",
+  "order": 13
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Aloha Air",
+  "code": "AO",
+  "country": "United States",
+  "color": "#2E5F9E",
+  "tail": "assets/img/members/aloha-air.webp",
+  "hubs": [
+    "OGG"
+  ],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "Based at Kahului on Maui, Aloha Air operates the alliance's mid-Pacific services, wearing the Mollweide globe on its fin.",
+  "order": 38
+}

@@ -1,0 +1,137 @@
+{
+  "name": "PJSC AkerAir Ukraine International",
+  "short": "AkerAir",
+  "code": "5K",
+  "country": "Ukraine",
+  "group": "connect",
+  "color": "#0063D3",
+  "tail": "assets/img/members/akerair.webp",
+  "hubs": [
+    "KBP",
+    "LWO",
+    "OZH",
+    "HRK",
+    "ODS"
+  ],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "Ukraine's largest carrier, flying scheduled and charter services from Kyiv Boryspil to Europe, Asia, Africa and North America, with further bases at Lviv, Zaporizhzhia, Kharkiv and Odesa.",
+  "profile": {
+    "founded": "1952",
+    "about": [
+      "AkerAir is a Ukrainian carrier flying scheduled and charter services from Kyiv Boryspil and Lviv, with further bases at Zaporizhzhia, Kharkiv and Odesa. It joined the alliance through Mollweide Connect.",
+      "The airline traces its history to August 1952, when it was formed as the 86th Aviation Detachment of the Kyiv United Aviation Detachment, flying under the Aeroflot banner within the Ukrainian SSR. When the Soviet Union and Aeroflot were broken up, the detachment became Kyiv Avia and flew domestic services across Ukraine with Tupolev Tu-154 and Ilyushin Il-86 aircraft.",
+      "After the loss of an Il-86 operating as flight 5K-8950 in 2004, the airline was reorganised as the charter carrier AkerAir and replaced its Soviet fleet with leased Embraer and Boeing aircraft.",
+      "Operations were suspended in 2022, when Ukrainian airports closed. Since 2025 the airline has been resuming service with a modernised fleet, partly from Ukrainian airports that have reopened and partly from Russian and Belarusian airports near the border."
+    ],
+    "network": [
+      "The long-haul network is built around the two primary bases. Kyiv Boryspil and Lviv each link Ukraine with London, Tokyo, southern Africa and the United States."
+    ],
+    "routes": [
+      [
+        "KBP",
+        "MIA"
+      ],
+      [
+        "KBP",
+        "HND"
+      ],
+      [
+        "KBP",
+        "JNB"
+      ],
+      [
+        "KBP",
+        "LHR"
+      ],
+      [
+        "LWO",
+        "DEN"
+      ],
+      [
+        "LWO",
+        "NRT"
+      ],
+      [
+        "LWO",
+        "CPT"
+      ],
+      [
+        "LWO",
+        "LHR"
+      ]
+    ],
+    "fleet": {
+      "current": [
+        [
+          "Airbus",
+          "A320neo",
+          "5 aircraft · Leased from AerCap"
+        ],
+        [
+          "Airbus",
+          "A321neo",
+          "10 aircraft · Leased from AerCap"
+        ],
+        [
+          "Boeing",
+          "737-700",
+          "20 aircraft · Leased from GECAS"
+        ],
+        [
+          "Boeing",
+          "737-800",
+          "20 aircraft · Leased from GECAS"
+        ],
+        [
+          "Boeing",
+          "737-900",
+          "20 aircraft · Leased from GECAS"
+        ],
+        [
+          "Boeing",
+          "757-200",
+          "30 aircraft · Leased from GECAS"
+        ],
+        [
+          "Boeing",
+          "767-300ER",
+          "30 aircraft · Leased from GECAS"
+        ],
+        [
+          "Boeing",
+          "777-200",
+          "5 aircraft · Leased from United Airlines"
+        ],
+        [
+          "Boeing",
+          "777-300",
+          "5 aircraft · Leased from United Airlines"
+        ],
+        [
+          "Boeing",
+          "787-8",
+          "10 aircraft · Leased from All Nippon Airways"
+        ],
+        [
+          "Embraer",
+          "E170",
+          "5 aircraft"
+        ],
+        [
+          "Embraer",
+          "E195-E2",
+          "5 aircraft"
+        ]
+      ],
+      "incoming": [
+        [
+          "Boeing",
+          "767-200ER",
+          "30 aircraft · Leased from GECAS; enters service when the type reaches the game"
+        ]
+      ]
+    }
+  },
+  "order": 24
+}

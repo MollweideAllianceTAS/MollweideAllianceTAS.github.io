@@ -1,0 +1,14 @@
+{
+  "name": "Mexicana",
+  "code": "MX",
+  "country": "Mexico",
+  "color": "#2A2F38",
+  "tail": "assets/img/members/mexicana.webp",
+  "hubs": [
+    "MEX"
+  ],
+  "focus": [],
+  "joined": 2025,
+  "blurb": "From Mexico City, Mexicana carries the alliance across Latin America and into the southern United States, feeding transpacific services through its Pacific-coast network.",
+  "order": 14
+}

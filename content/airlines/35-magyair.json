@@ -1,0 +1,85 @@
+{
+  "name": "Magyair Hungarian Airlines",
+  "short": "Magyair",
+  "code": "MG",
+  "country": "Hungary",
+  "color": "#AA061F",
+  "tail": "assets/img/members/magyair.webp",
+  "hubs": [
+    "BUD"
+  ],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "A Hungarian airline from Budapest, connecting Central Europe with Western Europe and the Red Sea. \"Unlock your vacation.\"",
+  "profile": {
+    "about": [
+      "Magyair Hungarian Airlines is headquartered in Budapest, with the goal of connecting Central Europe. Its promise to passengers: \"Unlock your vacation.\""
+    ],
+    "network": [
+      "From Budapest it flies to London Heathrow, Paris, Frankfurt, Munich and Zurich, and south to Egypt: Cairo, Alexandria, and the Red Sea and Nile resorts of Hurghada, Sharm el-Sheikh and Luxor."
+    ],
+    "routes": [
+      [
+        "BUD",
+        "LHR"
+      ],
+      [
+        "BUD",
+        "CDG"
+      ],
+      [
+        "BUD",
+        "FRA"
+      ],
+      [
+        "BUD",
+        "MUC"
+      ],
+      [
+        "BUD",
+        "ZRH"
+      ],
+      [
+        "BUD",
+        "CAI"
+      ],
+      [
+        "BUD",
+        "HBE"
+      ],
+      [
+        "BUD",
+        "LXR"
+      ],
+      [
+        "BUD",
+        "HRG"
+      ],
+      [
+        "BUD",
+        "SSH"
+      ]
+    ],
+    "fleet": {
+      "current": [
+        [
+          "Airbus",
+          "A330-200",
+          "2 aircraft"
+        ],
+        [
+          "Boeing",
+          "737 MAX 8",
+          "21 aircraft"
+        ],
+        [
+          "Embraer",
+          "E190-E2",
+          "5 aircraft"
+        ]
+      ],
+      "incoming": []
+    }
+  },
+  "order": 35
+}

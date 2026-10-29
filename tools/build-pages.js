@@ -25,6 +25,7 @@ const ROOT = path.resolve(__dirname, '..');
 const DATA = (() => {
   const ctx = vm.createContext({ console, Math, Date, JSON, Set, Intl, window:{},
     document:{ addEventListener(){}, querySelector:()=>null, querySelectorAll:()=>[] } });
+  vm.runInContext(fs.readFileSync(`${ROOT}/assets/js/members.generated.js`, 'utf8'), ctx);
   vm.runInContext(fs.readFileSync(`${ROOT}/assets/js/data.js`, 'utf8'), ctx);
   vm.runInContext(fs.readFileSync(`${ROOT}/assets/js/site.js`, 'utf8'), ctx);
   vm.runInContext('globalThis._x = { ALLIANCE, MEMBERS, JOIN, airport, nameOf, groupOf, memberPage, tintOn };', ctx);
@@ -148,6 +149,7 @@ const footer = () => `
     </div>
   </div>
 </footer>
+<script src="assets/js/members.generated.js"></script>
 <script src="assets/js/data.js"></script>
 <script src="assets/js/site.js"></script>`;
 
@@ -155,75 +157,178 @@ const footer = () => `
 /*  INDEX                                                                     */
 /* ========================================================================== */
 const index = head('Mollweide Alliance', `${Size} airlines, one network. Explore the Mollweide Alliance route map, its featured airlines, and book a simulated flight.`)
+  .replace('</head>', '<link rel="stylesheet" href="assets/css/cinematic.css">\n</head>')
+  .replace('<body>', '<body class="cinema">')
 + chrome('index.html') + `
-<section class="hero">
-  <div class="wrap hero__in">
-    <div class="hero__grid">
-      <div>
-        <h1 class="display" data-rv style="transition-delay:80ms">
-          <span class="hero__line">Mollweide can take you</span>
-          <span class="hero__line">from <b class="hero__city" id="cityA">Tbilisi</b></span>
-          <span class="hero__line">to <b class="hero__city" id="cityB">Rio de Janeiro</b></span>
-        </h1>
-        <div class="brandrule" data-rv style="transition-delay:140ms"></div>
-        <p class="lede mt-3" data-rv style="transition-delay:200ms">The fastest-growing alliance in The Airline Simulator: ${SIZE} carriers on every inhabited continent, and no end of room to codeshare and work together.</p>
-        <div class="hero__actions" data-rv style="transition-delay:260ms">
-          <a class="btn btn--sky btn--lg" href="book.html">Book a flight <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          <a class="btn btn--ghost btn--lg" href="network.html">Explore the network</a>
-        </div>
-      </div>
-      <canvas class="hero__globe" id="globe" aria-hidden="true"></canvas>
-    </div>
-  </div>
-</section>
+<div class="c-progress" aria-hidden="true"><span></span></div>
 
-<section class="section">
-  <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <h2 class="display" data-rv>Named for a projection that <b>shows the world at true size.</b></h2>
+<main>
+<section class="c-hero" aria-labelledby="c-hero-title">
+  <div class="c-hero__grid" aria-hidden="true"></div>
+  <div class="c-hero__orbit c-hero__orbit--one" aria-hidden="true"></div>
+  <div class="c-hero__orbit c-hero__orbit--two" aria-hidden="true"></div>
+  <canvas class="c-hero__globe" id="globe" aria-hidden="true"></canvas>
+  <div class="wrap c-hero__inner">
+    <div class="c-hero__copy">
+      <p class="c-kicker c-reveal">Mollweide Alliance · The Airline Simulator</p>
+      <h1 id="c-hero-title" class="c-title c-reveal">The world,<br><strong>at true size.</strong></h1>
+      <p class="c-hero__lede c-reveal">Mollweide brings airlines together in The Airline Simulator, offering greater visibility, codeshare opportunities and an active community of operators.</p>
+      <div class="c-hero__actions c-reveal">
+        <a class="btn btn--sky btn--lg" href="join.html">Discover the alliance <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="c-textlink" href="network.html">Explore the network <span>↗</span></a>
       </div>
-      <a class="btn btn--line" href="network.html" data-rv>The route network</a>
-    </div>
-    <div class="two-col">
-      <p class="lede" data-rv>Mollweide Alliance brings ${SIZE} independently operated airlines together under one standard of service, one loyalty programme and one coordinated schedule. The name comes from the equal-area projection that shows every part of the world at its true size — a fair description of how the network is put together, region by region, around the carriers that know each one best.</p>
-      <div data-rv style="transition-delay:80ms">
-        <p class="body-copy">What that means for your journey is simple. Travel across several members and it is still <strong style="color:var(--blue)">one booking, on one reference</strong>, with your bags checked through to where you are going. Our airlines carry one another's flight numbers, so a route no single carrier operates still sells as a single through service.</p>
-        <p class="body-copy mt-2">Miles you earn on any member count towards status on every other, and from <strong style="color:var(--blue)">Strata</strong> upwards that status opens alliance lounges across the network. Schedules are timed into connecting waves at each hub, so the onward flight is there when you land — and if a connection slips, it is the alliance that looks after you, not a hand-off between airlines.</p>
+      <div class="c-route c-reveal" aria-label="A sample journey across the alliance">
+        <span class="c-route__code">MWA</span>
+        <span><b id="cityA">Tbilisi</b><small>From</small></span>
+        <i><span class="c-route__flight" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21.8 11.2 14 7.1V2.8a2 2 0 0 0-4 0v4.3l-7.8 4.1c-.7.4-.7 1.4 0 1.8L10 15v4.2l-2.2 1.5v1.1l4.2-.8 4.2.8v-1.1L14 19.2V15l7.8-2c.8-.2.8-1.4 0-1.8Z"/></svg></span></i>
+        <span><b id="cityB">Rio de Janeiro</b><small>To</small></span>
       </div>
     </div>
-  </div>
-</section>
-
-<section class="section on-wash">
-  <div class="wrap">
-    <div class="sec-head">
-      <div><h2 class="display" data-rv>Featured <b>airlines</b></h2></div>
-      <a class="btn btn--line" href="members.html" data-rv>View all featured airlines</a>
-    </div>
-    <div class="rail rail--tails" data-rv data-at="start">
-      <button class="rail__nav rail__nav--prev" type="button" data-rail="prev" aria-label="Previous airlines">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
-      </button>
-      <div class="tails" id="membersHome"></div>
-      <button class="rail__nav rail__nav--next" type="button" data-rail="next" aria-label="Next airlines">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
-      </button>
+    <div class="c-hero__facts c-reveal" aria-label="Alliance overview">
+      <span><strong>${SIZE}</strong> carriers in game</span>
+      <span><strong>${DATA.MEMBERS.length}</strong> featured stories</span>
+      <span><strong>1</strong> shared community</span>
     </div>
   </div>
+  <a class="c-scroll" href="#meaning" aria-label="Continue to the story"><span></span>Scroll to explore</a>
 </section>
 
-<section class="band section--tight">
-  <div class="wrap band__in">
+<section class="c-intro" id="meaning">
+  <div class="wrap c-intro__grid">
+    <p class="c-index c-reveal">01 · The meaning</p>
     <div>
-      <h2 class="display" style="font-size:clamp(1.6rem,3.4vw,2.6rem)">Plan a journey across <b>the alliance network.</b></h2>
-      <p class="lede mt-2" style="color:rgba(255,255,255,.8)">Search every member carrier on a single itinerary.</p>
+      <h2 class="c-heading c-reveal">A map projection became<br><strong>a way of seeing the world.</strong></h2>
+      <p class="c-intro__lead c-reveal">Named after an equal-area map projection, Mollweide brings airlines from different regions together to share opportunities and make their networks more visible.</p>
     </div>
-    <a class="btn btn--lg" style="background:#fff;color:var(--blue)" href="book.html">Book a flight <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
   </div>
 </section>
+
+<section class="c-story" aria-label="The Mollweide idea">
+  <div class="c-story__visual" aria-hidden="true">
+    <div class="c-story__phase">
+      <span data-map-phase="1"><b>01</b> Entering the network</span>
+      <span data-map-phase="2"><b>02</b> Connecting airlines</span>
+      <span data-map-phase="3"><b>03</b> Growing together</span>
+    </div>
+    <div class="c-map">
+      <div class="c-map__grid"></div>
+      <img class="c-map__aircraft" src="assets/img/brand/mollweide-aircraft.png" alt="" width="2054" height="766">
+      <span class="c-map__route c-map__route--a"></span>
+      <span class="c-map__route c-map__route--b"></span>
+      <span class="c-map__route c-map__route--c"></span>
+    </div>
+    <p><span data-story-number>01</span> / 03</p>
+  </div>
+  <div class="c-story__chapters">
+    <article class="c-chapter" data-story-step="1">
+      <p class="c-kicker">Equal-area by design</p>
+      <h3>Every market has its place.</h3>
+      <p>The Mollweide projection preserves the relative area of regions across the world. It gives the alliance its name and reflects the breadth of markets represented by its members.</p>
+    </article>
+    <article class="c-chapter" data-story-step="2">
+      <p class="c-kicker">Member visibility</p>
+      <h3>Give your airline a wider audience.</h3>
+      <p>Member profiles introduce airlines, their hubs and routes to the wider alliance and to visitors exploring the network.</p>
+    </article>
+    <article class="c-chapter" data-story-step="3">
+      <p class="c-kicker">Working together</p>
+      <h3>More opportunities to connect.</h3>
+      <p>Members can find codeshare partners, coordinate routes and take part in a growing market, with discounts of up to 70% on offers.</p>
+    </article>
+  </div>
+</section>
+
+<section class="c-history">
+  <div class="wrap">
+    <div class="c-sectionhead">
+      <div>
+        <p class="c-index c-reveal">02 · Our story</p>
+        <h2 class="c-heading c-reveal">A growing alliance.<br><strong>A shared network.</strong></h2>
+      </div>
+      <p class="c-sectionhead__copy c-reveal">Mollweide brings operators in The Airline Simulator together to share routes, opportunities and ideas across a growing network.</p>
+    </div>
+    <div class="c-timeline">
+      <article class="c-moment c-reveal">
+        <time>${DATA.ALLIANCE.founded}</time><i></i>
+        <h3>The alliance takes shape</h3>
+        <p>Mollweide was founded to bring airlines together across the simulator.</p>
+      </article>
+      <article class="c-moment c-reveal">
+        <time>Today</time><i></i>
+        <h3>${Size} carriers in game</h3>
+        <p>Carriers across every inhabited continent, with ${DATA.MEMBERS.length} member stories already featured here.</p>
+      </article>
+      <article class="c-moment c-reveal">
+        <time>Next</time><i></i>
+        <h3>A growing network</h3>
+        <p>More member profiles and routes give airlines further opportunities to be seen.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="c-members">
+  <div class="wrap">
+    <div class="c-sectionhead c-sectionhead--light">
+      <div>
+        <p class="c-index c-reveal">03 · The members</p>
+        <h2 class="c-heading c-reveal">Meet the airlines<br><strong>in our network.</strong></h2>
+      </div>
+      <div class="c-sectionhead__aside c-reveal">
+        <p>Explore member airlines, their home markets and the hubs that connect them.</p>
+        <a class="c-textlink" href="members.html">Meet the featured airlines <span>↗</span></a>
+      </div>
+    </div>
+  </div>
+  <div class="c-members__rail">
+    <div class="rail rail--tails" data-at="start">
+      <button class="rail__nav rail__nav--prev" type="button" data-rail="prev" aria-label="Previous airlines"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <div class="tails" id="membersHome"></div>
+      <button class="rail__nav rail__nav--next" type="button" data-rail="next" aria-label="Next airlines"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+  </div>
+</section>
+
+<section class="c-join" id="why-join">
+  <div class="wrap">
+    <div class="c-sectionhead">
+      <div>
+        <p class="c-index c-reveal">04 · Why Mollweide</p>
+        <h2 class="c-heading c-reveal">More opportunities<br><strong>for your airline.</strong></h2>
+      </div>
+      <a class="btn btn--primary btn--lg c-reveal" href="join.html">How to join <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+    <div class="c-benefits">
+      <article class="c-benefit c-reveal"><span>01</span><h3>Airline visibility</h3><p>Present your airline, its routes and its hubs to the alliance and a wider audience.</p></article>
+      <article class="c-benefit c-reveal"><span>02</span><h3>Codeshare opportunities</h3><p>Meet other operators and explore partnerships that connect your networks.</p></article>
+      <article class="c-benefit c-reveal"><span>03</span><h3>An active market</h3><p>Explore a growing market with discounts of up to 70% on offers.</p></article>
+      <article class="c-benefit c-reveal"><span>04</span><h3>A growing community</h3><p>Connect with fellow members on Discord to exchange ideas and coordinate opportunities.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="c-final">
+  <div class="c-final__lines" aria-hidden="true"></div>
+  <div class="wrap c-final__inner">
+    <div class="c-final__brand c-reveal" aria-label="Mollweide Alliance">
+      <img class="c-final__brand-mark" src="assets/img/mark-white.png" alt="" width="598" height="524">
+      <span class="c-final__brand-type">
+        <img class="c-final__brand-word" src="assets/img/wordmark-white.png" alt="Mollweide" width="1980" height="162">
+        <span>Alliance</span>
+      </span>
+    </div>
+    <p class="c-kicker c-reveal">The next route starts here</p>
+    <h2 class="c-reveal">Explore what your airline<br><strong>can do next.</strong></h2>
+    <div class="c-final__actions c-reveal">
+      <a class="btn btn--sky btn--lg" href="join.html">Join the alliance</a>
+      <a class="btn btn--ghost btn--lg" href="book.html">Experience the network</a>
+    </div>
+  </div>
+</section>
+</main>
 ` + footer() + `
 <script src="assets/js/land.js"></script>
+<script src="assets/js/cinematic.js"></script>
 <script>
   renderTails(document.getElementById('membersHome'));
   initRail(document.querySelector('.rail'));
@@ -237,37 +342,94 @@ const index = head('Mollweide Alliance', `${Size} airlines, one network. Explore
 /* ========================================================================== */
 /*  MEMBERS                                                                   */
 /* ========================================================================== */
+const memberCountries = new Set(DATA.MEMBERS.map(m => m.country)).size;
+const memberHubs = new Set(DATA.MEMBERS.flatMap(m => m.hubs || [])).size;
+const memberProfiles = DATA.MEMBERS.filter(m => m.profile).length;
 const members = head('Featured airlines', `The featured airlines of the Mollweide Alliance, their hubs and home markets.`)
+  .replace('</head>', '<link rel="stylesheet" href="assets/css/members-cinematic.css">\n</head>')
+  .replace('<body>', '<body class="members-page">')
 + chrome('members.html') + `
-<section class="phead">
-  <img class="phead__bg" src="assets/img/photos/lineup-four.jpg" alt="" width="1440" height="380">
-  <div class="wrap phead__in">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span>/</span> Featured airlines</nav>
-    <h1 class="display">Featured <b>airlines</b></h1>
-    <div class="brandrule"></div>
-    <p class="lede mt-3">Each member keeps its own livery, its own cabin and its own home market. What they share is a schedule, a loyalty programme and a promise that a connection onto another member's aircraft feels like the same journey.</p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <div class="sec-head">
-      <div><h2 class="display">The <b>full line-up.</b></h2></div>
-      <p class="lbl" style="line-height:1.8;white-space:nowrap">Hover to identify each carrier</p>
+<main>
+<section class="m-hero">
+  <img class="m-hero__image" src="assets/img/photos/hero-departures.jpg" alt="Alliance departures displayed inside an airport terminal" width="1800" height="667">
+  <div class="m-hero__veil" aria-hidden="true"></div>
+  <div class="wrap m-hero__inner">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span>/</span> Members</nav>
+    <p class="m-kicker">The airlines behind the network</p>
+    <h1>Our airlines.<br><strong>One alliance.</strong></h1>
+    <p class="m-hero__lede">Discover the airlines, home markets and hubs represented across Mollweide's network.</p>
+    <div class="m-hero__facts" aria-label="Featured member overview">
+      <span><strong>${DATA.MEMBERS.length}</strong> featured airlines</span>
+      <span><strong>${memberCountries}</strong> home countries</span>
+      <span><strong>${memberHubs}</strong> listed hubs</span>
     </div>
-    <div class="liveries" id="membersAll"></div>
+  </div>
+  <div class="m-hero__manifest" aria-hidden="true">
+    <div>${DATA.MEMBERS.map(m => `<span><i>${m.code}</i>${nameOf(m)}</span>`).join('')}</div>
+    <div>${DATA.MEMBERS.map(m => `<span><i>${m.code}</i>${nameOf(m)}</span>`).join('')}</div>
   </div>
 </section>
 
-<section class="band section--tight">
-  <div class="wrap band__in">
-    <div><h2 class="display" style="font-size:clamp(1.6rem,3.4vw,2.6rem)">Every featured airline, <b>one booking.</b></h2></div>
-    <a class="btn btn--lg" style="background:#fff;color:var(--blue)" href="book.html">Search flights <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+<section class="m-directory" id="directory">
+  <div class="wrap">
+    <div class="m-directory__head">
+      <div><p class="m-index">01 · Member directory</p><h2>${DATA.MEMBERS.length} airlines.<br><strong>${memberCountries} countries.</strong></h2></div>
+      <p>One searchable manifest. Find a member by airline, home country or hub.</p>
+    </div>
+    <div class="m-tools">
+      <label class="m-search"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m16.5 16.5 4 4"></path></svg><input id="memberSearch" type="search" aria-label="Search members" placeholder="Search airline, country or hub" autocomplete="off"></label>
+      <div class="m-filters" aria-label="Filter members">
+        <button type="button" data-member-filter="all" aria-pressed="true">All <span>${DATA.MEMBERS.length}</span></button>
+        <button type="button" data-member-filter="profile" aria-pressed="false">Stories <span>${memberProfiles}</span></button>
+        <button type="button" data-member-filter="connect" aria-pressed="false">Connect</button>
+      </div>
+      <p class="m-count" aria-live="polite"><span id="memberCount">${DATA.MEMBERS.length}</span> airlines shown</p>
+    </div>
+    <div class="member-grid" id="membersAll"></div>
+    <p class="m-empty" id="memberEmpty" hidden>No airlines match that search yet.</p>
   </div>
 </section>
+
+<section class="m-exit">
+  <div class="wrap m-exit__inner">
+    <p class="m-index">02 · Continue the journey</p>
+    <h2>Explore the network.<br><strong>Find a connection.</strong></h2>
+    <div class="m-exit__foot">
+      <p>Turn the alliance line-up into a connected itinerary across the network.</p>
+      <a class="btn btn--sky btn--lg" href="book.html">Search alliance flights <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>
+</main>
 ` + footer() + `
 <script>
   renderMembers(document.getElementById('membersAll'));
+  (function () {
+    const directory = document.getElementById('membersAll');
+    const search = document.getElementById('memberSearch');
+    const buttons = Array.from(document.querySelectorAll('[data-member-filter]'));
+    const count = document.getElementById('memberCount');
+    const empty = document.getElementById('memberEmpty');
+    let filter = 'all';
+    function updateMembers() {
+      const query = search.value.trim().toLowerCase();
+      let shown = 0;
+      directory.querySelectorAll('[data-member]').forEach(card => {
+        const kindMatch = filter === 'all' || card.dataset[filter] === 'true';
+        const textMatch = !query || card.dataset.search.includes(query);
+        card.hidden = !(kindMatch && textMatch);
+        if (!card.hidden) shown += 1;
+      });
+      count.textContent = shown;
+      empty.hidden = shown !== 0;
+    }
+    search.addEventListener('input', updateMembers);
+    buttons.forEach(button => button.addEventListener('click', () => {
+      filter = button.dataset.memberFilter;
+      buttons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+      updateMembers();
+    }));
+  }());
   document.getElementById('ftMembers').innerHTML =
     MEMBERS.slice(0,6).map(m => '<li><a href="'+(memberPage(m)||'members.html#'+m.code)+'">'+ (m.short||m.name) +'</a></li>').join('');
 
@@ -278,22 +440,27 @@ const members = head('Featured airlines', `The featured airlines of the Mollweid
 /*  NETWORK                                                                   */
 /* ========================================================================== */
 const network = head('Network', 'The Mollweide Alliance route network on an interactive globe: every hub, and where it connects, by airline.')
+.replace('</head>', '<link rel="stylesheet" href="assets/css/network-join.css">\n</head>')
+.replace('<body>', '<body class="network-page">')
 + chrome('network.html') + `
-<section class="phead">
-  <img class="phead__bg" src="assets/img/photos/aranya-aloha.jpg" alt="" width="1440" height="424">
-  <div class="wrap phead__in">
+<main>
+<section class="n-hero">
+  <img class="n-hero__image" src="assets/img/photos/hero-departures.jpg" alt="Alliance departures displayed across an airport terminal board" width="1800" height="667">
+  <div class="n-hero__veil" aria-hidden="true"></div>
+  <div class="wrap n-hero__inner">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span>/</span> Network</nav>
-    <h1 class="display">The network, <b>at true size.</b></h1>
-    <div class="brandrule"></div>
-    <p class="lede mt-3">Every hub, and every route our airlines have listed, on a globe you can turn. Each line is a real great circle — the shortest path an aircraft would actually fly.</p>
+    <p class="n-kicker">Alliance network · Live directory</p>
+    <h1>${memberHubs} hubs.<br><strong>${DATA.MEMBERS.length} airlines.</strong></h1>
+    <p class="n-hero__lede">Every listed base and member route, drawn on one globe. The lines follow real great circles rather than a flattened map.</p>
+    <a class="n-hero__jump" href="#hubs">Explore the network <span aria-hidden="true">↓</span></a>
   </div>
 </section>
 
-<section class="section" id="hubs">
+<section class="n-explorer" id="hubs">
   <div class="wrap">
-    <div class="sec-head">
-      <h2 class="display">Principal <b>connecting points.</b></h2>
-      <p class="lede hx__intro">Choose an airline to lift its bases and routes out of the network, or a hub to see where it connects, and with which airline. Drag the globe to turn it.</p>
+    <div class="n-sectionhead">
+      <div><p class="n-index">01 · Interactive network</p><h2>Turn the globe.<br><strong>Read the routes.</strong></h2></div>
+      <p>Choose an airline to isolate its bases and routes. Choose a hub to see the airlines and destinations connected through it.</p>
     </div>
 
     <div class="hubx" id="hubx">
@@ -318,12 +485,13 @@ const network = head('Network', 'The Mollweide Alliance route network on an inte
   </div>
 </section>
 
-<section class="band section--tight">
-  <div class="wrap band__in">
-    <div><h2 class="display" style="font-size:clamp(1.6rem,3.4vw,2.6rem)">Search <b>the network.</b></h2></div>
-    <a class="btn btn--lg" style="background:#fff;color:var(--blue)" href="book.html">Search flights <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+<section class="n-next">
+  <div class="wrap n-next__inner">
+    <div><p class="n-index">02 · Use the network</p><h2>Turn a route into<br><strong>an itinerary.</strong></h2></div>
+    <div class="n-next__action"><p>Flight search uses these same members and hubs to build direct and connecting journeys.</p><a class="btn btn--sky btn--lg" href="book.html">Search alliance flights <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
   </div>
 </section>
+</main>
 ` + footer() + `
 <script src="assets/js/land.js"></script>
 <script>
@@ -354,7 +522,7 @@ const book = head('Book a flight', 'Search the Mollweide Alliance network and ma
   <section class="section" data-step="1" style="padding-top:clamp(2rem,4vw,3rem)">
     <div class="wrap">
       <h1 class="display" style="font-size:clamp(1.75rem,4vw,3rem)">Plan <b>your journey.</b></h1>
-      <p class="lede mt-2">Search every member carrier on a single itinerary. Bookings are simulated and stored only in this browser.</p>
+      <p class="lede mt-2">Search published member routes, with aircraft from their current fleets. Bookings are simulated and stored only in this browser.</p>
 
       <form class="search-card mt-4" id="searchForm" autocomplete="off">
         <div class="search-card__hd" role="tablist" aria-label="Trip type">
@@ -408,8 +576,8 @@ const book = head('Book a flight', 'Search the Mollweide Alliance network and ma
       </form>
 
       <div class="feats mt-6" style="grid-template-columns:repeat(auto-fit,minmax(14rem,1fr))">
-        <article class="feat"><span class="feat__n">01</span><h3 class="feat__t">Hub-to-hub service</h3><p class="feat__b">Geneva&ndash;Rio de Janeiro, Tbilisi&ndash;Mumbai and Los Angeles&ndash;Shanghai are among the most densely served sectors on the network.</p></article>
-        <article class="feat"><span class="feat__n">02</span><h3 class="feat__t">Connecting itineraries</h3><p class="feat__b">Where no member operates a sector directly, the search constructs a one-stop itinerary through the most efficient alliance hub.</p></article>
+        <article class="feat"><span class="feat__n">01</span><h3 class="feat__t">Published services</h3><p class="feat__b">Explore routes supplied by member airlines. Aircraft are selected from their declared current fleets, within the site's range limits.</p></article>
+        <article class="feat"><span class="feat__n">02</span><h3 class="feat__t">Connecting itineraries</h3><p class="feat__b">One-stop journeys combine published flight sectors, including member stopover services. Results depend on the route and fleet details available.</p></article>
         <article class="feat"><span class="feat__n">03</span><h3 class="feat__t">Simulated service</h3><p class="feat__b">No payment is taken and no data leaves your device. Itineraries are held in this browser's local storage.</p></article>
       </div>
     </div>
@@ -762,80 +930,95 @@ const submit = head('Member submissions', 'What member airlines need to send for
 /*  JOIN                                                                      */
 /* ========================================================================== */
 const join = head('Join the alliance', `How to join the ${groupList} from inside The Airline Simulator.`)
+.replace('</head>', '<link rel="stylesheet" href="assets/css/network-join.css">\n</head>')
+.replace('<body>', '<body class="join-page">')
 + chrome('join.html') + `
-<section class="phead">
-  <img class="phead__bg" src="assets/img/photos/lineup-six.jpg" alt="" width="1440" height="296">
-  <div class="wrap phead__in">
+<main>
+<section class="j-hero">
+  <img class="j-hero__image" src="assets/img/photos/join-mollweide-projection.png" alt="" width="1672" height="941">
+  <div class="j-hero__veil" aria-hidden="true"></div>
+  <div class="j-hero__brand-scene" aria-hidden="true">
+    <span class="j-hero__orbit j-hero__orbit--outer"></span>
+    <span class="j-hero__orbit j-hero__orbit--inner"></span>
+    <img class="j-hero__mark" src="assets/img/mark-white.png" alt="" width="598" height="524">
+    <span class="j-hero__brandline">Mollweide · Alliance</span>
+  </div>
+  <div class="wrap j-hero__inner">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span>/</span> Join the alliance</nav>
-    <h1 class="display">${words(GROUPS.length)[0].toUpperCase() + words(GROUPS.length).slice(1)} ways in, <b>all starting in the game.</b></h1>
-    <div class="brandrule"></div>
-    <p class="lede mt-3">New carriers are always welcome. Find us in the alliance search in <span data-slot="game">The Airline Simulator</span>, then come and say hello on Discord — the rest is a conversation rather than a form.</p>
+    <p class="j-kicker">Membership · The Airline Simulator</p>
+    <h1>No form.<br><strong>Start in the game.</strong></h1>
+    <p class="j-hero__lede">Join a growing community of operators, find codeshare partners and give your airline greater visibility. Find Mollweide in The Airline Simulator and connect with members on Discord.</p>
+    <div class="j-hero__facts" aria-label="How joining works">
+      <span><b>${GROUPS.length}</b> in-game listings</span>
+      <span><b>1</b> shared Discord</span>
+      <span><b>0</b> website forms</span>
+    </div>
   </div>
 </section>
 
-<section class="section">
+<section class="j-groups">
   <div class="wrap">
-    <div class="sec-head">
-      <div><h2 class="display" data-rv>${GROUPS[0]}, <b>${GROUPS.slice(1, -1).join(', ')}${GROUPS.length > 2 ? ' and ' : 'and '}${GROUPS[GROUPS.length - 1]}.</b></h2>
-      <p class="lede mt-2" data-rv>Each is listed separately in game. The names below are what the game matches on, so it is worth copying them across rather than typing them out.</p></div>
+    <div class="j-sectionhead">
+      <div><p class="j-index">01 · Find the listing</p><h2>Three names<br><strong>inside the game.</strong></h2></div>
+      <p>Each group appears separately in alliance search. Copy the exact search string for the group you have been directed to.</p>
     </div>
     <div class="joins" id="joinGroups"></div>
   </div>
 </section>
 
-<section class="section on-wash">
+<section class="j-process">
   <div class="wrap">
-    <div class="sec-head">
-      <div><h2 class="display">Three steps, <b>and none of them here.</b></h2>
-      <p class="lede mt-2">There is no application form — not on this site and not in the game. Finding us and getting in touch is the whole of it.</p></div>
+    <div class="j-process__intro">
+      <p class="j-index">02 · What happens next</p>
+      <h2>From search<br><strong>to membership.</strong></h2>
+      <p>There is no application form on this website. These are the only steps.</p>
     </div>
 
-    <ol class="spec">
-      <li class="spec__item"><span class="spec__n">01</span><div>
+    <ol class="j-steps">
+      <li><span class="j-steps__n">01</span><div>
         <h3 class="spec__t">Find us in the game</h3>
         <p class="spec__b">Open the alliance search and look up whichever of the ${words(GROUPS.length)} groups you are interested in. Every name is above, and each can be copied straight from this page.</p>
       </div></li>
 
-      <li class="spec__item"><span class="spec__n">02</span><div>
+      <li><span class="j-steps__n">02</span><div>
         <h3 class="spec__t">Come and say hello on Discord</h3>
         <p class="spec__b">The invite links are given in game rather than published here. Since there is nothing to apply through, the channel is where joining is actually arranged — introduce your airline and someone will pick it up from there.</p>
       </div></li>
 
-      <li class="spec__item"><span class="spec__n">03</span><div>
+      <li><span class="j-steps__n">03</span><div>
         <h3 class="spec__t">Send a few details when you are ready</h3>
         <p class="spec__b">Once you are in, we will add your carrier to this site: the member wall, the route map, and flight search as an operating carrier. The submissions page sets out what is useful to send, though there is no hurry about it.</p>
-        <p class="spec__eg"><b>Next</b> &nbsp;<a href="submit.html" style="color:var(--blue);font-weight:600">What to send for the website</a></p>
+        <a class="j-steps__link" href="submit.html">What to send for the website ↗</a>
       </div></li>
     </ol>
   </div>
 </section>
 
-<section class="section on-ink" style="background:var(--blue-ink)">
-  <div class="wrap">
-    <div class="sec-head">
-      <div><h2 class="display">Where the alliance <b>actually happens.</b></h2>
-      <p class="lede mt-2">We ask every member airline to be in the channel. It is how the alliance keeps in touch, and it is the only way we have of reaching you.</p></div>
+<section class="j-channel">
+  <div class="wrap j-channel__inner">
+    <div class="j-channel__title">
+      <p class="j-index">03 · The shared channel</p>
+      <h2>The alliance<br><strong>meets on Discord.</strong></h2>
+      <p>Every member airline is asked to be there. It is how the alliance stays in contact.</p>
     </div>
-    <div class="two-col">
-      <ul class="reqs">
+    <div class="j-channel__details">
+      <ul>
         <li><b>The invite links are given in game.</b> We do not publish them here, so the in-game listing is the place to look.</li>
         <li><b>All ${words(GROUPS.length)} groups share the same channel</b>, so you will find everyone in one place whichever you join through.</li>
         <li><b>Anything you would like shown on this site is sent there</b> — airline details, livery artwork, lounges and news.</li>
       </ul>
-      <div>
-        <p class="lede" style="font-size:1rem">It is also where route coordination and codeshare requests are handled, so it is worth being around for reasons beyond the formality.</p>
-        <p class="body-copy mt-3" style="color:var(--tx-on-ink-soft)">If you have found us in game but cannot see an invite anywhere, just mention it when you get in touch and someone will send one over.</p>
-      </div>
+      <p>Route coordination and codeshare requests happen there too. If the invite is missing from an in-game listing, ask a member for the current link.</p>
     </div>
   </div>
 </section>
 
-<section class="band section--tight">
-  <div class="wrap band__in">
-    <div><h2 class="display" style="font-size:clamp(1.6rem,3.4vw,2.6rem)">Already in? <b>Here is what helps.</b></h2></div>
-    <a class="btn btn--lg" style="background:#fff;color:var(--blue)" href="submit.html">Member submissions <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+<section class="j-next">
+  <div class="wrap j-next__inner">
+    <div><p class="j-index">Already a member?</p><h2>Prepare your<br><strong>airline profile.</strong></h2></div>
+    <div><p>The submissions guide explains the few details and images needed to add an airline to the website.</p><a class="btn btn--primary btn--lg" href="submit.html">Open submissions guide <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
   </div>
 </section>
+</main>
 ` + footer() + `
 <script>
   renderJoin(document.getElementById('joinGroups'));

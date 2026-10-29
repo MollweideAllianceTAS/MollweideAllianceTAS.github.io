@@ -1,0 +1,14 @@
+{
+  "name": "Lemanair",
+  "code": "LX",
+  "country": "Switzerland",
+  "color": "#1B4A8F",
+  "tail": "assets/img/members/lemanair.webp",
+  "hubs": [
+    "GVA"
+  ],
+  "focus": [],
+  "joined": 2024,
+  "blurb": "The alliance's Alpine gateway. From Geneva, Lemanair links western Switzerland to the network with a precision short-haul operation and a growing long-haul programme.",
+  "order": 1
+}

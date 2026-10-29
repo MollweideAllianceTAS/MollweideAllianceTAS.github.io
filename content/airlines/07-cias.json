@@ -1,0 +1,194 @@
+{
+  "name": "China Intercontinental Air Systems",
+  "short": "CIAS",
+  "code": "QH",
+  "country": "People's Republic of China",
+  "color": "#B4191F",
+  "tail": "assets/img/members/cias.webp",
+  "hubs": [
+    "PVG",
+    "PEK",
+    "KMG",
+    "URC",
+    "YNT",
+    "SZX"
+  ],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "An actively growing Chinese carrier with big ambitions, flying from Shanghai Pudong and Beijing Capital with further bases across the mainland from Kunming to Ürümqi.",
+  "profile": {
+    "founded": "2014",
+    "about": [
+      "China Intercontinental Air Systems connects mainland China with every inhabited continent. It flies from Shanghai Pudong and Beijing Capital, with further bases at Kunming, Ürümqi, Yantai and Shenzhen.",
+      "The airline was founded in Shanghai on 16 January 2014 and began flying on 22 June 2015 as Shanghai Express, linking Shanghai with the rest of China on a small fleet of Boeing 717s, 737s and 757s.",
+      "A reorganisation in 2017 turned it towards international flying. The older aircraft were retired in favour of new types, and Chinese-built aircraft now make up a large part of the fleet."
+    ],
+    "network": [
+      "Long-haul flying is split between the two primary hubs. Beijing Capital serves Africa, the Gulf, Europe, Oceania and North America; Shanghai Pudong links China with Southeast Asia, the Middle East, Europe, Oceania and Latin America."
+    ],
+    "routes": [
+      [
+        "PEK",
+        "KMG"
+      ],
+      [
+        "PEK",
+        "ADD"
+      ],
+      [
+        "PEK",
+        "AUH"
+      ],
+      [
+        "PEK",
+        "MEL"
+      ],
+      [
+        "PEK",
+        "MAD"
+      ],
+      [
+        "PEK",
+        "SVO"
+      ],
+      [
+        "PEK",
+        "SEA"
+      ],
+      [
+        "PVG",
+        "SIN"
+      ],
+      [
+        "PVG",
+        "CAI"
+      ],
+      [
+        "PVG",
+        "DXB"
+      ],
+      [
+        "PVG",
+        "AKL"
+      ],
+      [
+        "PVG",
+        "FRA"
+      ],
+      [
+        "PVG",
+        "LED"
+      ],
+      [
+        "PVG",
+        "MEX"
+      ]
+    ],
+    "fleet": {
+      "current": [
+        [
+          "Airbus",
+          "A319neo",
+          "30 aircraft"
+        ],
+        [
+          "Airbus",
+          "A320neo",
+          "30 aircraft"
+        ],
+        [
+          "Airbus",
+          "A321neo",
+          "30 aircraft"
+        ],
+        [
+          "Airbus",
+          "A321XLR",
+          "30 aircraft"
+        ],
+        [
+          "Airbus",
+          "A350-900",
+          "20 aircraft"
+        ],
+        [
+          "Airbus",
+          "A380-800",
+          "30 aircraft"
+        ],
+        [
+          "Boeing",
+          "737 MAX 7",
+          "30 aircraft"
+        ],
+        [
+          "Boeing",
+          "737 MAX 8",
+          "30 aircraft"
+        ],
+        [
+          "Boeing",
+          "737 MAX 9",
+          "30 aircraft"
+        ],
+        [
+          "Boeing",
+          "747-400",
+          "20 aircraft · Leased from GECAS"
+        ],
+        [
+          "Boeing",
+          "747-8I",
+          "10 aircraft"
+        ],
+        [
+          "Boeing",
+          "777-200",
+          "10 aircraft · Leased from GECAS"
+        ],
+        [
+          "Boeing",
+          "777-200LR",
+          "10 aircraft"
+        ],
+        [
+          "Boeing",
+          "777-300",
+          "10 aircraft · Leased from GECAS"
+        ],
+        [
+          "Boeing",
+          "777-300ER",
+          "10 aircraft"
+        ],
+        [
+          "Boeing",
+          "787-8",
+          "20 aircraft"
+        ],
+        [
+          "Boeing",
+          "787-9",
+          "20 aircraft"
+        ],
+        [
+          "COMAC",
+          "C909 (ARJ21-700)",
+          "100 aircraft"
+        ],
+        [
+          "COMAC",
+          "C919-100ER",
+          "300 aircraft"
+        ],
+        [
+          "UAC",
+          "Superjet 100-95LR",
+          "100 aircraft · 25 of them leased from Gazprom Avia"
+        ]
+      ],
+      "incoming": []
+    }
+  },
+  "order": 7
+}

@@ -16,8 +16,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site.css?v=752a6947">
+<link rel="stylesheet" href="assets/css/members-cinematic.css?v=19407b99">
 </head>
-<body>
+<body class="members-page">
 <div class="topbar">
   <div class="wrap topbar__in">
     <p>The Mollweide Alliance is a fictitious alliance created for The Airline Simulator</p>
@@ -46,32 +47,58 @@
     </nav>
   </div>
 </header>
-<section class="phead">
-  <img class="phead__bg" src="assets/img/photos/lineup-four.jpg" alt="" width="1440" height="380">
-  <div class="wrap phead__in">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span>/</span> Featured airlines</nav>
-    <h1 class="display">Featured <b>airlines</b></h1>
-    <div class="brandrule"></div>
-    <p class="lede mt-3">Each member keeps its own livery, its own cabin and its own home market. What they share is a schedule, a loyalty programme and a promise that a connection onto another member's aircraft feels like the same journey.</p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <div class="sec-head">
-      <div><h2 class="display">The <b>full line-up.</b></h2></div>
-      <p class="lbl" style="line-height:1.8;white-space:nowrap">Hover to identify each carrier</p>
+<main>
+<section class="m-hero">
+  <img class="m-hero__image" src="assets/img/photos/hero-departures.jpg" alt="Alliance departures displayed inside an airport terminal" width="1800" height="667">
+  <div class="m-hero__veil" aria-hidden="true"></div>
+  <div class="wrap m-hero__inner">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span>/</span> Members</nav>
+    <p class="m-kicker">The airlines behind the network</p>
+    <h1>Our airlines.<br><strong>One alliance.</strong></h1>
+    <p class="m-hero__lede">Discover the airlines, home markets and hubs represented across Mollweide's network.</p>
+    <div class="m-hero__facts" aria-label="Featured member overview">
+      <span><strong>39</strong> featured airlines</span>
+      <span><strong>21</strong> home countries</span>
+      <span><strong>112</strong> listed hubs</span>
     </div>
-    <div class="liveries" id="membersAll"></div>
+  </div>
+  <div class="m-hero__manifest" aria-hidden="true">
+    <div><span><i>LX</i>Lemanair</span><span><i>GA</i>Caucausair</span><span><i>DU</i>Dumont</span><span><i>RG</i>Rogato</span><span><i>AY</i>Aranya Air</span><span><i>RK</i>Aranya Rukmanidoot</span><span><i>QH</i>CIAS</span><span><i>AS</i>Air SIAM</span><span><i>DX</i>DNX</span><span><i>KA</i>Kosmos</span><span><i>NS</i>Altasib</span><span><i>AA</i>Avni Airlines</span><span><i>AL</i>AirLiban</span><span><i>MX</i>Mexicana</span><span><i>CA</i>Californio Air</span><span><i>CL</i>Californio Shuttle</span><span><i>PA</i>Pacific Air</span><span><i>WA</i>Western Airways</span><span><i>QA</i>QuintAir</span><span><i>CS</i>Clear Sky</span><span><i>VO</i>Volare</span><span><i>OI</i>Montigo Air</span><span><i>HO</i>Hop on!</span><span><i>5K</i>AkerAir</span><span><i>PL</i>PolAir</span><span><i>SJ</i>StrayaJet</span><span><i>JO</i>Jet Oceania</span><span><i>RA</i>Royal Air Australia</span><span><i>PS</i>Pacific Sunset</span><span><i>VC</i>Virgin Caribbean</span><span><i>JN</i>JIA</span><span><i>LA</i>London Airways</span><span><i>EU</i>EuroStar</span><span><i>UN</i>Union Airlines</span><span><i>MG</i>Magyair</span><span><i>RO</i>Romanian Airways</span><span><i>MJ</i>MaraJet</span><span><i>AO</i>Aloha Air</span><span><i>AR</i>Aloha Regional</span></div>
+    <div><span><i>LX</i>Lemanair</span><span><i>GA</i>Caucausair</span><span><i>DU</i>Dumont</span><span><i>RG</i>Rogato</span><span><i>AY</i>Aranya Air</span><span><i>RK</i>Aranya Rukmanidoot</span><span><i>QH</i>CIAS</span><span><i>AS</i>Air SIAM</span><span><i>DX</i>DNX</span><span><i>KA</i>Kosmos</span><span><i>NS</i>Altasib</span><span><i>AA</i>Avni Airlines</span><span><i>AL</i>AirLiban</span><span><i>MX</i>Mexicana</span><span><i>CA</i>Californio Air</span><span><i>CL</i>Californio Shuttle</span><span><i>PA</i>Pacific Air</span><span><i>WA</i>Western Airways</span><span><i>QA</i>QuintAir</span><span><i>CS</i>Clear Sky</span><span><i>VO</i>Volare</span><span><i>OI</i>Montigo Air</span><span><i>HO</i>Hop on!</span><span><i>5K</i>AkerAir</span><span><i>PL</i>PolAir</span><span><i>SJ</i>StrayaJet</span><span><i>JO</i>Jet Oceania</span><span><i>RA</i>Royal Air Australia</span><span><i>PS</i>Pacific Sunset</span><span><i>VC</i>Virgin Caribbean</span><span><i>JN</i>JIA</span><span><i>LA</i>London Airways</span><span><i>EU</i>EuroStar</span><span><i>UN</i>Union Airlines</span><span><i>MG</i>Magyair</span><span><i>RO</i>Romanian Airways</span><span><i>MJ</i>MaraJet</span><span><i>AO</i>Aloha Air</span><span><i>AR</i>Aloha Regional</span></div>
   </div>
 </section>
 
-<section class="band section--tight">
-  <div class="wrap band__in">
-    <div><h2 class="display" style="font-size:clamp(1.6rem,3.4vw,2.6rem)">Every featured airline, <b>one booking.</b></h2></div>
-    <a class="btn btn--lg" style="background:#fff;color:var(--blue)" href="book.html">Search flights <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+<section class="m-directory" id="directory">
+  <div class="wrap">
+    <div class="m-directory__head">
+      <div><p class="m-index">01 · Member directory</p><h2>39 airlines.<br><strong>21 countries.</strong></h2></div>
+      <p>One searchable manifest. Find a member by airline, home country or hub.</p>
+    </div>
+    <div class="m-tools">
+      <label class="m-search"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m16.5 16.5 4 4"></path></svg><input id="memberSearch" type="search" aria-label="Search members" placeholder="Search airline, country or hub" autocomplete="off"></label>
+      <div class="m-filters" aria-label="Filter members">
+        <button type="button" data-member-filter="all" aria-pressed="true">All <span>39</span></button>
+        <button type="button" data-member-filter="profile" aria-pressed="false">Stories <span>24</span></button>
+        <button type="button" data-member-filter="connect" aria-pressed="false">Connect</button>
+      </div>
+      <p class="m-count" aria-live="polite"><span id="memberCount">39</span> airlines shown</p>
+    </div>
+    <div class="member-grid" id="membersAll"></div>
+    <p class="m-empty" id="memberEmpty" hidden>No airlines match that search yet.</p>
   </div>
 </section>
+
+<section class="m-exit">
+  <div class="wrap m-exit__inner">
+    <p class="m-index">02 · Continue the journey</p>
+    <h2>Explore the network.<br><strong>Find a connection.</strong></h2>
+    <div class="m-exit__foot">
+      <p>Turn the alliance line-up into a connected itinerary across the network.</p>
+      <a class="btn btn--sky btn--lg" href="book.html">Search alliance flights <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>
+</main>
 
 <footer class="ft">
   <div class="wrap ft__top">
@@ -120,10 +147,37 @@
     </div>
   </div>
 </footer>
-<script src="assets/js/data.js?v=b90c8f09"></script>
-<script src="assets/js/site.js?v=e8c4f308"></script>
+<script src="assets/js/members.generated.js?v=012b97ee"></script>
+<script src="assets/js/data.js?v=b6d66bcb"></script>
+<script src="assets/js/site.js?v=8db25271"></script>
 <script>
   renderMembers(document.getElementById('membersAll'));
+  (function () {
+    const directory = document.getElementById('membersAll');
+    const search = document.getElementById('memberSearch');
+    const buttons = Array.from(document.querySelectorAll('[data-member-filter]'));
+    const count = document.getElementById('memberCount');
+    const empty = document.getElementById('memberEmpty');
+    let filter = 'all';
+    function updateMembers() {
+      const query = search.value.trim().toLowerCase();
+      let shown = 0;
+      directory.querySelectorAll('[data-member]').forEach(card => {
+        const kindMatch = filter === 'all' || card.dataset[filter] === 'true';
+        const textMatch = !query || card.dataset.search.includes(query);
+        card.hidden = !(kindMatch && textMatch);
+        if (!card.hidden) shown += 1;
+      });
+      count.textContent = shown;
+      empty.hidden = shown !== 0;
+    }
+    search.addEventListener('input', updateMembers);
+    buttons.forEach(button => button.addEventListener('click', () => {
+      filter = button.dataset.memberFilter;
+      buttons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+      updateMembers();
+    }));
+  }());
   document.getElementById('ftMembers').innerHTML =
     MEMBERS.slice(0,6).map(m => '<li><a href="'+(memberPage(m)||'members.html#'+m.code)+'">'+ (m.short||m.name) +'</a></li>').join('');
 

@@ -1,0 +1,19 @@
+{
+  "name": "Rogato Linhas Aéreas",
+  "short": "Rogato",
+  "code": "RG",
+  "country": "Brazil",
+  "color": "#C0342F",
+  "tail": "assets/img/members/rogato.webp",
+  "hubs": [
+    "CGH",
+    "BSB",
+    "SSA",
+    "BEL",
+    "GIG"
+  ],
+  "focus": [],
+  "joined": 2025,
+  "blurb": "Brazil's domestic backbone within the alliance. Hubs at Congonhas, Brasília, Salvador, Belém and Galeão put almost every Brazilian city within one connection of the network.",
+  "order": 4
+}

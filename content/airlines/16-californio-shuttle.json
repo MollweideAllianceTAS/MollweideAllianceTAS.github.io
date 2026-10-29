@@ -1,0 +1,15 @@
+{
+  "name": "Californio Shuttle",
+  "code": "CL",
+  "country": "United States",
+  "color": "#0A3D91",
+  "tail": "assets/img/members/californio-shuttle.webp",
+  "hubs": [
+    "LAX",
+    "SFO"
+  ],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "Californio Air's short-haul sister, shuttling between Los Angeles and San Francisco and feeding both gateways from across the West Coast.",
+  "order": 16
+}

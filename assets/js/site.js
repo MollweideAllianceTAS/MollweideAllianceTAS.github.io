@@ -68,17 +68,13 @@ function aircraftFor(maker, model) {
   const t = (maker + ' ' + model).toLowerCase();
   return AIRCRAFT.find(a => a.match.test(t)) || null;
 }
-const AC_BY_TYPE = {};
-AIRCRAFT.forEach(a => AC_BY_TYPE[a.type] = a);
 
-/* What a member actually flies today: its profile's current fleet, or the
-   general mix for members that have not sent one. Ordered by range. */
+/* Only declared current aircraft can operate bookable services. */
 const _fleets = {};
 function fleetOf(m) {
   if (_fleets[m.code]) return _fleets[m.code];
   const listed = (m.profile && m.profile.fleet && m.profile.fleet.current) || [];
-  let types = listed.map(f => aircraftFor(f[0], f[1])).filter(Boolean);
-  if (!types.length) types = DEFAULT_FLEET.map(t => AC_BY_TYPE[t]).filter(Boolean);
+  const types = listed.map(f => aircraftFor(f[0], f[1])).filter(Boolean);
   return (_fleets[m.code] = Array.from(new Set(types)).sort((x, y) => x.maxKm - y.maxKm));
 }
 
@@ -108,14 +104,23 @@ function seatLayout(eq, cabinId) {
   return wide ? [1, 1, 1] : (y[0] + y[1] <= 5 ? [1, 1] : [2, 2]);   // first
 }
 
-/* Which members could operate a given sector? At least one endpoint must be
-   an alliance hub or focus city, and the member needs an aircraft with the
-   range. */
+/* Published [from, to, via] services fly from→via→to. Return services use
+   the same sectors in reverse. A hub alone never grants a route. */
+function publishedSectors(m) {
+  return ((m.profile && m.profile.routes) || [])
+    .flatMap(r => r[2] ? [[r[0], r[2]], [r[2], r[1]]] : [[r[0], r[1]]])
+    .filter(([a, b]) => airport(a) && airport(b) && a !== b);
+}
+function servesSector(m, fromC, toC) {
+  return publishedSectors(m).some(([a, b]) =>
+    (a === fromC && b === toC) || (a === toC && b === fromC));
+}
+
 function operatorsFor(fromC, toC) {
+  if (!airport(fromC) || !airport(toC) || fromC === toC) return [];
   const km = distKm(airport(fromC), airport(toC));
   return MEMBERS.filter(m => {
-    const s = servesSet(m);
-    return (s.includes(fromC) || s.includes(toC)) && fleetOf(m).some(a => a.maxKm >= km * 1.08);
+    return servesSector(m, fromC, toC) && fleetOf(m).some(a => a.maxKm >= km * 1.08);
   });
 }
 
@@ -178,20 +183,30 @@ function directFlights(fromC, toC, dateISO, cabinId) {
 function connectingFlights(fromC, toC, dateISO, cabinId, want) {
   const from = airport(fromC), to = airport(toC);
   if (!from || !to) return [];
-  const hubs = AIRPORTS.filter(a => (a.hub || a.focus) && a.code !== fromC && a.code !== toC);
+  // Include published stopovers even when they are not labelled as hubs.
+  const hubs = AIRPORTS.filter(a => a.code !== fromC && a.code !== toC &&
+    operatorsFor(fromC, a.code).length && operatorsFor(a.code, toC).length);
 
   // Rank candidate hubs by detour penalty — shortest total distance first.
   const direct = distKm(from, to);
   const ranked = hubs
     .map(h => ({ h, extra: distKm(from, h) + distKm(h, to) - direct }))
-    .filter(x => x.extra < direct * 1.25 + 2600)
-    .sort((a, b) => a.extra - b.extra)
-    .slice(0, 7);
+    // Avoid sending passengers across a continent and back just to connect.
+    .filter(x => x.extra <= Math.max(direct * 0.45, 600))
+    .sort((a, b) => a.extra - b.extra);
 
   const out = [];
   for (const { h } of ranked) {
     const leg1 = directFlights(fromC, h.code, dateISO, cabinId);
-    const leg2 = directFlights(h.code, toC, dateISO, cabinId);
+    const leg2 = [0, 1, 2].flatMap(day => {
+      const date = new Date(dateISO + 'T12:00:00Z');
+      date.setUTCDate(date.getUTCDate() + day);
+      return directFlights(h.code, toC, date.toISOString().slice(0, 10), cabinId)
+        .map(f => Object.assign({}, f, {
+          dep: f.dep + day * 1440, arr: f.arr + day * 1440,
+          dayGain: f.dayGain + day
+        }));
+    });
     if (!leg1.length || !leg2.length) continue;
 
     for (const a of leg1) {
@@ -522,36 +537,33 @@ function toast(msg) {
 
 /* --- Renderers used across pages ----------------------------------------- */
 
-/* The member wall: liveries side by side, the airline named on hover.
-   The name is always in the DOM for assistive tech, and is shown permanently
-   on touch devices, where there is no hover state. */
+/* The member directory: every airline is presented as a compact profile,
+   keeping its identity and useful network context visible without hover. */
 function renderMembers(el, limit) {
   if (!el) return;
   const list = limit ? MEMBERS.slice(0, limit) : MEMBERS;
-  /* In a rail the cards sit off to the right of a clipped box, so revealing
-     them one by one on intersection would leave most of the line blank until
-     it was scrolled to. The rail reveals as a single block instead. */
-  /* The caption carries the trading name: two members are registered under
-     names long enough to wrap, and the caption's height is reserved so that
-     revealing it cannot reflow the wall. The registered name stays on the
-     figure's title and in the image's alt text. */
-  /* A member with its own page is a link; the rest stay focusable figures, so
-     the name can still be revealed from the keyboard. */
-  const rail = el.classList.contains('liveries--rail');
   el.innerHTML = list.map((m, i) => {
     const page = memberPage(m);
-    const body = `
-      <img class="livery__img" src="${m.tail}" alt="${m.name} aircraft livery"
-           loading="lazy" width="380" height="285" decoding="async">
-      <figcaption class="livery__name">${m.short || m.name}${
-        m.group ? ` <span class="livery__grp">${groupOf(m).sub}</span>` : ''}</figcaption>`;
+    const hubs = (m.hubs || []).map(code => `<span>${code}</span>`).join('');
+    const search = [m.name, m.short, m.country].concat(m.hubs || [], m.focus || []).filter(Boolean).join(' ').toLowerCase();
+    const body = `<div class="member-card__visual" data-code="${m.code}" style="--member-colour:${m.color}">
+        <span class="member-card__code">${m.code}</span>
+        <span class="member-card__type">${m.group ? groupOf(m).sub : 'Alliance member'}</span>
+        <img class="member-card__aircraft" src="${m.tail}" alt="${m.name} aircraft livery"
+             loading="lazy" width="380" height="285" decoding="async">
+      </div>
+      <div class="member-card__body">
+        <p class="member-card__country">${m.country}</p>
+        <h3>${m.short || m.name}</h3>
+        <p class="member-card__blurb">${m.blurb}</p>
+        <div class="member-card__foot"><span class="member-card__hubs">${hubs || '<span>—</span>'}</span><span class="member-card__action">${page ? 'View member story <b>↗</b>' : 'Alliance listing'}</span></div>
+      </div>`;
     return `
-    <figure class="livery${page ? ' livery--link' : ''}" id="${m.code}"${page ? '' : ' tabindex="0"'}${
-      m.short ? ` title="${m.name}"` : ''}${rail ? '' : ` data-rv style="transition-delay:${i * 40}ms"`}>${
-      page ? `<a class="livery__a" href="${page}">${body}</a>` : body}
-    </figure>`;
+    <article class="member-card${page ? ' member-card--link' : ''}" id="${m.code}" data-member data-profile="${Boolean(page)}" data-connect="${Boolean(m.group)}" data-search="${search}" data-rv style="transition-delay:${Math.min(i * 24, 240)}ms">${
+      page ? `<a class="member-card__inner" href="${page}" aria-label="View ${m.name} member story">${body}</a>` : `<div class="member-card__inner">${body}</div>`}
+    </article>`;
   }).join('');
-  if (!rail) observeReveals(el);
+  observeReveals(el);
 }
 
 /* The home page line-up: tails parked nose-to-tail, each one tucked behind
@@ -748,9 +760,7 @@ function initHubExplorer(root) {
   /* Every route a member listed, as legs. A one-stop service [from, to, via]
      flies from→via→to. Routes are only those the members named — nothing is
      inferred — so a hub can have none yet. */
-  const legsOf = m => ((m.profile && m.profile.routes) || [])
-    .flatMap(r => r[2] ? [[r[0], r[2]], [r[2], r[1]]] : [[r[0], r[1]]])
-    .filter(([x, y]) => AP[x] && AP[y]);
+  const legsOf = publishedSectors;
 
   /* Who connects a hub to where: one entry per member that bases there or
      lists a route through it. */
@@ -782,7 +792,7 @@ function initHubExplorer(root) {
     MEMBERS.slice().sort((a, b) => nm(a).localeCompare(nm(b)))
       .map(m => `
       <button class="hx__opt" type="button" data-code="${m.code}" aria-pressed="false">
-        <i class="hx__dot" style="background:${onPage(m)}"></i>
+        <i class="hx__dot" style="background:${ink(m)}"></i>
         <span class="hx__name">${nm(m)}${
           m.group ? ` <em class="hx__grp">${groupOf(m).sub}</em>` : ''}</span>
         <span class="hx__n">${(m.hubs || []).length}</span>
@@ -942,8 +952,8 @@ function initHubExplorer(root) {
         ? `${routes} listed ${routes === 1 ? 'route' : 'routes'} by ${conns.filter(c => c.dests.length).length} ${conns.filter(c => c.dests.length).length === 1 ? 'airline' : 'airlines'}.`
         : 'No routes from here have been listed yet.'}</p>
       ${conns.map(c => `
-        <div class="hxd__al" style="--al:${onPage(c.m)}">
-          <p class="hxd__name"><i class="hx__dot" style="background:${onPage(c.m)}"></i>${
+        <div class="hxd__al" style="--al:${ink(c.m)}">
+          <p class="hxd__name"><i class="hx__dot" style="background:${ink(c.m)}"></i>${
             memberPage(c.m) ? `<a href="${memberPage(c.m)}">${c.m.name}</a>` : c.m.name}${
             c.based ? ' <em>hub</em>' : ''}</p>
           ${c.dests.length
@@ -1003,10 +1013,10 @@ function initHubExplorer(root) {
     if (list) {
       list.innerHTML = shownHubs.length ? shownHubs.map(a => `
         <li><button class="hx__hub" type="button" data-hub="${a.code}">
-          <span class="hx__code" style="color:${m ? onPage(m) : 'var(--blue)'}">${a.code}</span>
+          <span class="hx__code" style="color:${m ? ink(m) : 'var(--sky-soft)'}">${a.code}</span>
           <span class="hx__city">${a.city}${m && m.hubs[0] === a.code ? ' <em>primary</em>' : ''}</span>
           <span class="hx__apt">${a.name}, ${a.country}</span>
-          <span class="hx__by">${(basedAt[a.code] || []).map(x => `<i class="hx__dot" title="${x.name}" style="background:${onPage(x)}"></i>`).join('')}</span>
+          <span class="hx__by">${(basedAt[a.code] || []).map(x => `<i class="hx__dot" title="${x.name}" style="background:${ink(x)}"></i>`).join('')}</span>
         </button></li>`).join('')
         : '<li class="hx__empty">No hub matches that search.</li>';
     }
@@ -1068,21 +1078,26 @@ function initHubExplorer(root) {
 /* The in-game groups, each with the string to search for. */
 function renderJoin(el) {
   if (!el) return;
-  el.innerHTML = JOIN.map(j => `
+  el.innerHTML = JOIN.map((j, i) => `
     <article class="joinc" style="--jc:${j.accent}" data-rv>
-      <div class="brand brand--xl">
-        <img class="brand__mark" src="assets/img/mark-blue.png" alt="" width="58" height="51">
-        <span class="brand__txt">
-          <img class="brand__word" src="assets/img/wordmark-blue.png" alt="Mollweide" width="300" height="26">
-          <span class="brand__sub">${j.sub}</span>
-        </span>
+      <p class="joinc__index">${String(i + 1).padStart(2, '0')}</p>
+      <div class="joinc__identity">
+        <div class="brand brand--xl">
+          <img class="brand__mark" src="assets/img/mark-blue.png" alt="" width="58" height="51">
+          <span class="brand__txt">
+            <img class="brand__word" src="assets/img/wordmark-blue.png" alt="Mollweide" width="300" height="26">
+            <span class="brand__sub">${j.sub}</span>
+          </span>
+        </div>
+        <p class="joinc__b">${j.blurb}</p>
       </div>
-      <p class="joinc__b">${j.blurb}</p>
-      <p class="joinc__lab">Search in game for</p>
-      <div class="codechip">
-        <code class="codechip__v">${j.search}</code>
-        <button class="codechip__btn" type="button" data-copy="${j.search}"
-                aria-label="Copy ${j.search}">Copy</button>
+      <div class="joinc__search">
+        <p class="joinc__lab">Search in game for</p>
+        <div class="codechip">
+          <code class="codechip__v">${j.search}</code>
+          <button class="codechip__btn" type="button" data-copy="${j.search}"
+                  aria-label="Copy ${j.search}">Copy</button>
+        </div>
       </div>
     </article>`).join('');
   observeReveals(el);

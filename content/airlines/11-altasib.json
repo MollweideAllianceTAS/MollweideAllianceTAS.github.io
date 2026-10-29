@@ -1,0 +1,92 @@
+{
+  "name": "Altai-Sibir Airlines",
+  "short": "Altasib",
+  "code": "NS",
+  "country": "Russia",
+  "color": "#586673",
+  "tail": "assets/img/members/altasib.webp",
+  "hubs": [
+    "OVB",
+    "BAX"
+  ],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "A Siberian low-cost carrier flying across Russia and to neighbouring countries from Novosibirsk and Barnaul.",
+  "profile": {
+    "founded": "1992",
+    "about": [
+      "Altasib is a Russian low-cost carrier flying from Novosibirsk, with its original base at Barnaul. It serves destinations across Russia, with international flights to China, Kazakhstan, Uzbekistan, Belarus, Türkiye and Egypt.",
+      "The airline was founded in Barnaul in 1992 with a fleet of Tupolev Tu-154s and Tu-134s, and later moved most of its flying to Novosibirsk. Over the years it replaced its Soviet aircraft with Boeing 737-800s and Airbus A320s and A321s."
+    ],
+    "network": [
+      "Novosibirsk is the main hub, linking Siberia with Moscow and Saratov, with Anadyr in the far north-east, and with Ankara abroad."
+    ],
+    "routes": [
+      [
+        "OVB",
+        "SVO"
+      ],
+      [
+        "OVB",
+        "DYR"
+      ],
+      [
+        "OVB",
+        "GSV"
+      ],
+      [
+        "OVB",
+        "ESB"
+      ]
+    ],
+    "fleet": {
+      "current": [
+        [
+          "Airbus",
+          "A220-100",
+          "10 aircraft · Leased from Airbus"
+        ],
+        [
+          "Airbus",
+          "A320-200",
+          "10 aircraft · Leased from AerCap"
+        ],
+        [
+          "Airbus",
+          "A320neo",
+          "10 aircraft · Leased from S7"
+        ],
+        [
+          "Airbus",
+          "A321-200",
+          "10 aircraft · Leased from AerCap"
+        ],
+        [
+          "Airbus",
+          "A321neo",
+          "10 aircraft · 8 leased from S7, 2 from Turkish Airlines"
+        ],
+        [
+          "ATR",
+          "72"
+        ],
+        [
+          "Boeing",
+          "737-800",
+          "10 aircraft · Leased from GECAS"
+        ],
+        [
+          "UAC",
+          "Superjet 100-95B"
+        ],
+        [
+          "UAC",
+          "Tu-204-100",
+          "15 aircraft · 5 leased from Red Wings, 10 from Aviastar-TU"
+        ]
+      ],
+      "incoming": []
+    }
+  },
+  "order": 11
+}

@@ -1,0 +1,178 @@
+{
+  "name": "Kosmos Airways",
+  "short": "Kosmos",
+  "code": "KA",
+  "country": "Russia",
+  "color": "#11053B",
+  "tail": "assets/img/members/kosmos.webp",
+  "hubs": [
+    "SVO",
+    "LED",
+    "DME",
+    "GOJ",
+    "OVB"
+  ],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "A premium Russian carrier flying long-haul from Moscow Sheremetyevo and St Petersburg, with further hubs at Domodedovo, Nizhny Novgorod and Novosibirsk.",
+  "profile": {
+    "founded": "1991",
+    "about": [
+      "Kosmos is a premium Russian carrier, flying from Moscow Sheremetyevo and St Petersburg with further hubs at Moscow Domodedovo, Nizhny Novgorod and Novosibirsk. It competes at the top end of long-haul flying, against the leading Gulf and Asian carriers.",
+      "The airline was founded in Moscow in 1991, emerging from what remained of Aeroflot after its break-up. Its first fleet combined Tupolev Tu-134s and Tu-154s, Antonov An-24s and Ilyushin Il-62s with Airbus A310-300s and Boeing 737-400s leased from Aeroflot.",
+      "When Transaero went bankrupt in 2015, Kosmos and Aeroflot divided its remaining assets. Kosmos took the Airbus A380s, Boeing 747-8Is and Airbus A350s that Transaero had ordered but never received."
+    ],
+    "network": [
+      "Sheremetyevo is the main hub, with long-haul services to Beijing, Lagos, Dubai, Paris and Dallas and domestic flights as far as Khabarovsk. St Petersburg links Russia with Shanghai, Manila, Minsk, Victoria Falls and Denver.",
+      "Domodedovo is Moscow's backup hub. It handles the A380 and 747-8I, which Sheremetyevo cannot accommodate, and takes every Moscow flight if Sheremetyevo closes."
+    ],
+    "routes": [
+      [
+        "SVO",
+        "PKX"
+      ],
+      [
+        "SVO",
+        "LOS"
+      ],
+      [
+        "SVO",
+        "DXB"
+      ],
+      [
+        "SVO",
+        "ORY"
+      ],
+      [
+        "SVO",
+        "KHV"
+      ],
+      [
+        "SVO",
+        "DFW"
+      ],
+      [
+        "LED",
+        "PVG"
+      ],
+      [
+        "LED",
+        "MNL"
+      ],
+      [
+        "LED",
+        "MSQ"
+      ],
+      [
+        "LED",
+        "VFA"
+      ],
+      [
+        "LED",
+        "DEN"
+      ]
+    ],
+    "fleet": {
+      "current": [
+        [
+          "Airbus",
+          "A320neo",
+          "18 aircraft"
+        ],
+        [
+          "Airbus",
+          "A321neo",
+          "18 aircraft"
+        ],
+        [
+          "Airbus",
+          "A321XLR",
+          "18 aircraft"
+        ],
+        [
+          "Airbus",
+          "A330-900",
+          "18 aircraft"
+        ],
+        [
+          "Airbus",
+          "A350-900",
+          "18 aircraft"
+        ],
+        [
+          "Airbus",
+          "A350-1000",
+          "12 aircraft"
+        ],
+        [
+          "Airbus",
+          "A380-800",
+          "24 aircraft · Operates from Domodedovo"
+        ],
+        [
+          "Boeing",
+          "737 MAX 8",
+          "18 aircraft"
+        ],
+        [
+          "Boeing",
+          "737 MAX 9",
+          "18 aircraft"
+        ],
+        [
+          "Boeing",
+          "747-8I",
+          "18 aircraft · Operates from Domodedovo"
+        ],
+        [
+          "Boeing",
+          "787-8",
+          "18 aircraft"
+        ],
+        [
+          "Boeing",
+          "787-9",
+          "18 aircraft"
+        ],
+        [
+          "Embraer",
+          "E195-E2",
+          "18 aircraft"
+        ]
+      ],
+      "incoming": [
+        [
+          "Boeing",
+          "777-9",
+          "24 aircraft"
+        ],
+        [
+          "UAC",
+          "MC-21-210",
+          "18 aircraft"
+        ],
+        [
+          "UAC",
+          "MC-21-310",
+          "18 aircraft"
+        ],
+        [
+          "UAC",
+          "MC-21-410",
+          "18 aircraft"
+        ],
+        [
+          "UAC",
+          "Tu-214",
+          "12 aircraft · Enters service when the type reaches the game"
+        ],
+        [
+          "UAC",
+          "Tu-454",
+          "12 aircraft"
+        ]
+      ]
+    }
+  },
+  "order": 10
+}

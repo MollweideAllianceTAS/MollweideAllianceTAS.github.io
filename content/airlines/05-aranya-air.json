@@ -1,0 +1,18 @@
+{
+  "name": "Aranya Air",
+  "code": "AY",
+  "country": "India",
+  "color": "#6B9A35",
+  "tail": "assets/img/members/aranya-air.webp",
+  "hubs": [
+    "BOM",
+    "DEL",
+    "BLR",
+    "HYD",
+    "MAA"
+  ],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "A five-hub South Asian network spanning Mumbai, Delhi, Bangalore, Hyderabad and Chennai, connecting the alliance with the growing Indian market and beyond.",
+  "order": 5
+}

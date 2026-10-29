@@ -1,0 +1,16 @@
+{
+  "name": "Californio Air",
+  "code": "CA",
+  "country": "United States",
+  "color": "#1273D4",
+  "tail": "assets/img/members/californio.webp",
+  "hubs": [
+    "LAX"
+  ],
+  "focus": [
+    "SFO"
+  ],
+  "joined": 2026,
+  "blurb": "A West Coast carrier bearing the bear and star, Californio provides the alliance's primary transpacific and North American gateway.",
+  "order": 15
+}

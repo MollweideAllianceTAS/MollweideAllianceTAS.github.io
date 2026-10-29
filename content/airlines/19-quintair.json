@@ -1,0 +1,85 @@
+{
+  "name": "QuintAir",
+  "code": "QA",
+  "country": "United States",
+  "group": "connect",
+  "color": "#FFB6C1",
+  "tail": "assets/img/members/quintair.webp",
+  "hubs": [
+    "LAX",
+    "MIA",
+    "JFK",
+    "DFW"
+  ],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "A US international carrier in character liveries, flying from Los Angeles, Miami, New York JFK and Dallas/Fort Worth.",
+  "profile": {
+    "about": [
+      "QuintAir is a United States international carrier flying from hubs at Los Angeles, Miami, New York JFK and Dallas/Fort Worth. It joined the alliance through Mollweide Connect.",
+      "Its aircraft wear character liveries inspired by the anime The Quintessential Quintuplets, giving the airline a style passengers recognise wherever it flies.",
+      "A dedicated domestic fleet is planned, to expand its regional flying."
+    ],
+    "network": [
+      "QuintAir flies long-haul from all four hubs: across the Pacific to Tokyo, Seoul and Sydney, across the Atlantic to London, and south to São Paulo. Its fleet is led by the Boeing 777-300ER, 787-9 and Airbus A350-1000."
+    ],
+    "routes": [
+      [
+        "LAX",
+        "NRT"
+      ],
+      [
+        "LAX",
+        "SYD"
+      ],
+      [
+        "MIA",
+        "GRU"
+      ],
+      [
+        "JFK",
+        "LHR"
+      ],
+      [
+        "DFW",
+        "ICN"
+      ]
+    ],
+    "fleet": {
+      "current": [
+        [
+          "Airbus",
+          "A321neo",
+          "15 aircraft"
+        ],
+        [
+          "Airbus",
+          "A350-1000",
+          "31 aircraft"
+        ],
+        [
+          "Airbus",
+          "A380-800",
+          "9 aircraft"
+        ],
+        [
+          "Boeing",
+          "777-300",
+          "4 aircraft"
+        ],
+        [
+          "Boeing",
+          "777-300ER",
+          "39 aircraft"
+        ],
+        [
+          "Boeing",
+          "787-9 Dreamliner",
+          "35 aircraft"
+        ]
+      ],
+      "incoming": []
+    }
+  },
+  "order": 19
+}

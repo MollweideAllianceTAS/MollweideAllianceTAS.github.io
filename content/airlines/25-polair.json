@@ -1,0 +1,252 @@
+{
+  "name": "PolAir",
+  "code": "PL",
+  "country": "Poland",
+  "color": "#C9240C",
+  "tail": "assets/img/members/polair.webp",
+  "hubs": [
+    "WAW",
+    "KRK",
+    "SZY"
+  ],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "The alliance's Polish member, linking Central Europe to the wider network through Warsaw Chopin, with bases at Krakow and Olsztyn-Mazury serving the south and the north-east.",
+  "profile": {
+    "founded": "2020",
+    "about": [
+      "PolAir is a Polish carrier flying short-, medium- and long-haul services from Warsaw Chopin, with further bases at Krakow and Olsztyn-Mazury. It connects Poland with Europe, North America, Asia, the Middle East and leisure destinations further afield.",
+      "Founded in Warsaw in 2020, the airline has grown quickly into a major European carrier with a global network.",
+      "Its aim from the outset has been to pair efficient operations with a high standard of passenger experience, and it takes pride in its Polish heritage."
+    ],
+    "network": [
+      "Warsaw carries most of the long-haul flying, to New York, Chicago, Boston, Fort Lauderdale, Montréal, Tokyo, Bangkok, Delhi, Dubai and Zanzibar, alongside a European network from Reykjavík to Baku.",
+      "Krakow adds Los Angeles, Washington and Zanzibar to its European routes, and Olsztyn-Mazury links north-east Poland with Germany and Scandinavia."
+    ],
+    "routes": [
+      [
+        "WAW",
+        "JFK"
+      ],
+      [
+        "WAW",
+        "ORD"
+      ],
+      [
+        "WAW",
+        "BOS"
+      ],
+      [
+        "WAW",
+        "FLL"
+      ],
+      [
+        "WAW",
+        "YUL"
+      ],
+      [
+        "WAW",
+        "NRT"
+      ],
+      [
+        "WAW",
+        "BKK"
+      ],
+      [
+        "WAW",
+        "DEL"
+      ],
+      [
+        "WAW",
+        "DXB"
+      ],
+      [
+        "WAW",
+        "ZNZ"
+      ],
+      [
+        "WAW",
+        "AMS"
+      ],
+      [
+        "WAW",
+        "LHR"
+      ],
+      [
+        "WAW",
+        "CDG"
+      ],
+      [
+        "WAW",
+        "BCN"
+      ],
+      [
+        "WAW",
+        "OPO"
+      ],
+      [
+        "WAW",
+        "TFN"
+      ],
+      [
+        "WAW",
+        "KEF"
+      ],
+      [
+        "WAW",
+        "GLA"
+      ],
+      [
+        "WAW",
+        "HEL"
+      ],
+      [
+        "WAW",
+        "ZRH"
+      ],
+      [
+        "WAW",
+        "CIA"
+      ],
+      [
+        "WAW",
+        "HER"
+      ],
+      [
+        "WAW",
+        "IST"
+      ],
+      [
+        "WAW",
+        "TLV"
+      ],
+      [
+        "WAW",
+        "TBS"
+      ],
+      [
+        "WAW",
+        "GYD"
+      ],
+      [
+        "KRK",
+        "LAX"
+      ],
+      [
+        "KRK",
+        "IAD"
+      ],
+      [
+        "KRK",
+        "ZNZ"
+      ],
+      [
+        "KRK",
+        "ABZ"
+      ],
+      [
+        "KRK",
+        "BIO"
+      ],
+      [
+        "KRK",
+        "LIS"
+      ],
+      [
+        "KRK",
+        "CPH"
+      ],
+      [
+        "KRK",
+        "FRA"
+      ],
+      [
+        "KRK",
+        "GVA"
+      ],
+      [
+        "KRK",
+        "CIA"
+      ],
+      [
+        "KRK",
+        "HER"
+      ],
+      [
+        "SZY",
+        "BER"
+      ],
+      [
+        "SZY",
+        "BRE"
+      ],
+      [
+        "SZY",
+        "CPH"
+      ],
+      [
+        "SZY",
+        "GOT"
+      ],
+      [
+        "SZY",
+        "OSL"
+      ],
+      [
+        "SZY",
+        "BGO"
+      ],
+      [
+        "SZY",
+        "BOO"
+      ]
+    ],
+    "fleet": {
+      "current": [
+        [
+          "Boeing",
+          "737 MAX 8",
+          "62 aircraft · The European backbone, and medium-haul flying"
+        ],
+        [
+          "Boeing",
+          "737 MAX 8-200",
+          "29 aircraft"
+        ],
+        [
+          "Boeing",
+          "737 MAX 10",
+          "6 aircraft"
+        ],
+        [
+          "Boeing",
+          "787-9 Dreamliner",
+          "20 aircraft · Intercontinental services"
+        ],
+        [
+          "Boeing",
+          "787-10 Dreamliner",
+          "21 aircraft · Intercontinental services"
+        ],
+        [
+          "Embraer",
+          "E195-E2",
+          "13 aircraft · Feeder and short-haul services"
+        ],
+        [
+          "Embraer",
+          "E175LR",
+          "7 aircraft · Feeder and short-haul services"
+        ]
+      ],
+      "incoming": [
+        [
+          "Boeing",
+          "737 MAX 10",
+          "4 aircraft"
+        ]
+      ]
+    }
+  },
+  "order": 25
+}

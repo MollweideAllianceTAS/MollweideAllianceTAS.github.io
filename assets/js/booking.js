@@ -201,9 +201,9 @@ function renderResults() {
   if (!list.length) {
     wrap.innerHTML = `<div class="empty">
       <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-      <h3 style="font-size:1.25rem;font-weight:700">No alliance service on this sector</h3>
-      <p class="body-copy" style="margin:.75rem auto 0">${A.city} to ${B.city} is not served directly or via a single connection.
-      Try an alliance hub such as ${AIRPORTS.filter(x => x.hub).slice(0, 3).map(x => x.code).join(', ')}.</p>
+      <h3 style="font-size:1.25rem;font-weight:700">No published service available for this search</h3>
+      <p class="body-copy" style="margin:.75rem auto 0">We could not build a direct or one-stop journey from ${A.city} to ${B.city}
+      using the routes and current fleets supplied by members. More services can appear as members add their details.</p>
       <button class="btn btn--line mt-3" data-back="1">Change search</button></div>`;
   } else {
     wrap.innerHTML = list.map(f => legHTML(f, dir)).join('');
@@ -510,7 +510,7 @@ function initBooking() {
 
   const acFrom = initAutocomplete($('#from'), $('#fromHint'), $('#fromAC'));
   const acTo   = initAutocomplete($('#to'),   $('#toHint'),   $('#toAC'));
-  acFrom.set('GVA'); acTo.set('GIG');          // a sensible opening pair
+  acFrom.set('GIG'); acTo.set('JFK');          // a published Dumont service
 
   /* Trip type */
   $$('[data-trip]').forEach(b => b.addEventListener('click', () => {

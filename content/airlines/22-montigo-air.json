@@ -1,0 +1,146 @@
+{
+  "name": "Montigo Airline Corporation",
+  "short": "Montigo Air",
+  "code": "OI",
+  "country": "Italy",
+  "color": "#0F4C81",
+  "tail": "assets/img/members/montigo-air.webp",
+  "hubs": [
+    "MXP",
+    "FCO"
+  ],
+  "focus": [
+    "LGW",
+    "JFK",
+    "DOH",
+    "DXB",
+    "JNB",
+    "ALG"
+  ],
+  "joined": 2026,
+  "blurb": "An Italian hybrid carrier from Milan Malpensa and Rome Fiumicino, pairing fair fares with Italian hospitality and a stopover programme through Doha and Dubai.",
+  "profile": {
+    "founded": "2023",
+    "about": [
+      "Montigo Air is an Italian hybrid airline based at Milan Malpensa, with a second hub at Rome Fiumicino. Registered as a low-cost carrier, it keeps fares fair while adding extras that low-cost flying usually leaves out, pairing Italian hospitality with modern efficiency.",
+      "The airline was founded in Milan on 6 October 2023.",
+      "Its signature stopover programme lets passengers break a journey in Doha or Dubai with two complimentary nights."
+    ],
+    "network": [
+      "From Malpensa and Fiumicino the network spans Europe, North Africa, the Middle East, Asia and the Americas, with focus cities at London Gatwick, New York JFK, Doha, Dubai, Johannesburg and Algiers.",
+      "Non-stop long-haul flights are flown by the Boeing 787 Dreamliner. The Airbus A321XLR flies the one-stop services through Doha and Dubai to Seoul, Hong Kong, Bangkok and Kuala Lumpur."
+    ],
+    "routes": [
+      [
+        "MXP",
+        "FCO"
+      ],
+      [
+        "MXP",
+        "CDG"
+      ],
+      [
+        "MXP",
+        "BCN"
+      ],
+      [
+        "MXP",
+        "MAD"
+      ],
+      [
+        "MXP",
+        "LIS"
+      ],
+      [
+        "MXP",
+        "BER"
+      ],
+      [
+        "MXP",
+        "LGW"
+      ],
+      [
+        "MXP",
+        "AMS"
+      ],
+      [
+        "MXP",
+        "CAI"
+      ],
+      [
+        "MXP",
+        "RAK"
+      ],
+      [
+        "MXP",
+        "DXB"
+      ],
+      [
+        "MXP",
+        "DOH"
+      ],
+      [
+        "MXP",
+        "SIN"
+      ],
+      [
+        "MXP",
+        "HKG"
+      ],
+      [
+        "MXP",
+        "NRT"
+      ],
+      [
+        "MXP",
+        "JFK"
+      ],
+      [
+        "MXP",
+        "ICN",
+        "DOH"
+      ],
+      [
+        "MXP",
+        "HKG",
+        "DOH"
+      ],
+      [
+        "MXP",
+        "BKK",
+        "DXB"
+      ],
+      [
+        "MXP",
+        "KUL",
+        "DXB"
+      ]
+    ],
+    "fleet": {
+      "current": [
+        [
+          "Airbus",
+          "A320neo",
+          "40 aircraft"
+        ],
+        [
+          "Airbus",
+          "A220-300",
+          "12 aircraft"
+        ],
+        [
+          "Airbus",
+          "A321XLR",
+          "10 aircraft · Stopover services via Doha and Dubai"
+        ],
+        [
+          "Boeing",
+          "787-8",
+          "10 aircraft · Non-stop long-haul"
+        ]
+      ],
+      "incoming": []
+    }
+  },
+  "order": 22
+}

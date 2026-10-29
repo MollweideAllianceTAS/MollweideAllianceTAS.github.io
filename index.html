@@ -16,8 +16,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site.css?v=752a6947">
+<link rel="stylesheet" href="assets/css/cinematic.css?v=b07d86a9">
 </head>
-<body>
+<body class="cinema">
 <div class="topbar">
   <div class="wrap topbar__in">
     <p>The Mollweide Alliance is a fictitious alliance created for The Airline Simulator</p>
@@ -46,72 +47,172 @@
     </nav>
   </div>
 </header>
-<section class="hero">
-  <div class="wrap hero__in">
-    <div class="hero__grid">
-      <div>
-        <h1 class="display" data-rv style="transition-delay:80ms">
-          <span class="hero__line">Mollweide can take you</span>
-          <span class="hero__line">from <b class="hero__city" id="cityA">Tbilisi</b></span>
-          <span class="hero__line">to <b class="hero__city" id="cityB">Rio de Janeiro</b></span>
-        </h1>
-        <div class="brandrule" data-rv style="transition-delay:140ms"></div>
-        <p class="lede mt-3" data-rv style="transition-delay:200ms">The fastest-growing alliance in The Airline Simulator: more than 160 carriers on every inhabited continent, and no end of room to codeshare and work together.</p>
-        <div class="hero__actions" data-rv style="transition-delay:260ms">
-          <a class="btn btn--sky btn--lg" href="book.html">Book a flight <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          <a class="btn btn--ghost btn--lg" href="network.html">Explore the network</a>
-        </div>
-      </div>
-      <canvas class="hero__globe" id="globe" aria-hidden="true"></canvas>
-    </div>
-  </div>
-</section>
+<div class="c-progress" aria-hidden="true"><span></span></div>
 
-<section class="section">
-  <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <h2 class="display" data-rv>Named for a projection that <b>shows the world at true size.</b></h2>
+<main>
+<section class="c-hero" aria-labelledby="c-hero-title">
+  <div class="c-hero__grid" aria-hidden="true"></div>
+  <div class="c-hero__orbit c-hero__orbit--one" aria-hidden="true"></div>
+  <div class="c-hero__orbit c-hero__orbit--two" aria-hidden="true"></div>
+  <canvas class="c-hero__globe" id="globe" aria-hidden="true"></canvas>
+  <div class="wrap c-hero__inner">
+    <div class="c-hero__copy">
+      <p class="c-kicker c-reveal">Mollweide Alliance · The Airline Simulator</p>
+      <h1 id="c-hero-title" class="c-title c-reveal">The world,<br><strong>at true size.</strong></h1>
+      <p class="c-hero__lede c-reveal">Mollweide brings airlines together in The Airline Simulator, offering greater visibility, codeshare opportunities and an active community of operators.</p>
+      <div class="c-hero__actions c-reveal">
+        <a class="btn btn--sky btn--lg" href="join.html">Discover the alliance <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="c-textlink" href="network.html">Explore the network <span>↗</span></a>
       </div>
-      <a class="btn btn--line" href="network.html" data-rv>The route network</a>
-    </div>
-    <div class="two-col">
-      <p class="lede" data-rv>Mollweide Alliance brings more than 160 independently operated airlines together under one standard of service, one loyalty programme and one coordinated schedule. The name comes from the equal-area projection that shows every part of the world at its true size — a fair description of how the network is put together, region by region, around the carriers that know each one best.</p>
-      <div data-rv style="transition-delay:80ms">
-        <p class="body-copy">What that means for your journey is simple. Travel across several members and it is still <strong style="color:var(--blue)">one booking, on one reference</strong>, with your bags checked through to where you are going. Our airlines carry one another's flight numbers, so a route no single carrier operates still sells as a single through service.</p>
-        <p class="body-copy mt-2">Miles you earn on any member count towards status on every other, and from <strong style="color:var(--blue)">Strata</strong> upwards that status opens alliance lounges across the network. Schedules are timed into connecting waves at each hub, so the onward flight is there when you land — and if a connection slips, it is the alliance that looks after you, not a hand-off between airlines.</p>
+      <div class="c-route c-reveal" aria-label="A sample journey across the alliance">
+        <span class="c-route__code">MWA</span>
+        <span><b id="cityA">Tbilisi</b><small>From</small></span>
+        <i><span class="c-route__flight" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21.8 11.2 14 7.1V2.8a2 2 0 0 0-4 0v4.3l-7.8 4.1c-.7.4-.7 1.4 0 1.8L10 15v4.2l-2.2 1.5v1.1l4.2-.8 4.2.8v-1.1L14 19.2V15l7.8-2c.8-.2.8-1.4 0-1.8Z"/></svg></span></i>
+        <span><b id="cityB">Rio de Janeiro</b><small>To</small></span>
       </div>
     </div>
-  </div>
-</section>
-
-<section class="section on-wash">
-  <div class="wrap">
-    <div class="sec-head">
-      <div><h2 class="display" data-rv>Featured <b>airlines</b></h2></div>
-      <a class="btn btn--line" href="members.html" data-rv>View all featured airlines</a>
-    </div>
-    <div class="rail rail--tails" data-rv data-at="start">
-      <button class="rail__nav rail__nav--prev" type="button" data-rail="prev" aria-label="Previous airlines">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
-      </button>
-      <div class="tails" id="membersHome"></div>
-      <button class="rail__nav rail__nav--next" type="button" data-rail="next" aria-label="Next airlines">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
-      </button>
+    <div class="c-hero__facts c-reveal" aria-label="Alliance overview">
+      <span><strong>more than 160</strong> carriers in game</span>
+      <span><strong>39</strong> featured stories</span>
+      <span><strong>1</strong> shared community</span>
     </div>
   </div>
+  <a class="c-scroll" href="#meaning" aria-label="Continue to the story"><span></span>Scroll to explore</a>
 </section>
 
-<section class="band section--tight">
-  <div class="wrap band__in">
+<section class="c-intro" id="meaning">
+  <div class="wrap c-intro__grid">
+    <p class="c-index c-reveal">01 · The meaning</p>
     <div>
-      <h2 class="display" style="font-size:clamp(1.6rem,3.4vw,2.6rem)">Plan a journey across <b>the alliance network.</b></h2>
-      <p class="lede mt-2" style="color:rgba(255,255,255,.8)">Search every member carrier on a single itinerary.</p>
+      <h2 class="c-heading c-reveal">A map projection became<br><strong>a way of seeing the world.</strong></h2>
+      <p class="c-intro__lead c-reveal">Named after an equal-area map projection, Mollweide brings airlines from different regions together to share opportunities and make their networks more visible.</p>
     </div>
-    <a class="btn btn--lg" style="background:#fff;color:var(--blue)" href="book.html">Book a flight <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
   </div>
 </section>
+
+<section class="c-story" aria-label="The Mollweide idea">
+  <div class="c-story__visual" aria-hidden="true">
+    <div class="c-story__phase">
+      <span data-map-phase="1"><b>01</b> Entering the network</span>
+      <span data-map-phase="2"><b>02</b> Connecting airlines</span>
+      <span data-map-phase="3"><b>03</b> Growing together</span>
+    </div>
+    <div class="c-map">
+      <div class="c-map__grid"></div>
+      <img class="c-map__aircraft" src="assets/img/brand/mollweide-aircraft.png" alt="" width="2054" height="766">
+      <span class="c-map__route c-map__route--a"></span>
+      <span class="c-map__route c-map__route--b"></span>
+      <span class="c-map__route c-map__route--c"></span>
+    </div>
+    <p><span data-story-number>01</span> / 03</p>
+  </div>
+  <div class="c-story__chapters">
+    <article class="c-chapter" data-story-step="1">
+      <p class="c-kicker">Equal-area by design</p>
+      <h3>Every market has its place.</h3>
+      <p>The Mollweide projection preserves the relative area of regions across the world. It gives the alliance its name and reflects the breadth of markets represented by its members.</p>
+    </article>
+    <article class="c-chapter" data-story-step="2">
+      <p class="c-kicker">Member visibility</p>
+      <h3>Give your airline a wider audience.</h3>
+      <p>Member profiles introduce airlines, their hubs and routes to the wider alliance and to visitors exploring the network.</p>
+    </article>
+    <article class="c-chapter" data-story-step="3">
+      <p class="c-kicker">Working together</p>
+      <h3>More opportunities to connect.</h3>
+      <p>Members can find codeshare partners, coordinate routes and take part in a growing market, with discounts of up to 70% on offers.</p>
+    </article>
+  </div>
+</section>
+
+<section class="c-history">
+  <div class="wrap">
+    <div class="c-sectionhead">
+      <div>
+        <p class="c-index c-reveal">02 · Our story</p>
+        <h2 class="c-heading c-reveal">A growing alliance.<br><strong>A shared network.</strong></h2>
+      </div>
+      <p class="c-sectionhead__copy c-reveal">Mollweide brings operators in The Airline Simulator together to share routes, opportunities and ideas across a growing network.</p>
+    </div>
+    <div class="c-timeline">
+      <article class="c-moment c-reveal">
+        <time>2024</time><i></i>
+        <h3>The alliance takes shape</h3>
+        <p>Mollweide was founded to bring airlines together across the simulator.</p>
+      </article>
+      <article class="c-moment c-reveal">
+        <time>Today</time><i></i>
+        <h3>More than 160 carriers in game</h3>
+        <p>Carriers across every inhabited continent, with 39 member stories already featured here.</p>
+      </article>
+      <article class="c-moment c-reveal">
+        <time>Next</time><i></i>
+        <h3>A growing network</h3>
+        <p>More member profiles and routes give airlines further opportunities to be seen.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="c-members">
+  <div class="wrap">
+    <div class="c-sectionhead c-sectionhead--light">
+      <div>
+        <p class="c-index c-reveal">03 · The members</p>
+        <h2 class="c-heading c-reveal">Meet the airlines<br><strong>in our network.</strong></h2>
+      </div>
+      <div class="c-sectionhead__aside c-reveal">
+        <p>Explore member airlines, their home markets and the hubs that connect them.</p>
+        <a class="c-textlink" href="members.html">Meet the featured airlines <span>↗</span></a>
+      </div>
+    </div>
+  </div>
+  <div class="c-members__rail">
+    <div class="rail rail--tails" data-at="start">
+      <button class="rail__nav rail__nav--prev" type="button" data-rail="prev" aria-label="Previous airlines"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <div class="tails" id="membersHome"></div>
+      <button class="rail__nav rail__nav--next" type="button" data-rail="next" aria-label="Next airlines"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+  </div>
+</section>
+
+<section class="c-join" id="why-join">
+  <div class="wrap">
+    <div class="c-sectionhead">
+      <div>
+        <p class="c-index c-reveal">04 · Why Mollweide</p>
+        <h2 class="c-heading c-reveal">More opportunities<br><strong>for your airline.</strong></h2>
+      </div>
+      <a class="btn btn--primary btn--lg c-reveal" href="join.html">How to join <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+    <div class="c-benefits">
+      <article class="c-benefit c-reveal"><span>01</span><h3>Airline visibility</h3><p>Present your airline, its routes and its hubs to the alliance and a wider audience.</p></article>
+      <article class="c-benefit c-reveal"><span>02</span><h3>Codeshare opportunities</h3><p>Meet other operators and explore partnerships that connect your networks.</p></article>
+      <article class="c-benefit c-reveal"><span>03</span><h3>An active market</h3><p>Explore a growing market with discounts of up to 70% on offers.</p></article>
+      <article class="c-benefit c-reveal"><span>04</span><h3>A growing community</h3><p>Connect with fellow members on Discord to exchange ideas and coordinate opportunities.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="c-final">
+  <div class="c-final__lines" aria-hidden="true"></div>
+  <div class="wrap c-final__inner">
+    <div class="c-final__brand c-reveal" aria-label="Mollweide Alliance">
+      <img class="c-final__brand-mark" src="assets/img/mark-white.png" alt="" width="598" height="524">
+      <span class="c-final__brand-type">
+        <img class="c-final__brand-word" src="assets/img/wordmark-white.png" alt="Mollweide" width="1980" height="162">
+        <span>Alliance</span>
+      </span>
+    </div>
+    <p class="c-kicker c-reveal">The next route starts here</p>
+    <h2 class="c-reveal">Explore what your airline<br><strong>can do next.</strong></h2>
+    <div class="c-final__actions c-reveal">
+      <a class="btn btn--sky btn--lg" href="join.html">Join the alliance</a>
+      <a class="btn btn--ghost btn--lg" href="book.html">Experience the network</a>
+    </div>
+  </div>
+</section>
+</main>
 
 <footer class="ft">
   <div class="wrap ft__top">
@@ -160,9 +261,11 @@
     </div>
   </div>
 </footer>
-<script src="assets/js/data.js?v=b90c8f09"></script>
-<script src="assets/js/site.js?v=e8c4f308"></script>
+<script src="assets/js/members.generated.js?v=012b97ee"></script>
+<script src="assets/js/data.js?v=b6d66bcb"></script>
+<script src="assets/js/site.js?v=8db25271"></script>
 <script src="assets/js/land.js?v=6a275796"></script>
+<script src="assets/js/cinematic.js?v=297da32e"></script>
 <script>
   renderTails(document.getElementById('membersHome'));
   initRail(document.querySelector('.rail'));

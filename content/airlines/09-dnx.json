@@ -1,0 +1,225 @@
+{
+  "name": "DNX",
+  "code": "DX",
+  "country": "Romania",
+  "color": "#FBCB56",
+  "tail": "assets/img/members/dnx.webp",
+  "hubs": [
+    "CLJ",
+    "OTP"
+  ],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "Romania's largest airline, connecting the country with the world from Cluj-Napoca in Transylvania and Bucharest Henri Coandă.",
+  "profile": {
+    "founded": "2024",
+    "about": [
+      "DNX is Romania's largest airline. It connects the country with the world from its main base at Cluj-Napoca, the unofficial capital of Transylvania, and a second hub at Bucharest Henri Coandă.",
+      "Founded in 2024, it now serves more than 900 destinations, flying to leading cities' main airports as well as secondary ones, with fares to suit a wide range of budgets.",
+      "Its next aim is a base at every airport in Romania, strengthening domestic links and opening new routes abroad."
+    ],
+    "network": [
+      "Cluj carries the transatlantic flying to Atlanta, New York, Chicago and Montreal, along with East and South Asia, the Gulf and western Europe. Its relatively short runway means most flights there are flown by the Airbus A321XLR.",
+      "Bucharest reaches further, to Southeast Asia, Japan, Australia, South America and the US west coast, mostly on the Airbus A350-1000."
+    ],
+    "routes": [
+      [
+        "CLJ",
+        "ATL"
+      ],
+      [
+        "CLJ",
+        "JFK"
+      ],
+      [
+        "CLJ",
+        "ORD"
+      ],
+      [
+        "CLJ",
+        "YUL"
+      ],
+      [
+        "CLJ",
+        "BKK"
+      ],
+      [
+        "CLJ",
+        "DEL"
+      ],
+      [
+        "CLJ",
+        "HKG"
+      ],
+      [
+        "CLJ",
+        "PEK"
+      ],
+      [
+        "CLJ",
+        "PVG"
+      ],
+      [
+        "CLJ",
+        "DOH"
+      ],
+      [
+        "CLJ",
+        "DXB"
+      ],
+      [
+        "CLJ",
+        "AUH"
+      ],
+      [
+        "CLJ",
+        "AMS"
+      ],
+      [
+        "CLJ",
+        "FRA"
+      ],
+      [
+        "CLJ",
+        "MUC"
+      ],
+      [
+        "CLJ",
+        "VIE"
+      ],
+      [
+        "CLJ",
+        "CDG"
+      ],
+      [
+        "CLJ",
+        "LHR"
+      ],
+      [
+        "CLJ",
+        "FCO"
+      ],
+      [
+        "CLJ",
+        "IST"
+      ],
+      [
+        "CLJ",
+        "OTP"
+      ],
+      [
+        "CLJ",
+        "CND"
+      ],
+      [
+        "OTP",
+        "SIN"
+      ],
+      [
+        "OTP",
+        "KUL"
+      ],
+      [
+        "OTP",
+        "HND"
+      ],
+      [
+        "OTP",
+        "CCU"
+      ],
+      [
+        "OTP",
+        "SYD"
+      ],
+      [
+        "OTP",
+        "TLV"
+      ],
+      [
+        "OTP",
+        "ADD"
+      ],
+      [
+        "OTP",
+        "IST"
+      ],
+      [
+        "OTP",
+        "ATH"
+      ],
+      [
+        "OTP",
+        "AMS"
+      ],
+      [
+        "OTP",
+        "WAW"
+      ],
+      [
+        "OTP",
+        "JFK"
+      ],
+      [
+        "OTP",
+        "MIA"
+      ],
+      [
+        "OTP",
+        "SFO"
+      ],
+      [
+        "OTP",
+        "LAX"
+      ],
+      [
+        "OTP",
+        "LAS"
+      ],
+      [
+        "OTP",
+        "GIG"
+      ],
+      [
+        "OTP",
+        "EZE"
+      ]
+    ],
+    "fleet": {
+      "current": [
+        [
+          "Airbus",
+          "A321XLR",
+          "1,000 aircraft · Most flights from Cluj"
+        ],
+        [
+          "Airbus",
+          "A350-1000",
+          "175 aircraft · Most flights from Bucharest"
+        ]
+      ],
+      "incoming": [
+        [
+          "Airbus",
+          "A220-300",
+          "25 aircraft"
+        ],
+        [
+          "Airbus",
+          "A321XLR",
+          "100 aircraft"
+        ],
+        [
+          "Airbus",
+          "A350-1000",
+          "325 aircraft"
+        ],
+        [
+          "Airbus",
+          "A350-1000ULR",
+          "25 aircraft"
+        ]
+      ]
+    }
+  },
+  "order": 9
+}

@@ -1,0 +1,139 @@
+{
+  "name": "Royal Air Australia",
+  "code": "RA",
+  "country": "Australia",
+  "color": "#B78727",
+  "tail": "assets/img/members/royal-air-australia.webp",
+  "hubs": [
+    "SYD",
+    "PER"
+  ],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "A medium-cost Australian airline flying domestic and international routes from Sydney and Perth.",
+  "profile": {
+    "about": [
+      "Royal Air Australia is a medium-cost airline based in Sydney and Perth, flying domestic routes across Australia and international services to most continents.",
+      "It is part of the Pacific Sunset Group."
+    ],
+    "network": [
+      "From hubs on the east and west coasts, the airline links Australia's cities with one another and with destinations across most of the world."
+    ],
+    "fleet": {
+      "current": [
+        [
+          "Airbus",
+          "A319neo",
+          "1 aircraft"
+        ],
+        [
+          "Airbus",
+          "A321-100",
+          "6 aircraft"
+        ],
+        [
+          "Airbus",
+          "A321neo",
+          "3 aircraft"
+        ],
+        [
+          "Airbus",
+          "A321XLR",
+          "1 aircraft"
+        ],
+        [
+          "Airbus",
+          "A330-800",
+          "12 aircraft"
+        ],
+        [
+          "Airbus",
+          "A340-600",
+          "1 aircraft"
+        ],
+        [
+          "Airbus",
+          "A350-900",
+          "1 aircraft"
+        ],
+        [
+          "Airbus",
+          "A350-1000",
+          "6 aircraft"
+        ],
+        [
+          "Airbus",
+          "A350-1000ULR",
+          "7 aircraft"
+        ],
+        [
+          "Airbus",
+          "A380-800",
+          "5 aircraft"
+        ],
+        [
+          "Boeing",
+          "737-700",
+          "1 aircraft"
+        ],
+        [
+          "Boeing",
+          "737-800",
+          "7 aircraft"
+        ],
+        [
+          "Boeing",
+          "737-900ER",
+          "6 aircraft"
+        ],
+        [
+          "Boeing",
+          "737 MAX 9",
+          "4 aircraft"
+        ],
+        [
+          "Boeing",
+          "737 MAX 10",
+          "8 aircraft"
+        ],
+        [
+          "Boeing",
+          "747-400D",
+          "1 aircraft"
+        ],
+        [
+          "Boeing",
+          "747-8",
+          "2 aircraft"
+        ],
+        [
+          "Boeing",
+          "767-300ER",
+          "1 aircraft"
+        ],
+        [
+          "Boeing",
+          "777-200LR",
+          "2 aircraft"
+        ],
+        [
+          "Boeing",
+          "787-9 Dreamliner",
+          "1 aircraft"
+        ],
+        [
+          "De Havilland Canada",
+          "Dash 8 Q400",
+          "4 aircraft"
+        ],
+        [
+          "Embraer",
+          "E195-E2",
+          "1 aircraft"
+        ]
+      ],
+      "incoming": []
+    }
+  },
+  "order": 28
+}

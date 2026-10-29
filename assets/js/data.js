@@ -61,7 +61,10 @@ const ALLIANCE = {
    them, and as they supplied them — see "No published figures" in the README.
    ========================================================================== */
 
-const MEMBERS = [
+/* The build pipeline now supplies MWA_MEMBERS from content/airlines/*.json.
+   This in-file copy remains temporarily as a safe migration fallback until
+   the new content workflow has been reviewed and accepted. */
+const MEMBERS = typeof MWA_MEMBERS !== 'undefined' ? MWA_MEMBERS : [
   {
     name:'Lemanair', code:'LX', country:'Switzerland', 
     color:'#1B4A8F', tail:'assets/img/members/lemanair.webp',
@@ -1578,11 +1581,6 @@ const AIRCRAFT = [
   { type:'Boeing 747-400',      match:/747/,                       maxKm:13400, layout:[3,4,3], wide:true },
   { type:'Airbus A380-800',     match:/a380/,                      maxKm:15000, layout:[3,4,3], wide:true }
 ];
-
-/* Members that have not sent a fleet fly a general mix, still assigned by
-   range: regional, single-aisle and long-haul types. */
-const DEFAULT_FLEET = ['Embraer E195-E2', 'Airbus A220-300', 'Airbus A320neo',
-  'Airbus A321neo', 'Airbus A321XLR', 'Boeing 787-9', 'Airbus A350-900', 'Airbus A350-1000'];
 
 /* ============================================================================
    LOYALTY — Elara

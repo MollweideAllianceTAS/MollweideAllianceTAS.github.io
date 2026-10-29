@@ -1,0 +1,162 @@
+{
+  "name": "Dumont Linhas Aéreas",
+  "short": "Dumont",
+  "code": "DU",
+  "country": "Brazil",
+  "color": "#1B3A63",
+  "tail": "assets/img/members/dumont.webp",
+  "hubs": [
+    "GIG",
+    "GRU"
+  ],
+  "focus": [],
+  "joined": 2024,
+  "blurb": "Named for the aviation pioneer, Dumont flies the alliance's long-haul South Atlantic network from twin hubs at Rio de Janeiro–Galeão and São Paulo–Guarulhos.",
+  "profile": {
+    "founded": "1992",
+    "about": [
+      "Dumont is a Brazilian full-service carrier headquartered in Rio de Janeiro. From hubs at Rio de Janeiro–Galeão and São Paulo–Guarulhos it connects Brazil with the Americas, Europe, Africa, the Middle East and the Pacific.",
+      "The airline was founded in 1992, as Brazilian aviation was liberalised, as Táxi Aéreo Fluminense: a small regional carrier at Galeão flying the business routes to São Paulo–Congonhas and Belo Horizonte–Confins. As competition opened up it grew its domestic network and took the name Dumont, after the aviation pioneer Alberto Santos-Dumont.",
+      "Over the following decades it became a major international carrier, built Galeão into its principal hub, expanded at Guarulhos, and replaced its older aircraft with newer, more efficient types."
+    ],
+    "network": [
+      "Galeão carries most of the long-haul flying, to Sydney, New York, Los Angeles, western Europe, Lagos, Cape Town and Tbilisi, and on to Papeete by way of Easter Island. Guarulhos adds Sydney, New York, Miami, London, Madrid, Barcelona, Dubai and Beirut, and Bali by way of Melbourne."
+    ],
+    "routes": [
+      [
+        "GIG",
+        "SYD"
+      ],
+      [
+        "GIG",
+        "JFK"
+      ],
+      [
+        "GIG",
+        "STN"
+      ],
+      [
+        "GIG",
+        "LIS"
+      ],
+      [
+        "GIG",
+        "FCO"
+      ],
+      [
+        "GIG",
+        "LOS"
+      ],
+      [
+        "GIG",
+        "PPT",
+        "IPC"
+      ],
+      [
+        "GIG",
+        "CPT"
+      ],
+      [
+        "GIG",
+        "LAX"
+      ],
+      [
+        "GIG",
+        "ORY"
+      ],
+      [
+        "GIG",
+        "TBS"
+      ],
+      [
+        "GRU",
+        "SYD"
+      ],
+      [
+        "GRU",
+        "JFK"
+      ],
+      [
+        "GRU",
+        "LHR"
+      ],
+      [
+        "GRU",
+        "MIA"
+      ],
+      [
+        "GRU",
+        "DXB"
+      ],
+      [
+        "GRU",
+        "BEY"
+      ],
+      [
+        "GRU",
+        "MAD"
+      ],
+      [
+        "GRU",
+        "BCN"
+      ],
+      [
+        "GRU",
+        "DPS",
+        "MEL"
+      ]
+    ],
+    "fleet": {
+      "current": [
+        [
+          "Airbus",
+          "A350-1000",
+          "46 aircraft"
+        ],
+        [
+          "Airbus",
+          "A321neo",
+          "35 aircraft"
+        ],
+        [
+          "Airbus",
+          "A330-900",
+          "11 aircraft"
+        ],
+        [
+          "Airbus",
+          "A321XLR",
+          "6 aircraft"
+        ],
+        [
+          "Embraer",
+          "E195-E2",
+          "7 aircraft"
+        ]
+      ],
+      "incoming": [
+        [
+          "Airbus",
+          "A350-1000",
+          "9 aircraft"
+        ],
+        [
+          "Airbus",
+          "A321neo",
+          "10 aircraft"
+        ],
+        [
+          "Airbus",
+          "A330-900",
+          "9 aircraft"
+        ],
+        [
+          "Embraer",
+          "E195-E2",
+          "13 aircraft"
+        ]
+      ]
+    }
+  },
+  "order": 3
+}

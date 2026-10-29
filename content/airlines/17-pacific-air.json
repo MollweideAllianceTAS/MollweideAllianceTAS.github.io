@@ -1,0 +1,19 @@
+{
+  "name": "Pacific Air",
+  "code": "PA",
+  "country": "United States",
+  "color": "#01C7FC",
+  "tail": "assets/img/members/pacific-air.webp",
+  "hubs": [
+    "SFO",
+    "BOS",
+    "HNL",
+    "DEN",
+    "MIA",
+    "IAH"
+  ],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "A United States premium carrier operating more than 800 aircraft across a rapidly growing global network, with service to six continents and over thirty countries.",
+  "order": 17
+}

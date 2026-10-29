@@ -1,0 +1,29 @@
+{
+  "name": "Example Airways",
+  "short": "Example",
+  "code": "EX",
+  "country": "Country",
+  "color": "#13398C",
+  "tail": "assets/img/members/example-airways.webp",
+  "hubs": ["AAA"],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "A concise introduction to the airline and the role it plays in the Mollweide network.",
+  "group": "connect",
+  "profile": {
+    "founded": "2024",
+    "about": [
+      "Who the airline is today.",
+      "How it began and developed."
+    ],
+    "network": [
+      "Where it flies and how its hubs connect with the wider alliance."
+    ],
+    "routes": [["AAA", "BBB"]],
+    "fleet": {
+      "current": [["Airbus", "A320neo", "10 aircraft"]],
+      "incoming": []
+    }
+  },
+  "order": 40
+}

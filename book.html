@@ -60,7 +60,7 @@
   <section class="section" data-step="1" style="padding-top:clamp(2rem,4vw,3rem)">
     <div class="wrap">
       <h1 class="display" style="font-size:clamp(1.75rem,4vw,3rem)">Plan <b>your journey.</b></h1>
-      <p class="lede mt-2">Search every member carrier on a single itinerary. Bookings are simulated and stored only in this browser.</p>
+      <p class="lede mt-2">Search published member routes, with aircraft from their current fleets. Bookings are simulated and stored only in this browser.</p>
 
       <form class="search-card mt-4" id="searchForm" autocomplete="off">
         <div class="search-card__hd" role="tablist" aria-label="Trip type">
@@ -114,8 +114,8 @@
       </form>
 
       <div class="feats mt-6" style="grid-template-columns:repeat(auto-fit,minmax(14rem,1fr))">
-        <article class="feat"><span class="feat__n">01</span><h3 class="feat__t">Hub-to-hub service</h3><p class="feat__b">Geneva&ndash;Rio de Janeiro, Tbilisi&ndash;Mumbai and Los Angeles&ndash;Shanghai are among the most densely served sectors on the network.</p></article>
-        <article class="feat"><span class="feat__n">02</span><h3 class="feat__t">Connecting itineraries</h3><p class="feat__b">Where no member operates a sector directly, the search constructs a one-stop itinerary through the most efficient alliance hub.</p></article>
+        <article class="feat"><span class="feat__n">01</span><h3 class="feat__t">Published services</h3><p class="feat__b">Explore routes supplied by member airlines. Aircraft are selected from their declared current fleets, within the site's range limits.</p></article>
+        <article class="feat"><span class="feat__n">02</span><h3 class="feat__t">Connecting itineraries</h3><p class="feat__b">One-stop journeys combine published flight sectors, including member stopover services. Results depend on the route and fleet details available.</p></article>
         <article class="feat"><span class="feat__n">03</span><h3 class="feat__t">Simulated service</h3><p class="feat__b">No payment is taken and no data leaves your device. Itineraries are held in this browser's local storage.</p></article>
       </div>
     </div>
@@ -218,9 +218,10 @@
     </div>
   </div>
 </footer>
-<script src="assets/js/data.js?v=b90c8f09"></script>
-<script src="assets/js/site.js?v=e8c4f308"></script>
-<script src="assets/js/booking.js?v=a7947837"></script>
+<script src="assets/js/members.generated.js?v=012b97ee"></script>
+<script src="assets/js/data.js?v=b6d66bcb"></script>
+<script src="assets/js/site.js?v=8db25271"></script>
+<script src="assets/js/booking.js?v=d0ea5d50"></script>
 <script>
   document.getElementById('ftMembers').innerHTML =
     MEMBERS.slice(0,6).map(m => '<li><a href="'+(memberPage(m)||'members.html#'+m.code)+'">'+ (m.short||m.name) +'</a></li>').join('');

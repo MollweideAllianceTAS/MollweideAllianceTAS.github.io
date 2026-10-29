@@ -1,0 +1,103 @@
+{
+  "name": "London Airways",
+  "code": "LA",
+  "country": "United Kingdom",
+  "color": "#012169",
+  "tail": "assets/img/members/london-airways.webp",
+  "hubs": [
+    "LHR"
+  ],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "A Heathrow-based carrier flying across Europe and, increasingly, to the United States.",
+  "profile": {
+    "about": [
+      "London Airways is a low- to medium-cost airline flying solely from London Heathrow. It serves many destinations across Europe and is growing in the United States.",
+      "It is part of the Pacific Sunset Group."
+    ],
+    "network": [
+      "Heathrow is its only hub, with a broad European network and a growing list of routes to the United States."
+    ],
+    "fleet": {
+      "current": [
+        [
+          "Airbus",
+          "A320neo",
+          "2 aircraft"
+        ],
+        [
+          "Airbus",
+          "A321neo",
+          "4 aircraft"
+        ],
+        [
+          "Airbus",
+          "A330-300",
+          "2 aircraft"
+        ],
+        [
+          "Airbus",
+          "A330-900",
+          "5 aircraft"
+        ],
+        [
+          "Airbus",
+          "A340-600",
+          "2 aircraft"
+        ],
+        [
+          "Airbus",
+          "A380-800",
+          "4 aircraft"
+        ],
+        [
+          "Boeing",
+          "737-900ER",
+          "10 aircraft"
+        ],
+        [
+          "Boeing",
+          "737 MAX 7",
+          "2 aircraft"
+        ],
+        [
+          "Boeing",
+          "737 MAX 10",
+          "7 aircraft"
+        ],
+        [
+          "Boeing",
+          "747-400D",
+          "2 aircraft"
+        ],
+        [
+          "Boeing",
+          "747-8",
+          "4 aircraft"
+        ],
+        [
+          "Boeing",
+          "767-300ER",
+          "1 aircraft"
+        ],
+        [
+          "Boeing",
+          "777-300ER",
+          "5 aircraft"
+        ],
+        [
+          "Boeing",
+          "787-9 Dreamliner",
+          "1 aircraft"
+        ],
+        [
+          "Boeing",
+          "787-10 Dreamliner",
+          "1 aircraft"
+        ]
+      ],
+      "incoming": []
+    }
+  },
+  "order": 32
+}

@@ -1,0 +1,15 @@
+{
+  "name": "MaraJet",
+  "code": "MJ",
+  "country": "Kenya",
+  "color": "#1550A0",
+  "tail": "assets/img/members/marajet.webp",
+  "hubs": [
+    "NBO",
+    "DSS"
+  ],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "The alliance's African member, linking East and West Africa through twin hubs at Nairobi and Dakar.",
+  "order": 37
+}

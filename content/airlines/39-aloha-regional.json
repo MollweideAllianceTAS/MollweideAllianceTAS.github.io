@@ -1,0 +1,14 @@
+{
+  "name": "Aloha Regional",
+  "code": "AR",
+  "country": "United States",
+  "color": "#3E79A8",
+  "tail": "assets/img/members/aloha-regional.webp",
+  "hubs": [
+    "HNL"
+  ],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "The inter-island specialist. From Honolulu, Aloha Regional feeds the alliance's Pacific network with high-frequency turboprop services.",
+  "order": 39
+}

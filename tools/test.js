@@ -5,10 +5,11 @@ const ctx = { console, Math, Date, JSON, Set, Intl, window:{}, requestAnimationF
               document: { addEventListener(){}, querySelector:()=>null, querySelectorAll:()=>[],
                           createElement:()=>({}), body:{} }, localStorage:null, location:{pathname:'/'} };
 vm.createContext(ctx);
+vm.runInContext(fs.readFileSync('assets/js/members.generated.js','utf8'), ctx);
 vm.runInContext(fs.readFileSync('assets/js/data.js','utf8'), ctx);
 vm.runInContext(fs.readFileSync('assets/js/site.js','utf8'), ctx);
 // const-declared bindings are not properties of the VM global; surface them.
-vm.runInContext('globalThis._x = {airport, memberOf, distKm, hhmm, durTxt, money, CABINS, AIRCRAFT, DEFAULT_FLEET, aircraftFor, fleetOf, equipmentFor, operatorsFor, seatLayout, searchFlights, MEMBERS, AIRPORTS, ALLIANCE, TIERS, PRESS, HERO_CITIES, HERO_COORDS, PROGRAMME, LOUNGES, JOIN, tintOn, MAP_INK, memberPage};', ctx);
+vm.runInContext('globalThis._x = {airport, memberOf, distKm, hhmm, durTxt, money, CABINS, AIRCRAFT, aircraftFor, fleetOf, equipmentFor, operatorsFor, publishedSectors, servesSector, directFlights, seatLayout, searchFlights, MEMBERS, AIRPORTS, ALLIANCE, TIERS, PRESS, HERO_CITIES, HERO_COORDS, PROGRAMME, LOUNGES, JOIN, tintOn, MAP_INK, memberPage};', ctx);
 Object.assign(ctx, ctx._x);
 const S = ctx;
 let fails = 0;
@@ -22,8 +23,28 @@ const ok = (name, cond, extra='') => { console.log((cond?'  PASS  ':'  FAIL  ')+
   S.MEMBERS.forEach(m => ((m.profile && m.profile.fleet) ? [].concat(m.profile.fleet.current, m.profile.fleet.incoming || []) : [])
     .forEach(f => { if (!S.aircraftFor(f[0], f[1])) unknown.push(m.code + ' ' + f[0] + ' ' + f[1]); }));
   ok('Every fleet type a member lists is in the aircraft catalogue', !unknown.length, unknown.join('; '));
-  ok('The default fleet names real catalogue types',
-     S.DEFAULT_FLEET.every(t => S.AIRCRAFT.some(a => a.type === t)));
+  ok('Missing fleet data does not create aircraft or operating services',
+     S.fleetOf(S.memberOf('MX')).length === 0 &&
+     !S.operatorsFor('MEX', 'LHR').some(m => m.code === 'MX'));
+  ok('An unlisted route is not granted by having a hub',
+     !S.operatorsFor('GIG', 'GVA').some(m => m.code === 'DU'));
+  ok('A published stopover is not offered as a nonstop',
+     !S.directFlights('GIG', 'PPT', '2026-11-03', 'economy').some(f => f.op === 'DU'));
+  ok('Range conflicts exclude the affected airline from direct service',
+     !S.operatorsFor('OTP', 'SYD').some(m => m.code === 'DX') &&
+     !S.operatorsFor('CCU', 'SCL').some(m => m.code === 'AA'));
+  ok('Published stopover legs work through an airport not labelled as a hub',
+     S.searchFlights('GIG', 'PPT', '2026-11-03', 'economy', 1)
+       .some(f => f.via === 'IPC' && f.legs.every(g => g.op === 'DU')));
+  ok('Connections reject excessive geographic detours',
+     S.searchFlights('GIG', 'JFK', '2026-11-05', 'economy', 1)
+       .every(f => !f.stops || f.km <= S.distKm(S.airport('GIG'), S.airport('JFK')) * 1.45));
+  ok('Long-haul stopovers can depart on the following day',
+     S.searchFlights('GRU', 'DPS', '2026-11-03', 'economy', 1)
+       .some(f => f.legs && f.legs[1].dep >= 1440 && f.layover >= 55 && f.layover <= 330));
+  ok('Published Melbourne stopover sectors remain available',
+     S.operatorsFor('GRU', 'MEL').some(m => m.code === 'DU') &&
+     S.operatorsFor('MEL', 'DPS').some(m => m.code === 'DU'));
 
   const L = (mk, md) => S.aircraftFor(mk, md).layout.join('-');
   ok('Seat layouts follow the families',
@@ -41,10 +62,10 @@ const ok = (name, cond, extra='') => { console.log((cond?'  PASS  ':'  FAIL  ')+
     if (a === b) return;
     S.searchFlights(a, b, '2026-11-03', 'economy', 1).forEach(f => (f.legs || [f]).forEach(g => {
       const m = S.memberOf(g.op);
-      if (!g.eq || g.eq.maxKm < g.km * 1.08 || !S.fleetOf(m).includes(g.eq)) bad.push(g.no + ' ' + g.from + '-' + g.to + ' ' + (g.eq && g.eq.type));
+      if (!g.eq || g.eq.maxKm < g.km * 1.08 || !S.fleetOf(m).includes(g.eq) || !S.servesSector(m, g.from, g.to)) bad.push(g.no + ' ' + g.from + '-' + g.to + ' ' + (g.eq && g.eq.type));
     }));
   }));
-  ok('Every flight offered is flown by its own fleet, within range', !bad.length, bad.slice(0, 5).join('; '));
+  ok('Every offered leg is published and uses its own current fleet within range', !bad.length, bad.slice(0, 5).join('; '));
 }
 
 ok('Every hero city can be placed on the globe',
@@ -80,8 +101,7 @@ const d2 = S.distKm(S.airport('GVA'), S.airport('GIG'));
 ok('GVA–GIG ≈ 9200 km', Math.abs(d2-9200) < 400, d2+' km');
 
 // --- flight search ---------------------------------------------------------
-const pairs = [['GVA','GIG'],['TBS','BOM'],['LAX','PVG'],['MEX','HNL'],['BEY','CGH'],
-               ['OGG','DEL'],['CKG','BSB'],['EVN','OGG'],['SSA','CCU'],['GYD','MEX']];
+const pairs = [['GIG','JFK'],['TBS','LHR'],['GRU','LHR'],['EVN','GRU']];
 let allHave = true, badTimes = false, badPrice = false;
 pairs.forEach(([a,b]) => {
   const fl = S.searchFlights(a,b,'2026-10-15','economy',2);
@@ -92,20 +112,20 @@ pairs.forEach(([a,b]) => {
     if (f.stops === 1 && (!f.via || f.layover < 55)) badTimes = true;
   });
 });
-ok('Every tested city pair returns flights', allHave);
+ok('Published service examples return flights', allHave);
 ok('Arrival is always after departure', !badTimes);
 ok('Totals are positive and finite', !badPrice);
 
 // --- determinism -----------------------------------------------------------
-const a1 = JSON.stringify(S.searchFlights('GVA','BOM','2026-11-02','business',1));
-const a2 = JSON.stringify(S.searchFlights('GVA','BOM','2026-11-02','business',1));
+const a1 = JSON.stringify(S.searchFlights('GIG','JFK','2026-11-02','business',1));
+const a2 = JSON.stringify(S.searchFlights('GIG','JFK','2026-11-02','business',1));
 ok('Identical searches return identical results', a1 === a2);
-const a3 = JSON.stringify(S.searchFlights('GVA','BOM','2026-11-03','business',1));
+const a3 = JSON.stringify(S.searchFlights('GIG','JFK','2026-11-03','business',1));
 ok('A different date returns different flights', a1 !== a3);
 
 // --- cabins price monotonically -------------------------------------------
 const cab = ['economy','premium','business','first'].map(c =>
-  S.searchFlights('GVA','GIG','2026-10-15',c,1)[0].price);
+  S.searchFlights('GIG','JFK','2026-10-15',c,1)[0].price);
 ok('Fares rise with cabin class', cab.every((v,i)=> i===0 || v > cab[i-1]), cab.join(' < '));
 
 // --- every member hub is a known airport ----------------------------------

@@ -1,0 +1,201 @@
+{
+  "name": "Pacific Sunset Airlines",
+  "short": "Pacific Sunset",
+  "code": "PS",
+  "country": "United States",
+  "color": "#011D57",
+  "tail": "assets/img/members/pacific-sunset.webp",
+  "hubs": [
+    "LAX",
+    "LHR",
+    "GRU",
+    "SYD",
+    "LGB",
+    "HND",
+    "SFO",
+    "HNL",
+    "ANC",
+    "CPT",
+    "SJU",
+    "SEA",
+    "OGG",
+    "LPA",
+    "NRT",
+    "PER"
+  ],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "The founder of the Pacific Sunset Group, grown from a Long Beach regional carrier into a worldwide airline with hubs on every inhabited continent.",
+  "profile": {
+    "about": [
+      "Pacific Sunset is a United States carrier and the founding airline of the Pacific Sunset Group, which includes six other airlines. Despite its name it flies worldwide, with hubs on every inhabited continent.",
+      "The airline began as a regional carrier at Long Beach, California, then expanded to Los Angeles, Honolulu, Maui, Atlanta and Seattle on its way to becoming a major international airline.",
+      "Together with its subsidiary Sunset Express, it serves every airport in California, with a fleet that runs from the Airbus A380 down to the Dash 8 Q400."
+    ],
+    "network": [
+      "Its hubs are listed by passengers carried. Los Angeles is the largest, followed by London Heathrow, São Paulo and Sydney; Long Beach, where the airline began, is still among the busiest.",
+      "Further hubs at Tokyo, San Francisco, Honolulu, Anchorage, Cape Town, San Juan, Seattle, Maui, Gran Canaria and Perth spread the network across the Pacific, the Atlantic and the Indian Ocean."
+    ],
+    "fleet": {
+      "current": [
+        [
+          "Airbus",
+          "A319-100",
+          "2 aircraft"
+        ],
+        [
+          "Airbus",
+          "A320-200",
+          "19 aircraft"
+        ],
+        [
+          "Airbus",
+          "A320neo",
+          "4 aircraft"
+        ],
+        [
+          "Airbus",
+          "A321-200",
+          "9 aircraft"
+        ],
+        [
+          "Airbus",
+          "A321neo",
+          "5 aircraft"
+        ],
+        [
+          "Airbus",
+          "A321XLR",
+          "18 aircraft"
+        ],
+        [
+          "Airbus",
+          "A330-300",
+          "4 aircraft"
+        ],
+        [
+          "Airbus",
+          "A330-900",
+          "3 aircraft"
+        ],
+        [
+          "Airbus",
+          "A340-600",
+          "1 aircraft"
+        ],
+        [
+          "Airbus",
+          "A350-1000",
+          "13 aircraft"
+        ],
+        [
+          "Airbus",
+          "A350-1000ULR",
+          "10 aircraft"
+        ],
+        [
+          "Airbus",
+          "A380-800",
+          "12 aircraft"
+        ],
+        [
+          "Boeing",
+          "717-200",
+          "3 aircraft"
+        ],
+        [
+          "Boeing",
+          "737-700",
+          "1 aircraft"
+        ],
+        [
+          "Boeing",
+          "737-900ER",
+          "28 aircraft"
+        ],
+        [
+          "Boeing",
+          "737 MAX 8",
+          "2 aircraft"
+        ],
+        [
+          "Boeing",
+          "737 MAX 9",
+          "13 aircraft"
+        ],
+        [
+          "Boeing",
+          "737 MAX 10",
+          "23 aircraft"
+        ],
+        [
+          "Boeing",
+          "747-400",
+          "1 aircraft"
+        ],
+        [
+          "Boeing",
+          "747-400D",
+          "8 aircraft"
+        ],
+        [
+          "Boeing",
+          "747-8",
+          "6 aircraft"
+        ],
+        [
+          "Boeing",
+          "757-300",
+          "6 aircraft"
+        ],
+        [
+          "Boeing",
+          "777-200ER",
+          "1 aircraft"
+        ],
+        [
+          "Boeing",
+          "777-200LR",
+          "3 aircraft"
+        ],
+        [
+          "Boeing",
+          "777-300",
+          "10 aircraft"
+        ],
+        [
+          "Boeing",
+          "777-300ER",
+          "3 aircraft"
+        ],
+        [
+          "Boeing",
+          "787-9 Dreamliner",
+          "2 aircraft"
+        ],
+        [
+          "Boeing",
+          "787-10 Dreamliner",
+          "7 aircraft"
+        ],
+        [
+          "Bombardier",
+          "CRJ-1000",
+          "2 aircraft"
+        ],
+        [
+          "De Havilland Canada",
+          "Dash 8 Q400",
+          "2 aircraft"
+        ],
+        [
+          "Embraer",
+          "E170",
+          "4 aircraft"
+        ]
+      ],
+      "incoming": []
+    }
+  },
+  "order": 29
+}

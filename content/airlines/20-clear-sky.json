@@ -1,0 +1,79 @@
+{
+  "name": "Clear Sky Airlines",
+  "short": "Clear Sky",
+  "code": "CS",
+  "country": "United States",
+  "color": "#52D6FC",
+  "tail": "assets/img/members/clear-sky.webp",
+  "hubs": [
+    "JFK",
+    "SEA",
+    "MIA",
+    "LAX"
+  ],
+  "focus": [
+    "LGA",
+    "HPN"
+  ],
+  "joined": 2026,
+  "blurb": "A premium-first US carrier based at New York JFK, with further major hubs at Seattle, Miami and Los Angeles.",
+  "profile": {
+    "about": [
+      "Clear Sky Airlines is a United States carrier built around premium service. Its primary hub is New York JFK, with further major hubs at Seattle, Miami and Los Angeles, and minor hubs at New York LaGuardia and White Plains.",
+      "Comfort comes first on board. The airline flies more than 100 premium aircraft on over 120 routes, from the all-premium A318 to its long-haul 747-8 and A380 flagships."
+    ],
+    "network": [
+      "Its hubs reach every corner of the United States, from Seattle in the north-west and Los Angeles on the Pacific coast to Miami and New York in the east. The network combines international routes with regional flying across America."
+    ],
+    "fleet": {
+      "current": [
+        [
+          "Airbus",
+          "A220"
+        ],
+        [
+          "Airbus",
+          "A318",
+          "LUX configuration, the most premium experience on board"
+        ],
+        [
+          "Airbus",
+          "A320"
+        ],
+        [
+          "Airbus",
+          "A340"
+        ],
+        [
+          "Airbus",
+          "A350"
+        ],
+        [
+          "Airbus",
+          "A380-800",
+          "Long-haul flagship"
+        ],
+        [
+          "Boeing",
+          "737"
+        ],
+        [
+          "Boeing",
+          "747-8",
+          "Long-haul flagship"
+        ],
+        [
+          "Boeing",
+          "757",
+          "ECO configuration, designed for savings on every trip"
+        ],
+        [
+          "Boeing",
+          "787"
+        ]
+      ],
+      "incoming": []
+    }
+  },
+  "order": 20
+}

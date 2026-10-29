@@ -1,0 +1,18 @@
+{
+  "name": "Volare",
+  "code": "VO",
+  "country": "Italy",
+  "color": "#1E7A3E",
+  "tail": "assets/img/members/volare.webp",
+  "hubs": [
+    "LIN",
+    "MXP",
+    "FCO",
+    "PMO",
+    "NAP"
+  ],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "The alliance's Italian member, operating from both Milan airports, Rome Fiumicino, Palermo and Naples.",
+  "order": 21
+}

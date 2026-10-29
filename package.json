@@ -1,0 +1,13 @@
+{
+  "name": "mollweide-alliance-site",
+  "private": true,
+  "scripts": {
+    "build:content": "node tools/content-pipeline.js",
+    "build:pages": "node tools/build-pages.js",
+    "build": "npm run build:content && npm run build:pages",
+    "check:content": "node tools/content-pipeline.js --check",
+    "audit:routes": "node tools/audit-routes.js",
+    "test": "npm run check:content && node tools/test.js",
+    "preview": "python3 -m http.server 4173"
+  }
+}

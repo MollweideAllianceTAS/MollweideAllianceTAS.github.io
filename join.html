@@ -16,8 +16,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site.css?v=752a6947">
+<link rel="stylesheet" href="assets/css/network-join.css?v=81193b03">
 </head>
-<body>
+<body class="join-page">
 <div class="topbar">
   <div class="wrap topbar__in">
     <p>The Mollweide Alliance is a fictitious alliance created for The Airline Simulator</p>
@@ -46,79 +47,92 @@
     </nav>
   </div>
 </header>
-<section class="phead">
-  <img class="phead__bg" src="assets/img/photos/lineup-six.jpg" alt="" width="1440" height="296">
-  <div class="wrap phead__in">
+<main>
+<section class="j-hero">
+  <img class="j-hero__image" src="assets/img/photos/join-mollweide-projection.png" alt="" width="1672" height="941">
+  <div class="j-hero__veil" aria-hidden="true"></div>
+  <div class="j-hero__brand-scene" aria-hidden="true">
+    <span class="j-hero__orbit j-hero__orbit--outer"></span>
+    <span class="j-hero__orbit j-hero__orbit--inner"></span>
+    <img class="j-hero__mark" src="assets/img/mark-white.png" alt="" width="598" height="524">
+    <span class="j-hero__brandline">Mollweide · Alliance</span>
+  </div>
+  <div class="wrap j-hero__inner">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span>/</span> Join the alliance</nav>
-    <h1 class="display">Three ways in, <b>all starting in the game.</b></h1>
-    <div class="brandrule"></div>
-    <p class="lede mt-3">New carriers are always welcome. Find us in the alliance search in <span data-slot="game">The Airline Simulator</span>, then come and say hello on Discord — the rest is a conversation rather than a form.</p>
+    <p class="j-kicker">Membership · The Airline Simulator</p>
+    <h1>No form.<br><strong>Start in the game.</strong></h1>
+    <p class="j-hero__lede">Join a growing community of operators, find codeshare partners and give your airline greater visibility. Find Mollweide in The Airline Simulator and connect with members on Discord.</p>
+    <div class="j-hero__facts" aria-label="How joining works">
+      <span><b>3</b> in-game listings</span>
+      <span><b>1</b> shared Discord</span>
+      <span><b>0</b> website forms</span>
+    </div>
   </div>
 </section>
 
-<section class="section">
+<section class="j-groups">
   <div class="wrap">
-    <div class="sec-head">
-      <div><h2 class="display" data-rv>Mollweide Alliance, <b>Mollweide Connect and Mollweide Meridian.</b></h2>
-      <p class="lede mt-2" data-rv>Each is listed separately in game. The names below are what the game matches on, so it is worth copying them across rather than typing them out.</p></div>
+    <div class="j-sectionhead">
+      <div><p class="j-index">01 · Find the listing</p><h2>Three names<br><strong>inside the game.</strong></h2></div>
+      <p>Each group appears separately in alliance search. Copy the exact search string for the group you have been directed to.</p>
     </div>
     <div class="joins" id="joinGroups"></div>
   </div>
 </section>
 
-<section class="section on-wash">
+<section class="j-process">
   <div class="wrap">
-    <div class="sec-head">
-      <div><h2 class="display">Three steps, <b>and none of them here.</b></h2>
-      <p class="lede mt-2">There is no application form — not on this site and not in the game. Finding us and getting in touch is the whole of it.</p></div>
+    <div class="j-process__intro">
+      <p class="j-index">02 · What happens next</p>
+      <h2>From search<br><strong>to membership.</strong></h2>
+      <p>There is no application form on this website. These are the only steps.</p>
     </div>
 
-    <ol class="spec">
-      <li class="spec__item"><span class="spec__n">01</span><div>
+    <ol class="j-steps">
+      <li><span class="j-steps__n">01</span><div>
         <h3 class="spec__t">Find us in the game</h3>
         <p class="spec__b">Open the alliance search and look up whichever of the three groups you are interested in. Every name is above, and each can be copied straight from this page.</p>
       </div></li>
 
-      <li class="spec__item"><span class="spec__n">02</span><div>
+      <li><span class="j-steps__n">02</span><div>
         <h3 class="spec__t">Come and say hello on Discord</h3>
         <p class="spec__b">The invite links are given in game rather than published here. Since there is nothing to apply through, the channel is where joining is actually arranged — introduce your airline and someone will pick it up from there.</p>
       </div></li>
 
-      <li class="spec__item"><span class="spec__n">03</span><div>
+      <li><span class="j-steps__n">03</span><div>
         <h3 class="spec__t">Send a few details when you are ready</h3>
         <p class="spec__b">Once you are in, we will add your carrier to this site: the member wall, the route map, and flight search as an operating carrier. The submissions page sets out what is useful to send, though there is no hurry about it.</p>
-        <p class="spec__eg"><b>Next</b> &nbsp;<a href="submit.html" style="color:var(--blue);font-weight:600">What to send for the website</a></p>
+        <a class="j-steps__link" href="submit.html">What to send for the website ↗</a>
       </div></li>
     </ol>
   </div>
 </section>
 
-<section class="section on-ink" style="background:var(--blue-ink)">
-  <div class="wrap">
-    <div class="sec-head">
-      <div><h2 class="display">Where the alliance <b>actually happens.</b></h2>
-      <p class="lede mt-2">We ask every member airline to be in the channel. It is how the alliance keeps in touch, and it is the only way we have of reaching you.</p></div>
+<section class="j-channel">
+  <div class="wrap j-channel__inner">
+    <div class="j-channel__title">
+      <p class="j-index">03 · The shared channel</p>
+      <h2>The alliance<br><strong>meets on Discord.</strong></h2>
+      <p>Every member airline is asked to be there. It is how the alliance stays in contact.</p>
     </div>
-    <div class="two-col">
-      <ul class="reqs">
+    <div class="j-channel__details">
+      <ul>
         <li><b>The invite links are given in game.</b> We do not publish them here, so the in-game listing is the place to look.</li>
         <li><b>All three groups share the same channel</b>, so you will find everyone in one place whichever you join through.</li>
         <li><b>Anything you would like shown on this site is sent there</b> — airline details, livery artwork, lounges and news.</li>
       </ul>
-      <div>
-        <p class="lede" style="font-size:1rem">It is also where route coordination and codeshare requests are handled, so it is worth being around for reasons beyond the formality.</p>
-        <p class="body-copy mt-3" style="color:var(--tx-on-ink-soft)">If you have found us in game but cannot see an invite anywhere, just mention it when you get in touch and someone will send one over.</p>
-      </div>
+      <p>Route coordination and codeshare requests happen there too. If the invite is missing from an in-game listing, ask a member for the current link.</p>
     </div>
   </div>
 </section>
 
-<section class="band section--tight">
-  <div class="wrap band__in">
-    <div><h2 class="display" style="font-size:clamp(1.6rem,3.4vw,2.6rem)">Already in? <b>Here is what helps.</b></h2></div>
-    <a class="btn btn--lg" style="background:#fff;color:var(--blue)" href="submit.html">Member submissions <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+<section class="j-next">
+  <div class="wrap j-next__inner">
+    <div><p class="j-index">Already a member?</p><h2>Prepare your<br><strong>airline profile.</strong></h2></div>
+    <div><p>The submissions guide explains the few details and images needed to add an airline to the website.</p><a class="btn btn--primary btn--lg" href="submit.html">Open submissions guide <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
   </div>
 </section>
+</main>
 
 <footer class="ft">
   <div class="wrap ft__top">
@@ -167,8 +181,9 @@
     </div>
   </div>
 </footer>
-<script src="assets/js/data.js?v=b90c8f09"></script>
-<script src="assets/js/site.js?v=e8c4f308"></script>
+<script src="assets/js/members.generated.js?v=012b97ee"></script>
+<script src="assets/js/data.js?v=b6d66bcb"></script>
+<script src="assets/js/site.js?v=8db25271"></script>
 <script>
   renderJoin(document.getElementById('joinGroups'));
   initCopy();

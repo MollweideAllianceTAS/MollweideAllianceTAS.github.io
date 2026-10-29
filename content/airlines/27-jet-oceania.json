@@ -1,0 +1,76 @@
+{
+  "name": "Jet Oceania",
+  "code": "JO",
+  "country": "Australia",
+  "color": "#00398A",
+  "tail": "assets/img/members/jet-oceania.webp",
+  "hubs": [
+    "BNE",
+    "SYD",
+    "CNS",
+    "PER"
+  ],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "The alliance's second Australian member, operating from Brisbane with further bases at Sydney, Cairns and Perth, linking the east coast to the west and north.",
+  "profile": {
+    "founded": "1998",
+    "about": [
+      "Jet Oceania is an Australian carrier flying from four hubs at Brisbane, Sydney, Perth and Cairns. It serves Oceania together with East and Southeast Asia, and offers a high standard of comfort on every flight.",
+      "The airline was founded in Brisbane on 12 September 1998.",
+      "It sets out to lead air travel across Oceania, and it stays within that focus: South Asia and West Asia are deliberately outside its network."
+    ],
+    "network": [
+      "High-frequency services link the four hubs with one another and with destinations across Australia, New Zealand, the Pacific Islands and East Asia.",
+      "The principal long-haul service flies non-stop to Tokyo, without an intermediate stop such as Manila, and the same aircraft serves the airline's other long sectors to East Asia."
+    ],
+    "routes": [
+      [
+        "BNE",
+        "SYD"
+      ],
+      [
+        "BNE",
+        "PER"
+      ],
+      [
+        "BNE",
+        "CNS"
+      ],
+      [
+        "SYD",
+        "PER"
+      ],
+      [
+        "SYD",
+        "CNS"
+      ],
+      [
+        "PER",
+        "CNS"
+      ]
+    ],
+    "fleet": {
+      "current": [
+        [
+          "Boeing",
+          "737 MAX",
+          "Core fleet across Oceania and Asia"
+        ],
+        [
+          "Boeing",
+          "787-9 Dreamliner",
+          "Flagship, on long-haul services to Tokyo and East Asia"
+        ]
+      ],
+      "incoming": [
+        [
+          "Boeing",
+          "737 MAX",
+          "Further aircraft to enlarge the core fleet"
+        ]
+      ]
+    }
+  },
+  "order": 27
+}

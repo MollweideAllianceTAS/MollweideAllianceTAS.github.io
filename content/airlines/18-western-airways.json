@@ -1,0 +1,19 @@
+{
+  "name": "Western Airways",
+  "code": "WA",
+  "country": "United States",
+  "color": "#043167",
+  "tail": "assets/img/members/western-airways.webp",
+  "hubs": [
+    "LAX",
+    "JFK",
+    "DEN",
+    "ORD",
+    "DXB",
+    "MIA"
+  ],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "A coast-to-coast United States carrier flying from Los Angeles and New York JFK, with further bases at Denver, Chicago O'Hare and Miami, and a long-haul base at Dubai.",
+  "order": 18
+}

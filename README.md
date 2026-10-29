@@ -43,19 +43,24 @@ works — nothing here needs a server.)
 
 ## Editing the content
 
-**Almost everything lives in one file: [`assets/js/data.js`](assets/js/data.js).**
-You do not need to touch HTML or CSS to change the alliance, its members, its
-airports or its fares.
+**Airline records now live in [`content/airlines/`](content/airlines/), one
+readable file per airline.** See [`content/README.md`](content/README.md) for
+the short add-an-airline workflow. Run `npm run build` after a change and
+`npm test` before review.
+
+The remaining shared catalogues still live in `assets/js/data.js` during this
+migration. You do not need to touch HTML or CSS to change airports, fares,
+lounges or alliance-wide settings.
 
 | What you want to change | Where |
 |---|---|
 | Alliance name, tagline, HQ, statement | `ALLIANCE` at the top of `data.js` |
-| Member airlines, hubs, colours, blurbs | `MEMBERS` |
-| Which group a carrier joined through | `group` on that member (`'connect'`, `'meridian'`) |
-| A member's own page | `profile` on that member (see *Airline pages*) |
+| Member airlines, hubs, colours, blurbs | `content/airlines/*.json` |
+| Which group a carrier joined through | `group` in that airline's file (`"connect"`, `"meridian"`) |
+| A member's own page | `profile` in that airline's file (see *Airline pages*) |
 | Airports the search and map know about | `AIRPORTS` |
 | Cabins, fare multipliers, seat layouts | `CABINS` |
-| Aircraft types: range and seat layout | `AIRCRAFT`, `DEFAULT_FLEET` |
+| Aircraft types: range and seat layout | `AIRCRAFT` |
 | Loyalty tiers (Member / Select / Strata / Aurora) | `TIERS` and `PROGRAMME` (the programme is called **Elara**) |
 | Cities in the rotating homepage headline | `HERO_CITIES` |
 | Lounges, their operator, access rules and photos | `LOUNGES` |

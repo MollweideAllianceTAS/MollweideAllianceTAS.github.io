@@ -1,0 +1,147 @@
+{
+  "name": "Union Airlines",
+  "code": "UN",
+  "country": "United States",
+  "color": "#2C0977",
+  "tail": "assets/img/members/union-airlines.webp",
+  "hubs": [
+    "BNA",
+    "BOS"
+  ],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "A mainline US carrier linking the American South with the rest of the country and abroad, from Nashville and Boston.",
+  "profile": {
+    "about": [
+      "Union Airlines is a mainline United States carrier connecting the southern United States with the rest of the country and abroad, from hubs at Nashville and Boston.",
+      "It puts comfort, safety and reliability first."
+    ],
+    "network": [
+      "Nashville is the larger hub, with long-haul flights to London Heathrow, Paris, Frankfurt, Madrid and Honolulu alongside a domestic network reaching Los Angeles, Denver, Miami, Atlanta and across the South. Boston links New England with Chicago, Minneapolis, Seattle, Salt Lake City and the Midwest."
+    ],
+    "routes": [
+      [
+        "BNA",
+        "LHR"
+      ],
+      [
+        "BNA",
+        "CDG"
+      ],
+      [
+        "BNA",
+        "FRA"
+      ],
+      [
+        "BNA",
+        "MAD"
+      ],
+      [
+        "BNA",
+        "HNL"
+      ],
+      [
+        "BNA",
+        "LAX"
+      ],
+      [
+        "BNA",
+        "DEN"
+      ],
+      [
+        "BNA",
+        "MIA"
+      ],
+      [
+        "BNA",
+        "ATL"
+      ],
+      [
+        "BNA",
+        "MSY"
+      ],
+      [
+        "BNA",
+        "RDU"
+      ],
+      [
+        "BNA",
+        "AUS"
+      ],
+      [
+        "BNA",
+        "HOU"
+      ],
+      [
+        "BOS",
+        "ORD"
+      ],
+      [
+        "BOS",
+        "MSP"
+      ],
+      [
+        "BOS",
+        "SEA"
+      ],
+      [
+        "BOS",
+        "SLC"
+      ],
+      [
+        "BOS",
+        "CMH"
+      ],
+      [
+        "BOS",
+        "PIT"
+      ]
+    ],
+    "fleet": {
+      "current": [
+        [
+          "Airbus",
+          "A220-300",
+          "5 aircraft"
+        ],
+        [
+          "Airbus",
+          "A320-200",
+          "8 aircraft"
+        ],
+        [
+          "Boeing",
+          "737-800",
+          "20 aircraft"
+        ],
+        [
+          "Boeing",
+          "737 MAX 8",
+          "13 aircraft"
+        ],
+        [
+          "Boeing",
+          "757-300",
+          "12 aircraft"
+        ],
+        [
+          "Boeing",
+          "777-200",
+          "10 aircraft"
+        ],
+        [
+          "Embraer",
+          "E190-E2",
+          "6 aircraft"
+        ],
+        [
+          "Embraer",
+          "E195-E2",
+          "5 aircraft"
+        ]
+      ],
+      "incoming": []
+    }
+  },
+  "order": 34
+}
