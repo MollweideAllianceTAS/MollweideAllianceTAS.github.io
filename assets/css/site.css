@@ -752,6 +752,10 @@ header.nav {
 .field__in:focus { outline: 0; border-color: var(--blue); background: var(--paper);
   box-shadow: 0 0 0 3px rgba(19,57,140,.12); }
 .field__in::placeholder { color: var(--tx-faint); }
+/* iOS Safari sizes date inputs to their content and centres the value, which
+   pushes the field past the column; hold it to the column like the others. */
+input[type="date"].field__in { -webkit-appearance: none; appearance: none; display: block; min-width: 0; max-width: 100%; min-height: 50px; }
+input[type="date"].field__in::-webkit-date-and-time-value { text-align: left; margin: 0; }
 select.field__in { appearance: none; cursor: pointer; padding-right: 2.25rem;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238494AD' stroke-width='1.4' fill='none'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: right .875rem center; }

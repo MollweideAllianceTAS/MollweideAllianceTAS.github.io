@@ -9,7 +9,7 @@ vm.runInContext(fs.readFileSync('assets/js/members.generated.js','utf8'), ctx);
 vm.runInContext(fs.readFileSync('assets/js/data.js','utf8'), ctx);
 vm.runInContext(fs.readFileSync('assets/js/site.js','utf8'), ctx);
 // const-declared bindings are not properties of the VM global; surface them.
-vm.runInContext('globalThis._x = {airport, memberOf, distKm, hhmm, durTxt, money, CABINS, AIRCRAFT, aircraftFor, fleetOf, equipmentFor, operatorsFor, publishedSectors, servesSector, directFlights, seatLayout, searchFlights, MEMBERS, AIRPORTS, ALLIANCE, TIERS, PRESS, HERO_CITIES, HERO_COORDS, PROGRAMME, LOUNGES, JOIN, tintOn, MAP_INK, memberPage};', ctx);
+vm.runInContext('globalThis._x = {airport, memberOf, distKm, hhmm, durTxt, money, CABINS, AIRCRAFT, aircraftFor, fleetOf, equipmentFor, operatorsFor, SPHERE_KM, publishedSectors, servesSector, directFlights, seatLayout, searchFlights, MEMBERS, AIRPORTS, ALLIANCE, TIERS, PRESS, HERO_CITIES, HERO_COORDS, PROGRAMME, LOUNGES, JOIN, tintOn, MAP_INK, memberPage};', ctx);
 Object.assign(ctx, ctx._x);
 const S = ctx;
 let fails = 0;
@@ -26,10 +26,15 @@ const ok = (name, cond, extra='') => { console.log((cond?'  PASS  ':'  FAIL  ')+
   ok('Missing fleet data does not create aircraft or operating services',
      S.fleetOf(S.memberOf('MX')).length === 0 &&
      !S.operatorsFor('MEX', 'LHR').some(m => m.code === 'MX'));
-  ok('An unlisted route is not granted by having a hub',
+  ok('Sectors beyond a sphere of influence need a published route',
      !S.operatorsFor('GIG', 'GVA').some(m => m.code === 'DU'));
   ok('A published stopover is not offered as a nonstop',
      !S.directFlights('GIG', 'PPT', '2026-11-03', 'economy').some(f => f.op === 'DU'));
+  ok('Long journeys can be codeshares meeting between two spheres',
+     S.searchFlights('SVO', 'PVG', '2026-11-05', 'economy', 1)
+       .some(f => f.legs && f.legs[0].op !== f.legs[1].op));
+  ok('Aircraft are sized to the sector: a smaller type on a thin short sector than a busy long one',
+     S.equipmentFor(S.memberOf('KA'), 700, 60).seats < S.equipmentFor(S.memberOf('KA'), 6000, 400).seats);
   ok('Range conflicts exclude the affected airline from direct service',
      !S.operatorsFor('OTP', 'SYD').some(m => m.code === 'DX') &&
      !S.operatorsFor('CCU', 'SCL').some(m => m.code === 'AA'));
@@ -55,17 +60,19 @@ const ok = (name, cond, extra='') => { console.log((cond?'  PASS  ':'  FAIL  ')+
      L('Embraer','E195-E2') === '2-2' && L('Embraer','E175LR') === '2-2');
 
   /* Every flight offered on a spread of sectors has an aircraft from its
-     operator's own fleet with the range for its leg. */
+     operator's own fleet with the range for its leg, on a sector the
+     operator published or one within its sphere of influence. */
   const bad = [];
   const codes = ['TLV','GIG','GVA','LHR','JFK','SYD','BEY','NRT','LAX','DXB','BNA','HNL','SIN','EZE'];
   codes.forEach(a => codes.forEach(b => {
     if (a === b) return;
     S.searchFlights(a, b, '2026-11-03', 'economy', 1).forEach(f => (f.legs || [f]).forEach(g => {
       const m = S.memberOf(g.op);
-      if (!g.eq || g.eq.maxKm < g.km * 1.08 || !S.fleetOf(m).includes(g.eq) || !S.servesSector(m, g.from, g.to)) bad.push(g.no + ' ' + g.from + '-' + g.to + ' ' + (g.eq && g.eq.type));
+      if (!g.eq || g.eq.maxKm < g.km * 1.08 || !S.fleetOf(m).includes(g.eq) ||
+          !(S.servesSector(m, g.from, g.to) || (g.km <= S.SPHERE_KM && [g.from, g.to].some(c => (m.hubs || []).concat(m.focus || []).includes(c))))) bad.push(g.no + ' ' + g.from + '-' + g.to + ' ' + (g.eq && g.eq.type));
     }));
   }));
-  ok('Every offered leg is published and uses its own current fleet within range', !bad.length, bad.slice(0, 5).join('; '));
+  ok('Every offered leg is published or within its sphere, on its own current fleet within range', !bad.length, bad.slice(0, 5).join('; '));
 }
 
 ok('Every hero city can be placed on the globe',

@@ -385,10 +385,18 @@ The livery renders are stored at 760px wide, which is twice their display size.
 - **Flight results are deterministic.** The same route, date and cabin always
   produce the same flights, so nothing reshuffles when you navigate back. Change
   the date and you get a different day's schedule.
-- **Routes are generated, not listed.** A direct sector exists when at least one
-  member serves either end. If none does, the engine builds a one-stop itinerary
-  via the alliance hub with the smallest detour, honouring a 55-minute minimum
-  connection. Interline connections credit both carriers ("Carrier A + Carrier B").
+- **Who flies a sector.** A member flies the routes it published, and any
+  sector from one of its hubs or focus cities whose other end lies within its
+  sphere of influence (`SPHERE_KM`, 4,500 km, in `assets/js/site.js`). Longer
+  journeys it has not published are codeshares: two members each flying within
+  their own sphere and meeting at an airport in between, with a 55-minute
+  minimum connection and no long detours. Results credit both carriers
+  ("Carrier A + Carrier B") and mark the connection as a codeshare.
+- **Which aircraft.** Only types in the member's own current fleet, with the
+  range for the sector (range to spare where it has it). Among those, the type
+  closest to the sector's demand: the smallest one whose `seats` covers it, or
+  the largest it has. Demand rises between hubs and on longer sectors. A member
+  that has not sent a fleet flies nothing until it does.
 - **Bookings are stored in `localStorage`** under the key `mwa-bookings`. Nothing
   is sent anywhere — there is no backend and no analytics. Bookings are per
   browser and per device, and clearing browser data removes them.

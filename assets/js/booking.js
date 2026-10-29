@@ -136,7 +136,7 @@ function legHTML(f, dir) {
   const A = airport(f.from), B = airport(f.to);
   const stops = f.stops === 0
     ? '<span class="rt__stops" data-direct="true">Direct</span>'
-    : `<span class="rt__stops">1 stop · ${f.via}</span>`;
+    : `<span class="rt__stops">1 stop · ${f.via}${f.legs && f.legs[0].op !== f.legs[1].op ? ' · codeshare' : ''}</span>`;
   return `<article class="flight" style="--m-color:${f.color}">
     <div class="flight__op">
       <div class="flight__chip">${f.op}</div>

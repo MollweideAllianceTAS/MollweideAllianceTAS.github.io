@@ -69,7 +69,9 @@ function aircraftFor(maker, model) {
   return AIRCRAFT.find(a => a.match.test(t)) || null;
 }
 
-/* Only declared current aircraft can operate bookable services. */
+/* What a member actually flies today: its profile's current fleet, ordered by
+   range. A member that has not sent a fleet has no aircraft, and flies
+   nothing until it does. */
 const _fleets = {};
 function fleetOf(m) {
   if (_fleets[m.code]) return _fleets[m.code];
@@ -78,19 +80,24 @@ function fleetOf(m) {
   return (_fleets[m.code] = Array.from(new Set(types)).sort((x, y) => x.maxKm - y.maxKm));
 }
 
-/* The aircraft a member would put on a sector: a type from its own fleet
-   with the range for it, and among those one of the two smallest, so a short
-   hop is flown by a regional or single-aisle aircraft and a long-haul one by
-   a widebody. Null when nothing in the fleet can make the trip — that member
-   then does not fly the sector at all. */
-function equipmentFor(m, km, r) {
+/* Seats a sector needs on one rotation: more between hubs, more on long
+   sectors (fewer, bigger flights), fewer between two secondary airports. */
+function sectorDemand(from, to, km) {
+  const w = a => a.hub ? 3 : a.focus ? 2 : 1;
+  return Math.round(60 * Math.sqrt(w(from) * w(to)) * (1 + km / 5000));
+}
+
+/* The aircraft a member puts on a sector: a type from its own fleet with the
+   range (and, where it has one, range to spare: airlines don't plan to the
+   limit), sized to the demand: the smallest type that fills it, or the
+   largest it has when none does. Null when nothing in the fleet can make the
+   trip, and the member then does not fly the sector at all. */
+function equipmentFor(m, km, demand) {
   const ok = fleetOf(m).filter(a => a.maxKm >= km * 1.08);
   if (!ok.length) return null;
-  /* Prefer types with range to spare — airlines don't plan to the limit —
-     falling back to whatever can just make it. */
   const easy = ok.filter(a => a.maxKm >= km * 1.3);
-  const pool = easy.length ? easy : ok;
-  return pick(r, pool.slice(0, Math.min(2, pool.length)));
+  const pool = (easy.length ? easy : ok).slice().sort((x, y) => x.seats - y.seats);
+  return pool.find(a => a.seats >= (demand || 0)) || pool[pool.length - 1];
 }
 
 /* Seat layout for a cabin on a type: economy is the type's own; premium
@@ -105,7 +112,7 @@ function seatLayout(eq, cabinId) {
 }
 
 /* Published [from, to, via] services fly from→via→to. Return services use
-   the same sectors in reverse. A hub alone never grants a route. */
+   the same sectors in reverse. */
 function publishedSectors(m) {
   return ((m.profile && m.profile.routes) || [])
     .flatMap(r => r[2] ? [[r[0], r[2]], [r[2], r[1]]] : [[r[0], r[1]]])
@@ -116,11 +123,22 @@ function servesSector(m, fromC, toC) {
     (a === fromC && b === toC) || (a === toC && b === fromC));
 }
 
+/* A member's sphere of influence: how far from its own hubs and focus cities
+   it flies sectors it has not published. Beyond it, a journey is either a
+   route the member published or a codeshare: two members each flying within
+   their own sphere and meeting at an airport in between. */
+const SPHERE_KM = 4500;
+
+/* Which members could operate a given sector? Those that published it, and
+   those with a hub or focus city at one end and the other end within their
+   sphere. Either way the member needs an aircraft with the range. */
 function operatorsFor(fromC, toC) {
   if (!airport(fromC) || !airport(toC) || fromC === toC) return [];
   const km = distKm(airport(fromC), airport(toC));
   return MEMBERS.filter(m => {
-    return servesSector(m, fromC, toC) && fleetOf(m).some(a => a.maxKm >= km * 1.08);
+    const flies = servesSector(m, fromC, toC) || (km <= SPHERE_KM &&
+      (servesSet(m).includes(fromC) || servesSet(m).includes(toC)));
+    return flies && fleetOf(m).some(a => a.maxKm >= km * 1.08);
   });
 }
 
@@ -155,7 +173,7 @@ function directFlights(fromC, toC, dateISO, cabinId) {
     const op = ops.length === 1 ? ops[0] : pick(r, ops);
     const depMin = Math.round((5.5 + i * (16 / n) + r() * 1.4) * 60);
     const arrMin = depMin + blockMin;
-    const eq = equipmentFor(op, km, r);
+    const eq = equipmentFor(op, km, sectorDemand(from, to, km));
     out.push({
       kind:    'direct',
       op:      op.code,
@@ -183,7 +201,8 @@ function directFlights(fromC, toC, dateISO, cabinId) {
 function connectingFlights(fromC, toC, dateISO, cabinId, want) {
   const from = airport(fromC), to = airport(toC);
   if (!from || !to) return [];
-  // Include published stopovers even when they are not labelled as hubs.
+  // Any airport both legs can be flown through: an alliance hub, a published
+  // stopover, or where two members' spheres meet for a codeshare.
   const hubs = AIRPORTS.filter(a => a.code !== fromC && a.code !== toC &&
     operatorsFor(fromC, a.code).length && operatorsFor(a.code, toC).length);
 
