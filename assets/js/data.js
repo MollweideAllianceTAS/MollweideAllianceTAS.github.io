@@ -13,7 +13,7 @@ const ALLIANCE = {
   code:      'MWA',
   tagline:   'Further together. A wider world.',
   tagline2:  'More places. A brighter tomorrow.',
-  founded:   2024,                        // TODO confirm founding year
+  founded:   'September 2026',
   hq:        'Geneva, Switzerland',       // TODO confirm
   game:      'The Airline Simulator',
   /* The alliance's size in game, as the alliance states it. The site lists
