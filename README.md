@@ -392,6 +392,11 @@ The livery renders are stored at 760px wide, which is twice their display size.
   their own sphere and meeting at an airport in between, with a 55-minute
   minimum connection and no long detours. Results credit both carriers
   ("Carrier A + Carrier B") and mark the connection as a codeshare.
+- **Timetables.** A member that sends its flights as a `schedule` (see
+  `content/README.md`) flies exactly those, daily, with its own flight numbers,
+  local times and aircraft; they count as published routes on the network page
+  and are not shown on the member's own page. Connections stay with the same
+  airline when it has a flight that works.
 - **Which aircraft.** Only types in the member's own current fleet, with the
   range for the sector (range to spare where it has it). Among those, the type
   closest to the sector's demand: the smallest one whose `seats` covers it, or

@@ -76,7 +76,9 @@ const _fleets = {};
 function fleetOf(m) {
   if (_fleets[m.code]) return _fleets[m.code];
   const listed = (m.profile && m.profile.fleet && m.profile.fleet.current) || [];
-  const types = listed.map(f => aircraftFor(f[0], f[1])).filter(Boolean);
+  const types = listed.map(f => aircraftFor(f[0], f[1]))
+    .concat(scheduleOf(m).map(f => aircraftFor(f[3], '')))
+    .filter(Boolean);
   return (_fleets[m.code] = Array.from(new Set(types)).sort((x, y) => x.maxKm - y.maxKm));
 }
 
@@ -111,11 +113,18 @@ function seatLayout(eq, cabinId) {
   return wide ? [1, 1, 1] : (y[0] + y[1] <= 5 ? [1, 1] : [2, 2]);   // first
 }
 
-/* Published [from, to, via] services fly from→via→to. Return services use
-   the same sectors in reverse. */
+/* A member's own timetable, kept off its page: one row per flight,
+   [number, from, to, aircraft, departs, arrives ("+1" next day), block time,
+   economy seats, business seats]. Times are local, as the member gave them. */
+const scheduleOf = m => m.schedule || [];
+
+/* Published [from, to, via] services fly from→via→to, and so does every
+   sector in a member's timetable. Return services use the same sectors in
+   reverse. */
 function publishedSectors(m) {
   return ((m.profile && m.profile.routes) || [])
     .flatMap(r => r[2] ? [[r[0], r[2]], [r[2], r[1]]] : [[r[0], r[1]]])
+    .concat(scheduleOf(m).map(f => [f[1], f[2]]))
     .filter(([a, b]) => airport(a) && airport(b) && a !== b);
 }
 function servesSector(m, fromC, toC) {
@@ -136,6 +145,8 @@ function operatorsFor(fromC, toC) {
   if (!airport(fromC) || !airport(toC) || fromC === toC) return [];
   const km = distKm(airport(fromC), airport(toC));
   return MEMBERS.filter(m => {
+    // A timetabled flight is flown as the member gave it.
+    if (scheduleOf(m).some(f => f[1] === fromC && f[2] === toC)) return true;
     const flies = servesSector(m, fromC, toC) || (km <= SPHERE_KM &&
       (servesSet(m).includes(fromC) || servesSet(m).includes(toC)));
     return flies && fleetOf(m).some(a => a.maxKm >= km * 1.08);
@@ -153,11 +164,32 @@ function fareFor(km, cabinId, r) {
 function directFlights(fromC, toC, dateISO, cabinId) {
   const from = airport(fromC), to = airport(toC);
   if (!from || !to || fromC === toC) return [];
-  const ops = operatorsFor(fromC, toC);
-  if (!ops.length) return [];
+  const all = operatorsFor(fromC, toC);
+  if (!all.length) return [];
 
   const km   = distKm(from, to);
   const r    = rng(hash(fromC + toC + dateISO));
+
+  // Members with a timetable on this sector fly exactly those flights, daily.
+  const hm = t => { const [h, m] = t.split(':'); return +h * 60 + parseInt(m, 10); };
+  const timetabled = [];
+  all.forEach(m => scheduleOf(m).forEach((f, i) => {
+    if (f[1] !== fromC || f[2] !== toC) return;
+    if (cabinId !== 'economy' && !f[8]) return;        // no premium cabin on board
+    const dep = hm(f[4]);
+    let arr = hm(f[5]) + (/\+1/.test(f[5]) ? 1440 : 0);
+    if (arr < dep) arr += 1440;
+    timetabled.push({
+      kind: 'direct', op: m.code, opName: nameOf(m), color: m.color, no: f[0],
+      from: fromC, to: toC, dep, arr, dayGain: Math.floor(arr / 1440),
+      dur: hm(f[6]), km, eq: aircraftFor(f[3], ''), stops: 0, scheduled: true,
+      // seeded by the flight, so the rest of the day's schedule is unchanged
+      seatsLeft: 2 + Math.floor(rng(hash(f[0] + dateISO))() * 26),
+      price: fareFor(km, cabinId, rng(hash(f[0] + dateISO + cabinId)))
+    });
+  }));
+  const ops = all.filter(m => !scheduleOf(m).some(f => f[1] === fromC && f[2] === toC));
+  if (!ops.length) return timetabled;
   const both = (from.hub && to.hub);
 
   // Frequency: hub-to-hub sectors get more rotations; ultra-long-haul fewer.
@@ -193,7 +225,7 @@ function directFlights(fromC, toC, dateISO, cabinId) {
       price:   fareFor(km, cabinId, rng(hash(fromC + toC + dateISO + i + cabinId)))
     });
   }
-  return out;
+  return timetabled.concat(out);
 }
 
 /* One-stop itineraries via an alliance hub, used when no direct sector exists
@@ -229,8 +261,10 @@ function connectingFlights(fromC, toC, dateISO, cabinId, want) {
     if (!leg1.length || !leg2.length) continue;
 
     for (const a of leg1) {
-      // Earliest onward departure leaving a legal 55-minute connection.
-      const b = leg2.find(x => x.dep >= a.arr + 55 && x.dep <= a.arr + 330);
+      // Earliest onward departure leaving a legal 55-minute connection,
+      // staying with the same airline when it has one.
+      const legal = leg2.filter(x => x.dep >= a.arr + 55 && x.dep <= a.arr + 330);
+      const b = legal.find(x => x.op === a.op) || legal[0];
       if (!b) continue;
       out.push({
         kind:  'connect',
@@ -777,8 +811,8 @@ function initHubExplorer(root) {
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* Every route a member listed, as legs. A one-stop service [from, to, via]
-     flies from→via→to. Routes are only those the members named — nothing is
-     inferred — so a hub can have none yet. */
+     flies from→via→to; a timetable adds its sectors. Routes are only those
+     the members named — nothing is inferred — so a hub can have none yet. */
   const legsOf = publishedSectors;
 
   /* Who connects a hub to where: one entry per member that bases there or
@@ -786,7 +820,8 @@ function initHubExplorer(root) {
   function connections(code) {
     return MEMBERS.map(m => {
       const dests = [];
-      ((m.profile && m.profile.routes) || []).forEach(r => {
+      ((m.profile && m.profile.routes) || [])
+        .concat(scheduleOf(m).map(f => [f[1], f[2]])).forEach(r => {
         const [f, t, via] = r;
         if (f === code) dests.push({ to: t, via });
         else if (t === code) dests.push({ to: f, via });

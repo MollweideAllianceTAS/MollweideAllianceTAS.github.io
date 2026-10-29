@@ -30,6 +30,12 @@ const ok = (name, cond, extra='') => { console.log((cond?'  PASS  ':'  FAIL  ')+
      !S.operatorsFor('GIG', 'GVA').some(m => m.code === 'DU'));
   ok('A published stopover is not offered as a nonstop',
      !S.directFlights('GIG', 'PPT', '2026-11-03', 'economy').some(f => f.op === 'DU'));
+  ok('A member timetable is flown with its own flight numbers, times and aircraft',
+     S.directFlights('NOU', 'LIF', '2026-11-05', 'economy').some(f => f.no === 'SJ460' && f.dep === 16 * 60 + 35 && /Q400/.test(f.eq.type)) &&
+     !S.directFlights('NOU', 'LIF', '2026-11-05', 'business').some(f => f.op === 'SJ'));
+  ok('A timetable does not give its member a page', !S.memberPage(S.memberOf('SJ')));
+  ok('Every timetabled airport and aircraft is known',
+     S.MEMBERS.every(m => (m.schedule || []).every(f => S.airport(f[1]) && S.airport(f[2]) && S.aircraftFor(f[3], ''))));
   ok('Long journeys can be codeshares meeting between two spheres',
      S.searchFlights('SVO', 'PVG', '2026-11-05', 'economy', 1)
        .some(f => f.legs && f.legs[0].op !== f.legs[1].op));
@@ -68,7 +74,7 @@ const ok = (name, cond, extra='') => { console.log((cond?'  PASS  ':'  FAIL  ')+
     if (a === b) return;
     S.searchFlights(a, b, '2026-11-03', 'economy', 1).forEach(f => (f.legs || [f]).forEach(g => {
       const m = S.memberOf(g.op);
-      if (!g.eq || g.eq.maxKm < g.km * 1.08 || !S.fleetOf(m).includes(g.eq) ||
+      if (!g.eq || (!g.scheduled && g.eq.maxKm < g.km * 1.08) || !S.fleetOf(m).includes(g.eq) ||
           !(S.servesSector(m, g.from, g.to) || (g.km <= S.SPHERE_KM && [g.from, g.to].some(c => (m.hubs || []).concat(m.focus || []).includes(c))))) bad.push(g.no + ' ' + g.from + '-' + g.to + ' ' + (g.eq && g.eq.type));
     }));
   }));

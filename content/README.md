@@ -20,3 +20,14 @@ Do not edit `assets/js/members.generated.js`; it is generated automatically.
 - Two airlines can be added at the same time without their changes colliding.
 - A Discord bot can create exactly one file and attach one livery image.
 - GitHub can show a clear review: what the member submitted, what was changed, and who approved it.
+
+## Timetables
+
+An airline can send its flights as a `schedule` list, outside `profile`, so they feed the network page and booking without appearing on the airline's own page. One row per flight:
+
+```json
+["SJ460", "NOU", "LIF", "De Havilland Dash 8 Q400", "16:35", "17:15", "0:40", 90, 0]
+```
+
+Flight number, from, to, aircraft (matched against the `AIRCRAFT` catalogue), local departure, local arrival (add `+1` for the next day), block time, economy seats and business seats. Booking offers these flights daily with these numbers and times; a flight with no business seats is offered in economy only. The aircraft count as the airline's fleet, and every airport must be in `AIRPORTS`.
+
