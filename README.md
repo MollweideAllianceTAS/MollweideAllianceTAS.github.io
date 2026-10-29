@@ -291,6 +291,17 @@ and a few of the brighter ones need darkening for the page. A test asserts every
 member clears the threshold on both, so a new member with an awkward livery
 colour cannot quietly disappear.
 
+### The landing game
+
+Tapping the plane on the homepage route line twice opens *Final approach*, a
+small landing game (`assets/js/landing.js`, styles at the end of
+`assets/css/cinematic.css`). `index.html#land` opens it directly, which is the
+link players share. The runway, starting height and gusts come from the date,
+so everyone flies the same approach on a given day and scores can be compared
+on Discord. A score is up to 600 points for a soft touchdown plus up to 400 for
+landing near the aiming point. Each browser keeps only its own best for the
+day; there is no shared leaderboard.
+
 ### The route map
 
 `renderMap()` draws the full network: trunk arcs between primary hubs, feeders,

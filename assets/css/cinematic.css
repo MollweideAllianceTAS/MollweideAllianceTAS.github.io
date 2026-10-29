@@ -203,3 +203,36 @@
   .c-map__aircraft { transform: translate3d(-5vw,-50%,0) scale(.72); }
   .c-chapter { opacity: 1; transform: none; }
 }
+
+/* Final approach: the hidden landing game (assets/js/landing.js) */
+.c-route__flight { touch-action: manipulation; }
+.c-route__flight::before { content: ''; position: absolute; inset: -12px; }
+.lg-open, .lg-open body { overflow: hidden; }
+.lg { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 16px; background: rgba(7,26,69,.72); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.lg__panel { width: min(900px,100%); background: var(--blue-ink); color: var(--tx-on-ink); border: 1px solid var(--rule-ink); border-radius: var(--r-lg); padding: 1.25rem; box-shadow: 0 30px 80px rgba(0,0,0,.35); }
+.lg__head { display: flex; justify-content: space-between; align-items: start; gap: 1rem; margin-bottom: 1rem; }
+.lg__head h2 { font-size: 1.35rem; font-weight: 600; color: #fff; }
+.lg__head p { color: var(--tx-on-ink-soft); font-size: .85rem; margin-top: .15rem; }
+.lg__close { background: none; border: 1px solid var(--rule-ink); color: #fff; width: 2.25rem; height: 2.25rem; border-radius: 50%; font-size: 1.3rem; line-height: 1; cursor: pointer; flex: none; }
+.lg__close:hover { background: rgba(255,255,255,.08); }
+.lg__stage { position: relative; border-radius: var(--r); overflow: hidden; }
+.lg__canvas { display: block; width: 100%; height: min(62vh, 480px); touch-action: none; cursor: pointer; user-select: none; -webkit-user-select: none; }
+.lg__card { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: min(400px, calc(100% - 2rem)); background: rgba(7,26,69,.92); border: 1px solid var(--rule-ink); border-radius: var(--r-lg); padding: 1.4rem; text-align: center; }
+.lg__card[hidden] { display: none; }
+.lg__card h3 { font-size: 1.25rem; font-weight: 600; color: #fff; }
+.lg__card p { color: var(--tx-on-ink-soft); font-size: .9rem; margin-top: .4rem; }
+.lg__score { font-family: var(--f-data); color: var(--sky-soft); }
+.lg__score b { display: block; font-size: 3rem; line-height: 1; color: #fff; font-weight: 500; margin-bottom: .2rem; }
+.lg__facts { display: grid; grid-template-columns: repeat(3,1fr); gap: .5rem; margin: 1rem 0 0; }
+.lg__facts dt { font-size: .7rem; color: var(--tx-on-ink-soft); }
+.lg__facts dd { font-family: var(--f-data); font-size: .9rem; color: #fff; margin: .15rem 0 0; }
+.lg__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; margin-top: 1.2rem; }
+.lg__note { font-size: .8rem; word-break: break-word; }
+.lg__note:empty { display: none; }
+.lg__hint { color: var(--tx-on-ink-soft); font-size: .8rem; margin-top: .75rem; }
+@media (max-width: 560px) {
+  .lg { padding: 8px; }
+  .lg__panel { padding: .9rem; }
+  .lg__canvas { height: min(58vh, 420px); }
+  .lg__score b { font-size: 2.4rem; }
+}

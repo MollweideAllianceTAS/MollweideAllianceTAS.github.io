@@ -329,6 +329,7 @@ const index = head('Mollweide Alliance', `${Size} airlines, one network. Explore
 ` + footer() + `
 <script src="assets/js/land.js"></script>
 <script src="assets/js/cinematic.js"></script>
+<script src="assets/js/landing.js"></script>
 <script>
   renderTails(document.getElementById('membersHome'));
   initRail(document.querySelector('.rail'));
