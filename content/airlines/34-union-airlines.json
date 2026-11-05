@@ -6,7 +6,8 @@
   "tail": "assets/img/members/union-airlines.webp",
   "hubs": [
     "BNA",
-    "BOS"
+    "BOS",
+    "OKC"
   ],
   "focus": [],
   "joined": 2026,
@@ -95,6 +96,41 @@
       [
         "BOS",
         "PIT"
+      ],
+      [
+        "OKC",
+        "DEN"
+      ],
+      [
+        "OKC",
+        "MEX",
+        "DAL"
+      ],
+      [
+        "OKC",
+        "CUU"
+      ],
+      [
+        "OKC",
+        "BOS"
+      ],
+      [
+        "OKC",
+        "HNL",
+        "SAN"
+      ],
+      [
+        "OKC",
+        "LHR",
+        "MSP"
+      ],
+      [
+        "OKC",
+        "LBB"
+      ],
+      [
+        "OKC",
+        "AMA"
       ]
     ],
     "fleet": {

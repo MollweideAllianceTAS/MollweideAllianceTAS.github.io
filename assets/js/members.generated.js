@@ -1163,7 +1163,9 @@ const MWA_MEMBERS = [
       "MRU",
       "GEO",
       "PBM",
-      "MCT"
+      "MCT",
+      "BCN",
+      "BOS"
     ],
     "focus": [],
     "joined": 2026,
@@ -4499,7 +4501,8 @@ const MWA_MEMBERS = [
     "tail": "assets/img/members/union-airlines.webp",
     "hubs": [
       "BNA",
-      "BOS"
+      "BOS",
+      "OKC"
     ],
     "focus": [],
     "joined": 2026,
@@ -4588,6 +4591,41 @@ const MWA_MEMBERS = [
         [
           "BOS",
           "PIT"
+        ],
+        [
+          "OKC",
+          "DEN"
+        ],
+        [
+          "OKC",
+          "MEX",
+          "DAL"
+        ],
+        [
+          "OKC",
+          "CUU"
+        ],
+        [
+          "OKC",
+          "BOS"
+        ],
+        [
+          "OKC",
+          "HNL",
+          "SAN"
+        ],
+        [
+          "OKC",
+          "LHR",
+          "MSP"
+        ],
+        [
+          "OKC",
+          "LBB"
+        ],
+        [
+          "OKC",
+          "AMA"
         ]
       ],
       "fleet": {
@@ -4850,5 +4888,303 @@ const MWA_MEMBERS = [
     "focus": [],
     "joined": 2026,
     "blurb": "The inter-island specialist. From Honolulu, Aloha Regional feeds the alliance's Pacific network with high-frequency turboprop services."
+  },
+  {
+    "name": "Royal Johor Airway",
+    "short": "Royal Johor",
+    "code": "JH",
+    "country": "Malaysia",
+    "color": "#011D57",
+    "secondaryColor": "#D19D01",
+    "tail": "assets/img/members/royal-johor.webp",
+    "hubs": [
+      "JHB"
+    ],
+    "focus": [
+      "KUL",
+      "PEN",
+      "JNB",
+      "IST",
+      "MEL",
+      "HND",
+      "HKG"
+    ],
+    "joined": 2026,
+    "blurb": "Johor's premium full-service carrier, linking Senai with international markets while presenting the state's royal heritage and hospitality to the world.",
+    "profile": {
+      "founded": "2013",
+      "about": [
+        "Royal Johor Airway is a premium full-service Malaysian carrier based at Senai International Airport. It was founded on 10 March 2013 as a state-owned airline with a mission to grow international tourism for Johor, celebrate the state's royal heritage and cultural character, and establish Johor as a prominent gateway to Southeast Asia.",
+        "From the beginning, the airline built a balanced narrow-body and wide-body fleet and designed its service for both leisure visitors and business travellers. The COVID-19 pandemic brought severe financial and operational pressure: collapsing demand and border restrictions pushed Royal Johor Airway into bankruptcy between 2020 and 2022, halting most scheduled services.",
+        "Following an extended restructuring, Montigo Group acquired the airline in 2025 and ended its state-owned status. The public continues to associate the carrier closely with Johor's identity and widely regards it as the state's flagship airline. Now fully operational again, Royal Johor continues its founding mission by welcoming visitors to the state's beaches, heritage landmarks and culture."
+      ],
+      "network": [
+        "Senai is the main hub, supported by focus-city operations in Kuala Lumpur, George Town, Johannesburg, Istanbul, Melbourne, Tokyo and Hong Kong. Its 30-aircraft fleet combines the Airbus A321neo for regional flying with Boeing 787-9 Dreamliners for long-haul service."
+      ],
+      "fleet": {
+        "current": [
+          [
+            "Airbus",
+            "A321neo",
+            "26 aircraft"
+          ],
+          [
+            "Boeing",
+            "787-9 Dreamliner",
+            "4 aircraft"
+          ]
+        ],
+        "incoming": []
+      }
+    }
+  },
+  {
+    "name": "AviaX Portugal",
+    "code": "AX",
+    "country": "Portugal",
+    "color": "#064B3B",
+    "tail": "assets/img/members/aviax-portugal.webp",
+    "hubs": [
+      "LIS",
+      "OPO"
+    ],
+    "focus": [
+      "FAO",
+      "PDL",
+      "FNC"
+    ],
+    "joined": 2026,
+    "blurb": "A premium Portuguese full-service airline connecting the world through Lisbon and Porto, with additional gateways in Faro, Funchal and Ponta Delgada.",
+    "profile": {
+      "about": [
+        "Part of the AVIA X Group, AviaX Portugal is a global full-service airline rooted in Portugal. It is positioned as a premium carrier, offering an elevated travel experience from the lounge to the cabin.",
+        "Lisbon and Porto anchor its operation, while Faro, Funchal and Ponta Delgada provide additional connectivity across mainland Portugal, Madeira and the Azores."
+      ],
+      "network": [
+        "A mixed fleet of long-haul wide-body aircraft and next-generation narrow-bodies supports an international network spanning every continent."
+      ],
+      "fleet": {
+        "current": [
+          [
+            "Boeing",
+            "777-300ER"
+          ],
+          [
+            "Airbus",
+            "A350-900"
+          ],
+          [
+            "Airbus",
+            "A321XLR"
+          ],
+          [
+            "Airbus",
+            "A330-900"
+          ],
+          [
+            "Airbus",
+            "A350-1000"
+          ]
+        ],
+        "incoming": []
+      }
+    }
+  },
+  {
+    "name": "AZANIAN",
+    "code": "AZ",
+    "country": "South Africa",
+    "color": "#790018",
+    "tail": "assets/img/members/azanian.webp",
+    "hubs": [
+      "CPT"
+    ],
+    "focus": [],
+    "joined": 2026,
+    "blurb": "A luxury South African long-haul carrier connecting the Cape with major cities across Europe, the Middle East and North America.",
+    "profile": {
+      "about": [
+        "AZANIAN is a luxury South African carrier connecting the Cape to the world and beyond. The airline operates exclusively long-haul services with a fleet of premium wide-body aircraft."
+      ],
+      "network": [
+        "From Cape Town, AZANIAN serves Budapest, Dubai, New York, Frankfurt, Paris, Los Angeles, San Francisco and Houston."
+      ],
+      "routes": [
+        [
+          "CPT",
+          "BUD"
+        ],
+        [
+          "CPT",
+          "DXB"
+        ],
+        [
+          "CPT",
+          "JFK"
+        ],
+        [
+          "CPT",
+          "FRA"
+        ],
+        [
+          "CPT",
+          "CDG"
+        ],
+        [
+          "CPT",
+          "LAX"
+        ],
+        [
+          "CPT",
+          "SFO"
+        ],
+        [
+          "CPT",
+          "IAH"
+        ]
+      ],
+      "fleet": {
+        "current": [
+          [
+            "Airbus",
+            "A350-900",
+            "13 aircraft"
+          ],
+          [
+            "Airbus",
+            "A380-800",
+            "7 aircraft"
+          ],
+          [
+            "Boeing",
+            "747-8",
+            "5 aircraft"
+          ],
+          [
+            "Boeing",
+            "747-400",
+            "3 aircraft"
+          ],
+          [
+            "Airbus",
+            "A350-900ULR",
+            "3 aircraft"
+          ]
+        ],
+        "incoming": []
+      }
+    }
+  },
+  {
+    "name": "Gauto Airlines",
+    "short": "Gauto",
+    "code": "GT",
+    "country": "South Africa",
+    "color": "#012966",
+    "tail": "assets/img/members/gauto-airlines.webp",
+    "hubs": [
+      "JNB"
+    ],
+    "focus": [],
+    "joined": 2026,
+    "blurb": "A budget-friendly South African airline linking Johannesburg with domestic cities and destinations across Africa and Europe.",
+    "profile": {
+      "about": [
+        "Gauto is a budget-friendly South African airline with service originating from Johannesburg. It combines an extensive domestic network with international flights across Africa and into Europe."
+      ],
+      "network": [
+        "Popular services from Johannesburg include Cape Town, London Gatwick, Paris Orly, Durban, Gqeberha, Douala, Harare, Windhoek and Libreville."
+      ],
+      "routes": [
+        [
+          "JNB",
+          "CPT"
+        ],
+        [
+          "JNB",
+          "LGW"
+        ],
+        [
+          "JNB",
+          "ORY"
+        ],
+        [
+          "JNB",
+          "DUR"
+        ],
+        [
+          "JNB",
+          "PLZ"
+        ],
+        [
+          "JNB",
+          "DLA"
+        ],
+        [
+          "JNB",
+          "HRE"
+        ],
+        [
+          "JNB",
+          "WDH"
+        ],
+        [
+          "JNB",
+          "LBV"
+        ]
+      ],
+      "fleet": {
+        "current": [
+          [
+            "Boeing",
+            "737 MAX 8",
+            "22 aircraft"
+          ],
+          [
+            "Embraer",
+            "E195-E2",
+            "5 aircraft"
+          ],
+          [
+            "Boeing",
+            "787-8 Dreamliner",
+            "5 aircraft"
+          ]
+        ],
+        "incoming": []
+      }
+    }
+  },
+  {
+    "name": "AsiaJet",
+    "code": "AJ",
+    "country": "Malaysia",
+    "color": "#0B2D6B",
+    "tail": "assets/img/members/asiajet.webp",
+    "hubs": [
+      "KUL"
+    ],
+    "focus": [],
+    "joined": 2026,
+    "blurb": "TAA Group's Kuala Lumpur-based Asian carrier, operating a unified fleet of 102 Boeing 737 MAX 10 aircraft.",
+    "profile": {
+      "about": [
+        "AsiaJet traces its origins to QantasLink before its acquisition by TAA Group. Following the acquisition, the airline was rebranded as AsiaJet and established operations in Kuala Lumpur, Malaysia.",
+        "Today, AsiaJet operates as part of TAA Group alongside Trans Atlantic Airlines and EuroStar."
+      ],
+      "network": [
+        "Kuala Lumpur International Airport is AsiaJet's primary hub. Its single-type fleet of 102 Boeing 737 MAX 10 aircraft supports the carrier's network."
+      ],
+      "fleet": {
+        "current": [
+          [
+            "Boeing",
+            "737 MAX 10",
+            "102 aircraft"
+          ]
+        ],
+        "incoming": []
+      }
+    }
   }
 ];

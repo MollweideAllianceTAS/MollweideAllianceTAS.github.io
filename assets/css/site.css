@@ -563,6 +563,7 @@ header.nav {
 .lounge__name { font-size: 1.3125rem; font-weight: 700; line-height: 1.15; letter-spacing: -.018em; }
 .lounge__where { font-size: .8125rem; color: var(--tx-soft); }
 .lounge__where .code { color: var(--blue); font-weight: 600; margin-right: .3125rem; }
+.lounge__desc { font-size: .875rem; line-height: 1.6; color: var(--tx-soft); }
 
 .lounge__facts { display: grid; gap: .6875rem; margin-top: .25rem;
   padding-top: .875rem; border-top: 1px solid var(--rule); }
@@ -1261,6 +1262,9 @@ footer.ft { background: var(--blue-ink); color: var(--tx-on-ink-soft); }
 .al-facts dd { margin: 0; font-size: .875rem; line-height: 1.5; color: var(--tx); }
 .al-facts .code { color: var(--blue); margin-left: .25rem; }
 .al-facts dd > .code:only-child { margin-left: 0; }
+.al-colours { display: flex; flex-wrap: wrap; gap: .5rem; }
+.al-colours span { display: inline-flex; align-items: center; gap: .3rem; font-family: var(--f-label); font-size: .6875rem; }
+.al-colours span::before { content: ''; width: .875rem; height: .875rem; border-radius: 50%; background: var(--sw); border: 1px solid rgba(7,26,69,.14); }
 
 .al-sub { margin: 2.25rem 0 .875rem; font-size: .75rem; font-weight: 700;
   letter-spacing: 0; text-transform: none; color: var(--blue); }

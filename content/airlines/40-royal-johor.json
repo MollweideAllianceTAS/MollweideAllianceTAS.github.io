@@ -1,0 +1,32 @@
+{
+  "name": "Royal Johor Airway",
+  "short": "Royal Johor",
+  "code": "JH",
+  "country": "Malaysia",
+  "color": "#011D57",
+  "secondaryColor": "#D19D01",
+  "tail": "assets/img/members/royal-johor.webp",
+  "hubs": ["JHB"],
+  "focus": ["KUL", "PEN", "JNB", "IST", "MEL", "HND", "HKG"],
+  "joined": 2026,
+  "blurb": "Johor's premium full-service carrier, linking Senai with international markets while presenting the state's royal heritage and hospitality to the world.",
+  "profile": {
+    "founded": "2013",
+    "about": [
+      "Royal Johor Airway is a premium full-service Malaysian carrier based at Senai International Airport. It was founded on 10 March 2013 as a state-owned airline with a mission to grow international tourism for Johor, celebrate the state's royal heritage and cultural character, and establish Johor as a prominent gateway to Southeast Asia.",
+      "From the beginning, the airline built a balanced narrow-body and wide-body fleet and designed its service for both leisure visitors and business travellers. The COVID-19 pandemic brought severe financial and operational pressure: collapsing demand and border restrictions pushed Royal Johor Airway into bankruptcy between 2020 and 2022, halting most scheduled services.",
+      "Following an extended restructuring, Montigo Group acquired the airline in 2025 and ended its state-owned status. The public continues to associate the carrier closely with Johor's identity and widely regards it as the state's flagship airline. Now fully operational again, Royal Johor continues its founding mission by welcoming visitors to the state's beaches, heritage landmarks and culture."
+    ],
+    "network": [
+      "Senai is the main hub, supported by focus-city operations in Kuala Lumpur, George Town, Johannesburg, Istanbul, Melbourne, Tokyo and Hong Kong. Its 30-aircraft fleet combines the Airbus A321neo for regional flying with Boeing 787-9 Dreamliners for long-haul service."
+    ],
+    "fleet": {
+      "current": [
+        ["Airbus", "A321neo", "26 aircraft"],
+        ["Boeing", "787-9 Dreamliner", "4 aircraft"]
+      ],
+      "incoming": []
+    }
+  },
+  "order": 40
+}

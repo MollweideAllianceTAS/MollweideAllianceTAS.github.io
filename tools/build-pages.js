@@ -212,7 +212,7 @@ const index = head('Mollweide Alliance', `${Size} airlines, one network. Explore
     </div>
     <div class="c-map">
       <div class="c-map__grid"></div>
-      <img class="c-map__aircraft" src="assets/img/brand/mollweide-aircraft.png" alt="" width="2054" height="766">
+      <img class="c-map__aircraft" src="assets/img/brand/strayajet-aircraft.png" alt="" width="2053" height="766">
       <span class="c-map__route c-map__route--a"></span>
       <span class="c-map__route c-map__route--b"></span>
       <span class="c-map__route c-map__route--c"></span>
@@ -1076,6 +1076,8 @@ const airlinePage = m => {
       <dl class="al-facts">
         <div><dt>Airline code</dt><dd><span class="code">${m.code}</span></dd></div>
         <div><dt>Country</dt><dd>${esc(m.country)}</dd></div>
+${m.secondaryColor ? `        <div><dt>Brand colours</dt><dd class="al-colours"><span style="--sw:${m.color}">${m.color}</span><span style="--sw:${m.secondaryColor}">${m.secondaryColor}</span></dd></div>
+` : ''}
 ${P.founded ? `        <div><dt>Founded</dt><dd>${esc(P.founded)}</dd></div>
 ` : ''}        <div><dt>Primary hub</dt><dd>${esc(hub.city)} ${esc(hub.name)} <span class="code">${hub.code}</span></dd></div>
         <div><dt>Membership</dt><dd>${group}, since ${m.joined}</dd></div>

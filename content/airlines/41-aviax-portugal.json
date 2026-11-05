@@ -1,0 +1,31 @@
+{
+  "name": "AviaX Portugal",
+  "code": "AX",
+  "country": "Portugal",
+  "color": "#064B3B",
+  "tail": "assets/img/members/aviax-portugal.webp",
+  "hubs": ["LIS", "OPO"],
+  "focus": ["FAO", "PDL", "FNC"],
+  "joined": 2026,
+  "blurb": "A premium Portuguese full-service airline connecting the world through Lisbon and Porto, with additional gateways in Faro, Funchal and Ponta Delgada.",
+  "profile": {
+    "about": [
+      "Part of the AVIA X Group, AviaX Portugal is a global full-service airline rooted in Portugal. It is positioned as a premium carrier, offering an elevated travel experience from the lounge to the cabin.",
+      "Lisbon and Porto anchor its operation, while Faro, Funchal and Ponta Delgada provide additional connectivity across mainland Portugal, Madeira and the Azores."
+    ],
+    "network": [
+      "A mixed fleet of long-haul wide-body aircraft and next-generation narrow-bodies supports an international network spanning every continent."
+    ],
+    "fleet": {
+      "current": [
+        ["Boeing", "777-300ER"],
+        ["Airbus", "A350-900"],
+        ["Airbus", "A321XLR"],
+        ["Airbus", "A330-900"],
+        ["Airbus", "A350-1000"]
+      ],
+      "incoming": []
+    }
+  },
+  "order": 41
+}

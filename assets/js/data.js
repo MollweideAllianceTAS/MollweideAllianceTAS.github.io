@@ -1284,6 +1284,8 @@ const AIRPORTS = [
   { code:'SFO', city:'San Francisco', name:'San Francisco Intl',       country:'United States',lat:37.62, lon:-122.38,hub:true },
   { code:'OGG', city:'Kahului',       name:'Kahului Airport',          country:'United States',lat:20.90, lon:-156.43,hub:true },
   { code:'HNL', city:'Honolulu',      name:'Daniel K. Inouye Intl',    country:'United States',lat:21.32, lon:-157.92,hub:true },
+  { code:'JHB', city:'Johor Bahru',   name:'Senai Intl (WMKJ)',        country:'Malaysia',     lat: 1.64, lon:103.67, hub:true },
+  { code:'OKC', city:'Oklahoma City', name:'Will Rogers World',        country:'United States',lat:35.39, lon:-97.60, hub:true },
 
   /* --- Network destinations ---------------------------------------------- */
   { code:'ZRH', city:'Zurich',        name:'Zurich Airport',           country:'Switzerland',  lat:47.46, lon:  8.55 },
@@ -1301,7 +1303,7 @@ const AIRPORTS = [
   { code:'LGW', city:'London',        name:'Gatwick',                  country:'United Kingdom',lat:51.15,lon: -0.19, focus:true },
   { code:'LPA', city:'Gran Canaria',  name:'Gran Canaria',             country:'Spain',        lat:27.93, lon:-15.39, hub:true },
   { code:'BCN', city:'Barcelona',     name:'El Prat',                  country:'Spain',        lat:41.30, lon:  2.08 },
-  { code:'LIS', city:'Lisbon',        name:'Humberto Delgado',         country:'Portugal',     lat:38.77, lon: -9.13 },
+  { code:'LIS', city:'Lisbon',        name:'Humberto Delgado',         country:'Portugal',     lat:38.77, lon: -9.13, hub:true },
   { code:'FCO', city:'Rome',          name:'Fiumicino',                country:'Italy',        lat:41.80, lon: 12.25, hub:true },
   { code:'BRI', city:'Bari',          name:'Karol Wojtyła',            country:'Italy',        lat: 41.14, lon:  16.76 },
   { code:'CTA', city:'Catania',       name:'Fontanarossa',             country:'Italy',        lat: 37.47, lon:  15.07 },
@@ -1363,7 +1365,10 @@ const AIRPORTS = [
   { code:'HEL', city:'Helsinki',      name:'Helsinki-Vantaa',          country:'Finland',      lat: 60.32, lon:  24.96 },
   { code:'HER', city:'Heraklion',     name:'Nikos Kazantzakis',        country:'Greece',       lat: 35.34, lon:  25.18 },
   { code:'CIA', city:'Rome',          name:'Ciampino',                 country:'Italy',        lat: 41.80, lon:  12.59 },
-  { code:'OPO', city:'Porto',         name:'Francisco Sá Carneiro',    country:'Portugal',     lat: 41.24, lon:  -8.68 },
+  { code:'OPO', city:'Porto',         name:'Francisco Sá Carneiro',    country:'Portugal',     lat: 41.24, lon:  -8.68, hub:true },
+  { code:'FAO', city:'Faro',          name:'Gago Coutinho',            country:'Portugal',     lat: 37.01, lon:  -7.97, focus:true },
+  { code:'PDL', city:'Ponta Delgada', name:'João Paulo II',            country:'Portugal',     lat: 37.74, lon: -25.70, focus:true },
+  { code:'FNC', city:'Funchal',       name:'Cristiano Ronaldo Madeira',country:'Portugal',     lat: 32.70, lon: -16.77, focus:true },
   { code:'BIO', city:'Bilbao',        name:'Bilbao',                   country:'Spain',        lat: 43.30, lon:  -2.91 },
   { code:'BRE', city:'Bremen',        name:'Bremen',                   country:'Germany',      lat: 53.05, lon:   8.79 },
   { code:'GOT', city:'Gothenburg',    name:'Landvetter',               country:'Sweden',       lat: 57.66, lon:  12.28 },
@@ -1413,6 +1418,7 @@ const AIRPORTS = [
   { code:'BKK', city:'Bangkok',       name:'Suvarnabhumi',             country:'Thailand',     lat:13.69, lon:100.75, hub:true },
   { code:'SIN', city:'Singapore',     name:'Changi',                   country:'Singapore',    lat: 1.36, lon:103.99 },
   { code:'KUL', city:'Kuala Lumpur',  name:'KLIA',                     country:'Malaysia',     lat: 2.75, lon:101.71, hub:true },
+  { code:'PEN', city:'George Town',   name:'Penang Intl',              country:'Malaysia',     lat: 5.30, lon:100.28, focus:true },
   { code:'HKG', city:'Hong Kong',     name:'Hong Kong Intl',           country:'Hong Kong',    lat:22.31, lon:113.91 },
   { code:'PEK', city:'Beijing',       name:'Capital Intl',             country:'China',        lat:40.08, lon:116.58, hub:true },
   { code:'PKX', city:'Beijing',       name:'Daxing Intl',              country:'China',        lat:39.51, lon:116.41 },
@@ -1455,6 +1461,17 @@ const AIRPORTS = [
   { code:'SLC', city:'Salt Lake City',name:'Salt Lake City Intl',      country:'United States',lat:40.79, lon:-111.98},
   { code:'CMH', city:'Columbus',      name:'John Glenn Columbus',      country:'United States',lat:40.00, lon:-82.89 },
   { code:'PIT', city:'Pittsburgh',    name:'Pittsburgh Intl',          country:'United States',lat:40.49, lon:-80.23 },
+  { code:'DAL', city:'Dallas',        name:'Love Field',               country:'United States',lat:32.85, lon:-96.85 },
+  { code:'CUU', city:'Chihuahua',     name:'General Roberto Fierro Villalobos Intl',country:'Mexico',lat:28.70,lon:-105.96 },
+  { code:'SAN', city:'San Diego',     name:'San Diego Intl',           country:'United States',lat:32.73, lon:-117.19 },
+  { code:'LBB', city:'Lubbock',       name:'Preston Smith Intl',       country:'United States',lat:33.66, lon:-101.82 },
+  { code:'AMA', city:'Amarillo',      name:'Rick Husband Intl',        country:'United States',lat:35.22, lon:-101.71 },
+  { code:'DUR', city:'Durban',        name:'King Shaka Intl',          country:'South Africa', lat:-29.61,lon: 31.12 },
+  { code:'PLZ', city:'Gqeberha',      name:'Chief Dawid Stuurman Intl',country:'South Africa', lat:-33.98,lon: 25.62 },
+  { code:'DLA', city:'Douala',        name:'Douala Intl',              country:'Cameroon',     lat:  4.01,lon:  9.72 },
+  { code:'HRE', city:'Harare',        name:'Robert Gabriel Mugabe Intl',country:'Zimbabwe',    lat:-17.93,lon: 31.09 },
+  { code:'WDH', city:'Windhoek',      name:'Hosea Kutako Intl',        country:'Namibia',      lat:-22.49,lon: 17.46 },
+  { code:'LBV', city:'Libreville',    name:'Léon-Mba Intl',            country:'Gabon',        lat:  0.46,lon:  9.41 },
   { code:'HBE', city:'Alexandria',    name:'Borg El Arab',             country:'Egypt',        lat:30.92, lon: 29.70 },
   { code:'LXR', city:'Luxor',         name:'Luxor Intl',               country:'Egypt',        lat:25.67, lon: 32.71 },
   { code:'HRG', city:'Hurghada',      name:'Hurghada Intl',            country:'Egypt',        lat:27.18, lon: 33.80 },
@@ -1842,6 +1859,65 @@ const LOUNGES = [
     photo:'assets/img/lounges/caucausair-tbs.jpg',
     access:['Business and First', 'Strata and Aurora members'],
     amenities:['Georgian wine bar','Hot kitchen','City and ramp view','Wi-Fi']
+  },
+  {
+    name:'Royal Johor Lounge', operator:'JH', airport:'JHB',
+    location:'Airside, after security',
+    hours:'Opening hours not published',
+    photo:'assets/img/lounges/royal-johor-jhb.webp',
+    description:'Royal Johor Airway’s flagship lounge is a calm, refined introduction to Johor hospitality. Warm wood, deep-blue details and restrained greenery create an uncluttered setting for regional and long-haul travellers, with quiet seating, work nooks and dedicated rest areas.',
+    access:['Royal Johor Business Class', 'Elite frequent flyers', 'Strata and Aurora members'],
+    amenities:['Local and international light bites','Self-service refreshments','Quiet seating','Work nooks','Rest areas']
+  },
+  {
+    name:'Pacific Sunset Group LGB Lounge', operator:'PS', airport:'LGB',
+    location:'North Terminal',
+    hours:'06:30 – 22:30 local time (UTC−7)',
+    photo:'assets/img/lounges/pacific-sunset-lgb.webp',
+    access:['Long Beach citizens — complimentary', 'Pacific Sunset Group Business and First', 'Mollweide member Business and First'],
+    amenities:['7 reservation suites','Walk-in suites when available','Runway view','Bar and buffet','Coffee','Desks and charging','Wi-Fi']
+  },
+  {
+    name:'AviaX Atlantic Lounge', operator:'AX', airport:'LIS',
+    location:'Terminal 1, airside, international departures',
+    hours:'05:00 – 00:00',
+    photo:'assets/img/lounges/aviax-lis.webp',
+    description:'A calm, polished expression of Portuguese hospitality, designed in deep greens, white stone and warm gold. The lounge offers refined spaces to relax, dine or work before departure.',
+    access:['AviaX Business and First', 'Strata and Aurora members'],
+    amenities:['Portuguese dining','Bar','Quiet seating','Workspaces','Wi-Fi']
+  },
+  {
+    name:'AviaX Douro Lounge', operator:'AX', airport:'OPO',
+    location:'Airside, international departures',
+    hours:'05:00 – 23:00 daily',
+    photo:'assets/img/lounges/aviax-opo.webp',
+    description:'Inspired by Porto and the Douro Valley, this warmer, intimate lounge uses natural materials and subtle azulejo-inspired details to create a welcoming retreat before the next journey.',
+    access:['AviaX Business and First', 'Strata and Aurora members'],
+    amenities:['Regional dining','Bar','Quiet seating','Workspaces','Wi-Fi']
+  },
+  {
+    name:'The Cape', operator:'AZ', airport:'CPT',
+    location:'Central Terminal',
+    hours:'Open 24 hours',
+    photo:'assets/img/lounges/azanian-cpt.webp',
+    access:['AZANIAN Business', 'AZANIAN Adulis', 'Mollweide Strata', 'Mollweide Aurora'],
+    amenities:['Dining','Bar','Lounge seating','Workspaces','Wi-Fi']
+  },
+  {
+    name:'Dolly Lounge', operator:'UN', airport:'BNA',
+    location:'Concourse C',
+    hours:'Open 24 hours',
+    photo:'assets/img/lounges/union-bna.webp',
+    access:['Union Business', 'Union First', 'Mollweide Strata', 'Mollweide Aurora'],
+    amenities:['Dining','Bar','Lounge seating','Workspaces','Wi-Fi']
+  },
+  {
+    name:'Union Business Club', operator:'UN', airport:'BOS',
+    location:'Terminal C, next to gate C23',
+    hours:'Open 24 hours',
+    photo:'assets/img/lounges/union-bos.webp',
+    access:['Union Business', 'Union First', 'Mollweide Strata', 'Mollweide Aurora'],
+    amenities:['Dining','Bar','Lounge seating','Workspaces','Wi-Fi']
   }
 ];
 

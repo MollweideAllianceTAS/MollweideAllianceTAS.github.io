@@ -25,7 +25,9 @@
     "MRU",
     "GEO",
     "PBM",
-    "MCT"
+    "MCT",
+    "BCN",
+    "BOS"
   ],
   "focus": [],
   "joined": 2026,

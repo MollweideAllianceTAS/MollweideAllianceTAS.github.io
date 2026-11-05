@@ -1,0 +1,34 @@
+{
+  "name": "AZANIAN",
+  "code": "AZ",
+  "country": "South Africa",
+  "color": "#790018",
+  "tail": "assets/img/members/azanian.webp",
+  "hubs": ["CPT"],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "A luxury South African long-haul carrier connecting the Cape with major cities across Europe, the Middle East and North America.",
+  "profile": {
+    "about": [
+      "AZANIAN is a luxury South African carrier connecting the Cape to the world and beyond. The airline operates exclusively long-haul services with a fleet of premium wide-body aircraft."
+    ],
+    "network": [
+      "From Cape Town, AZANIAN serves Budapest, Dubai, New York, Frankfurt, Paris, Los Angeles, San Francisco and Houston."
+    ],
+    "routes": [
+      ["CPT", "BUD"], ["CPT", "DXB"], ["CPT", "JFK"], ["CPT", "FRA"],
+      ["CPT", "CDG"], ["CPT", "LAX"], ["CPT", "SFO"], ["CPT", "IAH"]
+    ],
+    "fleet": {
+      "current": [
+        ["Airbus", "A350-900", "13 aircraft"],
+        ["Airbus", "A380-800", "7 aircraft"],
+        ["Boeing", "747-8", "5 aircraft"],
+        ["Boeing", "747-400", "3 aircraft"],
+        ["Airbus", "A350-900ULR", "3 aircraft"]
+      ],
+      "incoming": []
+    }
+  },
+  "order": 42
+}

@@ -1263,6 +1263,7 @@ function renderLounges(el, filter) {
         <p class="lounge__where">
           <span class="code">${l.airport}</span> ${ap.city} &middot; ${ap.name}
         </p>
+        ${l.description ? `<p class="lounge__desc">${l.description}</p>` : ''}
         <dl class="lounge__facts">
           <div><dt>Location</dt><dd>${l.location}</dd></div>
           <div><dt>Hours</dt><dd>${l.hours}</dd></div>

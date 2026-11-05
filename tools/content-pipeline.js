@@ -23,6 +23,7 @@ for (const file of files) {
   });
   if (!/^[A-Z0-9]{2}$/.test(item.code || '')) fail(`${file}: code must be two capital letters or numbers`);
   if (!/^#[0-9A-Fa-f]{6}$/.test(item.color || '')) fail(`${file}: color must look like #13398C`);
+  if (item.secondaryColor && !/^#[0-9A-Fa-f]{6}$/.test(item.secondaryColor)) fail(`${file}: secondaryColor must look like #D19D01`);
   if (!Array.isArray(item.hubs) || !item.hubs.length) fail(`${file}: hubs must contain at least one airport code`);
   if (!Array.isArray(item.focus)) item.focus = [];
   records.push({ file, item });

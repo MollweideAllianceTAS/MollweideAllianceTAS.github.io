@@ -1,0 +1,33 @@
+{
+  "name": "Gauto Airlines",
+  "short": "Gauto",
+  "code": "GT",
+  "country": "South Africa",
+  "color": "#012966",
+  "tail": "assets/img/members/gauto-airlines.webp",
+  "hubs": ["JNB"],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "A budget-friendly South African airline linking Johannesburg with domestic cities and destinations across Africa and Europe.",
+  "profile": {
+    "about": [
+      "Gauto is a budget-friendly South African airline with service originating from Johannesburg. It combines an extensive domestic network with international flights across Africa and into Europe."
+    ],
+    "network": [
+      "Popular services from Johannesburg include Cape Town, London Gatwick, Paris Orly, Durban, Gqeberha, Douala, Harare, Windhoek and Libreville."
+    ],
+    "routes": [
+      ["JNB", "CPT"], ["JNB", "LGW"], ["JNB", "ORY"], ["JNB", "DUR"],
+      ["JNB", "PLZ"], ["JNB", "DLA"], ["JNB", "HRE"], ["JNB", "WDH"], ["JNB", "LBV"]
+    ],
+    "fleet": {
+      "current": [
+        ["Boeing", "737 MAX 8", "22 aircraft"],
+        ["Embraer", "E195-E2", "5 aircraft"],
+        ["Boeing", "787-8 Dreamliner", "5 aircraft"]
+      ],
+      "incoming": []
+    }
+  },
+  "order": 43
+}

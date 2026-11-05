@@ -1,0 +1,27 @@
+{
+  "name": "AsiaJet",
+  "code": "AJ",
+  "country": "Malaysia",
+  "color": "#0B2D6B",
+  "tail": "assets/img/members/asiajet.webp",
+  "hubs": ["KUL"],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "TAA Group's Kuala Lumpur-based Asian carrier, operating a unified fleet of 102 Boeing 737 MAX 10 aircraft.",
+  "profile": {
+    "about": [
+      "AsiaJet traces its origins to QantasLink before its acquisition by TAA Group. Following the acquisition, the airline was rebranded as AsiaJet and established operations in Kuala Lumpur, Malaysia.",
+      "Today, AsiaJet operates as part of TAA Group alongside Trans Atlantic Airlines and EuroStar."
+    ],
+    "network": [
+      "Kuala Lumpur International Airport is AsiaJet's primary hub. Its single-type fleet of 102 Boeing 737 MAX 10 aircraft supports the carrier's network."
+    ],
+    "fleet": {
+      "current": [
+        ["Boeing", "737 MAX 10", "102 aircraft"]
+      ],
+      "incoming": []
+    }
+  },
+  "order": 44
+}
