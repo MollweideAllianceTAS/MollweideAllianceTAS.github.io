@@ -4896,7 +4896,7 @@ const MWA_MEMBERS = [
     "country": "Malaysia",
     "color": "#011D57",
     "secondaryColor": "#D19D01",
-    "tail": "assets/img/members/royal-johor.webp",
+    "tail": "assets/img/members/royal-johor-tail.png",
     "hubs": [
       "JHB"
     ],
@@ -4943,7 +4943,7 @@ const MWA_MEMBERS = [
     "code": "AX",
     "country": "Portugal",
     "color": "#064B3B",
-    "tail": "assets/img/members/aviax-portugal.webp",
+    "tail": "assets/img/members/aviax-portugal-tail.png",
     "hubs": [
       "LIS",
       "OPO"
@@ -4995,7 +4995,7 @@ const MWA_MEMBERS = [
     "code": "AZ",
     "country": "South Africa",
     "color": "#790018",
-    "tail": "assets/img/members/azanian.webp",
+    "tail": "assets/img/members/azanian-tail.png",
     "hubs": [
       "CPT"
     ],
@@ -5081,7 +5081,7 @@ const MWA_MEMBERS = [
     "code": "GT",
     "country": "South Africa",
     "color": "#012966",
-    "tail": "assets/img/members/gauto-airlines.webp",
+    "tail": "assets/img/members/gauto-airlines-tail.png",
     "hubs": [
       "JNB"
     ],
@@ -5160,7 +5160,7 @@ const MWA_MEMBERS = [
     "code": "AJ",
     "country": "Malaysia",
     "color": "#0B2D6B",
-    "tail": "assets/img/members/asiajet.webp",
+    "tail": "assets/img/members/asiajet-tail.png",
     "hubs": [
       "KUL"
     ],

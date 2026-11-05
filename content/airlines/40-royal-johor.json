@@ -5,7 +5,7 @@
   "country": "Malaysia",
   "color": "#011D57",
   "secondaryColor": "#D19D01",
-  "tail": "assets/img/members/royal-johor.webp",
+  "tail": "assets/img/members/royal-johor-tail.png",
   "hubs": ["JHB"],
   "focus": ["KUL", "PEN", "JNB", "IST", "MEL", "HND", "HKG"],
   "joined": 2026,
