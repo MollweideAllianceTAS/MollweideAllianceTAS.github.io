@@ -9,9 +9,11 @@
   "joined": 2026,
   "blurb": "Pacific Sunset's domestic express airline, connecting six hubs across the continental United States, Puerto Rico and Hawaii.",
   "profile": {
+    "founded": "1995",
+    "foundedDate": "9 February 1995",
     "about": [
-      "Sunset Express is Pacific Sunset's domestic express airline and the second member of the Pacific Sunset Group.",
-      "The airline previously belonged to MalAlliance until that alliance became extinct in November 2026."
+      "Sunset Express is Pacific Sunset's domestic express airline. Pacific Sunset founded it in Long Beach on 9 February 1995 to compete with Delta Shuttle and Delta Express, as well as American Eagle and United Express.",
+      "The airline is the second member of the Pacific Sunset Group. It previously belonged to MalAlliance until that alliance became extinct in November 2026."
     ],
     "network": [
       "Sunset Express operates from Long Beach, San Juan, Dallas/Fort Worth, New York JFK, Maui and Honolulu, combining mainland flying with services across Puerto Rico and Hawaii."

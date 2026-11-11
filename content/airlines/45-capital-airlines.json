@@ -9,9 +9,11 @@
   "joined": 2026,
   "blurb": "A proudly all-Boeing American carrier connecting national and state capitals from its Washington Dulles hub.",
   "profile": {
+    "founded": "1945",
+    "foundedDate": "4 July 1945",
     "about": [
-      "Capital Airlines is a medium-cost United States carrier built around a simple promise: connecting travellers from capital to capital, whether that means a national capital or a state capital.",
-      "Based at Washington Dulles International Airport, Capital is proudly Boeing and is the newest member of the Pacific Sunset Group."
+      "Capital Airlines is a medium-cost United States carrier founded in Washington, D.C., on 4 July 1945 for one purpose: connecting travellers from capital to capital, whether that means a national capital or a state capital.",
+      "Based at Washington Dulles International Airport, Capital is proudly Boeing. Fears of bankruptcy led it to join the Pacific Sunset Group in 2001, securing its place within the wider group."
     ],
     "network": [
       "Capital's present network also includes several exceptions to its capital-city focus: New York via JFK, Newark and LaGuardia; Los Angeles; Long Beach; and Tampa."

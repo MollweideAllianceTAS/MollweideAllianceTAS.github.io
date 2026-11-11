@@ -27,9 +27,11 @@
   "joined": 2026,
   "blurb": "The founder of the Pacific Sunset Group, grown from a Long Beach regional carrier into a worldwide airline with hubs on every inhabited continent.",
   "profile": {
+    "founded": "1926",
+    "foundedDate": "4 July 1926",
     "about": [
       "Pacific Sunset is a United States carrier and the founding airline of the Pacific Sunset Group, which includes six other airlines. Despite its name it flies worldwide, with hubs on every inhabited continent.",
-      "The airline began as a regional carrier at Long Beach, California, then expanded to Los Angeles, Honolulu, Maui, Atlanta and Seattle on its way to becoming a major international airline.",
+      "The airline was founded in Long Beach, California, on 4 July 1926 to serve California and the wider United States. It grew gradually from a regional carrier into a major international airline, expanding through Los Angeles, Honolulu, Maui, Atlanta and Seattle before reaching markets around the world.",
       "Together with its subsidiary Sunset Express, it serves every airport in California, with a fleet that runs from the Airbus A380 down to the Dash 8 Q400."
     ],
     "network": [

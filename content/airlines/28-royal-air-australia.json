@@ -12,9 +12,12 @@
   "joined": 2026,
   "blurb": "A medium-cost Australian airline flying domestic and international routes from Sydney and Perth.",
   "profile": {
+    "founded": "1946",
+    "foundedDate": "16 April 1946",
     "about": [
       "Royal Air Australia is a medium-cost airline based in Sydney and Perth, flying domestic routes across Australia and international services to most continents.",
-      "It is part of the Pacific Sunset Group."
+      "Pacific Sunset founded Royal Air Australia on 16 April 1946 as a competitor to Qantas. Although it has never matched Qantas in overall size or success, both airlines have experienced periods of strength and difficulty.",
+      "Royal Air Australia's creation formally began the Pacific Sunset Group on 17 April 1946."
     ],
     "network": [
       "From hubs on the east and west coasts, the airline links Australia's cities with one another and with destinations across most of the world."

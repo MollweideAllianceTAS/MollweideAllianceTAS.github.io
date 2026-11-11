@@ -3804,9 +3804,12 @@ const MWA_MEMBERS = [
     "joined": 2026,
     "blurb": "A medium-cost Australian airline flying domestic and international routes from Sydney and Perth.",
     "profile": {
+      "founded": "1946",
+      "foundedDate": "16 April 1946",
       "about": [
         "Royal Air Australia is a medium-cost airline based in Sydney and Perth, flying domestic routes across Australia and international services to most continents.",
-        "It is part of the Pacific Sunset Group."
+        "Pacific Sunset founded Royal Air Australia on 16 April 1946 as a competitor to Qantas. Although it has never matched Qantas in overall size or success, both airlines have experienced periods of strength and difficulty.",
+        "Royal Air Australia's creation formally began the Pacific Sunset Group on 17 April 1946."
       ],
       "network": [
         "From hubs on the east and west coasts, the airline links Australia's cities with one another and with destinations across most of the world."
@@ -3957,9 +3960,11 @@ const MWA_MEMBERS = [
     "joined": 2026,
     "blurb": "The founder of the Pacific Sunset Group, grown from a Long Beach regional carrier into a worldwide airline with hubs on every inhabited continent.",
     "profile": {
+      "founded": "1926",
+      "foundedDate": "4 July 1926",
       "about": [
         "Pacific Sunset is a United States carrier and the founding airline of the Pacific Sunset Group, which includes six other airlines. Despite its name it flies worldwide, with hubs on every inhabited continent.",
-        "The airline began as a regional carrier at Long Beach, California, then expanded to Los Angeles, Honolulu, Maui, Atlanta and Seattle on its way to becoming a major international airline.",
+        "The airline was founded in Long Beach, California, on 4 July 1926 to serve California and the wider United States. It grew gradually from a regional carrier into a major international airline, expanding through Los Angeles, Honolulu, Maui, Atlanta and Seattle before reaching markets around the world.",
         "Together with its subsidiary Sunset Express, it serves every airport in California, with a fleet that runs from the Airbus A380 down to the Dash 8 Q400."
       ],
       "network": [
@@ -4143,9 +4148,11 @@ const MWA_MEMBERS = [
     "joined": 2026,
     "blurb": "A Bahamian medium-cost carrier flying from San Juan, Miami and Nassau, known for its Oceanliner premium flights.",
     "profile": {
+      "founded": "1994",
+      "foundedDate": "22 June 1994",
       "about": [
         "Virgin Caribbean is a medium-cost airline registered in the Bahamas, flying from hubs at San Juan, Miami and Nassau. It is best known for its Oceanliner premium flights, and its A321XLRs and A350-1000s all wear the Oceanliner livery.",
-        "It is part of the Pacific Sunset Group."
+        "The airline was founded in Miami on 22 June 1994, ten years after the launch of Virgin Atlantic. Pacific Sunset reached an agreement with Virgin to bring the carrier into the Pacific Sunset Group and expand the group's reach across the Caribbean."
       ],
       "network": [
         "From the Caribbean and Florida the airline serves Europe, the United States and South America, with routes as far as Australia and Africa."
@@ -4307,9 +4314,11 @@ const MWA_MEMBERS = [
     "joined": 2026,
     "blurb": "A Tokyo carrier flying from Haneda and Narita, with international routes first and domestic flying second.",
     "profile": {
+      "founded": "1952",
+      "foundedDate": "21 September 1952",
       "about": [
         "Japan International Airways, known as JIA, is a low- to medium-cost airline based at Tokyo Haneda and Tokyo Narita. It puts international routes first and domestic flying second.",
-        "It is part of the Pacific Sunset Group."
+        "Pacific Sunset founded JIA in Tokyo on 21 September 1952 after acquiring its Tokyo hub. The airline was created to compete first with Japan Airlines and later with All Nippon Airways."
       ],
       "network": [
         "From Tokyo's two airports, JIA concentrates on international services, with a domestic network alongside."
@@ -4384,9 +4393,12 @@ const MWA_MEMBERS = [
     "joined": 2026,
     "blurb": "A Heathrow-based carrier flying across Europe and, increasingly, to the United States.",
     "profile": {
+      "founded": "1945",
+      "foundedDate": "1 October 1945",
       "about": [
         "London Airways is a low- to medium-cost airline flying solely from London Heathrow. It serves many destinations across Europe and is growing in the United States.",
-        "It is part of the Pacific Sunset Group."
+        "The airline was founded in London on 1 October 1945, shortly after the end of the Second World War. It was expected to merge with BOAC, BEA, Cambrian and Northeast to form British Airways, but ultimately remained independent when the proposed deal offered it no future beyond being dissolved.",
+        "London Airways entered the Pacific Sunset Group in 1998 under the promise of a brighter future."
       ],
       "network": [
         "Heathrow is its only hub, with a broad European network and a growing list of routes to the United States."
@@ -5251,9 +5263,11 @@ const MWA_MEMBERS = [
     "joined": 2026,
     "blurb": "A proudly all-Boeing American carrier connecting national and state capitals from its Washington Dulles hub.",
     "profile": {
+      "founded": "1945",
+      "foundedDate": "4 July 1945",
       "about": [
-        "Capital Airlines is a medium-cost United States carrier built around a simple promise: connecting travellers from capital to capital, whether that means a national capital or a state capital.",
-        "Based at Washington Dulles International Airport, Capital is proudly Boeing and is the newest member of the Pacific Sunset Group."
+        "Capital Airlines is a medium-cost United States carrier founded in Washington, D.C., on 4 July 1945 for one purpose: connecting travellers from capital to capital, whether that means a national capital or a state capital.",
+        "Based at Washington Dulles International Airport, Capital is proudly Boeing. Fears of bankruptcy led it to join the Pacific Sunset Group in 2001, securing its place within the wider group."
       ],
       "network": [
         "Capital's present network also includes several exceptions to its capital-city focus: New York via JFK, Newark and LaGuardia; Los Angeles; Long Beach; and Tampa."
@@ -5480,9 +5494,11 @@ const MWA_MEMBERS = [
     "joined": 2026,
     "blurb": "Pacific Sunset's domestic express airline, connecting six hubs across the continental United States, Puerto Rico and Hawaii.",
     "profile": {
+      "founded": "1995",
+      "foundedDate": "9 February 1995",
       "about": [
-        "Sunset Express is Pacific Sunset's domestic express airline and the second member of the Pacific Sunset Group.",
-        "The airline previously belonged to MalAlliance until that alliance became extinct in November 2026."
+        "Sunset Express is Pacific Sunset's domestic express airline. Pacific Sunset founded it in Long Beach on 9 February 1995 to compete with Delta Shuttle and Delta Express, as well as American Eagle and United Express.",
+        "The airline is the second member of the Pacific Sunset Group. It previously belonged to MalAlliance until that alliance became extinct in November 2026."
       ],
       "network": [
         "Sunset Express operates from Long Beach, San Juan, Dallas/Fort Worth, New York JFK, Maui and Honolulu, combining mainland flying with services across Puerto Rico and Hawaii."
