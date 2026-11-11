@@ -1,0 +1,33 @@
+{
+  "name": "Capital Airlines",
+  "code": "CT",
+  "country": "United States",
+  "color": "#1D3A63",
+  "tail": "assets/img/members/capital-airlines-tail.png",
+  "hubs": ["IAD"],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "A proudly all-Boeing American carrier connecting national and state capitals from its Washington Dulles hub.",
+  "profile": {
+    "about": [
+      "Capital Airlines is a medium-cost United States carrier built around a simple promise: connecting travellers from capital to capital, whether that means a national capital or a state capital.",
+      "Based at Washington Dulles International Airport, Capital is proudly Boeing and is the newest member of the Pacific Sunset Group."
+    ],
+    "network": [
+      "Capital's present network also includes several exceptions to its capital-city focus: New York via JFK, Newark and LaGuardia; Los Angeles; Long Beach; and Tampa."
+    ],
+    "fleet": {
+      "current": [
+        ["Boeing", "787-9 Dreamliner", "24 aircraft"],
+        ["Boeing", "747-8", "8 aircraft"],
+        ["Boeing", "737 MAX 10", "8 aircraft"],
+        ["Boeing", "737 MAX 7", "8 aircraft"],
+        ["Boeing", "767-300ER", "8 aircraft"],
+        ["Boeing", "777-200LR", "4 aircraft"],
+        ["Boeing", "737-600", "1 aircraft"]
+      ],
+      "incoming": []
+    }
+  },
+  "order": 45
+}

@@ -1,0 +1,38 @@
+{
+  "name": "JetSydney",
+  "code": "JS",
+  "country": "Australia",
+  "color": "#1267D8",
+  "tail": "assets/img/members/jetsydney-tail.png",
+  "hubs": ["SYD", "MEL", "PER"],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "A full-service Australian carrier connecting Sydney and its wider domestic network with Europe, North America, Oceania and beyond.",
+  "profile": {
+    "founded": "1946",
+    "about": [
+      "JetSydney is an Australian full-service international airline founded in 1946 and headquartered in Sydney. Owned by JetSydney Group, it combines Australian hospitality with a modern, diverse fleet serving domestic, Oceanian and long-haul markets.",
+      "Following decades of development, JetSydney has established itself as a major fictional aviation brand and continues to expand its international reach while strengthening connections between Sydney and the rest of the world. JetSydney — Exploration YES!"
+    ],
+    "network": [
+      "Sydney is the main hub, supported by Melbourne and Perth. Key services include Sydney–Sunshine Coast, Sydney–Singapore and Sunshine Coast–Singapore."
+    ],
+    "routes": [
+      ["SYD", "MCY"],
+      ["SYD", "SIN"]
+    ],
+    "fleet": {
+      "current": [
+        ["Airbus", "A321neo"],
+        ["Airbus", "A320neo"],
+        ["Airbus", "A330-200"],
+        ["Boeing", "787-8 Dreamliner"],
+        ["Boeing", "777-200ER"],
+        ["ATR", "72-600"]
+      ],
+      "incoming": []
+    },
+    "fleetTotal": "49 aircraft"
+  },
+  "order": 47
+}

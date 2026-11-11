@@ -88,6 +88,11 @@
       "current": [
         [
           "Airbus",
+          "A330-200",
+          "20 aircraft"
+        ],
+        [
+          "Airbus",
           "A319neo",
           "30 aircraft"
         ],
@@ -170,6 +175,16 @@
           "Boeing",
           "787-9",
           "20 aircraft"
+        ],
+        [
+          "Embraer",
+          "E190-E2",
+          "15 aircraft"
+        ],
+        [
+          "Embraer",
+          "E195-E2",
+          "15 aircraft"
         ],
         [
           "COMAC",

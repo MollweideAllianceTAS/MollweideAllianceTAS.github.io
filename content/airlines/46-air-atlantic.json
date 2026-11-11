@@ -1,0 +1,45 @@
+{
+  "name": "Air Atlantic",
+  "code": "FO",
+  "country": "Denmark",
+  "color": "#74A7FF",
+  "tail": "assets/img/members/air-atlantic-tail.png",
+  "hubs": ["CPH", "BLL", "FAE", "GOH"],
+  "focus": [],
+  "joined": 2026,
+  "group": "meridian",
+  "blurb": "A Danish carrier connecting Denmark, Greenland and the Faroe Islands with Northern Europe, business centres and holiday destinations.",
+  "profile": {
+    "about": [
+      "Air Atlantic is a Danish carrier connecting Denmark, Greenland and the Faroe Islands with Northern Europe.",
+      "The airline combines scheduled holiday and business flying from Copenhagen with charter services from Billund to popular leisure destinations."
+    ],
+    "network": [
+      "Copenhagen links Air Atlantic with Oslo, Stockholm and Helsinki. Billund serves Mallorca, Gran Canaria and Corfu, while the Vagar and Nuuk hubs strengthen connections across the North Atlantic, Greenland and the Faroe Islands."
+    ],
+    "routes": [
+      ["CPH", "OSL"],
+      ["CPH", "ARN"],
+      ["CPH", "HEL"],
+      ["BLL", "PMI"],
+      ["BLL", "LPA"],
+      ["BLL", "CFU"],
+      ["FAE", "CPH"],
+      ["FAE", "KEF"],
+      ["GOH", "CPH"],
+      ["GOH", "SFJ"],
+      ["GOH", "JAV"]
+    ],
+    "fleet": {
+      "current": [
+        ["Airbus", "A320neo"],
+        ["Airbus", "A330-900"],
+        ["Airbus", "A321neo"],
+        ["Airbus", "A319-100"],
+        ["De Havilland Canada", "Dash 8 Q300"]
+      ],
+      "incoming": []
+    }
+  },
+  "order": 46
+}

@@ -66,12 +66,17 @@
         [
           "Airbus",
           "A320neo",
-          "5 aircraft · Leased from AerCap"
+          "10 aircraft · Leased from AerCap"
         ],
         [
           "Airbus",
           "A321neo",
           "10 aircraft · Leased from AerCap"
+        ],
+        [
+          "Boeing",
+          "737 MAX 10",
+          "10 aircraft"
         ],
         [
           "Boeing",

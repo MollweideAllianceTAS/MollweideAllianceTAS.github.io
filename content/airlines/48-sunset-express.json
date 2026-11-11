@@ -1,0 +1,36 @@
+{
+  "name": "Sunset Express",
+  "code": "SE",
+  "country": "United States",
+  "color": "#011D57",
+  "tail": "assets/img/members/sunset-express-tail.webp",
+  "hubs": ["LGB", "SJU", "DFW", "JFK", "OGG", "HNL"],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "Pacific Sunset's domestic express airline, connecting six hubs across the continental United States, Puerto Rico and Hawaii.",
+  "profile": {
+    "about": [
+      "Sunset Express is Pacific Sunset's domestic express airline and the second member of the Pacific Sunset Group.",
+      "The airline previously belonged to MalAlliance until that alliance became extinct in November 2026."
+    ],
+    "network": [
+      "Sunset Express operates from Long Beach, San Juan, Dallas/Fort Worth, New York JFK, Maui and Honolulu, combining mainland flying with services across Puerto Rico and Hawaii."
+    ],
+    "fleet": {
+      "current": [
+        ["Embraer", "E190", "11 aircraft"],
+        ["Embraer", "E195-E2", "6 aircraft"],
+        ["Bombardier", "CRJ-1000", "5 aircraft"],
+        ["Boeing", "737-800", "4 aircraft"],
+        ["Embraer", "E175", "3 aircraft"],
+        ["Airbus", "A220-300", "3 aircraft"],
+        ["Bombardier", "CRJ-900", "2 aircraft"],
+        ["Boeing", "717-200", "1 aircraft"],
+        ["Boeing", "737-700", "1 aircraft"],
+        ["Airbus", "A320neo", "1 aircraft"]
+      ],
+      "incoming": []
+    }
+  },
+  "order": 48
+}

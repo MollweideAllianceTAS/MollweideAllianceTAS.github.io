@@ -43,13 +43,18 @@
       "current": [
         [
           "Airbus",
+          "A319-100",
+          "10 aircraft · Leased from AerCap"
+        ],
+        [
+          "Airbus",
           "A220-100",
           "10 aircraft · Leased from Airbus"
         ],
         [
           "Airbus",
           "A320-200",
-          "10 aircraft · Leased from AerCap"
+          "20 aircraft · Leased from AerCap"
         ],
         [
           "Airbus",
@@ -59,7 +64,7 @@
         [
           "Airbus",
           "A321-200",
-          "10 aircraft · Leased from AerCap"
+          "20 aircraft · Leased from AerCap"
         ],
         [
           "Airbus",
@@ -68,12 +73,28 @@
         ],
         [
           "ATR",
-          "72"
+          "72",
+          "10 aircraft"
         ],
         [
           "Boeing",
           "737-800",
-          "10 aircraft · Leased from GECAS"
+          "20 aircraft · Leased from GECAS"
+        ],
+        [
+          "Boeing",
+          "757-200",
+          "10 aircraft · Leased from ILFC"
+        ],
+        [
+          "Boeing",
+          "767-300ER",
+          "10 aircraft · Leased from Azex Leasing"
+        ],
+        [
+          "Embraer",
+          "E190",
+          "10 aircraft"
         ],
         [
           "UAC",

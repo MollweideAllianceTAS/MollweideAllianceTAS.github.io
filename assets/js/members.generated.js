@@ -479,6 +479,11 @@ const MWA_MEMBERS = [
         "current": [
           [
             "Airbus",
+            "A330-200",
+            "20 aircraft"
+          ],
+          [
+            "Airbus",
             "A319neo",
             "30 aircraft"
           ],
@@ -561,6 +566,16 @@ const MWA_MEMBERS = [
             "Boeing",
             "787-9",
             "20 aircraft"
+          ],
+          [
+            "Embraer",
+            "E190-E2",
+            "15 aircraft"
+          ],
+          [
+            "Embraer",
+            "E195-E2",
+            "15 aircraft"
           ],
           [
             "COMAC",
@@ -1008,6 +1023,11 @@ const MWA_MEMBERS = [
             "Embraer",
             "E195-E2",
             "18 aircraft"
+          ],
+          [
+            "UAC",
+            "Superjet 100-95B",
+            "12 aircraft"
           ]
         ],
         "incoming": [
@@ -1090,13 +1110,18 @@ const MWA_MEMBERS = [
         "current": [
           [
             "Airbus",
+            "A319-100",
+            "10 aircraft · Leased from AerCap"
+          ],
+          [
+            "Airbus",
             "A220-100",
             "10 aircraft · Leased from Airbus"
           ],
           [
             "Airbus",
             "A320-200",
-            "10 aircraft · Leased from AerCap"
+            "20 aircraft · Leased from AerCap"
           ],
           [
             "Airbus",
@@ -1106,7 +1131,7 @@ const MWA_MEMBERS = [
           [
             "Airbus",
             "A321-200",
-            "10 aircraft · Leased from AerCap"
+            "20 aircraft · Leased from AerCap"
           ],
           [
             "Airbus",
@@ -1115,12 +1140,28 @@ const MWA_MEMBERS = [
           ],
           [
             "ATR",
-            "72"
+            "72",
+            "10 aircraft"
           ],
           [
             "Boeing",
             "737-800",
-            "10 aircraft · Leased from GECAS"
+            "20 aircraft · Leased from GECAS"
+          ],
+          [
+            "Boeing",
+            "757-200",
+            "10 aircraft · Leased from ILFC"
+          ],
+          [
+            "Boeing",
+            "767-300ER",
+            "10 aircraft · Leased from Azex Leasing"
+          ],
+          [
+            "Embraer",
+            "E190",
+            "10 aircraft"
           ],
           [
             "UAC",
@@ -2086,12 +2127,17 @@ const MWA_MEMBERS = [
           [
             "Airbus",
             "A320neo",
-            "5 aircraft · Leased from AerCap"
+            "10 aircraft · Leased from AerCap"
           ],
           [
             "Airbus",
             "A321neo",
             "10 aircraft · Leased from AerCap"
+          ],
+          [
+            "Boeing",
+            "737 MAX 10",
+            "10 aircraft"
           ],
           [
             "Boeing",
@@ -5166,14 +5212,14 @@ const MWA_MEMBERS = [
     ],
     "focus": [],
     "joined": 2026,
-    "blurb": "TAA Group's Kuala Lumpur-based Asian carrier, operating a unified fleet of 102 Boeing 737 MAX 10 aircraft.",
+    "blurb": "TAA Group's Kuala Lumpur-based Asian carrier, operating Boeing 737 MAX 10 and 757-300 aircraft.",
     "profile": {
       "about": [
         "AsiaJet traces its origins to QantasLink before its acquisition by TAA Group. Following the acquisition, the airline was rebranded as AsiaJet and established operations in Kuala Lumpur, Malaysia.",
         "Today, AsiaJet operates as part of TAA Group alongside Trans Atlantic Airlines and EuroStar."
       ],
       "network": [
-        "Kuala Lumpur International Airport is AsiaJet's primary hub. Its single-type fleet of 102 Boeing 737 MAX 10 aircraft supports the carrier's network."
+        "Kuala Lumpur International Airport is AsiaJet's primary hub. Its fleet combines 102 Boeing 737 MAX 10 aircraft with 80 Boeing 757-300s."
       ],
       "fleet": {
         "current": [
@@ -5181,6 +5227,317 @@ const MWA_MEMBERS = [
             "Boeing",
             "737 MAX 10",
             "102 aircraft"
+          ],
+          [
+            "Boeing",
+            "757-300",
+            "80 aircraft"
+          ]
+        ],
+        "incoming": []
+      }
+    }
+  },
+  {
+    "name": "Capital Airlines",
+    "code": "CT",
+    "country": "United States",
+    "color": "#1D3A63",
+    "tail": "assets/img/members/capital-airlines-tail.png",
+    "hubs": [
+      "IAD"
+    ],
+    "focus": [],
+    "joined": 2026,
+    "blurb": "A proudly all-Boeing American carrier connecting national and state capitals from its Washington Dulles hub.",
+    "profile": {
+      "about": [
+        "Capital Airlines is a medium-cost United States carrier built around a simple promise: connecting travellers from capital to capital, whether that means a national capital or a state capital.",
+        "Based at Washington Dulles International Airport, Capital is proudly Boeing and is the newest member of the Pacific Sunset Group."
+      ],
+      "network": [
+        "Capital's present network also includes several exceptions to its capital-city focus: New York via JFK, Newark and LaGuardia; Los Angeles; Long Beach; and Tampa."
+      ],
+      "fleet": {
+        "current": [
+          [
+            "Boeing",
+            "787-9 Dreamliner",
+            "24 aircraft"
+          ],
+          [
+            "Boeing",
+            "747-8",
+            "8 aircraft"
+          ],
+          [
+            "Boeing",
+            "737 MAX 10",
+            "8 aircraft"
+          ],
+          [
+            "Boeing",
+            "737 MAX 7",
+            "8 aircraft"
+          ],
+          [
+            "Boeing",
+            "767-300ER",
+            "8 aircraft"
+          ],
+          [
+            "Boeing",
+            "777-200LR",
+            "4 aircraft"
+          ],
+          [
+            "Boeing",
+            "737-600",
+            "1 aircraft"
+          ]
+        ],
+        "incoming": []
+      }
+    }
+  },
+  {
+    "name": "Air Atlantic",
+    "code": "FO",
+    "country": "Denmark",
+    "color": "#74A7FF",
+    "tail": "assets/img/members/air-atlantic-tail.png",
+    "hubs": [
+      "CPH",
+      "BLL",
+      "FAE",
+      "GOH"
+    ],
+    "focus": [],
+    "joined": 2026,
+    "group": "meridian",
+    "blurb": "A Danish carrier connecting Denmark, Greenland and the Faroe Islands with Northern Europe, business centres and holiday destinations.",
+    "profile": {
+      "about": [
+        "Air Atlantic is a Danish carrier connecting Denmark, Greenland and the Faroe Islands with Northern Europe.",
+        "The airline combines scheduled holiday and business flying from Copenhagen with charter services from Billund to popular leisure destinations."
+      ],
+      "network": [
+        "Copenhagen links Air Atlantic with Oslo, Stockholm and Helsinki. Billund serves Mallorca, Gran Canaria and Corfu, while the Vagar and Nuuk hubs strengthen connections across the North Atlantic, Greenland and the Faroe Islands."
+      ],
+      "routes": [
+        [
+          "CPH",
+          "OSL"
+        ],
+        [
+          "CPH",
+          "ARN"
+        ],
+        [
+          "CPH",
+          "HEL"
+        ],
+        [
+          "BLL",
+          "PMI"
+        ],
+        [
+          "BLL",
+          "LPA"
+        ],
+        [
+          "BLL",
+          "CFU"
+        ],
+        [
+          "FAE",
+          "CPH"
+        ],
+        [
+          "FAE",
+          "KEF"
+        ],
+        [
+          "GOH",
+          "CPH"
+        ],
+        [
+          "GOH",
+          "SFJ"
+        ],
+        [
+          "GOH",
+          "JAV"
+        ]
+      ],
+      "fleet": {
+        "current": [
+          [
+            "Airbus",
+            "A320neo"
+          ],
+          [
+            "Airbus",
+            "A330-900"
+          ],
+          [
+            "Airbus",
+            "A321neo"
+          ],
+          [
+            "Airbus",
+            "A319-100"
+          ],
+          [
+            "De Havilland Canada",
+            "Dash 8 Q300"
+          ]
+        ],
+        "incoming": []
+      }
+    }
+  },
+  {
+    "name": "JetSydney",
+    "code": "JS",
+    "country": "Australia",
+    "color": "#1267D8",
+    "tail": "assets/img/members/jetsydney-tail.png",
+    "hubs": [
+      "SYD",
+      "MEL",
+      "PER"
+    ],
+    "focus": [],
+    "joined": 2026,
+    "blurb": "A full-service Australian carrier connecting Sydney and its wider domestic network with Europe, North America, Oceania and beyond.",
+    "profile": {
+      "founded": "1946",
+      "about": [
+        "JetSydney is an Australian full-service international airline founded in 1946 and headquartered in Sydney. Owned by JetSydney Group, it combines Australian hospitality with a modern, diverse fleet serving domestic, Oceanian and long-haul markets.",
+        "Following decades of development, JetSydney has established itself as a major fictional aviation brand and continues to expand its international reach while strengthening connections between Sydney and the rest of the world. JetSydney — Exploration YES!"
+      ],
+      "network": [
+        "Sydney is the main hub, supported by Melbourne and Perth. Key services include Sydney–Sunshine Coast, Sydney–Singapore and Sunshine Coast–Singapore."
+      ],
+      "routes": [
+        [
+          "SYD",
+          "MCY"
+        ],
+        [
+          "SYD",
+          "SIN"
+        ]
+      ],
+      "fleet": {
+        "current": [
+          [
+            "Airbus",
+            "A321neo"
+          ],
+          [
+            "Airbus",
+            "A320neo"
+          ],
+          [
+            "Airbus",
+            "A330-200"
+          ],
+          [
+            "Boeing",
+            "787-8 Dreamliner"
+          ],
+          [
+            "Boeing",
+            "777-200ER"
+          ],
+          [
+            "ATR",
+            "72-600"
+          ]
+        ],
+        "incoming": []
+      },
+      "fleetTotal": "49 aircraft"
+    }
+  },
+  {
+    "name": "Sunset Express",
+    "code": "SE",
+    "country": "United States",
+    "color": "#011D57",
+    "tail": "assets/img/members/sunset-express-tail.webp",
+    "hubs": [
+      "LGB",
+      "SJU",
+      "DFW",
+      "JFK",
+      "OGG",
+      "HNL"
+    ],
+    "focus": [],
+    "joined": 2026,
+    "blurb": "Pacific Sunset's domestic express airline, connecting six hubs across the continental United States, Puerto Rico and Hawaii.",
+    "profile": {
+      "about": [
+        "Sunset Express is Pacific Sunset's domestic express airline and the second member of the Pacific Sunset Group.",
+        "The airline previously belonged to MalAlliance until that alliance became extinct in November 2026."
+      ],
+      "network": [
+        "Sunset Express operates from Long Beach, San Juan, Dallas/Fort Worth, New York JFK, Maui and Honolulu, combining mainland flying with services across Puerto Rico and Hawaii."
+      ],
+      "fleet": {
+        "current": [
+          [
+            "Embraer",
+            "E190",
+            "11 aircraft"
+          ],
+          [
+            "Embraer",
+            "E195-E2",
+            "6 aircraft"
+          ],
+          [
+            "Bombardier",
+            "CRJ-1000",
+            "5 aircraft"
+          ],
+          [
+            "Boeing",
+            "737-800",
+            "4 aircraft"
+          ],
+          [
+            "Embraer",
+            "E175",
+            "3 aircraft"
+          ],
+          [
+            "Airbus",
+            "A220-300",
+            "3 aircraft"
+          ],
+          [
+            "Bombardier",
+            "CRJ-900",
+            "2 aircraft"
+          ],
+          [
+            "Boeing",
+            "717-200",
+            "1 aircraft"
+          ],
+          [
+            "Boeing",
+            "737-700",
+            "1 aircraft"
+          ],
+          [
+            "Airbus",
+            "A320neo",
+            "1 aircraft"
           ]
         ],
         "incoming": []
