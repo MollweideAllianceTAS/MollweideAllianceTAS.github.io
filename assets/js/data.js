@@ -1824,6 +1824,14 @@ const LOUNGES = [
     amenities:['All-day dining','Shower suites','Apron view','Work booths','Wi-Fi']
   },
   {
+    name:'Puffin Lounge', operator:'FO', airport:'CPH',
+    location:'Main concourse, near the E gates',
+    hours:'Opening hours not published',
+    photo:'assets/img/lounges/air-atlantic-cph.webp',
+    access:['Air Atlantic or StrayaJet Business and First', 'StrayaJet Gold and Platinum members', 'Mollweide Strata and Aurora members'],
+    amenities:['Hot and cold buffet','Self-service bar','Showers','Work pods','Apron views','Wi-Fi']
+  },
+  {
     name:'Jet Oceania Lounge', operator:'JO', airport:'BNE',
     location:'International terminal, level 3, past the central atrium',
     hours:'04:30 – 23:30',
