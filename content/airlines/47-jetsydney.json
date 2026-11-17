@@ -15,11 +15,21 @@
       "Following decades of development, JetSydney has established itself as a major fictional aviation brand and continues to expand its international reach while strengthening connections between Sydney and the rest of the world. JetSydney — Exploration YES!"
     ],
     "network": [
-      "Sydney is the main hub, supported by Melbourne and Perth. Key services include Sydney–Sunshine Coast, Sydney–Singapore and Sunshine Coast–Singapore."
+      "Sydney is the main hub, supported by Melbourne and Perth. JetSydney's network spans domestic Australia, New Zealand, Asia, Europe and North America, with services from Sydney to destinations including Perth, Miles, Gold Coast, Auckland, Rome, Brisbane, Tokyo, San Francisco, Seoul and Manila."
     ],
     "routes": [
       ["SYD", "MCY"],
-      ["SYD", "SIN"]
+      ["SYD", "SIN"],
+      ["SYD", "PER"],
+      ["SYD", "WLE"],
+      ["SYD", "OOL"],
+      ["SYD", "AKL"],
+      ["SYD", "FCO"],
+      ["SYD", "BNE"],
+      ["SYD", "NRT"],
+      ["SYD", "SFO"],
+      ["SYD", "ICN"],
+      ["SYD", "MNL"]
     ],
     "fleet": {
       "current": [

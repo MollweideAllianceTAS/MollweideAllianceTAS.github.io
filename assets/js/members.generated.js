@@ -5432,7 +5432,7 @@ const MWA_MEMBERS = [
         "Following decades of development, JetSydney has established itself as a major fictional aviation brand and continues to expand its international reach while strengthening connections between Sydney and the rest of the world. JetSydney — Exploration YES!"
       ],
       "network": [
-        "Sydney is the main hub, supported by Melbourne and Perth. Key services include Sydney–Sunshine Coast, Sydney–Singapore and Sunshine Coast–Singapore."
+        "Sydney is the main hub, supported by Melbourne and Perth. JetSydney's network spans domestic Australia, New Zealand, Asia, Europe and North America, with services from Sydney to destinations including Perth, Miles, Gold Coast, Auckland, Rome, Brisbane, Tokyo, San Francisco, Seoul and Manila."
       ],
       "routes": [
         [
@@ -5442,6 +5442,46 @@ const MWA_MEMBERS = [
         [
           "SYD",
           "SIN"
+        ],
+        [
+          "SYD",
+          "PER"
+        ],
+        [
+          "SYD",
+          "WLE"
+        ],
+        [
+          "SYD",
+          "OOL"
+        ],
+        [
+          "SYD",
+          "AKL"
+        ],
+        [
+          "SYD",
+          "FCO"
+        ],
+        [
+          "SYD",
+          "BNE"
+        ],
+        [
+          "SYD",
+          "NRT"
+        ],
+        [
+          "SYD",
+          "SFO"
+        ],
+        [
+          "SYD",
+          "ICN"
+        ],
+        [
+          "SYD",
+          "MNL"
         ]
       ],
       "fleet": {
@@ -5558,6 +5598,117 @@ const MWA_MEMBERS = [
         ],
         "incoming": []
       }
+    }
+  },
+  {
+    "name": "Bajan Air",
+    "code": "BA",
+    "country": "Barbados",
+    "color": "#012F7B",
+    "tail": "assets/img/members/bajan-air-tail.png",
+    "hubs": [
+      "BGI"
+    ],
+    "focus": [],
+    "joined": 2026,
+    "blurb": "The Bajan Group's international Barbados carrier, offering accessible widebody travel from Bridgetown across the Caribbean and beyond.",
+    "profile": {
+      "founded": "1993",
+      "about": [
+        "Bajan Air was founded in 1993 and is owned by The Bajan Group. Based at Bridgetown's Grantley Adams International Airport, it has grown into Barbados' largest international airline, built around stylish travel at more accessible fares.",
+        "The airline uses widebody aircraft on both short- and long-haul services, carrying passengers between Caribbean countries as well as to destinations further afield. Its journeys range from flights of around one hour to long-haul sectors of up to ten hours, with expansion planned aircraft by aircraft. This is Bajan Air — Barbados' largest international airline."
+      ],
+      "network": [
+        "Grantley Adams International Airport is Bajan Air's main hub. Its widebody network links Barbados with neighbouring Caribbean markets and international destinations."
+      ],
+      "fleet": {
+        "current": [
+          [
+            "Airbus",
+            "A350-1000",
+            "15 aircraft"
+          ],
+          [
+            "Boeing",
+            "787-9 Dreamliner",
+            "7 aircraft"
+          ],
+          [
+            "Airbus",
+            "A350-900",
+            "6 aircraft"
+          ],
+          [
+            "Boeing",
+            "777-300",
+            "5 aircraft"
+          ],
+          [
+            "Airbus",
+            "A330-900",
+            "3 aircraft"
+          ]
+        ],
+        "incoming": []
+      },
+      "fleetTotal": "36 aircraft"
+    }
+  },
+  {
+    "name": "Inter-Europe",
+    "code": "IE",
+    "country": "United Kingdom",
+    "color": "#0042A9",
+    "tail": "assets/img/members/inter-europe-tail.png",
+    "hubs": [
+      "LHR"
+    ],
+    "focus": [],
+    "joined": 2026,
+    "blurb": "The Bajan Group's London Heathrow carrier, connecting the United Kingdom with Europe and a growing network reaching Dubai and Moscow.",
+    "profile": {
+      "founded": "2007",
+      "about": [
+        "Inter-Europe was founded in 2007 and is owned by The Bajan Group. It began as a small airline with two Boeing 737-9s linking the United Kingdom with Spain and France before developing into a much larger carrier based at London Heathrow.",
+        "The fleet now includes Boeing 737 MAX 9 aircraft and two Boeing 777-200s donated by Bajan Air. Once a small regional operator, Inter-Europe is rapidly becoming a larger European contender, with services reaching as far as Dubai and Moscow. Inter-Europe — we may not take you to the Caribbean, but we will take you abroad."
+      ],
+      "network": [
+        "London Heathrow is Inter-Europe's main hub, with European links to Spain and France alongside longer services to Dubai and Moscow."
+      ],
+      "routes": [
+        [
+          "LHR",
+          "MAD"
+        ],
+        [
+          "LHR",
+          "CDG"
+        ],
+        [
+          "LHR",
+          "DXB"
+        ],
+        [
+          "LHR",
+          "SVO"
+        ]
+      ],
+      "fleet": {
+        "current": [
+          [
+            "Boeing",
+            "737 MAX 9",
+            "21 aircraft"
+          ],
+          [
+            "Boeing",
+            "777-200",
+            "2 aircraft · Donated by Bajan Air"
+          ]
+        ],
+        "incoming": []
+      },
+      "fleetTotal": "23 aircraft"
     }
   }
 ];

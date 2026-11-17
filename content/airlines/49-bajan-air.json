@@ -1,0 +1,33 @@
+{
+  "name": "Bajan Air",
+  "code": "BA",
+  "country": "Barbados",
+  "color": "#012F7B",
+  "tail": "assets/img/members/bajan-air-tail.png",
+  "hubs": ["BGI"],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "The Bajan Group's international Barbados carrier, offering accessible widebody travel from Bridgetown across the Caribbean and beyond.",
+  "profile": {
+    "founded": "1993",
+    "about": [
+      "Bajan Air was founded in 1993 and is owned by The Bajan Group. Based at Bridgetown's Grantley Adams International Airport, it has grown into Barbados' largest international airline, built around stylish travel at more accessible fares.",
+      "The airline uses widebody aircraft on both short- and long-haul services, carrying passengers between Caribbean countries as well as to destinations further afield. Its journeys range from flights of around one hour to long-haul sectors of up to ten hours, with expansion planned aircraft by aircraft. This is Bajan Air — Barbados' largest international airline."
+    ],
+    "network": [
+      "Grantley Adams International Airport is Bajan Air's main hub. Its widebody network links Barbados with neighbouring Caribbean markets and international destinations."
+    ],
+    "fleet": {
+      "current": [
+        ["Airbus", "A350-1000", "15 aircraft"],
+        ["Boeing", "787-9 Dreamliner", "7 aircraft"],
+        ["Airbus", "A350-900", "6 aircraft"],
+        ["Boeing", "777-300", "5 aircraft"],
+        ["Airbus", "A330-900", "3 aircraft"]
+      ],
+      "incoming": []
+    },
+    "fleetTotal": "36 aircraft"
+  },
+  "order": 49
+}

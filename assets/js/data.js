@@ -1442,8 +1442,10 @@ const AIRPORTS = [
   { code:'SYD', city:'Sydney',        name:'Kingsford Smith',          country:'Australia',    lat:-33.94,lon:151.18, hub:true },
   { code:'CNS', city:'Cairns',        name:'Cairns Airport',           country:'Australia',    lat:-16.88,lon:145.76, hub:true },
   { code:'PER', city:'Perth',         name:'Perth Airport',            country:'Australia',    lat:-31.94,lon:115.97, hub:true },
+  { code:'WLE', city:'Miles',         name:'Miles Airport',            country:'Australia',    lat:-26.81,lon:150.17 },
   { code:'MEL', city:'Melbourne',     name:'Tullamarine',              country:'Australia',    lat:-37.67,lon:144.84 },
   { code:'MCY', city:'Sunshine Coast',name:'Sunshine Coast Airport',   country:'Australia',    lat:-26.60,lon:153.09 },
+  { code:'OOL', city:'Gold Coast',    name:'Gold Coast Airport',      country:'Australia',    lat:-28.16,lon:153.50 },
   { code:'IPC', city:'Easter Island', name:'Mataveri Intl',            country:'Chile',        lat:-27.16,lon:-109.42 },
   { code:'AKL', city:'Auckland',      name:'Auckland Intl',            country:'New Zealand',  lat:-37.01,lon:174.79 },
   { code:'NAN', city:'Nadi',          name:'Nadi Intl',                country:'Fiji',         lat:-17.76,lon:177.44 },
@@ -1830,6 +1832,22 @@ const LOUNGES = [
     photo:'assets/img/lounges/air-atlantic-cph.webp',
     access:['Air Atlantic or StrayaJet Business and First', 'StrayaJet Gold and Platinum members', 'Mollweide Strata and Aurora members'],
     amenities:['Hot and cold buffet','Self-service bar','Showers','Work pods','Apron views','Wi-Fi']
+  },
+  {
+    name:'Night Sky Lounge', operator:'CS', airport:'LAX',
+    location:'Airside, with views across the LAX apron',
+    hours:'05:00 – 23:00',
+    photo:'assets/img/lounges/clear-sky-lax.webp',
+    access:['Clear Sky Business Class or above', '$50 lounge pass', 'Solo travellers on an international flight', 'Business Class on a Mollweide partner airline', 'Solo international travellers on a Mollweide partner airline'],
+    amenities:['Complimentary soft drinks','Complimentary food','Drinks available for purchase','Aircraft viewing lounge','Wi-Fi']
+  },
+  {
+    name:'Clear Sky JFK Lounge', operator:'CS', airport:'JFK',
+    location:'Airside; terminal location not published',
+    hours:'05:00 – 23:00',
+    photo:'assets/img/lounges/clear-sky-jfk.webp',
+    access:['Clear Sky Business Class or above', '$50 lounge pass', 'Solo travellers on an international flight', 'Business Class on a Mollweide partner airline', 'Solo international travellers on a Mollweide partner airline'],
+    amenities:['Complimentary food and drinks bar','Clear Sky die-cast model shop and display','Complimentary massage chairs','Wi-Fi']
   },
   {
     name:'Jet Oceania Lounge', operator:'JO', airport:'BNE',

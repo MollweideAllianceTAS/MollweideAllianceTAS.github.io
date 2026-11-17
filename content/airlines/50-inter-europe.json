@@ -1,0 +1,36 @@
+{
+  "name": "Inter-Europe",
+  "code": "IE",
+  "country": "United Kingdom",
+  "color": "#0042A9",
+  "tail": "assets/img/members/inter-europe-tail.png",
+  "hubs": ["LHR"],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "The Bajan Group's London Heathrow carrier, connecting the United Kingdom with Europe and a growing network reaching Dubai and Moscow.",
+  "profile": {
+    "founded": "2007",
+    "about": [
+      "Inter-Europe was founded in 2007 and is owned by The Bajan Group. It began as a small airline with two Boeing 737-9s linking the United Kingdom with Spain and France before developing into a much larger carrier based at London Heathrow.",
+      "The fleet now includes Boeing 737 MAX 9 aircraft and two Boeing 777-200s donated by Bajan Air. Once a small regional operator, Inter-Europe is rapidly becoming a larger European contender, with services reaching as far as Dubai and Moscow. Inter-Europe — we may not take you to the Caribbean, but we will take you abroad."
+    ],
+    "network": [
+      "London Heathrow is Inter-Europe's main hub, with European links to Spain and France alongside longer services to Dubai and Moscow."
+    ],
+    "routes": [
+      ["LHR", "MAD"],
+      ["LHR", "CDG"],
+      ["LHR", "DXB"],
+      ["LHR", "SVO"]
+    ],
+    "fleet": {
+      "current": [
+        ["Boeing", "737 MAX 9", "21 aircraft"],
+        ["Boeing", "777-200", "2 aircraft · Donated by Bajan Air"]
+      ],
+      "incoming": []
+    },
+    "fleetTotal": "23 aircraft"
+  },
+  "order": 50
+}
