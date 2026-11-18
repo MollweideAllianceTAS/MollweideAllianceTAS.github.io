@@ -5710,5 +5710,103 @@ const MWA_MEMBERS = [
       },
       "fleetTotal": "23 aircraft"
     }
+  },
+  {
+    "name": "SAMAT",
+    "short": "SAMAT",
+    "code": "SM",
+    "country": "Chile",
+    "color": "#082A55",
+    "tail": "assets/img/members/samat-tail.png",
+    "hubs": [
+      "SCL",
+      "GRU",
+      "EZE"
+    ],
+    "focus": [
+      "BOG",
+      "LIM",
+      "VVI"
+    ],
+    "joined": 2026,
+    "blurb": "A full-service South American international carrier connecting its Santiago, São Paulo and Buenos Aires hubs with the Americas, Europe and beyond.",
+    "profile": {
+      "founded": "2002",
+      "about": [
+        "South American Air Transport, known as SAMAT, was founded in 2002 and is owned by SAMAT Group. Headquartered across Santiago, São Paulo, Buenos Aires and Bogotá, the full-service carrier combines South American hospitality with a modern international operation.",
+        "Following decades of development, SAMAT has established itself as a major fictional aviation brand. Its diverse Airbus, Boeing, ATR and Bombardier fleet supports domestic, regional South American and long-haul services as the airline strengthens connections between South America and the rest of the world. SAMAT — Aquí para Sudamérica."
+      ],
+      "network": [
+        "Santiago is SAMAT's headquarters and principal hub, supported by major hubs at São Paulo Guarulhos and Buenos Aires Ezeiza. Bogotá, Lima and Santa Cruz serve as focus cities for a network reaching Europe, North America, Central America and destinations across South America."
+      ],
+      "routes": [
+        [
+          "SCL",
+          "LHR"
+        ],
+        [
+          "SCL",
+          "EZE"
+        ],
+        [
+          "SCL",
+          "JFK"
+        ],
+        [
+          "BOG",
+          "NLU"
+        ],
+        [
+          "LIM",
+          "PTY"
+        ],
+        [
+          "BOG",
+          "MIA"
+        ],
+        [
+          "GRU",
+          "LIM"
+        ],
+        [
+          "VVI",
+          "LPB"
+        ]
+      ],
+      "fleet": {
+        "current": [
+          [
+            "Airbus",
+            "A321neo"
+          ],
+          [
+            "Airbus",
+            "A320neo"
+          ],
+          [
+            "Airbus",
+            "A330-800"
+          ],
+          [
+            "Boeing",
+            "787-9 Dreamliner"
+          ],
+          [
+            "ATR",
+            "72-600"
+          ],
+          [
+            "Bombardier",
+            "CRJ-200"
+          ],
+          [
+            "Airbus",
+            "A220-300"
+          ]
+        ],
+        "incoming": []
+      },
+      "fleetTotal": "29 aircraft"
+    }
   }
 ];

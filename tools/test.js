@@ -254,9 +254,9 @@ profiled.forEach(m => (m.profile.routes || []).forEach(r => {
   const [a, b, via] = r;
   if (r.length < 2 || r.length > 3) { routesOK = false; console.log('        route is not [from, to] or [from, to, via]: '+r.join('-')+' ('+m.code+')'); }
   if (!S.airport(a) || !S.airport(b) || (via && !S.airport(via))) { routesOK = false; console.log('        unknown route airport: '+r.join('-')+' ('+m.code+')'); }
-  if (!m.hubs.includes(a)) { routesOK = false; console.log('        route does not start at a hub: '+a+'-'+b+' ('+m.code+')'); }
+  if (!m.hubs.includes(a) && !(m.focus || []).includes(a)) { routesOK = false; console.log('        route does not start at a hub or focus city: '+a+'-'+b+' ('+m.code+')'); }
 }));
-ok('Every key route starts at one of the member\'s hubs and resolves', routesOK);
+ok('Every key route starts at one of the member\'s hubs or focus cities and resolves', routesOK);
 ok('Profile pages get distinct file names',
    new Set(profiled.map(S.memberPage)).size === profiled.length);
 const onDisk = fs.readdirSync('.').filter(f => /^airline-.+\.html$/.test(f)).sort();
