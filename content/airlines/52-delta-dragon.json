@@ -1,0 +1,71 @@
+{
+  "name": "Delta Dragon Air",
+  "short": "Delta Dragon",
+  "code": "RD",
+  "country": "People's Republic of China",
+  "color": "#2F1069",
+  "secondaryColor": "#EA6B66",
+  "tertiaryColor": "#FFC857",
+  "tail": "assets/img/members/delta-dragon-tail.png",
+  "hubs": [
+    "PVG",
+    "HKG",
+    "MFM"
+  ],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "CIAS's Chinese ultra-low-cost sister airline, offering lower fares from Shanghai Pudong, Hong Kong and Macau.",
+  "profile": {
+    "founded": "2024",
+    "foundedDate": "17 July 2024",
+    "about": [
+      "Delta Dragon Air, known simply as Delta Dragon, is the Chinese ultra-low-cost sister airline of CIAS. It offers lower ticket prices than its sister carrier while retaining a distinct purple, coral and sunrise-yellow identity.",
+      "The airline was founded on 17 July 2024 and began operations on 22 November 2024. Its fleet combines high-capacity Airbus and COMAC narrow-body aircraft with Airbus A350-900s for longer services."
+    ],
+    "network": [
+      "Shanghai Pudong is Delta Dragon's primary hub, supported by hubs at Hong Kong International Airport and Macau International Airport. Together they give the airline access to mainland China and the wider Pearl River Delta market."
+    ],
+    "routes": [
+      [
+        "PVG",
+        "HKG"
+      ],
+      [
+        "PVG",
+        "MFM"
+      ]
+    ],
+    "fleet": {
+      "current": [
+        [
+          "Airbus",
+          "A320neo",
+          "30 aircraft"
+        ],
+        [
+          "Airbus",
+          "A321neo",
+          "30 aircraft"
+        ],
+        [
+          "Airbus",
+          "A321XLR",
+          "10 aircraft"
+        ],
+        [
+          "Airbus",
+          "A350-900",
+          "10 aircraft"
+        ],
+        [
+          "COMAC",
+          "C919-100ER",
+          "30 aircraft"
+        ]
+      ],
+      "incoming": []
+    },
+    "fleetTotal": "110 aircraft"
+  },
+  "order": 52
+}

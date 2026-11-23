@@ -9,8 +9,8 @@
   "hubs": [
     "KBP",
     "LWO",
-    "OZH",
     "HRK",
+    "OZH",
     "ODS"
   ],
   "focus": [],
@@ -105,6 +105,11 @@
         ],
         [
           "Boeing",
+          "767-200ER",
+          "30 aircraft · Leased from GECAS"
+        ],
+        [
+          "Boeing",
           "777-200",
           "5 aircraft · Leased from United Airlines"
         ],
@@ -116,7 +121,12 @@
         [
           "Boeing",
           "787-8",
-          "10 aircraft · Leased from All Nippon Airways"
+          "10 aircraft"
+        ],
+        [
+          "Boeing",
+          "787-8",
+          "5 aircraft · Leased from All Nippon Airways"
         ],
         [
           "Embraer",
@@ -129,13 +139,7 @@
           "5 aircraft"
         ]
       ],
-      "incoming": [
-        [
-          "Boeing",
-          "767-200ER",
-          "30 aircraft · Leased from GECAS; enters service when the type reaches the game"
-        ]
-      ]
+      "incoming": []
     }
   },
   "order": 24

@@ -1076,7 +1076,7 @@ const airlinePage = m => {
       <dl class="al-facts">
         <div><dt>Airline code</dt><dd><span class="code">${m.code}</span></dd></div>
         <div><dt>Country</dt><dd>${esc(m.country)}</dd></div>
-${m.secondaryColor ? `        <div><dt>Brand colours</dt><dd class="al-colours"><span style="--sw:${m.color}">${m.color}</span><span style="--sw:${m.secondaryColor}">${m.secondaryColor}</span></dd></div>
+${m.secondaryColor ? `        <div><dt>Brand colours</dt><dd class="al-colours"><span style="--sw:${m.color}">${m.color}</span><span style="--sw:${m.secondaryColor}">${m.secondaryColor}</span>${m.tertiaryColor ? `<span style="--sw:${m.tertiaryColor}">${m.tertiaryColor}</span>` : ''}</dd></div>
 ` : ''}
 ${P.founded ? `        <div><dt>Founded</dt><dd>${esc(P.foundedDate || P.founded)}</dd></div>
 ` : ''}        <div><dt>Primary hub</dt><dd>${esc(hub.city)} ${esc(hub.name)} <span class="code">${hub.code}</span></dd></div>

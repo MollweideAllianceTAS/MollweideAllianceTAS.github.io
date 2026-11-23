@@ -398,11 +398,11 @@ const MWA_MEMBERS = [
     "tail": "assets/img/members/cias.webp",
     "hubs": [
       "PVG",
-      "PEK",
       "KMG",
+      "PEK",
       "URC",
-      "YNT",
-      "SZX"
+      "SZX",
+      "YNT"
     ],
     "focus": [],
     "joined": 2026,
@@ -509,6 +509,11 @@ const MWA_MEMBERS = [
           ],
           [
             "Airbus",
+            "A350-1000",
+            "20 aircraft"
+          ],
+          [
+            "Airbus",
             "A380-800",
             "30 aircraft"
           ],
@@ -568,6 +573,11 @@ const MWA_MEMBERS = [
             "20 aircraft"
           ],
           [
+            "Boeing",
+            "787-10",
+            "20 aircraft"
+          ],
+          [
             "Embraer",
             "E190-E2",
             "15 aircraft"
@@ -590,7 +600,7 @@ const MWA_MEMBERS = [
           [
             "UAC",
             "Superjet 100-95LR",
-            "100 aircraft · 25 of them leased from Gazprom Avia"
+            "100 aircraft · 26 leased from Gazprom Avia"
           ]
         ],
         "incoming": []
@@ -892,18 +902,19 @@ const MWA_MEMBERS = [
     "tail": "assets/img/members/kosmos.webp",
     "hubs": [
       "SVO",
-      "LED",
       "DME",
-      "GOJ",
-      "OVB"
+      "LED",
+      "OVB",
+      "PKC",
+      "GOJ"
     ],
     "focus": [],
     "joined": 2026,
-    "blurb": "A premium Russian carrier flying long-haul from Moscow Sheremetyevo and St Petersburg, with further hubs at Domodedovo, Nizhny Novgorod and Novosibirsk.",
+    "blurb": "A premium Russian carrier flying long-haul from Moscow, St Petersburg, Novosibirsk, Petropavlovsk-Kamchatsky and Nizhny Novgorod.",
     "profile": {
       "founded": "1991",
       "about": [
-        "Kosmos is a premium Russian carrier, flying from Moscow Sheremetyevo and St Petersburg with further hubs at Moscow Domodedovo, Nizhny Novgorod and Novosibirsk. It competes at the top end of long-haul flying, against the leading Gulf and Asian carriers.",
+        "Kosmos is a premium Russian carrier, flying from Moscow Sheremetyevo and Domodedovo, St Petersburg, Novosibirsk, Petropavlovsk-Kamchatsky and Nizhny Novgorod. It competes at the top end of long-haul flying, against the leading Gulf and Asian carriers.",
         "The airline was founded in Moscow in 1991, emerging from what remained of Aeroflot after its break-up. Its first fleet combined Tupolev Tu-134s and Tu-154s, Antonov An-24s and Ilyushin Il-62s with Airbus A310-300s and Boeing 737-400s leased from Aeroflot.",
         "When Transaero went bankrupt in 2015, Kosmos and Aeroflot divided its remaining assets. Kosmos took the Airbus A380s, Boeing 747-8Is and Airbus A350s that Transaero had ordered but never received."
       ],
@@ -982,17 +993,17 @@ const MWA_MEMBERS = [
           [
             "Airbus",
             "A350-900",
-            "18 aircraft"
+            "24 aircraft"
           ],
           [
             "Airbus",
             "A350-1000",
-            "12 aircraft"
+            "24 aircraft"
           ],
           [
             "Airbus",
             "A380-800",
-            "24 aircraft · Operates from Domodedovo"
+            "24 aircraft"
           ],
           [
             "Boeing",
@@ -1007,17 +1018,22 @@ const MWA_MEMBERS = [
           [
             "Boeing",
             "747-8I",
-            "18 aircraft · Operates from Domodedovo"
+            "18 aircraft"
           ],
           [
             "Boeing",
             "787-8",
-            "18 aircraft"
+            "24 aircraft"
           ],
           [
             "Boeing",
             "787-9",
-            "18 aircraft"
+            "24 aircraft"
+          ],
+          [
+            "Boeing",
+            "787-10",
+            "24 aircraft"
           ],
           [
             "Embraer",
@@ -1026,42 +1042,11 @@ const MWA_MEMBERS = [
           ],
           [
             "UAC",
-            "Superjet 100-95B",
-            "12 aircraft"
+            "Superjet 100-95LR",
+            "18 aircraft"
           ]
         ],
-        "incoming": [
-          [
-            "Boeing",
-            "777-9",
-            "24 aircraft"
-          ],
-          [
-            "UAC",
-            "MC-21-210",
-            "18 aircraft"
-          ],
-          [
-            "UAC",
-            "MC-21-310",
-            "18 aircraft"
-          ],
-          [
-            "UAC",
-            "MC-21-410",
-            "18 aircraft"
-          ],
-          [
-            "UAC",
-            "Tu-214",
-            "12 aircraft · Enters service when the type reaches the game"
-          ],
-          [
-            "UAC",
-            "Tu-454",
-            "12 aircraft"
-          ]
-        ]
+        "incoming": []
       }
     }
   },
@@ -1116,7 +1101,7 @@ const MWA_MEMBERS = [
           [
             "Airbus",
             "A220-100",
-            "10 aircraft · Leased from Airbus"
+            "10 aircraft"
           ],
           [
             "Airbus",
@@ -1140,7 +1125,7 @@ const MWA_MEMBERS = [
           ],
           [
             "ATR",
-            "72",
+            "72-600",
             "10 aircraft"
           ],
           [
@@ -1165,7 +1150,8 @@ const MWA_MEMBERS = [
           ],
           [
             "UAC",
-            "Superjet 100-95B"
+            "Superjet 100-95B",
+            "10 aircraft"
           ],
           [
             "UAC",
@@ -2070,8 +2056,8 @@ const MWA_MEMBERS = [
     "hubs": [
       "KBP",
       "LWO",
-      "OZH",
       "HRK",
+      "OZH",
       "ODS"
     ],
     "focus": [],
@@ -2166,6 +2152,11 @@ const MWA_MEMBERS = [
           ],
           [
             "Boeing",
+            "767-200ER",
+            "30 aircraft · Leased from GECAS"
+          ],
+          [
+            "Boeing",
             "777-200",
             "5 aircraft · Leased from United Airlines"
           ],
@@ -2177,7 +2168,12 @@ const MWA_MEMBERS = [
           [
             "Boeing",
             "787-8",
-            "10 aircraft · Leased from All Nippon Airways"
+            "10 aircraft"
+          ],
+          [
+            "Boeing",
+            "787-8",
+            "5 aircraft · Leased from All Nippon Airways"
           ],
           [
             "Embraer",
@@ -2190,13 +2186,7 @@ const MWA_MEMBERS = [
             "5 aircraft"
           ]
         ],
-        "incoming": [
-          [
-            "Boeing",
-            "767-200ER",
-            "30 aircraft · Leased from GECAS; enters service when the type reaches the game"
-          ]
-        ]
+        "incoming": []
       }
     }
   },
@@ -5807,6 +5797,76 @@ const MWA_MEMBERS = [
         "incoming": []
       },
       "fleetTotal": "29 aircraft"
+    }
+  },
+  {
+    "name": "Delta Dragon Air",
+    "short": "Delta Dragon",
+    "code": "RD",
+    "country": "People's Republic of China",
+    "color": "#2F1069",
+    "secondaryColor": "#EA6B66",
+    "tertiaryColor": "#FFC857",
+    "tail": "assets/img/members/delta-dragon-tail.png",
+    "hubs": [
+      "PVG",
+      "HKG",
+      "MFM"
+    ],
+    "focus": [],
+    "joined": 2026,
+    "blurb": "CIAS's Chinese ultra-low-cost sister airline, offering lower fares from Shanghai Pudong, Hong Kong and Macau.",
+    "profile": {
+      "founded": "2024",
+      "foundedDate": "17 July 2024",
+      "about": [
+        "Delta Dragon Air, known simply as Delta Dragon, is the Chinese ultra-low-cost sister airline of CIAS. It offers lower ticket prices than its sister carrier while retaining a distinct purple, coral and sunrise-yellow identity.",
+        "The airline was founded on 17 July 2024 and began operations on 22 November 2024. Its fleet combines high-capacity Airbus and COMAC narrow-body aircraft with Airbus A350-900s for longer services."
+      ],
+      "network": [
+        "Shanghai Pudong is Delta Dragon's primary hub, supported by hubs at Hong Kong International Airport and Macau International Airport. Together they give the airline access to mainland China and the wider Pearl River Delta market."
+      ],
+      "routes": [
+        [
+          "PVG",
+          "HKG"
+        ],
+        [
+          "PVG",
+          "MFM"
+        ]
+      ],
+      "fleet": {
+        "current": [
+          [
+            "Airbus",
+            "A320neo",
+            "30 aircraft"
+          ],
+          [
+            "Airbus",
+            "A321neo",
+            "30 aircraft"
+          ],
+          [
+            "Airbus",
+            "A321XLR",
+            "10 aircraft"
+          ],
+          [
+            "Airbus",
+            "A350-900",
+            "10 aircraft"
+          ],
+          [
+            "COMAC",
+            "C919-100ER",
+            "30 aircraft"
+          ]
+        ],
+        "incoming": []
+      },
+      "fleetTotal": "110 aircraft"
     }
   }
 ];

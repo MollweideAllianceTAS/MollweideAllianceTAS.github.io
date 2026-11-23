@@ -7,18 +7,19 @@
   "tail": "assets/img/members/kosmos.webp",
   "hubs": [
     "SVO",
-    "LED",
     "DME",
-    "GOJ",
-    "OVB"
+    "LED",
+    "OVB",
+    "PKC",
+    "GOJ"
   ],
   "focus": [],
   "joined": 2026,
-  "blurb": "A premium Russian carrier flying long-haul from Moscow Sheremetyevo and St Petersburg, with further hubs at Domodedovo, Nizhny Novgorod and Novosibirsk.",
+  "blurb": "A premium Russian carrier flying long-haul from Moscow, St Petersburg, Novosibirsk, Petropavlovsk-Kamchatsky and Nizhny Novgorod.",
   "profile": {
     "founded": "1991",
     "about": [
-      "Kosmos is a premium Russian carrier, flying from Moscow Sheremetyevo and St Petersburg with further hubs at Moscow Domodedovo, Nizhny Novgorod and Novosibirsk. It competes at the top end of long-haul flying, against the leading Gulf and Asian carriers.",
+      "Kosmos is a premium Russian carrier, flying from Moscow Sheremetyevo and Domodedovo, St Petersburg, Novosibirsk, Petropavlovsk-Kamchatsky and Nizhny Novgorod. It competes at the top end of long-haul flying, against the leading Gulf and Asian carriers.",
       "The airline was founded in Moscow in 1991, emerging from what remained of Aeroflot after its break-up. Its first fleet combined Tupolev Tu-134s and Tu-154s, Antonov An-24s and Ilyushin Il-62s with Airbus A310-300s and Boeing 737-400s leased from Aeroflot.",
       "When Transaero went bankrupt in 2015, Kosmos and Aeroflot divided its remaining assets. Kosmos took the Airbus A380s, Boeing 747-8Is and Airbus A350s that Transaero had ordered but never received."
     ],
@@ -97,17 +98,17 @@
         [
           "Airbus",
           "A350-900",
-          "18 aircraft"
+          "24 aircraft"
         ],
         [
           "Airbus",
           "A350-1000",
-          "12 aircraft"
+          "24 aircraft"
         ],
         [
           "Airbus",
           "A380-800",
-          "24 aircraft · Operates from Domodedovo"
+          "24 aircraft"
         ],
         [
           "Boeing",
@@ -122,17 +123,22 @@
         [
           "Boeing",
           "747-8I",
-          "18 aircraft · Operates from Domodedovo"
+          "18 aircraft"
         ],
         [
           "Boeing",
           "787-8",
-          "18 aircraft"
+          "24 aircraft"
         ],
         [
           "Boeing",
           "787-9",
-          "18 aircraft"
+          "24 aircraft"
+        ],
+        [
+          "Boeing",
+          "787-10",
+          "24 aircraft"
         ],
         [
           "Embraer",
@@ -141,42 +147,11 @@
         ],
         [
           "UAC",
-          "Superjet 100-95B",
-          "12 aircraft"
+          "Superjet 100-95LR",
+          "18 aircraft"
         ]
       ],
-      "incoming": [
-        [
-          "Boeing",
-          "777-9",
-          "24 aircraft"
-        ],
-        [
-          "UAC",
-          "MC-21-210",
-          "18 aircraft"
-        ],
-        [
-          "UAC",
-          "MC-21-310",
-          "18 aircraft"
-        ],
-        [
-          "UAC",
-          "MC-21-410",
-          "18 aircraft"
-        ],
-        [
-          "UAC",
-          "Tu-214",
-          "12 aircraft · Enters service when the type reaches the game"
-        ],
-        [
-          "UAC",
-          "Tu-454",
-          "12 aircraft"
-        ]
-      ]
+      "incoming": []
     }
   },
   "order": 10

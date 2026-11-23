@@ -7,11 +7,11 @@
   "tail": "assets/img/members/cias.webp",
   "hubs": [
     "PVG",
-    "PEK",
     "KMG",
+    "PEK",
     "URC",
-    "YNT",
-    "SZX"
+    "SZX",
+    "YNT"
   ],
   "focus": [],
   "joined": 2026,
@@ -118,6 +118,11 @@
         ],
         [
           "Airbus",
+          "A350-1000",
+          "20 aircraft"
+        ],
+        [
+          "Airbus",
           "A380-800",
           "30 aircraft"
         ],
@@ -177,6 +182,11 @@
           "20 aircraft"
         ],
         [
+          "Boeing",
+          "787-10",
+          "20 aircraft"
+        ],
+        [
           "Embraer",
           "E190-E2",
           "15 aircraft"
@@ -199,7 +209,7 @@
         [
           "UAC",
           "Superjet 100-95LR",
-          "100 aircraft · 25 of them leased from Gazprom Avia"
+          "100 aircraft · 26 leased from Gazprom Avia"
         ]
       ],
       "incoming": []
