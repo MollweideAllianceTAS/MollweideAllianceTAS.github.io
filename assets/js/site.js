@@ -75,7 +75,11 @@ function aircraftFor(maker, model) {
 const _fleets = {};
 function fleetOf(m) {
   if (_fleets[m.code]) return _fleets[m.code];
-  const listed = (m.profile && m.profile.fleet && m.profile.fleet.current) || [];
+  const fleet = m.profile && m.profile.fleet;
+  const listed = fleet ? [].concat(
+    fleet.current || [],
+    ...(fleet.divisions || []).map(division => division.current || [])
+  ) : [];
   const types = listed.map(f => aircraftFor(f[0], f[1]))
     .concat(scheduleOf(m).map(f => aircraftFor(f[3], '')))
     .filter(Boolean);

@@ -20,7 +20,11 @@ const ok = (name, cond, extra='') => { console.log((cond?'  PASS  ':'  FAIL  ')+
 /* --- Aircraft: what flies where ------------------------------------------ */
 {
   const unknown = [];
-  S.MEMBERS.forEach(m => ((m.profile && m.profile.fleet) ? [].concat(m.profile.fleet.current, m.profile.fleet.incoming || []) : [])
+  S.MEMBERS.forEach(m => ((m.profile && m.profile.fleet) ? [].concat(
+    m.profile.fleet.current,
+    m.profile.fleet.incoming || [],
+    ...(m.profile.fleet.divisions || []).map(division => division.current || [])
+  ) : [])
     .forEach(f => { if (!S.aircraftFor(f[0], f[1])) unknown.push(m.code + ' ' + f[0] + ' ' + f[1]); }));
   ok('Every fleet type a member lists is in the aircraft catalogue', !unknown.length, unknown.join('; '));
   ok('Missing fleet data does not create aircraft or operating services',
@@ -248,7 +252,15 @@ ok('Every profile has the standard parts',
      Array.isArray(p.fleet.current) && p.fleet.current.length && Array.isArray(p.fleet.incoming)),
    profiled.map(m => m.code).join(' '));
 ok('Every fleet entry is [maker, type] or [maker, type, note]',
-   profiled.every(m => m.profile.fleet.current.concat(m.profile.fleet.incoming).every(isEntry)));
+   profiled.every(m => [].concat(
+     m.profile.fleet.current,
+     m.profile.fleet.incoming,
+     ...(m.profile.fleet.divisions || []).map(division => division.current || [])
+   ).every(isEntry)));
+ok('Every named airline division has its own fleet',
+   profiled.every(m => (m.profile.fleet.divisions || []).every(division =>
+     typeof division.name === 'string' && division.name.trim() &&
+     Array.isArray(division.current) && division.current.length)));
 let routesOK = true;
 profiled.forEach(m => (m.profile.routes || []).forEach(r => {
   const [a, b, via] = r;

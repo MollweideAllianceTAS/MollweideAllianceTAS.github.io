@@ -6032,5 +6032,108 @@ const MWA_MEMBERS = [
         "incoming": []
       }
     }
+  },
+  {
+    "name": "HK Pacific",
+    "code": "HK",
+    "country": "Hong Kong",
+    "color": "#309AB0",
+    "secondaryColor": "#023852",
+    "tail": "assets/img/members/hk-pacific-tail.png",
+    "hubs": [
+      "HKG"
+    ],
+    "focus": [],
+    "joined": 2026,
+    "blurb": "A premium Hong Kong airline operating worldwide, with the premium low-cost HK Spirit division inside the same carrier.",
+    "profile": {
+      "founded": "1999",
+      "about": [
+        "HK Pacific is a premium airline based in Hong Kong. Founded in 1999 with Airbus A320-200s and Boeing 777-200s, it has grown into a worldwide carrier with a broad narrow-body and long-haul fleet.",
+        "HK Spirit is HK Pacific's smaller premium low-cost division. It offers more comfortable seats and a higher level of service than conventional low-cost competitors, with correspondingly higher ticket prices."
+      ],
+      "network": [
+        "Hong Kong International Airport is the shared home of HK Pacific and HK Spirit. HK Pacific operates worldwide services from the hub, while HK Spirit complements the main airline with premium low-cost flying."
+      ],
+      "fleet": {
+        "current": [
+          [
+            "Airbus",
+            "A320neo",
+            "15 aircraft"
+          ],
+          [
+            "Airbus",
+            "A321neo",
+            "20 aircraft"
+          ],
+          [
+            "Airbus",
+            "A320-200",
+            "5 aircraft"
+          ],
+          [
+            "Airbus",
+            "A330-900",
+            "5 aircraft"
+          ],
+          [
+            "Airbus",
+            "A350-900",
+            "5 aircraft"
+          ],
+          [
+            "Airbus",
+            "A380-800",
+            "2 aircraft"
+          ],
+          [
+            "Boeing",
+            "777-200LR",
+            "5 aircraft"
+          ],
+          [
+            "Boeing",
+            "777-300ER",
+            "10 aircraft"
+          ],
+          [
+            "Boeing",
+            "787-8",
+            "10 aircraft"
+          ],
+          [
+            "Boeing",
+            "787-9",
+            "10 aircraft"
+          ]
+        ],
+        "incoming": [],
+        "divisions": [
+          {
+            "name": "HK Spirit",
+            "description": "HK Spirit's dedicated premium low-cost fleet operates as a division of HK Pacific.",
+            "current": [
+              [
+                "Airbus",
+                "A320neo",
+                "5 aircraft"
+              ],
+              [
+                "Airbus",
+                "A321-200",
+                "10 aircraft"
+              ],
+              [
+                "Airbus",
+                "A320-200",
+                "5 aircraft"
+              ]
+            ]
+          }
+        ]
+      },
+      "fleetTotal": "107 aircraft across HK Pacific and HK Spirit"
+    }
   }
 ];

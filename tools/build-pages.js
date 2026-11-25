@@ -1117,8 +1117,10 @@ ${P.founded ? `        <div><dt>Founded</dt><dd>${esc(P.foundedDate || P.founded
 <section class="section">
   <div class="wrap">
     <div class="sec-head"><div><h2 class="display">What it <b>flies.</b></h2></div></div>
-    <h3 class="al-sub al-sub--top">In service</h3>${fleetBlock(P.fleet.current)}${P.fleet.incoming.length ? `
-    <h3 class="al-sub">Joining the fleet</h3>${fleetBlock(P.fleet.incoming)}` : ''}
+    <h3 class="al-sub al-sub--top">${(P.fleet.divisions || []).length ? `${esc(nm)} main fleet` : 'In service'}</h3>${fleetBlock(P.fleet.current)}${P.fleet.incoming.length ? `
+    <h3 class="al-sub">Joining the fleet</h3>${fleetBlock(P.fleet.incoming)}` : ''}${(P.fleet.divisions || []).map(division => `
+    <h3 class="al-sub">${esc(division.name)} fleet</h3>${division.description ? `
+    <p class="body-copy al-p">${esc(division.description)}</p>` : ''}${fleetBlock(division.current || [])}`).join('')}
   </div>
 </section>
 </main>
