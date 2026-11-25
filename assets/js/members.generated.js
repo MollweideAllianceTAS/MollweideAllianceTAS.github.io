@@ -5868,5 +5868,169 @@ const MWA_MEMBERS = [
       },
       "fleetTotal": "110 aircraft"
     }
+  },
+  {
+    "name": "Îles Vanille Airlines",
+    "short": "Îles Vanille",
+    "code": "IV",
+    "country": "Mauritius",
+    "color": "#84562E",
+    "tail": "assets/img/members/iles-vanille-tail.png",
+    "hubs": [
+      "MRU"
+    ],
+    "focus": [],
+    "joined": 2026,
+    "blurb": "A Mauritius-based Pacific Sunset Group airline connecting the Vanilla Islands with each other and the wider world.",
+    "profile": {
+      "founded": "1968",
+      "foundedDate": "12 March 1968",
+      "about": [
+        "Îles Vanille Airlines takes its name from the French term for Vanilla Islands Airlines. Its six-petal emblem represents Madagascar, Mayotte, Mauritius, Comoros, Seychelles and Réunion—the six countries and territories that make up the Vanilla Islands of the Indian Ocean.",
+        "The idea followed a 1967 visit to Mauritius by the owner of Pacific Sunset Group. Although Air Mauritius already served the island, the success of JIA, London Airways and Royal Air Australia alongside established competitors encouraged the group to create another locally rooted airline. Îles Vanille was founded on 12 March 1968, the day Mauritius gained independence."
+      ],
+      "network": [
+        "Sir Seewoosagur Ramgoolam International Airport in Mauritius is the airline's primary hub, linking the Vanilla Islands and supporting longer services beyond the Indian Ocean. Further hubs are planned as the network develops."
+      ],
+      "routes": [
+        [
+          "MRU",
+          "TNR"
+        ],
+        [
+          "MRU",
+          "DZA"
+        ],
+        [
+          "MRU",
+          "HAH"
+        ],
+        [
+          "MRU",
+          "SEZ"
+        ],
+        [
+          "MRU",
+          "RUN"
+        ]
+      ],
+      "fleet": {
+        "current": [
+          [
+            "Airbus",
+            "A321XLR",
+            "4 aircraft"
+          ],
+          [
+            "Airbus",
+            "A350-1000",
+            "46 aircraft"
+          ],
+          [
+            "Airbus",
+            "A380-800",
+            "2 aircraft"
+          ],
+          [
+            "Boeing",
+            "737 MAX 10",
+            "8 aircraft"
+          ],
+          [
+            "Boeing",
+            "747-8",
+            "2 aircraft"
+          ],
+          [
+            "De Havilland Canada",
+            "Dash 8 Q400",
+            "2 aircraft"
+          ]
+        ],
+        "incoming": []
+      },
+      "fleetTotal": "64 aircraft"
+    }
+  },
+  {
+    "name": "Privat Air",
+    "short": "Privat Air",
+    "code": "PV",
+    "country": "United States",
+    "color": "#F6FADB",
+    "tail": "assets/img/members/privat-air-tail.png",
+    "hubs": [
+      "DEN"
+    ],
+    "focus": [
+      "SEA"
+    ],
+    "joined": 2026,
+    "blurb": "A Clear Sky-owned semi-private and charter airline offering luxury regional flying from Denver and international charters.",
+    "profile": {
+      "founded": "2012",
+      "about": [
+        "Privat Air is a United States-based semi-private and charter airline. It specialises in luxury regional routes, with international flights also available for private charter.",
+        "Originally founded in 2012, Privat Air entered bankruptcy in 2026. Clear Sky subsequently acquired and merged the airline into its wider operation, after which Privat Air joined Mollweide. Every regional aircraft is configured entirely in business class or premium economy, while its single Boeing 777-200LR offers an all-first-class cabin."
+      ],
+      "network": [
+        "Denver International Airport is Privat Air's main hub for its predominantly regional network. Seattle is a focus city for its Boeing 777-200LR services to Tokyo Narita and Seoul Incheon, as well as a departure point for international charter flying."
+      ],
+      "routes": [
+        [
+          "SEA",
+          "NRT"
+        ],
+        [
+          "SEA",
+          "ICN"
+        ]
+      ],
+      "fleet": {
+        "current": [
+          [
+            "ATR",
+            "42-600",
+            "Business class or premium economy"
+          ],
+          [
+            "Bombardier",
+            "CRJ-200",
+            "Business class or premium economy"
+          ],
+          [
+            "Bombardier",
+            "CRJ-550",
+            "Business class or premium economy"
+          ],
+          [
+            "Boeing",
+            "777-200LR",
+            "1 aircraft · First class only"
+          ],
+          [
+            "COMAC",
+            "C909 (ARJ21-700)",
+            "Business class or premium economy"
+          ],
+          [
+            "De Havilland Canada",
+            "Dash 8 Q100",
+            "Business class or premium economy"
+          ],
+          [
+            "De Havilland Canada",
+            "Dash 8 Q200",
+            "Business class or premium economy"
+          ],
+          [
+            "Embraer",
+            "ERJ-145",
+            "Business class or premium economy"
+          ]
+        ],
+        "incoming": []
+      }
+    }
   }
 ];

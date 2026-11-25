@@ -1423,6 +1423,9 @@ const AIRPORTS = [
   { code:'ATQ', city:'Amritsar',      name:'Sri Guru Ram Dass Jee',    country:'India',        lat:31.71, lon: 74.80, hub:true },
   { code:'DPS', city:'Denpasar',      name:'Ngurah Rai Intl',          country:'Indonesia',    lat:-8.75, lon:115.17, hub:true },
   { code:'MRU', city:'Mauritius',     name:'Sir Seewoosagur Ramgoolam',country:'Mauritius',    lat:-20.43,lon: 57.68, hub:true },
+  { code:'DZA', city:'Dzaoudzi',      name:'Dzaoudzi–Pamandzi Intl',    country:'Mayotte',      lat:-12.80,lon: 45.28 },
+  { code:'HAH', city:'Moroni',        name:'Prince Said Ibrahim Intl',  country:'Comoros',      lat:-11.53,lon: 43.27 },
+  { code:'RUN', city:'Saint-Denis',   name:'Roland Garros',             country:'Réunion',      lat:-20.89,lon: 55.51 },
   { code:'KTM', city:'Kathmandu',     name:'Tribhuvan Intl',           country:'Nepal',        lat:27.70, lon: 85.36 },
   { code:'DAC', city:'Dhaka',         name:'Hazrat Shahjalal',         country:'Bangladesh',   lat:23.84, lon: 90.40 },
   { code:'BKK', city:'Bangkok',       name:'Suvarnabhumi',             country:'Thailand',     lat:13.69, lon:100.75, hub:true },
@@ -1584,9 +1587,13 @@ const CABINS = [
 
 const AIRCRAFT = [
   /* --- turboprops and regional jets ---------------------------------- */
+  { type:'ATR 42-600',          match:/\batr ?42/,                 maxKm:1300, seats: 48, layout:[2,2] },
   { type:'ATR 72',              match:/\batr ?72/,                 maxKm:1500, seats: 70, layout:[2,2] },
+  { type:'Dash 8 Q100',         match:/dash ?8 ?q?100|\bq100\b/,   maxKm:1900, seats: 37, layout:[2,2] },
+  { type:'Dash 8 Q200',         match:/dash ?8 ?q?200|\bq200\b/,   maxKm:2000, seats: 37, layout:[2,2] },
   { type:'Dash 8 Q400',         match:/dash ?8|q400/,              maxKm:2000, seats: 78, layout:[2,2] },
   { type:'CRJ-1000',            match:/crj-?1000/,                 maxKm:3000, seats:100, layout:[2,2] },
+  { type:'CRJ-550',             match:/crj-?550/,                  maxKm:3000, seats: 50, layout:[2,2] },
   { type:'CRJ-900',             match:/crj-?900/,                  maxKm:2900, seats: 90, layout:[2,2] },
   { type:'CRJ-100',             match:/crj-?100\b/,                maxKm:3000, seats: 50, layout:[2,2] },
   { type:'CRJ-200',             match:/crj-?200/,                  maxKm:3000, seats: 50, layout:[2,2] },

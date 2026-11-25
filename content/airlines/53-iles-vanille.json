@@ -1,0 +1,45 @@
+{
+  "name": "Îles Vanille Airlines",
+  "short": "Îles Vanille",
+  "code": "IV",
+  "country": "Mauritius",
+  "color": "#84562E",
+  "tail": "assets/img/members/iles-vanille-tail.png",
+  "hubs": [
+    "MRU"
+  ],
+  "focus": [],
+  "joined": 2026,
+  "blurb": "A Mauritius-based Pacific Sunset Group airline connecting the Vanilla Islands with each other and the wider world.",
+  "profile": {
+    "founded": "1968",
+    "foundedDate": "12 March 1968",
+    "about": [
+      "Îles Vanille Airlines takes its name from the French term for Vanilla Islands Airlines. Its six-petal emblem represents Madagascar, Mayotte, Mauritius, Comoros, Seychelles and Réunion—the six countries and territories that make up the Vanilla Islands of the Indian Ocean.",
+      "The idea followed a 1967 visit to Mauritius by the owner of Pacific Sunset Group. Although Air Mauritius already served the island, the success of JIA, London Airways and Royal Air Australia alongside established competitors encouraged the group to create another locally rooted airline. Îles Vanille was founded on 12 March 1968, the day Mauritius gained independence."
+    ],
+    "network": [
+      "Sir Seewoosagur Ramgoolam International Airport in Mauritius is the airline's primary hub, linking the Vanilla Islands and supporting longer services beyond the Indian Ocean. Further hubs are planned as the network develops."
+    ],
+    "routes": [
+      ["MRU", "TNR"],
+      ["MRU", "DZA"],
+      ["MRU", "HAH"],
+      ["MRU", "SEZ"],
+      ["MRU", "RUN"]
+    ],
+    "fleet": {
+      "current": [
+        ["Airbus", "A321XLR", "4 aircraft"],
+        ["Airbus", "A350-1000", "46 aircraft"],
+        ["Airbus", "A380-800", "2 aircraft"],
+        ["Boeing", "737 MAX 10", "8 aircraft"],
+        ["Boeing", "747-8", "2 aircraft"],
+        ["De Havilland Canada", "Dash 8 Q400", "2 aircraft"]
+      ],
+      "incoming": []
+    },
+    "fleetTotal": "64 aircraft"
+  },
+  "order": 53
+}

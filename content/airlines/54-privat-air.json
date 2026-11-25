@@ -1,0 +1,44 @@
+{
+  "name": "Privat Air",
+  "short": "Privat Air",
+  "code": "PV",
+  "country": "United States",
+  "color": "#F6FADB",
+  "tail": "assets/img/members/privat-air-tail.png",
+  "hubs": [
+    "DEN"
+  ],
+  "focus": [
+    "SEA"
+  ],
+  "joined": 2026,
+  "blurb": "A Clear Sky-owned semi-private and charter airline offering luxury regional flying from Denver and international charters.",
+  "profile": {
+    "founded": "2012",
+    "about": [
+      "Privat Air is a United States-based semi-private and charter airline. It specialises in luxury regional routes, with international flights also available for private charter.",
+      "Originally founded in 2012, Privat Air entered bankruptcy in 2026. Clear Sky subsequently acquired and merged the airline into its wider operation, after which Privat Air joined Mollweide. Every regional aircraft is configured entirely in business class or premium economy, while its single Boeing 777-200LR offers an all-first-class cabin."
+    ],
+    "network": [
+      "Denver International Airport is Privat Air's main hub for its predominantly regional network. Seattle is a focus city for its Boeing 777-200LR services to Tokyo Narita and Seoul Incheon, as well as a departure point for international charter flying."
+    ],
+    "routes": [
+      ["SEA", "NRT"],
+      ["SEA", "ICN"]
+    ],
+    "fleet": {
+      "current": [
+        ["ATR", "42-600", "Business class or premium economy"],
+        ["Bombardier", "CRJ-200", "Business class or premium economy"],
+        ["Bombardier", "CRJ-550", "Business class or premium economy"],
+        ["Boeing", "777-200LR", "1 aircraft · First class only"],
+        ["COMAC", "C909 (ARJ21-700)", "Business class or premium economy"],
+        ["De Havilland Canada", "Dash 8 Q100", "Business class or premium economy"],
+        ["De Havilland Canada", "Dash 8 Q200", "Business class or premium economy"],
+        ["Embraer", "ERJ-145", "Business class or premium economy"]
+      ],
+      "incoming": []
+    }
+  },
+  "order": 54
+}
