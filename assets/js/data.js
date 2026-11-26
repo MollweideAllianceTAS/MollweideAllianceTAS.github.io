@@ -1451,6 +1451,8 @@ const AIRPORTS = [
   { code:'MEL', city:'Melbourne',     name:'Tullamarine',              country:'Australia',    lat:-37.67,lon:144.84 },
   { code:'MCY', city:'Sunshine Coast',name:'Sunshine Coast Airport',   country:'Australia',    lat:-26.60,lon:153.09 },
   { code:'OOL', city:'Gold Coast',    name:'Gold Coast Airport',      country:'Australia',    lat:-28.16,lon:153.50 },
+  { code:'TSV', city:'Townsville',    name:'Townsville Airport',      country:'Australia',    lat:-19.25,lon:146.77 },
+  { code:'WEI', city:'Weipa',         name:'Weipa Airport',           country:'Australia',    lat:-12.68,lon:141.93 },
   { code:'IPC', city:'Easter Island', name:'Mataveri Intl',            country:'Chile',        lat:-27.16,lon:-109.42 },
   { code:'AKL', city:'Auckland',      name:'Auckland Intl',            country:'New Zealand',  lat:-37.01,lon:174.79 },
   { code:'NAN', city:'Nadi',          name:'Nadi Intl',                country:'Fiji',         lat:-17.76,lon:177.44 },

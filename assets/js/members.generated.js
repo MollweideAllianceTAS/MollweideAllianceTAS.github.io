@@ -5422,7 +5422,7 @@ const MWA_MEMBERS = [
         "Following decades of development, JetSydney has established itself as a major fictional aviation brand and continues to expand its international reach while strengthening connections between Sydney and the rest of the world. JetSydney — Exploration YES!"
       ],
       "network": [
-        "Sydney is the main hub, supported by Melbourne and Perth. JetSydney's network spans domestic Australia, New Zealand, Asia, Europe and North America, with services from Sydney to destinations including Perth, Miles, Gold Coast, Auckland, Rome, Brisbane, Tokyo, San Francisco, Seoul and Manila."
+        "Sydney is the main hub, supported by Melbourne and Perth. JetSydney's network spans domestic Australia, New Zealand, Asia, Europe and North America, with services from Sydney to destinations including Perth, Miles, Gold Coast, Auckland, Rome, Brisbane, Tokyo, San Francisco, Seoul and Manila. A new Q400 service now links Sydney with Weipa via Townsville."
       ],
       "routes": [
         [
@@ -5472,6 +5472,11 @@ const MWA_MEMBERS = [
         [
           "SYD",
           "MNL"
+        ],
+        [
+          "SYD",
+          "WEI",
+          "TSV"
         ]
       ],
       "fleet": {
@@ -5499,6 +5504,10 @@ const MWA_MEMBERS = [
           [
             "ATR",
             "72-600"
+          ],
+          [
+            "De Havilland Canada",
+            "Dash 8 Q400"
           ]
         ],
         "incoming": []
